@@ -404,18 +404,18 @@ namespace zoneutils
 
                     ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setMaxHit(1);
                     ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setSkillType(sql->GetIntData(17));
-                    DAMAGETYPE damageType = DAMAGE_NONE;
+                    DAMAGE_TYPE damageType = DAMAGE_NONE;
                     switch (((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->getSkillType()) {
                     // Combat Skills
                     case SKILLTYPE::SKILL_NONE: 
-                        damageType = (DAMAGETYPE)0; 
+                        damageType = (DAMAGE_TYPE)0; 
                         break;
                     case SKILLTYPE::SKILL_ARCHERY:
                     case SKILLTYPE::SKILL_MARKSMANSHIP:
                     case SKILLTYPE::SKILL_THROWING:
                     case SKILLTYPE::SKILL_DAGGER: 
                     case SKILLTYPE::SKILL_POLEARM: 
-                        damageType = (DAMAGETYPE)1; 
+                        damageType = (DAMAGE_TYPE)1; 
                         break;
                     case SKILLTYPE::SKILL_SWORD:
                     case SKILLTYPE::SKILL_GREAT_SWORD:
@@ -424,14 +424,14 @@ namespace zoneutils
                     case SKILLTYPE::SKILL_SCYTHE: 
                     case SKILLTYPE::SKILL_KATANA:
                     case SKILLTYPE::SKILL_GREAT_KATANA: 
-                        damageType = (DAMAGETYPE)2; 
+                        damageType = (DAMAGE_TYPE)2; 
                         break;
                     case SKILLTYPE::SKILL_CLUB: 
                     case SKILLTYPE::SKILL_STAFF: 
-                        damageType = (DAMAGETYPE)3; 
+                        damageType = (DAMAGE_TYPE)3; 
                         break;
                     case SKILLTYPE::SKILL_HAND_TO_HAND: 
-                        damageType = (DAMAGETYPE)4; 
+                        damageType = (DAMAGE_TYPE)4; 
                         break;
                     default: break;
                 }
