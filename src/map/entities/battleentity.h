@@ -522,7 +522,7 @@ public:
 
     uint8 GetSpeed();
     
-    DAMAGETYPE m_dmgType;
+    DAMAGE_TYPE m_dmgType;
 
     bool isDead(); // проверяем, мертва ли сущность
     bool isAlive();
