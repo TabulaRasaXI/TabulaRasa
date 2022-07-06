@@ -711,19 +711,23 @@ namespace petutils
             default: // case FRAME_HARLEQUIN:
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(2, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(10, PPet->GetMLevel()));
+                PPet->m_dmgType = DAMAGE_IMPACT;
                 break;
             case FRAME_VALOREDGE:
                 PPet->m_Weapons[SLOT_SUB]->setShieldSize(3);
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(5, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(5, PPet->GetMLevel()));
+                PPet->m_dmgType = DAMAGE_SLASHING;
                 break;
             case FRAME_SHARPSHOT:
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(1, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(11, PPet->GetMLevel()));
+                PPet->m_dmgType = DAMAGE_PIERCING;
                 break;
             case FRAME_STORMWAKER:
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(10, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(12, PPet->GetMLevel()));
+                PPet->m_dmgType = DAMAGE_IMPACT;
                 break;
         }
 
@@ -883,6 +887,12 @@ namespace petutils
             PPet->addModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
             PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
         }
+        
+        // Set damage type for Avatars
+        if (PPet->m_PetID == PETID_CAIT_SITH || PPet->m_PetID == PETID_FENRIR)
+            PPet->m_dmgType = DAMAGE_SLASHING;
+        else
+            PPet->m_dmgType = DAMAGE_IMPACT;
     }
 
     /************************************************************************
