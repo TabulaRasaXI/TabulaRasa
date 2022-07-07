@@ -544,7 +544,6 @@ namespace petutils
         PMob->stats.CHR = (uint16)((fCHR + mCHR) * 0.9f);
         
         // Set damageType to impact (blunt) damage. All jugs at level 75 cap do blunt (impact) damage. https://ffxiclopedia.fandom.com/wiki/Category:Familiars
-        uint32 id = PMob->m_PetID;
         PMob->m_dmgType = DAMAGE_TYPE::IMPACT;
     }
 
@@ -1747,8 +1746,7 @@ namespace petutils
         PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(SKILL_HAND_TO_HAND, JOB_WAR, PPet->GetMLevel()));
         
         // Set damageType to slashing damage. "Wyverns do slashing damage..." https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)
-        uint32 id = PMob->m_PetID;
-        PMob->m_dmgType = DAMAGE_TYPE::SLASHING;
+        PPet->m_dmgType = DAMAGE_TYPE::SLASHING;
 
         // Job Point: Wyvern Max HP
         if (PMaster->objtype == TYPE_PC)
