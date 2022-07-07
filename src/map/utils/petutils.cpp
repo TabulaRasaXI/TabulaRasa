@@ -1748,7 +1748,7 @@ namespace petutils
         
         // Set damageType to slashing damage. "Wyverns do slashing damage..." https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)
         uint32 id = PMob->m_PetID;
-        PMob->m_dmgType = DAMAGE_SLASHING;
+        PMob->m_dmgType = DAMAGE_TYPE::SLASHING;
 
         // Job Point: Wyvern Max HP
         if (PMaster->objtype == TYPE_PC)
