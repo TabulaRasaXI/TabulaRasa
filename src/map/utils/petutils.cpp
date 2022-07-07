@@ -545,7 +545,7 @@ namespace petutils
         
         // Set damageType to impact (blunt) damage. All jugs at level 75 cap do blunt (impact) damage. https://ffxiclopedia.fandom.com/wiki/Category:Familiars
         uint32 id = PMob->m_PetID;
-        PMob->m_dmgType = DAMAGE_IMPACT;
+        PMob->m_dmgType = DAMAGE_TYPE::IMPACT;
     }
 
     void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats)
@@ -711,23 +711,23 @@ namespace petutils
             default: // case FRAME_HARLEQUIN:
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(2, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(10, PPet->GetMLevel()));
-                PPet->m_dmgType = DAMAGE_IMPACT;
+                PPet->m_dmgType = DAMAGE_TYPE::IMPACT;
                 break;
             case FRAME_VALOREDGE:
                 PPet->m_Weapons[SLOT_SUB]->setShieldSize(3);
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(5, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(5, PPet->GetMLevel()));
-                PPet->m_dmgType = DAMAGE_SLASHING;
+                PPet->m_dmgType = DAMAGE_TYPE::SLASHING;
                 break;
             case FRAME_SHARPSHOT:
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(1, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(11, PPet->GetMLevel()));
-                PPet->m_dmgType = DAMAGE_PIERCING;
+                PPet->m_dmgType = DAMAGE_TYPE::PIERCING;
                 break;
             case FRAME_STORMWAKER:
                 PPet->WorkingSkills.evasion = battleutils::GetMaxSkill(10, PPet->GetMLevel());
                 PPet->setModifier(Mod::DEF, battleutils::GetMaxSkill(12, PPet->GetMLevel()));
-                PPet->m_dmgType = DAMAGE_IMPACT;
+                PPet->m_dmgType = DAMAGE_TYPE::IMPACT;
                 break;
         }
 
@@ -890,9 +890,9 @@ namespace petutils
         
         // Set damage type for Avatars
         if (PPet->m_PetID == PETID_CAIT_SITH || PPet->m_PetID == PETID_FENRIR)
-            PPet->m_dmgType = DAMAGE_SLASHING;
+            PPet->m_dmgType = DAMAGE_TYPE::SLASHING;
         else
-            PPet->m_dmgType = DAMAGE_IMPACT;
+            PPet->m_dmgType = DAMAGE_TYPE::IMPACT;
     }
 
     /************************************************************************
