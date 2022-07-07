@@ -887,7 +887,7 @@ namespace petutils
             PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
         }
         
-        // Set damage type for Avatars
+        // Set damageType for Avatars
         if (PPet->m_PetID == PETID_CAIT_SITH || PPet->m_PetID == PETID_FENRIR)
             PPet->m_dmgType = DAMAGE_TYPE::SLASHING;
         else
