@@ -12,9 +12,9 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    local stock =
+   --[[ local stock =
     {
-        21444,  200,    -- Livid Broth
+       21444,  200,    -- Livid Broth
         21445,  344,    -- Lyrical Broth
         21446,  519,    -- Airy Broth
         21447, 1016,    -- Crumbly Soil
@@ -39,7 +39,7 @@ entity.onTrigger = function(player, npc)
     }
 
     player:showText(npc, ID.text.MP_SHOP_DIALOG)
-    xi.shop.general(player, stock)
+    xi.shop.general(player, stock)--]]
 end
 
 entity.onEventUpdate = function(player, csid, option)
