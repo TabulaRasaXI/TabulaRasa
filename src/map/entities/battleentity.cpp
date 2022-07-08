@@ -86,6 +86,7 @@ CBattleEntity::CBattleEntity()
     m_Immunity   = 0;
     isCharmed    = false;
     m_unkillable = false;
+    m_dmgType = DAMAGE_TYPE::NONE;
 
     m_DeathType = DEATH_TYPE::NONE;
     BattleHistory.lastHitTaken_atkType = ATTACK_TYPE::NONE;
@@ -637,13 +638,13 @@ uint16 CBattleEntity::ATT()
     {
         ATT += (STR() * 3) / 4;
     }
-    else if (weapon && weapon->isHandToHand())
-    {
-        ATT += (STR() * 5) / 8;
-    }
+    //else if (weapon && weapon->isHandToHand())
+    //{
+    //    ATT += (STR() * 5) / 8;
+    //}
     else
     {
-        ATT += (STR() * 3) / 4;
+        ATT += STR() / 2;
     }
 
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_ENDARK))
@@ -678,7 +679,7 @@ uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
     {
         return 0;
     }
-    int32 ATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
+    int32 ATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + STR() / 2;
     if ((this->objtype == TYPE_PC) || (this->objtype == TYPE_PET && this->PMaster->objtype == TYPE_PC && ((CPetEntity*)this)->getPetType() == PET_TYPE::AUTOMATON)) // PC or PC Automaton
     {
         ATT = int32((float)ATT * battleutils::GetRangedDistanceCorrection(this, distance));
@@ -713,7 +714,7 @@ uint16 CBattleEntity::RACC(uint8 skill, float distance, uint16 bonusSkill)
     }
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
-    acc += (AGI() * 3) / 4;
+    acc += AGI() / 2;
     if ((this->objtype == TYPE_PC) || (this->objtype == TYPE_PET && this->PMaster->objtype == TYPE_PC && ((CPetEntity*)this)->getPetType() == PET_TYPE::AUTOMATON)) // PC or PC Automaton
     {
         if (!this->StatusEffectContainer->HasStatusEffect(EFFECT_SHARPSHOT))
@@ -740,7 +741,7 @@ uint16 CBattleEntity::GetBaseRACC(uint8 skill, uint16 bonusSkill)
     }
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
-    acc += (AGI() * 3) / 4;
+    acc += AGI() / 2;
     return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
 }
 
@@ -795,7 +796,7 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
         }
         else
         {
-            ACC += (int16)(DEX() * 0.75);
+            ACC += (int16)(DEX() * 0.5);
         }
         ACC         = (ACC + m_modStat[Mod::ACC] + offsetAccuracy);
         auto* PChar = dynamic_cast<CCharEntity*>(this);
@@ -1699,6 +1700,15 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     TracyZoneScoped;
     auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
+    if (this->objtype == TYPE_MOB)
+    {
+        auto* PMob = dynamic_cast<CMobEntity*>(this);
+        if (charutils::CheckMob(PTarget->m_mlvl, PMob->m_maxLevel) == EMobDifficulty::TooWeak)
+        {
+            PMob->m_ExpPenalty = ((PMob->m_ExpPenalty + lua["xi"]["settings"]["main"]["PL_PENALTY"].get<uint16>()) < UINT16_MAX - 1) ? PMob->m_ExpPenalty + lua["xi"]["settings"]["main"]["PL_PENALTY"].get<uint16>() : UINT16_MAX - 1;
+        }
+    }
+
     if (PTarget->objtype == TYPE_PC)
     {
         // TODO: Should not be removed by AoE effects that don't target the player.
@@ -1766,7 +1776,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             else if (attack.IsParried())
             {
                 actionTarget.messageID  = 70;
-                actionTarget.reaction   = REACTION::PARRY;
+                actionTarget.reaction   = REACTION::PARRY | REACTION::HIT;
                 actionTarget.speceffect = SPECEFFECT::NONE;
                 battleutils::HandleTacticalParry(PTarget);
                 battleutils::HandleIssekiganEnmityBonus(PTarget, this);
@@ -1841,10 +1851,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Set this attack's critical flag.
                 attack.SetCritical(xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing()));
 
+                actionTarget.reaction   = REACTION::HIT;
+
                 // Critical hit.
                 if (attack.IsCritical())
                 {
-                    actionTarget.reaction   = REACTION::HIT;
                     actionTarget.speceffect = SPECEFFECT::CRITICAL_HIT;
                     actionTarget.messageID  = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 353 : 67;
 
@@ -1860,7 +1871,6 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Not critical hit.
                 else
                 {
-                    actionTarget.reaction   = REACTION::HIT;
                     actionTarget.speceffect = SPECEFFECT::HIT;
                     actionTarget.messageID  = attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::DAKEN ? 352 : 1;
                 }
@@ -1868,7 +1878,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Guarded. TODO: Stuff guards that shouldn't.
                 if (attack.IsGuarded())
                 {
-                    actionTarget.reaction = REACTION::GUARD;
+                    actionTarget.reaction |= REACTION::GUARDED;
                     battleutils::HandleTacticalGuard(PTarget);
                 }
 
@@ -1886,7 +1896,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 // Try shield block
                 if (attack.IsBlocked())
                 {
-                    actionTarget.reaction = REACTION::BLOCK;
+                    actionTarget.reaction |= REACTION::BLOCK;
                 }
 
                 actionTarget.param =
@@ -1942,23 +1952,27 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             battleutils::HandleAfflatusMiseryAccuracyBonus(this);
         }
 
-        if (actionTarget.reaction != REACTION::HIT && actionTarget.reaction != REACTION::BLOCK && actionTarget.reaction != REACTION::GUARD && actionTarget.messageID != MSGBASIC_SHADOW_ABSORB)
+        // If we didn't hit at all, set param to 0 if we didn't blink any shadows.
+        if ((actionTarget.reaction & REACTION::HIT) == REACTION::NONE && actionTarget.messageID != MSGBASIC_SHADOW_ABSORB)
         {
             actionTarget.param = 0;
         }
 
-        if (actionTarget.reaction != REACTION::EVADE && actionTarget.reaction != REACTION::PARRY && attack.GetAttackType() != PHYSICAL_ATTACK_TYPE::DAKEN)
+        // if we did hit, run enspell/spike routines as long as this isn't a Daken swing
+        if ((actionTarget.reaction & REACTION::MISS) == REACTION::NONE && attack.GetAttackType() != PHYSICAL_ATTACK_TYPE::DAKEN)
         {
             battleutils::HandleEnspell(this, PTarget, &actionTarget, attack.IsFirstSwing(), (CItemWeapon*)this->m_Weapons[attack.GetWeaponSlot()],
                                        attack.GetDamage());
             battleutils::HandleSpikesDamage(this, PTarget, &actionTarget, attack.GetDamage());
         }
 
-        if (actionTarget.reaction == REACTION::PARRY && PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BATTUTA))
+        // if we parried, run battuta check if applicable
+        if ((actionTarget.reaction & REACTION::PARRY) == REACTION::PARRY && PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_BATTUTA))
         {
             battleutils::HandleParrySpikesDamage(this, PTarget, &actionTarget, attack.GetDamage());
         }
 
+        // set recoil if we hit and dealt non-zero damage
         if (actionTarget.speceffect == SPECEFFECT::HIT && actionTarget.param > 0)
         {
             actionTarget.speceffect = SPECEFFECT::RECOIL;
@@ -1971,7 +1985,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             uint16 zanshinChance = this->getMod(Mod::ZANSHIN) + battleutils::GetMeritValue(this, MERIT_ZASHIN_ATTACK_RATE);
             zanshinChance        = std::clamp<uint16>(zanshinChance, 0, 100);
             // zanshin may only proc on a missed/guarded/countered swing or as SAM main with hasso up (at 25% of the base zanshin rate)
-            if (((actionTarget.reaction == REACTION::EVADE || actionTarget.reaction == REACTION::GUARD || actionTarget.spikesEffect == SUBEFFECT_COUNTER) &&
+            if ((((actionTarget.reaction & REACTION::MISS) != REACTION::NONE || (actionTarget.reaction & REACTION::GUARDED) != REACTION::NONE || actionTarget.spikesEffect == SUBEFFECT_COUNTER) &&
                  xirand::GetRandomNumber(100) < zanshinChance) ||
                 (GetMJob() == JOB_SAM && this->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO) && xirand::GetRandomNumber(100) < (zanshinChance / 4)))
             {

@@ -677,11 +677,21 @@ xi.reaction =
 {
     NONE     = 0x00,
     MISS     = 0x01,
+    GUARDED  = 0x02,
     PARRY    = 0x03,
     BLOCK    = 0x04,
     HIT      = 0x08,
     EVADE    = 0x09,
-    GUARD    = 0x14,
+    ABILITY  = 0x10,
+}
+
+xi.actionModifier =
+{
+    NONE        = 0x00,
+    COVER       = 0x01,
+    RESIST      = 0x02,
+    MAGIC_BURST = 0x04, -- Currently known to be used for Swipe/Lunge only
+    IMMUNOBREAK = 0x08,
 }
 
 xi.specEffect =
@@ -709,7 +719,7 @@ function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shado
     end
 
     -- handle super jump
-    if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStausEffect(xi.effect.ALL_MISS):getPower() > 1 then
+    if target:hasStatusEffect(xi.effect.ALL_MISS) and target:getStatusEffect(xi.effect.ALL_MISS):getPower() > 1 then
         skill:setMsg(xi.msg.basic.JA_MISS_2)
         return 0
     end
