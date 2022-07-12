@@ -299,17 +299,18 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, damage, element, dmgm
     local returninfo = {}
     --get all the stuff we need
     local resist = 1
+    local barspellDef = 0
 
-    local barspellDef = getBarSpellDefBonus(mob, target, element)
-    if barspellDef == nil then
-        barspellDef = 0
+    if
+        element >= xi.magic.element.FIRE and
+        element <= xi.magic.element.WATER and
+        target:hasStatusEffect(xi.magic.barSpell[element])
+    then -- bar- spell magic defense bonus
+        barspellDef = getBarSpellDefBonus(mob, target, element)
     end
 
-    local mdef = barspellDef + target:getMod(xi.mod.MDEF)
-    local matt = mob:getMod(xi.mod.MATT)
-    local mab = matt / mdef
+    local mab = (100 + mob:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF) + barspellDef)
     local bonusMacc = 0
-
     mab = utils.clamp(mab, 0.7, 1.3)
 
     if tpeffect == xi.mobskills.magicalTpBonus.DMG_BONUS then
