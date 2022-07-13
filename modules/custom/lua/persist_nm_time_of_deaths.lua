@@ -17,6 +17,8 @@ local nms_to_persist =
 {
     { "Attohwa_Chasm", "Tiamat", function() return math.random(259200, 432000) end }, -- 3 - 5 days
     { "Bostaunieux_Oubliette", "Bloodsucker", function() return 259200 end }, -- 3 days
+    { "Castle_Zvahl_Baileys", "Marquis_Allocen", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Castle_Zvahl_Baileys", "Marquis_Amon", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Behemoths_Dominion", "Behemoth", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows
     { "Dragons_Aery", "Fafnir", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows
     { "Eastern_Altepa_Desert", "Centurio_XII-I", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
