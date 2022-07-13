@@ -35,7 +35,6 @@ local nms_to_persist =
     { "Pashhow_Marshlands", "BoWho_Warmonger", function() return 75600 + math.random(600, 900) end }, -- 21 hours, plus 10 to 15 minutes
     { "Quicksand_Caves", "Antican_Consul", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Rolanberry_Fields", "Simurgh", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
-    { "Riverne-Site_A01", "Carmine_Dobsonfly", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Riverne-Site_B01", "Boroka", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Sea_Serpent_Grotto", "Ocean_Sahagin", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "The_Shrine_of_RuAvitau", "Faust", function() return math.random(10800, 21600) end }, -- 3 - 6 hours 
