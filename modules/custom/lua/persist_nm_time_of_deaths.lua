@@ -17,6 +17,9 @@ local nms_to_persist =
 {
     { "Attohwa_Chasm", "Tiamat", function() return math.random(259200, 432000) end }, -- 3 - 5 days
     { "Bostaunieux_Oubliette", "Bloodsucker", function() return 259200 end }, -- 3 days
+    { "Caedarva_Mire", "Khimaira", function() return math.random(48, 72) * 3600 end }, -- 48 - 72 hours with 1 hour windows
+    { "Castle_Zvahl_Baileys", "Duke_Haborym", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Castle_Zvahl_Baileys", "Grand_Duke_Batym", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Castle_Zvahl_Baileys", "Marquis_Allocen", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Castle_Zvahl_Baileys", "Marquis_Amon", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Behemoths_Dominion", "Behemoth", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows
@@ -27,10 +30,12 @@ local nms_to_persist =
     { "Garlaige_Citadel", "Serket", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Garlaige_Citadel", "Skewer_Sam", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Gustav_Tunnel", "Bune", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Ifrits_Cauldron", "Ash_Dragon", function() return math.random(259200, 432000) end }, -- 3 - 5 days
     { "Jugner_Forest", "King_Arthro", function() return 75900 + math.random(0, 6) * 1800 end }, -- 21:05 - 24:05 hours with half hour windows
     { "King_Ranperres_Tomb", "Vrtra", function() return math.random(259200, 432000) end }, -- 3 - 5 days
     { "Labyrinth_of_Onzozo", "Mysticmaker_Profblix", function() return math.random(7200, 9000) end }, -- 2 to 2.5 hours
     { "Lufaise_Meadows", "Padfoot", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Mount_Zhayolm", "Cerberus", function() return math.random(48, 72) * 3600 end }, -- 48 - 72 hours with 1 hour windows
     { "Ordelles_Caves", "Morbolger", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
     { "Pashhow_Marshlands", "BoWho_Warmonger", function() return 75600 + math.random(600, 900) end }, -- 21 hours, plus 10 to 15 minutes
     { "Quicksand_Caves", "Antican_Consul", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
@@ -43,6 +48,7 @@ local nms_to_persist =
     { "Uleguerand_Range", "Jormungand", function() return math.random(259200, 432000) end }, -- 3 - 5 days
     { "Valley_of_Sorrows", "Adamantoise", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows
     { "VeLugannon_Palace", "Zipacna", function() return math.random(10800, 14400) end }, -- 3 - 4 hours 
+    { "Wajaom_Woodlands", "Hydra", function() return math.random(48, 72) * 3600 end }, -- 48 - 72 hours with 1 hour windows
     { "Yhoator_Jungle", "Bright-handed_Kunberry", function() return math.random(75600, 77400) end }, -- 21 - 21.5 hours
 }
 
