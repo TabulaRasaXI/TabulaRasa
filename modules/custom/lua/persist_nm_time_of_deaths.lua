@@ -16,6 +16,15 @@ local m = Module:new("persist_nm_time_of_deaths")
 local nms_to_persist =
 {
     { "Behemoths_Dominion", "Behemoth", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows
+    { "Dragons_Aery", "Fafnir", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows
+    { "Eastern_Altepa_Desert", "Centurio_XII-I", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Garlaige_Citadel", "Old_Two-Wings", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Garlaige_Citadel", "Skewer_Sam", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Jugner_Forest", "King_Arthro", function() return 75900 + math.random(0, 6) * 1800 end }, -- 21:05 - 24:05 hours with half hour windows
+    { "Pashhow_Marshlands", "BoWho_Warmonger", function() return 75600 + math.random(600, 900) end }, -- 21 hours, plus 10 to 15 minutes
+    { "Rolanberry_Fields", "Simurgh", function() return math.random(75600, 86400) end }, -- 21 - 24 hours
+    { "Sauromugue_Champaign", "Roc", function() return math.random(75600, 86400) end }, -- 21 - 24 hours 
+    { "Valley_of_Sorrows", "Adamantoise", function() return 75600 + math.random(0, 6) * 1800 end }, -- 21 - 24 hours with half hour windows 
 }
 
 -- NOTE: At the time we iterate over these entries, the Lua zone and mob objects won't be ready,
