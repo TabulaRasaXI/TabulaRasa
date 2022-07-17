@@ -3707,11 +3707,13 @@ INSERT INTO `mob_spell_lists` VALUES ('TRUST_Apururu_UC',367,133,68,255); -- she
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Apururu_UC',367,134,75,255); -- shellra_v (75~255)
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Apururu_UC',367,143,32,255); -- erase (32~255)
 
--- TRUST_Rughadjeen (372)
-INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',372,112,37,255); -- flash (37~255)
-
 -- TRUST_Rughadjeen (373)
-INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,21,55,255); -- holy (55~255)
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,1,1,255);    -- cure (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,2,11,255);   -- cure_ii (11~255)
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,3,21,255);   -- cure_iii (21~255)
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,4,41,255);   -- cure_iv (41~255)
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,21,55,255);  -- holy (55~255)
+INSERT INTO `mob_spell_lists` VALUES ('TRUST_Rughadjeen',373,112,37,255); -- flash (37~255)
 
 -- TRUST_Kukki-Chebukki (374)
 INSERT INTO `mob_spell_lists` VALUES ('TRUST_Kukki-Chebukki',374,144,13,255); -- fire (13~255)
@@ -4995,7 +4997,42 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 250, 1, 255); -- ice spi
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 252, 1, 255); -- stun (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 253, 1, 255); -- sleep (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 274, 1, 255); -- sleepga ii (1~255)
--- Next Avail 493
+
+-- Bastet (499)
+INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 165, 1, 255); -- thunder ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 195, 1, 255); -- thundaga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 212, 1, 255); -- burst (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 239, 1, 255); -- shock (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 251, 1, 255); -- shock spikes (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 252, 1, 255); -- stun (1~255)
+
+-- Noble Mold (500)
+INSERT INTO `mob_spell_lists` VALUES('Noble_Mold', 500, 55, 1, 255); -- aquaveil (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Noble_Mold', 500, 105, 1, 255); -- enwater (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Noble_Mold', 500, 170, 1, 255); -- water ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Noble_Mold', 500, 200, 1, 255); -- waterga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Noble_Mold', 500, 221, 1, 255); -- poison ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Noble_Mold', 500, 240, 1, 255); -- drown (1~255)
+
+-- Sacrificial Goblet
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 204, 1, 255); -- flare (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 206, 1, 255); -- freeze (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 208, 1, 255); -- tornado (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 210, 1, 255); -- quake (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 212, 1, 255); -- burst (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 214, 1, 255); -- flood (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 245, 1, 255); -- drain (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 247, 1, 255); -- aspir (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Sacrificial_Goblet', 501, 226, 1, 255); -- poisonga ii (1~255)
+
+-- Pyuu the Spatemaker (502)
+INSERT INTO `mob_spell_lists` VALUES('PyuuTheSpatemaker',502,201,1,255); -- waterga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('PyuuTheSpatemaker',502,172,1,255); -- water iv (1~255)
+
+-- Mucoid Mass (503)
+INSERT INTO `mob_spell_lists` VALUES('Mucoid_Mass', 503, 242, 1, 255); -- absorb-acc (1~255)
+
+-- Next Avail 504
 
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
