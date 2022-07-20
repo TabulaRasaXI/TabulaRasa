@@ -213,6 +213,9 @@ void CLuaBaseEntity::showText(CLuaBaseEntity* mob, uint16 messageID, sol::object
  *  Purpose : Displays text to a target PC (private)
  *  Example : player:messageText(target, ID.text.NOT_HAVE_ENOUGH_GP, false, 6);
  *  Notes   : Mainly used for sending retail text messages
+ *          : Value 1: Target of message (self select entity to send message to everyone in range)
+ *          : Value 2: Message ID
+ *          : Value 3: Set false to remove name at start of message
  ************************************************************************/
 
 void CLuaBaseEntity::messageText(CLuaBaseEntity* PLuaBaseEntity, uint16 messageID, sol::object const& arg2, sol::object const& arg3)
@@ -2577,7 +2580,18 @@ uint8 CLuaBaseEntity::getRotPos()
 
 void CLuaBaseEntity::setRotation(uint8 rotation)
 {
+    if (m_PBaseEntity == nullptr)
+    {
+        return;
+    }
+
     m_PBaseEntity->loc.p.rotation = rotation;
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+        ((CCharEntity*)m_PBaseEntity)->pushPacket(new CPositionPacket((CCharEntity*)m_PBaseEntity));
+    }
+
     m_PBaseEntity->updatemask |= UPDATE_POS;
 }
 
@@ -11170,7 +11184,7 @@ uint16 CLuaBaseEntity::getStat(uint16 statId)
             value = PEntity->CHR();
             break;
         case Mod::ATT:
-            value = PEntity->ATT();
+            value = PEntity->ATT(SLOT_MAIN);
             break;
         case Mod::DEF:
             value = PEntity->DEF();
@@ -11452,7 +11466,7 @@ int CLuaBaseEntity::getMeleeHitDamage(CLuaBaseEntity* PLuaBaseEntity, sol::objec
 
     if (xirand::GetRandomNumber(100) < hitrate)
     {
-        float DamageRatio = battleutils::GetDamageRatio(PAttacker, PDefender, false, 0.f);
+        float DamageRatio = battleutils::GetDamageRatio(PAttacker, PDefender, false, 0.f, SLOT_MAIN);
         int   damage      = (uint16)((PAttacker->GetMainWeaponDmg() + battleutils::GetFSTR(PAttacker, PDefender, SLOT_MAIN)) * DamageRatio);
 
         return damage;
@@ -14391,6 +14405,25 @@ bool CLuaBaseEntity::deleteRaisedChocobo()
     return true;
 }
 
+/************************************************************************
+ *  Function: clearSession()
+ *  Purpose : Delete player's account session
+ *  Example : player:clearSession()
+ ************************************************************************/
+
+bool CLuaBaseEntity::clearSession(std::string const& playerName)
+{
+    const char* charName = playerName.c_str();
+    const char* Query    = "DELETE FROM accounts_sessions WHERE charid IN (SELECT charid from chars where charname = '%s')";
+
+    if (sql->Query(Query, charName) == SQL_SUCCESS && sql->AffectedRows() > 0)
+    {
+        return true;
+    }
+
+    return false;
+}
+
 //==========================================================//
 
 void CLuaBaseEntity::Register()
@@ -15155,6 +15188,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setClaimedTraverserStones", CLuaBaseEntity::setClaimedTraverserStones);
 
     SOL_REGISTER("getHistory", CLuaBaseEntity::getHistory);
+
+    SOL_REGISTER("clearSession", CLuaBaseEntity::clearSession);
 }
 
 std::ostream& operator<<(std::ostream& os, const CLuaBaseEntity& entity)
