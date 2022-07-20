@@ -19,7 +19,7 @@ entity.onTrade = function(player, npc, trade)
             -- player puts sheep meat on the fire
             player:messageSpecial(ID.text.FIRE_PUT, 4372)
             player:confirmTrade()
-            player:setCharVar("SGusta_Sausage_Timer", os.time() + 60) -- 1 minute earth time
+            player:setCharVar("SGusta_Sausage_Timer", os.time() + 3600) -- 1 game day
             player:needToZone(true)
         else
             -- message given if sheep meat is already on the fire
