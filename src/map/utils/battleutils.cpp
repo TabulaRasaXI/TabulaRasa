@@ -4931,8 +4931,8 @@ namespace battleutils
         const float levelRatio = (charmerBSTlevel - targetLvl) / 100.f;
         charmChance *= (1.f + levelRatio);
 
-        float chrRatio = ((PCharmer->CHR() - PTarget->CHR())) / 100.f;
-        charmChance *= (1.f * (chrRatio * 5.83));
+        float chrRatio = 1.f * ((((PCharmer->CHR() - PTarget->CHR())) / 100.f) * 5.83);
+        charmChance *= std::max(chrRatio, 1.f);
 
         // Retail doesn't take light/apollo into account for Gauge
         if (includeCharmAffinityAndChanceMods)
