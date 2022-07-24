@@ -803,37 +803,23 @@ local digInfo =
 
 local function updatePlayerDigCount(player, increment)
     if increment == 0 then
-        player:setCharVar('[DIG]DigCount', 0)
+        player:setVolatileCharVar('[DIG]DigCount', 0)
     else
-        player:setCharVar('[DIG]DigCount', player:getCharVar('[DIG]DigCount') + increment)
+        player:setVolatileCharVar('[DIG]DigCount', player:getCharVar('[DIG]DigCount') + increment)
     end
 
-    player:setCharVar('[DIG]LastDigTime', os.time())
+    player:setVolatileCharVar('[DIG]LastDigTime', os.time())
 end
-
---[[ Not Implemented
-local function updateZoneDigCount(zoneId, increment)
-    local serverVar = '[DIG]ZONE' .. zoneId .. '_ITEMS'
-
-    -- 0 means we wanna wipe (probably only gonna happen onGameDay or something)
-    if increment == 0 then
-        SetServerVariable(serverVar, 0)
-    else
-        SetServerVariable(serverVar, GetServerVariable(serverVar) + increment)
-    end
-end
-]]--
 
 local function canDig(player)
     local digCount = player:getCharVar('[DIG]DigCount')
     local lastDigTime = player:getCharVar('[DIG]LastDigTime')
-    local zoneItemsDug = GetServerVariable('[DIG]ZONE'..player:getZoneID()..'_ITEMS')
     local zoneInTime = player:getLocalVar('ZoneInTime')
     local currentTime = os.time()
     local skillRank = player:getSkillRank(xi.skill.DIG)
 
     -- base delay -5 for each rank
-    local digDelay = 16 - (skillRank * 5)
+    local digDelay = math.max(16 - (skillRank * 5), 4)
     local areaDigDelay = 60 - (skillRank * 5)
 
     local prevMidnight = getMidnight() - 86400
@@ -846,7 +832,7 @@ local function canDig(player)
 
     -- neither player nor zone have reached their dig limit
 
-    if (digCount < 100 and zoneItemsDug < 20) or xi.settings.main.DIG_FATIGUE == 0 then
+    if (digCount < 100) or xi.settings.main.DIG_FATIGUE == 0 then
         -- pesky delays
         if (zoneInTime + areaDigDelay) <= currentTime and (lastDigTime + digDelay) <= currentTime then
             return true
@@ -860,27 +846,36 @@ local function calculateSkillUp(player)
     local skillRank = player:getSkillRank(xi.skill.DIG)
     local maxSkill = utils.clamp((skillRank + 1) * 100, 0, 1000)
     local realSkill = player:getCharSkillLevel(xi.skill.DIG)
-    local increment = 1
+    local stacksNeeded = 3500
 
-    -- this probably needs correcting
-    local roll = math.random(0, 100)
+    if skillRank == 0 then
+        stacksNeeded = 75
+    elseif skillRank == 1 then
+        stacksNeeded = 200
+    elseif skillRank == 2 then
+        stacksNeeded = 400
+    elseif skillRank == 3 then
+        stacksNeeded = 600
+    elseif skillRank == 4 then
+        stacksNeeded = 900
+    elseif skillRank == 5 then
+        stacksNeeded = 1200
+    elseif skillRank == 6 then
+        stacksNeeded = 1500
+    elseif skillRank == 7 then
+        stacksNeeded = 2000
+    elseif skillRank == 8 then
+        stacksNeeded = 2500
+    elseif skillRank == 9 then
+        stacksNeeded = 3500
+    else
+        return
+    end
 
-    -- make sure our skill isn't capped
-    if realSkill < maxSkill then
-        -- can we skill up?
-        if roll <= 15 then
-            if (increment + realSkill) > maxSkill then
-                increment = maxSkill - realSkill
-            end
-
-            -- skill up!
-            player:setSkillLevel(xi.skill.DIG, realSkill + increment)
-
-            -- update the skill rank
-            -- Digging does not have test items, so increment rank once player hits 10.0, 20.0, .. 100.0
-            if (realSkill + increment) >= (skillRank * 100) + 100 then
-                player:setSkillRank(xi.skill.DIG, skillRank + 1)
-            end
+    if math.random(1, (stacksNeeded*12)/100) == 1 then
+        player:setSkillLevel(xi.skill.DIG, realSkill + 1)
+        if (realSkill + 1) >= (skillRank * 100) + 100 then
+            player:setSkillRank(xi.skill.DIG, skillRank + 1)
         end
     end
 end
