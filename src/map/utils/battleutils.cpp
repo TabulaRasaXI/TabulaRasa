@@ -64,6 +64,7 @@
 #include "../packets/pet_sync.h"
 #include "../packets/position.h"
 #include "../party.h"
+#include "../petskill.h"
 #include "../recast_container.h"
 #include "../spell.h"
 #include "../status_effect_container.h"
@@ -85,6 +86,7 @@ std::array<std::array<uint16, MAX_SKILLCHAIN_COUNT + 1>, MAX_SKILLCHAIN_LEVEL + 
 
 std::array<CWeaponSkill*, MAX_WEAPONSKILL_ID> g_PWeaponSkillList; // Holds all Weapon skills
 std::array<CMobSkill*, MAX_MOBSKILL_ID>       g_PMobSkillList;    // List of mob skills
+std::unordered_map<uint8, CPetSkill*>         g_PPetSkillList;    // List of pet skills
 
 std::array<std::list<CWeaponSkill*>, MAX_SKILLTYPE> g_PWeaponSkillsList;
 std::unordered_map<uint16, std::vector<uint16>>     g_PMobSkillLists; // List of mob skills defined from mob_skill_lists.sql
@@ -245,6 +247,50 @@ namespace battleutils
         }
     }
 
+    /************************************************************************
+     *                                                                       *
+     *  Load Pet Skills from database                                        *
+     *                                                                       *
+     ************************************************************************/
+
+    void LoadPetSkillsList()
+    {
+        // Load all pet skills
+        const char* specialQuery = "SELECT pet_skill_id, pet_anim_id, pet_skill_name, \
+        pet_skill_aoe, pet_skill_distance, pet_anim_time, pet_prepare_time, \
+        pet_valid_targets, pet_message, pet_skill_flag, pet_skill_param, pet_skill_finish_category, knockback, primary_sc, secondary_sc, tertiary_sc \
+        FROM pet_skills;";
+
+        int32 ret = sql->Query(specialQuery);
+
+        if (ret != SQL_ERROR && sql->NumRows() != 0)
+        {
+            while (sql->NextRow() == SQL_SUCCESS)
+            {
+                CPetSkill* PPetSkill = new CPetSkill(sql->GetIntData(0));
+                PPetSkill->setAnimationID(sql->GetIntData(1));
+                PPetSkill->setName(sql->GetStringData(2));
+                PPetSkill->setAoe(sql->GetIntData(3));
+                PPetSkill->setDistance(sql->GetFloatData(4));
+                PPetSkill->setAnimationTime(sql->GetIntData(5));
+                PPetSkill->setActivationTime(sql->GetIntData(6));
+                PPetSkill->setValidTargets(sql->GetIntData(7));
+                PPetSkill->setMsg(sql->GetIntData(8));
+                PPetSkill->setFlag(sql->GetIntData(9));
+                PPetSkill->setParam(sql->GetIntData(10));
+                PPetSkill->setSkillFinishCategory(sql->GetIntData(11));
+                PPetSkill->setKnockback(sql->GetUIntData(12));
+                PPetSkill->setPrimarySkillchain(sql->GetUIntData(13));
+                PPetSkill->setSecondarySkillchain(sql->GetUIntData(14));
+                PPetSkill->setTertiarySkillchain(sql->GetUIntData(15));
+                g_PPetSkillList[PPetSkill->getID()] = PPetSkill;
+
+                auto filename = fmt::format("./scripts/globals/abilities/pet/{}.lua", PPetSkill->getName());
+                luautils::CacheLuaObjectFromFile(filename);
+            }
+        }
+    }
+
     void LoadSkillChainDamageModifiers()
     {
         const char* fmtQuery = "SELECT chain_level, chain_count, initial_modifier, magic_burst_modifier \
@@ -287,6 +333,17 @@ namespace battleutils
         {
             delete mobskill;
             mobskill = nullptr;
+        }
+    }
+
+    /************************************************************************
+     *  Clear Pet Skills List                                                *
+     ************************************************************************/
+    void FreePetSkillList()
+    {
+        for (auto iter = g_PPetSkillList.begin(); iter != g_PPetSkillList.end();)
+        {
+            g_PPetSkillList.erase(iter);
         }
     }
 
@@ -420,6 +477,24 @@ namespace battleutils
             // False positive: this is CMobSkill*, so it's OK
             // cppcheck-suppress CastIntegerToAddressAtReturn
             return g_PMobSkillList[SkillID];
+        }
+        else
+        {
+            return nullptr;
+        }
+    }
+
+    /************************************************************************
+     *                                                                       *
+     *  Get Pet Skill by Id                                                  *
+     *                                                                       *
+     ************************************************************************/
+
+    CPetSkill* GetPetSkill(uint16 SkillID)
+    {
+        if (g_PPetSkillList.find(SkillID) != g_PPetSkillList.end())
+        {
+            return g_PPetSkillList[SkillID];
         }
         else
         {
@@ -662,6 +737,12 @@ namespace battleutils
 
         damage = std::clamp(damage, -99999, 99999);
 
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage %= 2;
+        }
+
         return damage;
     }
 
@@ -778,6 +859,12 @@ namespace battleutils
             else
             {
                 Action->spikesParam = static_cast<uint16>(spikesDamage);
+            }
+
+            // When set mob will only take 0 or 1 damage
+            if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+            {
+                spikesDamage = xirand::GetRandomNumber(1);
             }
 
             switch (static_cast<SPIKES>(Action->spikesEffect))
@@ -936,6 +1023,12 @@ namespace battleutils
                 Action->spikesParam = static_cast<uint16>(spikesDamage);
             }
 
+            // When set mob will only take 0 or 1 damage
+            if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+            {
+                spikesDamage = xirand::GetRandomNumber(1);
+            }
+
             PAttacker->takeDamage(spikesDamage, PDefender, ATTACK_TYPE::MAGICAL, GetSpikesDamageType(Action->spikesEffect));
 
             battleutils::DirtyExp(PAttacker, PDefender);
@@ -980,6 +1073,12 @@ namespace battleutils
                 else
                 {
                     Action->spikesParam = static_cast<uint16>(spikesDamage);
+                }
+
+                // When set mob will only take 0 or 1 damage
+                if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+                {
+                    spikesDamage = PDefender->GetLocalVar("DAMAGE_DEALT");
                 }
 
                 PAttacker->takeDamage(spikesDamage, PDefender, ATTACK_TYPE::MAGICAL, GetSpikesDamageType(spikesType));
@@ -1779,7 +1878,7 @@ namespace battleutils
                 base = 55;
                 break;
             case 2: // round
-            case 5: // aegis
+            case 5: // aegis and srivatsa
                 base = 50;
                 break;
             case 3: // kite
@@ -2047,6 +2146,12 @@ namespace battleutils
             HandleAfflatusMiseryDamage(PDefender, damage);
         }
         damage = std::clamp(damage, -99999, 99999);
+
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage %= 2;
+        }
 
         int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
         if (damage < 0)
@@ -2341,6 +2446,12 @@ namespace battleutils
             PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_HAGAKURE);
         }
 
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage %= 2;
+        }
+
         return damage;
     }
 
@@ -2352,6 +2463,12 @@ namespace battleutils
 
     int32 TakeSpellDamage(CBattleEntity* PDefender, CCharEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType)
     {
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage = PDefender->GetLocalVar("DAMAGE_DEALT");
+        }
+
         PDefender->takeDamage(damage, PAttacker, attackType, damageType);
 
         // Remove effects from damage
@@ -3909,6 +4026,12 @@ namespace battleutils
         }
         damage = std::clamp(damage, -99999, 99999);
 
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage %= 2;
+        }
+
         uint16 elementOffset = static_cast<uint16>(DAMAGE_TYPE::ELEMENTAL) + static_cast<uint16>(appliedEle);
         PDefender->takeDamage(damage, PAttacker, ATTACK_TYPE::SPECIAL,
                               appliedEle == ELEMENT_NONE ? DAMAGE_TYPE::NONE : static_cast<DAMAGE_TYPE>(elementOffset));
@@ -4971,6 +5094,12 @@ namespace battleutils
     void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)
     {
         TracyZoneScoped;
+
+        if (PDefender == nullptr || (PDefender && PDefender->objtype != ENTITYTYPE::TYPE_MOB)) // Do not try to claim anything but mobs (trusts, pets, players don't count)
+        {
+            return;
+        }
+
         if (auto* mob = dynamic_cast<CMobEntity*>(PDefender))
         {
             CBattleEntity* original = PAttacker;
@@ -5144,6 +5273,12 @@ namespace battleutils
             }
         }
 
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage %= 2;
+        }
+
         return damage;
     }
 
@@ -5199,6 +5334,12 @@ namespace battleutils
             }
         }
 
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage %= 2;
+        }
+
         // ShowDebug(CL_CYAN"MagicDmgTaken: Element = %d", element);
         return damage;
     }
@@ -5241,6 +5382,12 @@ namespace battleutils
             damage = HandleFanDance(PDefender, damage);
         }
 
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage = PDefender->GetLocalVar("DAMAGE_DEALT");
+        }
+
         return damage;
     }
 
@@ -5279,6 +5426,12 @@ namespace battleutils
             ConvertDmgToMP(PDefender, damage, IsCovered);
 
             damage = HandleFanDance(PDefender, damage);
+        }
+
+        // When set mob will only take 0 or 1 damage
+        if (PDefender->GetLocalVar("DAMAGE_NULL") != 0)
+        {
+            damage = PDefender->GetLocalVar("DAMAGE_DEALT");
         }
 
         return damage;
@@ -6152,7 +6305,7 @@ namespace battleutils
 
         if (PEntity->StatusEffectContainer->HasStatusEffect({ EFFECT_HASSO, EFFECT_SEIGAN }))
         {
-            cast = (uint32)(cast * 2.0f);
+            cast = (uint32)(cast * 1.5f);
         }
 
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)

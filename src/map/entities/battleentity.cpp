@@ -43,6 +43,7 @@
 #include "../roe.h"
 #include "../status_effect_container.h"
 #include "../utils/battleutils.h"
+#include "../utils/mobutils.h"
 #include "../utils/petutils.h"
 #include "../utils/puppetutils.h"
 #include "../weapon_skill.h"
@@ -400,6 +401,13 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 {
     TracyZoneScoped;
     uint16 dmg = 0;
+
+    if (objtype == TYPE_MOB)
+    {
+        auto* PMob = static_cast<CMobEntity*>(this);
+        return (mobutils::GetWeaponDamage(PMob, SLOT_RANGED) + getMod(Mod::RANGED_DMG_RATING)) * battleutils::GetRangedDistanceCorrection(this, distance(this->loc.p, this->GetBattleTarget()->loc.p));
+    }
+
     if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
     {
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
@@ -560,6 +568,12 @@ int32 CBattleEntity::addMP(int32 mp)
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/,
                                 DAMAGE_TYPE damageType /* = DAMAGE_NONE*/)
 {
+    if (this->GetLocalVar("DAMAGE_NULL") != 0)
+    {
+        amount %= 2;
+        this->SetLocalVar("DAMAGE_DEALT", amount);
+    }
+
     TracyZoneScoped;
     PLastAttacker                             = attacker;
     this->BattleHistory.lastHitTaken_atkType  = attackType;
