@@ -758,7 +758,6 @@ local function checkReqs(player, npc, bfid, registrant)
 
     -- Determine whether player meets battlefield requirements
     local req = (registrant == true) and registerReqs[bfid] or enterReqs[bfid]
-
     if not req or req() then
         return true
     else
@@ -954,6 +953,10 @@ end
 -----------------------------------
 
 xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
+    if player:isLevelSync() then
+        player:messageBasic(xi.msg.basic.STATUS_PREVENTS,0,0)
+        return false
+    end
     -- Validate trade
     local itemId
 
@@ -1023,6 +1026,10 @@ end
 -- onTrigger Action
 -----------------------------------
 xi.bcnm.onTrigger = function(player, npc)
+    if player:isLevelSync() then
+        player:messageBasic(xi.msg.basic.STATUS_PREVENTS,0,0)
+        return false
+    end
     -- Player has battlefield status effect. That means a battlefield is open OR the player is inside a battlefield.
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         -- Player is inside battlefield. Attempting to leave.
