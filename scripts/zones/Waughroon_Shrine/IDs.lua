@@ -20,6 +20,15 @@ zones[xi.zone.WAUGHROON_SHRINE] =
         CONQUEST_BASE                = 7057, -- Tallying conquest results...
         PARTY_MEMBERS_HAVE_FALLEN    = 7566, -- All party members have fallen in battle. Now leaving the battlefield.
         THE_PARTY_WILL_BE_REMOVED    = 7573, -- If all party members' HP are still zero after # minute[/s], the party will be removed from the battlefield.
+        BOMB_TIMER_60                = 7676, -- 60.........
+        BOMB_TIMER_30                = 7677, -- 30......
+        BOMB_TIMER_20                = 7678, -- 20...
+        BOMB_TIMER_10                = 7679, -- 10...
+        BOMB_TIMER_5                 = 7680, -- 5
+        BOMB_TIMER_4                 = 7681, -- 4
+        BOMB_TIMER_3                 = 7682, -- 3!
+        BOMB_TIMER_2                 = 7683, -- 2!!
+        BOMB_TIMER_1                 = 7684, -- 1!!!
         YOU_DECIDED_TO_SHOW_UP       = 7685, -- So, you decided to show up. Now it's time to see what you're really made of, heh heh heh.
         LOOKS_LIKE_YOU_WERENT_READY  = 7686, -- Looks like you weren't ready for me, were you? Now go home, wash your face, and come back when you think you've got what it takes.
         YOUVE_COME_A_LONG_WAY        = 7687, -- Hm. That was a mighty fine display of skill there, <name>. You've come a long way...
@@ -29,7 +38,7 @@ zones[xi.zone.WAUGHROON_SHRINE] =
         THAT_LL_HURT_IN_THE_MORNING  = 7691, -- Ungh... That'll hurt in the morning...
         ONE_TENTACLE_WOUNDED         = 7709, -- One of the sea creature's tentacles have been wounded.
         ALL_TENTACLES_WOUNDED        = 7710, -- All of the sea creature's tentacles have been wounded.
-        SCORPION_IS_STUNNED          = 7711, -- The platoon scorpion does not have enough energy to attack!
+        SCORPION_NO_ENERGY           = 7711, -- The platoon scorpion does not have enough energy to attack!
         SCORPION_IS_BOUND            = 7712, -- The platoon scorpion's legs are lodged in the rocks!
         PROMISE_ME_YOU_WONT_GO_DOWN  = 7728, -- Promise you won't go down too easy, okay?
         IM_JUST_GETTING_WARMED_UP    = 7729, -- Haha! I'm just getting warmed up!
@@ -85,6 +94,13 @@ zones[xi.zone.WAUGHROON_SHRINE] =
             17367284,
             17367285,
         },
+    },
+
+    royalJellyQueens =
+    {
+            17367173,
+            17367183,
+            17367193,
     },
 }
 

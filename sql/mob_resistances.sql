@@ -365,7 +365,7 @@ INSERT INTO `mob_resistances` VALUES (333,'Greater_Bird-PetSuzaku',0.75,1.25,1,0
 INSERT INTO `mob_resistances` VALUES (334,'Orc-NM',1,1,1,1,0,0,0,0,0,-2500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (335,'Maat',1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (336,'Tonberry-ZM4',1,1,1,1,0,-2500,0,0,0,0,5000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
-INSERT INTO `mob_resistances` VALUES (337,'Quadav-NM',1,1.25,1,1,-1250,0,0,0,0,0,-1250,1250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `mob_resistances` VALUES (337,'Quadav-NM',1,1,1,1,-1250,0,0,0,0,0,-1250,1250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (338,'Twitherym',1,1.25,1,1,0,-2500,1250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (339,'Chapuli',1,1,1,1,0,-2500,0,0,-2500,0,-1250,-2500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (340,'Mantid',1,1,1,1,0,-2500,0,0,-2500,0,-1250,-2500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
@@ -505,3 +505,7 @@ INSERT INTO `mob_resistances` VALUES (504,'Luopan',1,1,1,1,0,0,0,0,0,0,0,0,0,0,0
 INSERT INTO `mob_resistances` VALUES (505,'Fungi',1,1,1,1,0,0,-2500,1250,0,0,-2500,1250,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (506,'Meeble',1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 INSERT INTO `mob_resistances` VALUES (507,'MemoryReceptacleENM',2,2,2,2,5000,5000,5000,5000,5000,5000,5000,5000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `mob_resistances` VALUES (508,'Annihilated_Anthony',0.25,0.75,0.5,0.5,-3000,-1500,-2500,-2500,-2500,-2500,-3000,-1500,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `mob_resistances` VALUES (509,'Shredded_Samson',1.25,0.75,0.25,0.25,-2500,5000,0,0,0,0,-2500,5000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `mob_resistances` VALUES (510,'Punctured_Percy',0.75,1.25,0.5,0.5,-2500,5000,0,0,0,0,-2500,5000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+INSERT INTO `mob_resistances` VALUES (511,'Mauled_Murdock',0.75,0.75,1.25,1.25,-2500,5000,0,0,0,0,-2500,5000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
