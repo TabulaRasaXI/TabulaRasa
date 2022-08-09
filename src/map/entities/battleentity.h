@@ -22,6 +22,7 @@
 #ifndef _BATTLEENTITY_H
 #define _BATTLEENTITY_H
 
+#include <mutex>
 #include <set>
 #include <unordered_map>
 #include <vector>
@@ -563,6 +564,8 @@ public:
 
     DAMAGE_TYPE m_dmgType;
 
+    std::mutex scMutex;
+
     bool isDead(); // проверяем, мертва ли сущность
     bool isAlive();
     bool isInAssault();
@@ -767,6 +770,10 @@ public:
     std::unique_ptr<CStatusEffectContainer> StatusEffectContainer;
     std::unique_ptr<CRecastContainer>       PRecastContainer;
     std::unique_ptr<CNotorietyContainer>    PNotorietyContainer;
+
+    int16              CalculateMSFromSources(); // Used to calculate movement speed when adding or removing items with movement speed modifiers
+    std::vector<int16> m_MSItemValues;           // Tracking movement speed items to prevent stacking values
+    std::vector<int16> m_MSNonItemValues;        // Tracking movement speed from non-item sources
 
 private:
     JOBTYPE    m_mjob; // главная профессия

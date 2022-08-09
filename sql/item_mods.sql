@@ -12647,10 +12647,11 @@ INSERT INTO `item_mods` VALUES (12516,96,2);  -- SOULEATER_EFFECT: 2
 INSERT INTO `item_mods` VALUES (12516,116,5); -- DARK: 5
 
 -- Beast Helm
-INSERT INTO `item_mods` VALUES (12517,1,22);  -- DEF: 22
-INSERT INTO `item_mods` VALUES (12517,2,15);  -- HP: 15
-INSERT INTO `item_mods` VALUES (12517,12,5);  -- INT: 5
-INSERT INTO `item_mods` VALUES (12517,360,4); -- CHARM_TIME: 4
+INSERT INTO `item_mods` VALUES (12517,1,22);   -- DEF: 22
+INSERT INTO `item_mods` VALUES (12517,2,15);   -- HP: 15
+INSERT INTO `item_mods` VALUES (12517,12,5);   -- INT: 5
+INSERT INTO `item_mods` VALUES (12517,360,4);  -- CHARM_TIME: 4
+INSERT INTO `item_mods` VALUES (12517,1166,5); -- Enhances Tame Success Rate
 
 -- Hunters Beret
 INSERT INTO `item_mods` VALUES (12518,1,21);  -- DEF: 21
@@ -21158,14 +21159,16 @@ INSERT INTO `item_mods` VALUES (14318,27,2);   -- ENMITY: 2
 INSERT INTO `item_mods` VALUES (14318,361,25); -- JUMP_TP_BONUS: 25
 
 -- Bison Kecks
-INSERT INTO `item_mods` VALUES (14319,1,29);  -- DEF: 29
-INSERT INTO `item_mods` VALUES (14319,5,15);  -- MP: 15
-INSERT INTO `item_mods` VALUES (14319,27,-2); -- ENMITY: -2
+INSERT INTO `item_mods` VALUES (14319,1,29);   -- DEF: 29
+INSERT INTO `item_mods` VALUES (14319,5,15);   -- MP: 15
+INSERT INTO `item_mods` VALUES (14319,27,-2);  -- ENMITY: -2
+INSERT INTO `item_mods` VALUES (14319,1166,5); -- Enhances Tame Success Rate
 
 -- Braves Kecks
-INSERT INTO `item_mods` VALUES (14320,1,30);  -- DEF: 30
-INSERT INTO `item_mods` VALUES (14320,5,16);  -- MP: 16
-INSERT INTO `item_mods` VALUES (14320,27,-3); -- ENMITY: -3
+INSERT INTO `item_mods` VALUES (14320,1,30);   -- DEF: 30
+INSERT INTO `item_mods` VALUES (14320,5,16);   -- MP: 16
+INSERT INTO `item_mods` VALUES (14320,27,-3);  -- ENMITY: -3
+INSERT INTO `item_mods` VALUES (14320,1166,5); -- Enhances Tame Success Rate
 
 -- Igqira Lappas
 INSERT INTO `item_mods` VALUES (14321,1,30);   -- DEF: 30
@@ -26099,11 +26102,12 @@ INSERT INTO `item_mods` VALUES (15232,96,2);  -- SOULEATER_EFFECT: 2
 INSERT INTO `item_mods` VALUES (15232,116,5); -- DARK: 5
 
 -- Beast Helm +1
-INSERT INTO `item_mods` VALUES (15233,1,26);  -- DEF: 26
-INSERT INTO `item_mods` VALUES (15233,2,15);  -- HP: 15
-INSERT INTO `item_mods` VALUES (15233,12,8);  -- INT: 8
-INSERT INTO `item_mods` VALUES (15233,13,8);  -- MND: 8
-INSERT INTO `item_mods` VALUES (15233,360,4); -- CHARM_TIME: 4
+INSERT INTO `item_mods` VALUES (15233,1,26);   -- DEF: 26
+INSERT INTO `item_mods` VALUES (15233,2,15);   -- HP: 15
+INSERT INTO `item_mods` VALUES (15233,12,8);   -- INT: 8
+INSERT INTO `item_mods` VALUES (15233,13,8);   -- MND: 8
+INSERT INTO `item_mods` VALUES (15233,360,4);  -- CHARM_TIME: 4
+INSERT INTO `item_mods` VALUES (15233,1182,5); -- Enhances Tame Success Rate
 
 -- Choral Roundlet +1
 INSERT INTO `item_mods` VALUES (15234,1,19);  -- DEF: 19
@@ -28102,16 +28106,18 @@ INSERT INTO `item_mods` VALUES (15644,12,1); -- INT: 1
 INSERT INTO `item_mods` VALUES (15644,13,1); -- MND: 1
 
 -- Khimaira Kecks
-INSERT INTO `item_mods` VALUES (15645,1,30);  -- DEF: 30
-INSERT INTO `item_mods` VALUES (15645,2,15);  -- HP: 15
-INSERT INTO `item_mods` VALUES (15645,5,15);  -- MP: 15
-INSERT INTO `item_mods` VALUES (15645,27,-4); -- ENMITY: -4
+INSERT INTO `item_mods` VALUES (15645,1,30);   -- DEF: 30
+INSERT INTO `item_mods` VALUES (15645,2,15);   -- HP: 15
+INSERT INTO `item_mods` VALUES (15645,5,15);   -- MP: 15
+INSERT INTO `item_mods` VALUES (15645,27,-4);  -- ENMITY: -4
+INSERT INTO `item_mods` VALUES (15645,1166,5); -- Enhances Tame Success Rate
 
 -- Stout Kecks
-INSERT INTO `item_mods` VALUES (15646,1,31);  -- DEF: 31
-INSERT INTO `item_mods` VALUES (15646,2,16);  -- HP: 16
-INSERT INTO `item_mods` VALUES (15646,5,16);  -- MP: 16
-INSERT INTO `item_mods` VALUES (15646,27,-5); -- ENMITY: -5
+INSERT INTO `item_mods` VALUES (15646,1,31);   -- DEF: 31
+INSERT INTO `item_mods` VALUES (15646,2,16);   -- HP: 16
+INSERT INTO `item_mods` VALUES (15646,5,16);   -- MP: 16
+INSERT INTO `item_mods` VALUES (15646,27,-5);  -- ENMITY: -5
+INSERT INTO `item_mods` VALUES (15646,1166,5); -- Enhances Tame Success Rate
 
 -- Askar Dirs
 INSERT INTO `item_mods` VALUES (15647,1,32); -- DEF: 32
@@ -34207,8 +34213,14 @@ INSERT INTO `item_mods` VALUES (17565,2,1); -- HP: 1
 INSERT INTO `item_mods` VALUES (17565,5,1); -- MP: 1
 
 -- Treat Staff
-INSERT INTO `item_mods` VALUES (17566,2,5); -- HP: 5
-INSERT INTO `item_mods` VALUES (17566,5,5); -- MP: 5
+INSERT INTO `item_mods` VALUES (17566,2,5);     -- HP: 5
+INSERT INTO `item_mods` VALUES (17566,5,5);     -- MP: 5
+INSERT INTO `item_mods` VALUES (17566,431,14);  -- ITEM_ADDEFFECT_TYPE: 14
+INSERT INTO `item_mods` VALUES (17566,499,12);  -- ITEM_SUBEFFECT: 12
+INSERT INTO `item_mods` VALUES (17566,501,15);  -- ITEM_ADDEFFECT_CHANCE: 15
+INSERT INTO `item_mods` VALUES (17566,951,797); -- ITEM_ADDEFFECT_STATUS: 797
+INSERT INTO `item_mods` VALUES (17566,952,1);   -- ITEM_ADDEFFECT_POWER: 1
+INSERT INTO `item_mods` VALUES (17566,953,2);   -- ITEM_ADDEFFECT_DURATION: 2
 
 -- Kirins Pole
 INSERT INTO `item_mods` VALUES (17567,2,20);  -- HP: 20
@@ -34408,7 +34420,12 @@ INSERT INTO `item_mods` VALUES (17621,10,3); -- VIT: 3
 INSERT INTO `item_mods` VALUES (17621,20,9); -- WATER_RES: 9
 
 -- Buccaneers Knife
-INSERT INTO `item_mods` VALUES (17622,20,7); -- WATER_RES: 7
+INSERT INTO `item_mods` VALUES (17622,20,7);   -- WATER_RES: 7
+INSERT INTO `item_mods` VALUES (17622,431,13);  -- ITEM_ADDEFFECT_TYPE:13
+INSERT INTO `item_mods` VALUES (17622,499,6); -- ITEM_SUBEFFECT: 6
+INSERT INTO `item_mods` VALUES (17622,500,40); -- ITEM_ADDEFFECT_DMG: 40
+INSERT INTO `item_mods` VALUES (17622,501,90); -- ITEM_ADDEFFECT_CHANCE: 90
+INSERT INTO `item_mods` VALUES (17622,950,3);  -- ITEM_ADDEFFECT_ELEMENT: 3
 
 -- Bartholomews Knife
 INSERT INTO `item_mods` VALUES (17623,11,2);  -- AGI: 2
@@ -37151,7 +37168,7 @@ INSERT INTO `item_mods` VALUES (18606,30,3); -- MACC: 3
 
 -- Ceres Spica
 INSERT INTO `item_mods` VALUES (18607,5,8);   -- MP: 8
-INSERT INTO `item_mods` VALUES (18607,374,1); -- CURE_POTENCY: 1
+INSERT INTO `item_mods` VALUES (18607,374,6); -- CURE_POTENCY: 6
 
 -- Atesh Pole
 INSERT INTO `item_mods` VALUES (18608,2,5);   -- HP: 5

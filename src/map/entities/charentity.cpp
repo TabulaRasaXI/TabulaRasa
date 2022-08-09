@@ -58,6 +58,7 @@
 
 #include "../ability.h"
 #include "../attack.h"
+#include "../battlefield.h"
 #include "../char_recast_container.h"
 #include "../conquest_system.h"
 #include "../item_container.h"
@@ -1104,7 +1105,12 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                     }
                 }
 
-                if (actionTarget.reaction == REACTION::HIT)
+                // See battleentity.h for REACTION class
+                // On retail, weaponskills will contain 0x08, 0x10 (HIT, ABILITY) on hit and may include the following:
+                // 0x01, 0x02, 0x04 (MISS, GUARDED, BLOCK)
+                // TODO: refactor this so lua returns the number of hits so we don't have to check the reaction bits.
+                // check if reaction bits don't contain miss (this WS was *fully* evaded or *fully* parried) (actionTarget.reaction & 0x01 == 0)
+                if ((actionTarget.reaction & REACTION::MISS) == REACTION::NONE)
                 {
                     int wspoints = settings::get<uint8>("map.WS_POINTS_BASE");
                     if (PWeaponSkill->getPrimarySkillchain() != 0)
@@ -1216,13 +1222,6 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             }
         }
 
-        if (battleutils::IsParalyzed(this))
-        {
-            // display paralyzed
-            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
-            return;
-        }
-
         // get any available merit recast reduction
         uint8 meritRecastReduction = 0;
 
@@ -1270,12 +1269,15 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
 
         // remove invisible if aggressive
-        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT)
+        if (PAbility->getID() != ABILITY_TAME && PAbility->getID() != ABILITY_FIGHT && PAbility->getID() != ABILITY_DEPLOY)
         {
             if (PAbility->getValidTarget() & TARGET_ENEMY)
             {
                 // aggressive action
-                StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+                if (PAbility->getID() != ABILITY_ASSAULT)
+                    StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+                else
+                    StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_INVISIBLE);
             }
             else if (PAbility->getID() != ABILITY_TRICK_ATTACK)
             {
@@ -1293,6 +1295,15 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 // The Bison/Brave's Warbonnet & Khimaira/Stout Bonnet reduces recast time by 10 seconds.
                 action.recast -= 10; // remove 10 seconds
             }
+        }
+
+        if (battleutils::IsParalyzed(this) && !(PAbility->getRecastTime() == 7200)) // If Paralyzed and Not JSA (7200s = 2Hr)
+        {
+            // display paralyzed
+            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+            pushPacket(new CCharRecastPacket(this));
+            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+            return;
         }
 
         action.id         = this->id;
@@ -1573,7 +1584,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             else
             {
                 bool  isCritical = xirand::GetRandomNumber(100) < battleutils::GetRangedCritHitRate(this, PTarget);
-                float pdif       = battleutils::GetRangedDamageRatio(this, PTarget, isCritical);
+                float pdif       = battleutils::GetRangedDamageRatio(this, PTarget, isCritical, 0);
 
                 if (isCritical)
                 {
@@ -1741,6 +1752,11 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
         return true;
     }
 
+    if (PBattleTarget->isInDynamis())
+    {
+        return true;
+    }
+
     bool found = false;
 
     // clang-format off
@@ -1845,23 +1861,26 @@ void CCharEntity::OnRaise()
 
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CActionPacket(action));
 
-        uint8  mLevel  = (m_LevelRestriction != 0 && m_LevelRestriction < GetMLevel()) ? m_LevelRestriction : GetMLevel();
-        uint16 expLost = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
+        uint8 mLevel = this->m_raiseLevel;
 
-        uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
-
-        // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
-        if (xpNeededToLevel < expLost && (m_LevelRestriction == 0 || GetMLevel() < m_LevelRestriction))
+        if (mLevel > 0)
         {
-            // Player probably leveled down when they died.  Give they xp for the next level.
-            expLost = GetMLevel() <= 67 ? (charutils::GetExpNEXTLevel(jobs.job[GetMJob()] + 1) * 8) / 100 : 2400;
-        }
+            uint16 expLost         = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
+            uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
 
-        uint16 xpReturned = (uint16)(ceil(expLost * ratioReturned));
+            // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
+            if (xpNeededToLevel < expLost && (m_LevelRestriction == 0 || GetMLevel() < m_LevelRestriction))
+            {
+                // Player probably leveled down when they died.  Give they xp for the next level.
+                expLost = GetMLevel() <= 67 ? (charutils::GetExpNEXTLevel(jobs.job[GetMJob()] + 1) * 8) / 100 : 2400;
+            }
 
-        if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
-        {
-            charutils::AddExperiencePoints(true, this, this, xpReturned);
+            uint16 xpReturned = (uint16)(ceil(expLost * ratioReturned));
+
+            if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
+            {
+                charutils::AddExperiencePoints(true, this, this, xpReturned);
+            }
         }
 
         // If Arise was used then apply a reraise 3 effect on the target
@@ -1880,24 +1899,25 @@ void CCharEntity::OnRaise()
 void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 {
     TracyZoneScoped;
-    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
-    auto* PItem   = state.GetItem();
-
-    if (battleutils::IsParalyzed(this))
-    {
-        // display paralyzed
-        // TODO: Make paralyze eat the item or charge when proced.
-        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
-        return;
-    }
+    auto* PTarget          = static_cast<CBattleEntity*>(state.GetTarget());
+    auto* PItem            = state.GetItem();
+    bool  isParalyzed      = battleutils::IsParalyzed(this);
+    bool  itemLoss         = lua["xi"]["settings"]["map"]["ITEM_PARALYSIS_LOSS"].get<bool>();
+    bool  scrollProtection = lua["xi"]["settings"]["map"]["ITEM_PARALYSIS_SCROLL_PROTECTION"].get<bool>();
+    // clang-format off
+    bool isScroll = (PItem->getID() >= 4606 && PItem->getID() <= 4638) || PItem->getID() == 4641 ||
+                    (PItem->getID() >= 4646 && PItem->getID() <= 4647) || (PItem->getID() >= 4651 && PItem->getID() <= 4851) ||
+                    (PItem->getID() >= 4853 && PItem->getID() <= 4863) || (PItem->getID() >= 4866 && PItem->getID() <= 4958) ||
+                    (PItem->getID() >= 4961 && PItem->getID() <= 5106) || (PItem->getID() >= 6569 && PItem->getID() <= 6571);
+    // clang-format on
 
     // TODO: I'm sure this is supposed to be in the action packet... (animation, message)
     if (PItem->getAoE())
     {
         // clang-format off
-        PTarget->ForParty([this, PItem, PTarget](CBattleEntity* PMember)
+        PTarget->ForParty([this, PItem, PTarget, isParalyzed](CBattleEntity* PMember)
         {
-            if (!PMember->isDead() && distance(PTarget->loc.p, PMember->loc.p) <= 10)
+            if (!PMember->isDead() && distance(PTarget->loc.p, PMember->loc.p) <= 10 && !isParalyzed)
             {
                 luautils::OnItemUse(this, PMember, PItem);
             }
@@ -1906,7 +1926,10 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     }
     else
     {
-        luautils::OnItemUse(this, PTarget, PItem);
+        if (!isParalyzed)
+        {
+            luautils::OnItemUse(this, PTarget, PItem);
+        }
     }
 
     action.id         = this->id;
@@ -1918,6 +1941,22 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 
     actionTarget_t& actionTarget = actionList.getNewActionTarget();
     actionTarget.animation       = PItem->getAnimationID();
+
+    if (isParalyzed)
+    {
+        actionTarget.reaction   = REACTION::NONE;
+        actionTarget.speceffect = SPECEFFECT::NONE;
+        // actionTarget.animation  = 54; // TODO: Fix Animation for Paralysis
+        actionTarget.param     = 0;
+        actionTarget.messageID = 0;
+        actionTarget.knockback = 0;
+    }
+
+    if ((isParalyzed && scrollProtection && isScroll && itemLoss) || (isParalyzed && !itemLoss)) // Become paralyzed and stop executing.
+    {
+        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+        return;
+    }
 
     if (PItem->isType(ITEM_EQUIPMENT))
     {
@@ -1941,10 +1980,20 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
             this->PRecastContainer->Add(RECAST_ITEM, PItem->getSlotID() << 8 | PItem->getLocationID(),
                                         PItem->getReuseTime() / 1000); // add recast timer to Recast List from any bag
         }
+
+        if (isParalyzed)
+        {
+            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+        }
     }
     else // разблокируем все предметы, кроме экипирвоки
     {
         PItem->setSubType(ITEM_UNLOCKED);
+
+        if (isParalyzed)
+        {
+            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+        }
 
         charutils::UpdateItem(this, PItem->getLocationID(), PItem->getSlotID(), -1, true);
     }
@@ -2007,10 +2056,24 @@ void CCharEntity::Die()
     // influence for conquest system
     conquest::LoseInfluencePoints(this);
 
-    if (GetLocalVar("MijinGakure") == 0)
+    // we lose xp if we didn't use mijin gakure AND (we aren't in a battlefield OR battlefiled rules say we lose xp
+    if (GetLocalVar("MijinGakure") == 0 && (!PBattlefield || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP)))
     {
         float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
+
+        if (m_LevelRestriction != 0 && m_LevelRestriction < GetMLevel())
+        {
+            this->m_raiseLevel = this->m_LevelRestriction;
+        }
+        else
+        {
+            this->m_raiseLevel = this->GetMLevel();
+        }
+    }
+    else
+    {
+        this->m_raiseLevel = 0;
     }
 
     luautils::OnPlayerDeath(this);
