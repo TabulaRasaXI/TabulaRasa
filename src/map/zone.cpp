@@ -108,6 +108,19 @@ int32 zone_update_weather(time_point tick, CTaskMgr::CTask* PTask)
     return 0;
 }
 
+const uint16 CZone::ReducedVerticalAggroZones[] = {
+    ZONE_KING_RANPERRES_TOMB,
+    ZONE_BEADEAUX,
+    ZONE_CASTLE_OZTROJA,
+    ZONE_GUSGEN_MINES,
+    ZONE_SHIP_BOUND_FOR_MHAURA,
+    ZONE_SHIP_BOUND_FOR_MHAURA_PIRATES,
+    ZONE_SHIP_BOUND_FOR_SELBINA,
+    ZONE_SHIP_BOUND_FOR_SELBINA_PIRATES,
+    ZONE_SILVER_SEA_ROUTE_TO_AL_ZAHBI,
+    ZONE_SILVER_SEA_ROUTE_TO_NASHMAU
+};
+
 /************************************************************************
  *                                                                       *
  *  Class CZone                                                          *
@@ -133,10 +146,10 @@ CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID)
     m_zoneEntities       = new CZoneEntities(this);
     m_CampaignHandler    = new CCampaignHandler(this);
 
-    m_ZoneDirection      = 0;
-    m_ZoneAnimation      = 0;
-    m_ZoneAnimStartTime  = 0;
-    m_ZoneAnimLength     = 0;
+    m_ZoneDirection     = 0;
+    m_ZoneAnimation     = 0;
+    m_ZoneAnimStartTime = 0;
+    m_ZoneAnimLength    = 0;
 
     // settings should load first
     LoadZoneSettings();
@@ -148,6 +161,8 @@ CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID)
 
 CZone::~CZone()
 {
+    delete m_TreasurePool;
+    delete m_CampaignHandler;
     delete m_zoneEntities;
 }
 
@@ -432,6 +447,7 @@ void CZone::LoadNavMesh()
 
     if (!m_navMesh->load(file))
     {
+        DebugNavmesh("CZone::LoadNavMesh: Cannot load navmesh file (%s)", file);
         delete m_navMesh;
         m_navMesh = nullptr;
     }
@@ -921,6 +937,11 @@ void CZone::ForEachNpc(std::function<void(CNpcEntity*)> func)
     {
         func((CNpcEntity*)PNpc.second);
     }
+}
+
+bool CZone::HasReducedVerticalAggro()
+{
+    return std::find(std::begin(ReducedVerticalAggroZones), std::end(ReducedVerticalAggroZones), this->m_zoneID) != std::end(ReducedVerticalAggroZones);
 }
 
 void CZone::createZoneTimer()

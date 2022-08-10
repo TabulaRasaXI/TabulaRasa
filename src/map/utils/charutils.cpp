@@ -2215,6 +2215,12 @@ namespace charutils
                 }
                 break;
             case SLOT_RANGED:
+                if (hasValidStyle(PChar, PItem, appearance))
+                    PChar->mainlook.ranged = appearanceModel;
+                else
+                    PChar->mainlook.ranged = PChar->look.ranged;
+                break;
+
             case SLOT_AMMO:
                 // Appears as though these aren't implemented by SE.
                 break;
@@ -2624,34 +2630,43 @@ namespace charutils
 
             for (auto PAbility : AbilitiesList)
             {
-                if (PPet->GetMLevel() >= PAbility->getLevel() && PetID >= 8 && PetID <= 20 && CheckAbilityAddtype(PChar, PAbility))
+                if (PPet->GetMLevel() >= PAbility->getLevel() && ((PetID >= PETID_CARBUNCLE && PetID <= PETID_CAIT_SITH) || PetID == PETID_SIREN) && CheckAbilityAddtype(PChar, PAbility))
                 {
-                    if (PetID == 8)
+                    if (PetID == PETID_CARBUNCLE)
                     {
                         if (PAbility->getID() >= ABILITY_HEALING_RUBY && PAbility->getID() <= ABILITY_SOOTHING_RUBY)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID >= 9 && PetID <= 15)
+                    else if (PetID >= PETID_FENRIR && PetID <= PETID_RAMUH)
                     {
                         if (PAbility->getID() >= (ABILITY_HEALING_RUBY + ((PetID - 8) * 16)) && PAbility->getID() < (ABILITY_HEALING_RUBY + ((PetID - 7) * 16)))
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID == 16)
+                    else if (PetID == PETID_DIABOLOS)
                     {
                         if (PAbility->getID() >= ABILITY_CAMISADO && PAbility->getID() <= ABILITY_PERFECT_DEFENSE)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
                         }
                     }
-                    else if (PetID == 20)
+                    else if (PetID == PETID_CAIT_SITH)
                     {
                         if (PAbility->getID() > ABILITY_SOOTHING_RUBY && PAbility->getID() <= ABILITY_MOONLIT_CHARGE)
                         {
                             addPetAbility(PChar, PAbility->getID() - ABILITY_HEALING_RUBY);
+                        }
+                    }
+                    else if (PetID == PETID_SIREN)
+                    {
+                        if (PAbility->getID() >= ABILITY_CLARSACH_CALL && PAbility->getID() <= ABILITY_HYSTERIC_ASSAULT)
+                        {
+                            uint16 sirenAbilltyPacketOffset = 0x1C0;
+                            uint16 sirenAbilityPacketBit    = (PAbility->getID() - ABILITY_CLARSACH_CALL) + sirenAbilltyPacketOffset;
+                            addPetAbility(PChar, sirenAbilityPacketBit);
                         }
                     }
                 }
@@ -3877,6 +3892,62 @@ namespace charutils
                     break;
                 }
                 tries++;
+            }
+        }
+    }
+
+    double GetPlayerShareMultiplier(uint16 membersInZone, bool regionBuff)
+    {
+        if (settings::get<bool>("main.DISABLE_PARTY_EXP_PENALTY"))
+        {
+            return 1.00;
+        }
+
+        // Alliance share
+        if (membersInZone > 6)
+        {
+            return 1.8f / membersInZone;
+        }
+
+        // Party share
+        if (regionBuff)
+        {
+            switch (membersInZone)
+            {
+                case 1:
+                    return 1.00;
+                case 2:
+                    return 0.75;
+                case 3:
+                    return 0.55;
+                case 4:
+                    return 0.45;
+                case 5:
+                    return 0.39;
+                case 6:
+                    return 0.35;
+                default:
+                    return 1.8 / membersInZone;
+            }
+        }
+        else
+        {
+            switch (membersInZone)
+            {
+                case 1:
+                    return 1.00;
+                case 2:
+                    return 0.60;
+                case 3:
+                    return 0.45;
+                case 4:
+                    return 0.40;
+                case 5:
+                    return 0.37;
+                case 6:
+                    return 0.35;
+                default:
+                    return 1.8 / membersInZone;
             }
         }
     }
@@ -6234,7 +6305,7 @@ namespace charutils
                                 "WHERE charid = %u;";
 
             sql->Query(Query, PChar->loc.destination,
-                       (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->loc.prevzone : PChar->getZone(), PChar->loc.p.rotation,
+                       (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->getZone() : PChar->loc.prevzone, PChar->loc.p.rotation,
                        PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->m_moghouseID, PChar->loc.boundary, PChar->id);
         }
         else

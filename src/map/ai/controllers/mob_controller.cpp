@@ -34,6 +34,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../ai_container.h"
 #include "../helpers/targetfind.h"
 #include "../states/ability_state.h"
+#include "../states/inactive_state.h"
 #include "../states/magic_state.h"
 #include "../states/weaponskill_state.h"
 
@@ -246,6 +247,18 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return false;
     }
 
+    float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
+
+    if (PMob->m_Family != 6 && verticalDistance > 8.0f)
+    {
+        return false;
+    }
+
+    if (PTarget->loc.zone->HasReducedVerticalAggro() && verticalDistance > 3.5f)
+    {
+        return false;
+    }
+
     auto detects         = PMob->m_Detects;
     auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
 
@@ -366,7 +379,7 @@ bool CMobController::MobSkill(int wsList)
 
         PActionTarget = luautils::OnMobSkillTarget(PActionTarget, PMob, PMobSkill);
 
-        if (PActionTarget && !PMobSkill->isTwoHour() && luautils::OnMobSkillCheck(PActionTarget, PMob, PMobSkill) == 0) // A script says that the move in question is valid
+        if (PActionTarget && !PMobSkill->isAstralFlow() && luautils::OnMobSkillCheck(PActionTarget, PMob, PMobSkill) == 0) // A script says that the move in question is valid
         {
             float currentDistance = distance(PMob->loc.p, PActionTarget->loc.p);
 
@@ -480,6 +493,7 @@ bool CMobController::TryCastSpell()
         return true;
     }
 
+    TapDeaggroTime();
     return false;
 }
 
@@ -502,6 +516,7 @@ bool CMobController::CanCastSpells()
     // check for spell blockers e.g. silence
     if (PMob->StatusEffectContainer->HasStatusEffect({ EFFECT_SILENCE, EFFECT_MUTE }))
     {
+        TapDeaggroTime();
         return false;
     }
 
@@ -597,10 +612,27 @@ void CMobController::DoCombatTick(time_point tick)
 
     TryLink();
 
+    if (PMob == nullptr || PTarget == nullptr)
+    {
+        return;
+    }
+
     float currentDistance = distance(PMob->loc.p, PTarget->loc.p);
 
     PMob->PAI->EventHandler.triggerListener("COMBAT_TICK", CLuaBaseEntity(PMob));
     luautils::OnMobFight(PMob, PTarget);
+
+    // handle pet behaviour on the targets behalf (faster than in ai_pet_dummy)
+    // Avatars defend masters by attacking mobs if the avatar isn't attacking anything currently (bodyguard behaviour)
+    //
+    // This change allows pets to auto-engage mobs to allow summoner kiting without the mob having to swing at the player.
+    if (PTarget->PPet != nullptr && PTarget->PPet->GetBattleTargetID() == 0)
+    {
+        if (PTarget->PPet->objtype == TYPE_PET && ((CPetEntity*)PTarget->PPet)->getPetType() == PET_TYPE::AVATAR)
+        {
+            petutils::AttackTarget(PTarget, PMob);
+        }
+    }
 
     // Try to spellcast (this is done first so things like Chainspell spam is prioritised over TP moves etc.
     if (IsSpecialSkillReady(currentDistance) && TrySpecialSkill())
@@ -622,6 +654,11 @@ void CMobController::DoCombatTick(time_point tick)
 void CMobController::FaceTarget(uint16 targid)
 {
     TracyZoneScoped;
+    if (PMob->PAI->IsCurrentState<CInactiveState>())
+    {
+        return;
+    }
+
     CBaseEntity* targ = PTarget;
     if (targid != 0 && ((targ && targid != targ->targid) || !targ))
     {
@@ -1104,6 +1141,11 @@ bool CMobController::Engage(uint16 targid)
         {
             m_LastMagicTime =
                 m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL) + xirand::GetRandomNumber(PMob->getBigMobMod(MOBMOD_MAGIC_DELAY)));
+        }
+        else if (PMob->getBigMobMod(MOBMOD_MAGIC_COOL) != 0)
+        {
+            m_LastMagicTime =
+                m_Tick - std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_MAGIC_COOL));
         }
 
         if (PMob->getBigMobMod(MOBMOD_SPECIAL_DELAY) != 0)

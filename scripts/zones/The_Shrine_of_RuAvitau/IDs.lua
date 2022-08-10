@@ -67,9 +67,9 @@ zones[xi.zone.THE_SHRINE_OF_RUAVITAU] =
             [18] = "y", [19] = "b",
         },
         OLLAS_QM        = 17506692,
-        CASKET_BASE     = 17506695,
         DOOR_OFFSET     = 17506718,
         MONOLITH_OFFSET = 17506741,
+        KIRIN_QM        = 17506693,
     },
 }
 

@@ -18,6 +18,14 @@ xi.settings.map =
     MAX_TIME_LASTUPDATE = 60,
 
     -- --------------------------------
+    -- SQL settings
+    -- --------------------------------
+
+    -- Used by serverutils::PersistServerVar() for the maximum attempts to retry verification
+    -- of a written Server Variable.
+    SETVAR_RETRY_MAX = 3,
+
+    -- --------------------------------
     -- Game settings
     -- --------------------------------
 
@@ -228,4 +236,8 @@ xi.settings.map =
     --  Gobbie Mystery Box settings
     DAILY_TALLY_AMOUNT = 10,
     DAILY_TALLY_LIMIT  = 50000,
+
+    -- Paralysis Settings
+    ITEM_PARALYSIS_LOSS              = true, -- Allow items to be put on recast or deleted when used during a paralysis tick.
+    ITEM_PARALYSIS_SCROLL_PROTECTION = false, -- Stops scrolls from being deleted if a paralysis tick occurs.
 }

@@ -115,7 +115,7 @@ INSERT INTO `bcnm_info` VALUES (129,163,'jungle_boogymen','nobody',0,1800,1800,6
 INSERT INTO `bcnm_info` VALUES (130,163,'amphibian_assault','nobody',0,1800,1800,60,6,130,15,0);
 INSERT INTO `bcnm_info` VALUES (131,163,'project_shantottofication','nobody',0,1800,1800,99,6,0,5,0);
 INSERT INTO `bcnm_info` VALUES (132,163,'whom_wilt_thou_call','nobody',0,1800,1800,0,6,132,15,0);
-INSERT INTO `bcnm_info` VALUES (160,165,'shadow_lord_battle','nobody',0,1800,1800,50,6,0,5,1);
+INSERT INTO `bcnm_info` VALUES (160,165,'shadow_lord_battle','nobody',0,1800,1800,99,6,0,5,1);
 INSERT INTO `bcnm_info` VALUES (161,165,'where_two_paths_converge','nobody',0,1800,1800,75,6,0,5,1);
 INSERT INTO `bcnm_info` VALUES (162,165,'kindred_spirits','nobody',0,1800,1800,60,6,162,15,0);
 INSERT INTO `bcnm_info` VALUES (163,165,'survival_of_the_wisest','nobody',0,600,600,99,1,0,6,0);
@@ -209,7 +209,7 @@ INSERT INTO `bcnm_info` VALUES (643,6,'brothers','nobody',0,1800,1800,75,18,643,
 INSERT INTO `bcnm_info` VALUES (644,6,'holy_cow','nobody',0,1800,1800,75,18,644,15,0);
 INSERT INTO `bcnm_info` VALUES (672,8,'head_wind','nobody',0,1800,1800,50,6,0,5,1);
 INSERT INTO `bcnm_info` VALUES (673,8,'like_the_wind','nobody',0,900,900,75,18,673,15,0);
-INSERT INTO `bcnm_info` VALUES (674,8,'sheep_in_antlions_clothing','nobody',0,1800,1800,75,18,674,15,0);
+INSERT INTO `bcnm_info` VALUES (674,8,'sheep_in_antlions_clothing','nobody',0,900,900,75,18,674,15,0);
 INSERT INTO `bcnm_info` VALUES (675,8,'shell_we_dance','nobody',0,1800,1800,75,18,675,15,0);
 INSERT INTO `bcnm_info` VALUES (676,8,'totentanz','nobody',0,1800,1800,75,18,676,15,0);
 INSERT INTO `bcnm_info` VALUES (677,8,'tango_with_a_tracker','nobody',0,1800,1800,0,6,0,7,0);

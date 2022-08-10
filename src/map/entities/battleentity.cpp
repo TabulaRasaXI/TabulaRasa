@@ -43,6 +43,7 @@
 #include "../roe.h"
 #include "../status_effect_container.h"
 #include "../utils/battleutils.h"
+#include "../utils/mobutils.h"
 #include "../utils/petutils.h"
 #include "../utils/puppetutils.h"
 #include "../weapon_skill.h"
@@ -82,6 +83,7 @@ CBattleEntity::CBattleEntity()
     m_modStat[Mod::PIERCE_SDT] = 1000;
     m_modStat[Mod::HTH_SDT]    = 1000;
     m_modStat[Mod::IMPACT_SDT] = 1000;
+    m_modStat[Mod::MOVE]       = 0;
 
     m_Immunity   = 0;
     isCharmed    = false;
@@ -232,9 +234,22 @@ uint8 CBattleEntity::GetSpeed()
     // Mod::MOUNT_MOVE (972)
     Mod mod = isMounted() ? Mod::MOUNT_MOVE : Mod::MOVE;
 
-    float modAmount     = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
+    float modAmount = (100.0f + static_cast<float>(getMod(mod))) / 100.0f;
+    // Cap unmounted movement speed increase to 25%
+    if (mod == Mod::MOVE)
+    {
+        if (StatusEffectContainer->GetStatusEffect(EFFECT_FLEE))
+        {
+            modAmount = std::clamp(modAmount, 0.0f, 2.0f);
+        }
+        else
+        {
+            modAmount = std::clamp(modAmount, 0.0f, 1.25f);
+        }
+    }
+
     float modifiedSpeed = static_cast<float>(startingSpeed) * modAmount;
-    uint8 outputSpeed   = static_cast<uint8>(modifiedSpeed);
+    uint8 outputSpeed   = static_cast<uint8>(modifiedSpeed < 0 ? 0 : modifiedSpeed);
 
     return std::clamp<uint8>(outputSpeed, std::numeric_limits<uint8>::min(), std::numeric_limits<uint8>::max());
 }
@@ -400,6 +415,13 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 {
     TracyZoneScoped;
     uint16 dmg = 0;
+
+    if (objtype == TYPE_MOB)
+    {
+        auto* PMob = static_cast<CMobEntity*>(this);
+        return (mobutils::GetWeaponDamage(PMob, SLOT_RANGED) + getMod(Mod::RANGED_DMG_RATING)) * battleutils::GetRangedDistanceCorrection(this, distance(this->loc.p, this->GetBattleTarget()->loc.p));
+    }
+
     if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_RANGED]))
     {
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
@@ -560,6 +582,12 @@ int32 CBattleEntity::addMP(int32 mp)
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/,
                                 DAMAGE_TYPE damageType /* = DAMAGE_NONE*/)
 {
+    if (this->GetLocalVar("DAMAGE_NULL") != 0)
+    {
+        amount %= 2;
+        this->SetLocalVar("DAMAGE_DEALT", amount);
+    }
+
     TracyZoneScoped;
     PLastAttacker                             = attacker;
     this->BattleHistory.lastHitTaken_atkType  = attackType;
@@ -960,7 +988,15 @@ uint8 CBattleEntity::GetDeathType()
 
 void CBattleEntity::addModifier(Mod type, int16 amount)
 {
-    m_modStat[type] += amount;
+    if (type == Mod::MOVE)
+    {
+        m_MSNonItemValues.push_back(amount);
+        m_modStat[type] = CalculateMSFromSources();
+    }
+    else
+    {
+        m_modStat[type] += amount;
+    }
 }
 
 /************************************************************************
@@ -974,8 +1010,55 @@ void CBattleEntity::addModifiers(std::vector<CModifier>* modList)
     TracyZoneScoped;
     for (auto modifier : *modList)
     {
-        m_modStat[modifier.getModID()] += modifier.getModAmount();
+        if (modifier.getModID() == Mod::MOVE)
+        {
+            addModifier(modifier.getModID(), modifier.getModAmount()); // Calculations in addModifier already, don't duplicate
+        }
+        else
+        {
+            m_modStat[modifier.getModID()] += modifier.getModAmount();
+        }
     }
+}
+
+int16 CBattleEntity::CalculateMSFromSources()
+{
+    int16 highestItemPositiveValue = 0;
+    int16 highestNonItemPositve    = 0;
+    int16 totalItemReducedValue    = 0;
+    int16 totalNonItemReducedValue = 0;
+
+    for (uint16 i = 0; i < m_MSNonItemValues.size(); i++)
+    {
+        if (m_MSNonItemValues[i] >= 0)
+        {
+            if (m_MSNonItemValues[i] > highestNonItemPositve)
+            {
+                highestNonItemPositve = m_MSNonItemValues[i];
+            }
+        }
+        else
+        {
+            totalNonItemReducedValue += m_MSNonItemValues[i];
+        }
+    }
+
+    for (uint16 i = 0; i < m_MSItemValues.size(); i++)
+    {
+        if (m_MSItemValues[i] >= 0)
+        {
+            if (m_MSItemValues[i] > highestItemPositiveValue)
+            {
+                highestItemPositiveValue = m_MSItemValues[i];
+            }
+        }
+        else
+        {
+            totalItemReducedValue += m_MSItemValues[i];
+        }
+    }
+
+    return (highestItemPositiveValue + totalItemReducedValue) + (highestNonItemPositve + totalNonItemReducedValue);
 }
 
 void CBattleEntity::addEquipModifiers(std::vector<CModifier>* modList, uint8 itemLevel, uint8 slotid)
@@ -998,7 +1081,16 @@ void CBattleEntity::addEquipModifiers(std::vector<CModifier>* modList, uint8 ite
             }
             else
             {
-                m_modStat[i.getModID()] += i.getModAmount();
+                // Add item with movement speed and prevent stacking
+                if (i.getModID() == Mod::MOVE)
+                {
+                    m_MSItemValues.push_back(i.getModAmount());
+                    m_modStat[i.getModID()] = CalculateMSFromSources();
+                }
+                else
+                {
+                    m_modStat[i.getModID()] += i.getModAmount();
+                }
             }
         }
     }
@@ -1093,7 +1185,23 @@ void CBattleEntity::setModifiers(std::vector<CModifier>* modList)
 
 void CBattleEntity::delModifier(Mod type, int16 amount)
 {
-    m_modStat[type] -= amount;
+    if (type == Mod::MOVE)
+    {
+        for (uint16 x = 0; x < m_MSNonItemValues.size(); x++)
+        {
+            if (m_MSNonItemValues[x] == amount)
+            {
+                m_MSNonItemValues.erase(m_MSNonItemValues.begin() + x);
+                break;
+            }
+        }
+
+        m_modStat[type] = CalculateMSFromSources();
+    }
+    else
+    {
+        m_modStat[type] -= amount;
+    }
 }
 
 void CBattleEntity::saveModifiers()
@@ -1117,7 +1225,14 @@ void CBattleEntity::delModifiers(std::vector<CModifier>* modList)
     TracyZoneScoped;
     for (auto& i : *modList)
     {
-        m_modStat[i.getModID()] -= i.getModAmount();
+        if (i.getModID() == Mod::MOVE)
+        {
+            delModifier(i.getModID(), i.getModAmount()); // Calculations in delModifier already, don't duplicate
+        }
+        else
+        {
+            m_modStat[i.getModID()] -= i.getModAmount();
+        }
     }
 }
 
@@ -1141,7 +1256,24 @@ void CBattleEntity::delEquipModifiers(std::vector<CModifier>* modList, uint8 ite
             }
             else
             {
-                m_modStat[i.getModID()] -= i.getModAmount();
+                // Remove item with movement speed and prevent stacking
+                if (i.getModID() == Mod::MOVE)
+                {
+                    for (uint16 x = 0; x < m_MSItemValues.size(); x++)
+                    {
+                        if (m_MSItemValues[x] == i.getModAmount())
+                        {
+                            m_MSItemValues.erase(m_MSItemValues.begin() + x);
+                            break;
+                        }
+                    }
+
+                    m_modStat[i.getModID()] = CalculateMSFromSources();
+                }
+                else
+                {
+                    m_modStat[i.getModID()] -= i.getModAmount();
+                }
             }
         }
     }
@@ -1827,7 +1959,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                             csJpAtkBonus = 1 + ((static_cast<float>(targetDex) / 100) * csJpModifier);
                         }
 
-                        float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), csJpAtkBonus, SLOT_MAIN);
+                        float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), csJpAtkBonus, SLOT_MAIN, 0, attack.IsGuarded());
                         auto  damage      = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
 
                         actionTarget.spikesParam =
@@ -1850,7 +1982,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             else
             {
                 // Set this attack's critical flag.
-                attack.SetCritical(xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing()), SLOT_MAIN);
+                attack.SetCritical(xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing()), SLOT_MAIN, attack.IsGuarded());
 
                 actionTarget.reaction = REACTION::HIT;
 
@@ -1892,7 +2024,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 }
 
                 // Process damage.
-                attack.ProcessDamage(attack.IsCritical());
+                attack.ProcessDamage(attack.IsCritical(), attack.IsGuarded());
 
                 // Try shield block
                 if (attack.IsBlocked())

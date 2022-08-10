@@ -4998,6 +4998,49 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 252, 1, 255); -- stun (1
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 253, 1, 255); -- sleep (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 492, 274, 1, 255); -- sleepga ii (1~255)
 
+-- Princess Jelly (493)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 235, 1, 255); -- burn (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 144, 1, 255); -- fire (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 240, 1, 255); -- drown (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 169, 1, 255); -- water (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 239, 1, 255); -- shock (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 164, 1, 255); -- thunder (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 238, 1, 255); -- rasp (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 159, 1, 255); -- stone (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 237, 1, 255); -- choke (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 154, 1, 255); -- aero (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 236, 1, 255); -- frost (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 149, 1, 255); -- blizzard (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 230, 1, 255); -- bio (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 245, 1, 255); -- drain (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 23, 1, 255);  -- dia (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Princess_Jelly', 493, 28, 1, 255);  -- banish (1~255)
+
+-- Queen Jelly (494)
+INSERT INTO `mob_spell_lists` VALUES('Queen_Jelly', 494, 174, 1, 255); -- firaga (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Queen_Jelly', 494, 199, 1, 255); -- waterga (1~255)
+
+-- Anansi (495)
+INSERT INTO `mob_spell_lists` VALUES('Anansi',495,226,1,255); -- poisonga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Anansi',495,356,1,255); -- paralyga (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Anansi',495,357,1,255); -- slowga (1~255)
+
+-- Osschaart (496)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 181, 1, 255); -- blizzaga iii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 191, 1, 255); -- stonega iii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 212, 1, 255); -- burst (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 226, 1, 255); -- poisonga ii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 232, 1, 255); -- bio iii(1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 238, 1, 255); -- rasp (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 240, 1, 255); -- drown (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 254, 1, 255); -- blind (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Osschaart', 496, 258, 1, 255); -- bind (1~255)
+
+-- Slendlix Spindlethumb (498)
+INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,3,1,255);  -- cure_iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,23,1,255); -- dia (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,33,1,255); -- diaga (1~255)
+
 -- Bastet (499)
 INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 165, 1, 255); -- thunder ii (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Bastet', 499, 195, 1, 255); -- thundaga ii (1~255)
@@ -5103,7 +5146,13 @@ INSERT INTO `mob_spell_lists` VALUES('Kurrea', 509, 112, 1, 255); -- flash (1~25
 INSERT INTO `mob_spell_lists` VALUES('Kurrea', 509, 376, 1, 255); -- horde_lullaby (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Kurrea', 509, 463, 1, 255); -- foe_lullaby (1~255)
 
--- Next Avail 506
+-- Pilwiz (510)
+INSERT INTO `mob_spell_lists` VALUES('Pilwiz', 510, 190, 1, 255); -- Stonega II (1~255)
+
+-- Generic Doll (511)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 194, 1, 255); -- Thundaga (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 251, 1, 255); -- Shock Spikes (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Generic_Doll', 511, 356, 1, 255); -- Paralyga (1~255)
 
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
@@ -5130,6 +5179,58 @@ INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 250, 1, 255); -- ice sp
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 252, 1, 255); -- stun
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 253, 1, 255); -- sleep
 INSERT INTO `mob_spell_lists` VALUES('Silverhook', 5022, 274, 1, 255); -- sleepga ii
+
+-- Aries (5023)
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 5023, 54, 1, 255);  -- stoneskin (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Kurrea', 5023, 356, 1, 255); -- paralyga (1~255)
+
+-- Jailer of Love (Light) (493)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Light',5024,21,1,255); -- Holy (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Light',5024,30,1,255); -- Banish III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Light',5024,35,1,255); -- Diaga III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Light',5024,40,1,255); -- Banishga III (1~255)
+
+-- Jailer of Love (Fire) (494)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Fire',5025,147,1,255); -- Fire IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Fire',5025,176,1,255); -- Firaga III (1~255)
+
+-- Jailer of Love (Ice) (495)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Ice',5026,152,1,255); -- Blizzard IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Ice',5026,181,1,255); -- Blizzaga III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Ice',5026,362,1,255); -- Bindga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Ice',5026,356,1,255); -- Paralyga (1~255)
+
+-- Jailer of Love (Wind) (496)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Wind',5027,157,1,255); -- Aero IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Wind',5027,186,1,255); -- Aeroga III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Wind',5027,359,1,255); -- Silencega (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Wind',5027,366,1,255); -- Graviga (1~255)
+
+-- Jailer of Love (Earth) (497)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Earth',5028,162,1,255); -- Stone IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Earth',5028,191,1,255); -- Stonega III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Earth',5028,357,1,255); -- Slowga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Earth',5028,365,1,255); -- Breakga (1~255)
+
+-- Jailer of Love (Thunder )(498)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Lightning',5029,167,1,255); -- Thunder IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Lightning',5029,196,1,255); -- Thundaga III (1~255)
+
+-- Jailer of Love (Water) (499)
+INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Love_Water',5030,172,1,255); -- Water IV (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Love_Water',5030,201,1,255); -- Waterga III (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Jailer_of_Love_Water',5030,226,1,255); -- Poisonga II (1~255)
+
+-- Jailer of Love (Dark) (500)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,232,1,255); -- Bio III (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,274,1,255); -- Sleepga II (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,360,1,255); -- Dispelga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Jailer_of_Love_Dark',5031,361,1,255); -- Blindga (1~255)
+
+-- Ullikummi (5032)
+INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 5032, 34, 1, 255); -- Diaga II
+INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 5032, 40, 1, 255); -- Banishga III
+INSERT INTO `mob_spell_lists` VALUES('Ullikummi', 5032, 112, 1, 255); -- Flash
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;

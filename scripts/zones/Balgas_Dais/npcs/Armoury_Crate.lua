@@ -321,54 +321,51 @@ local loot =
     [106] =
     {
         {
-            {itemid =   857, droprate = 1000}, -- dhalmel_hide
+            {itemid = 857, droprate = 1000}, -- dhalmel_hide
         },
         {
-            {itemid =     0, droprate =  500}, -- nothing
-            {itemid =   893, droprate =  500}, -- giant_femur
+            {itemid =   0, droprate = 500}, -- nothing
+            {itemid = 893, droprate = 500}, -- giant_femur
         },
         {
-            {itemid =     0, droprate =  500}, -- nothing
-            {itemid =  4359, droprate =  500}, -- slice_of_dhalmel_meat
+            {itemid =    0, droprate = 500}, -- nothing
+            {itemid = 4359, droprate = 500}, -- slice_of_dhalmel_meat
         },
         {
-            {itemid =     0, droprate =  400}, -- nothing
-            {itemid = 13659, droprate =  150}, -- mercenary_mantle
-            {itemid = 13669, droprate =  150}, -- beaters_mantle
-            {itemid = 13665, droprate =  150}, -- esquires_mantle
-            {itemid = 13661, droprate =  150}, -- healers_mantle
+            {itemid =     0, droprate = 400}, -- nothing
+            {itemid = 13659, droprate = 150}, -- mercenary_mantle
+            {itemid = 13669, droprate = 150}, -- beaters_mantle
+            {itemid = 13665, droprate = 150}, -- esquires_mantle
+            {itemid = 13661, droprate = 150}, -- healers_mantle
         },
         {
-            {itemid =     0, droprate =  400}, -- nothing
-            {itemid = 12392, droprate =  200}, -- wizards_shield
-            {itemid = 12397, droprate =  200}, -- trimmers_aspis
-            {itemid = 12402, droprate =  200}, -- wyvern_targe
+            {itemid =     0, droprate = 400}, -- nothing
+            {itemid = 12392, droprate = 200}, -- wizards_shield
+            {itemid = 12397, droprate = 200}, -- trimmers_aspis
+            {itemid = 12402, droprate = 200}, -- wyvern_targe
         },
         {
-            {itemid =     0, droprate =  200}, -- nothing
-            {itemid =  4751, droprate =  200}, -- scroll_of_erase
-            {itemid =  4868, droprate =  200}, -- scroll_of_dispel
-            {itemid =  5070, droprate =  200}, -- scroll_of_magic_finale
-            {itemid =  4947, droprate =  200}, -- scroll_of_utsusemi_ni
+            {itemid =     0, droprate = 200}, -- nothing
+            {itemid =  4751, droprate = 200}, -- scroll_of_erase
+            {itemid =  4868, droprate = 200}, -- scroll_of_dispel
+            {itemid =  5070, droprate = 200}, -- scroll_of_magic_finale
+            {itemid =  4947, droprate = 200}, -- scroll_of_utsusemi_ni
         },
         {
-            {itemid =     0, droprate =  250}, -- nothing
-            {itemid =   828, droprate =  250}, -- square_of_velvet_cloth
-            {itemid =   826, droprate =  250}, -- square_of_linen_cloth
-            {itemid =   827, droprate =  250}, -- square_of_wool_cloth
+            {itemid =   0, droprate = 250}, -- nothing
+            {itemid = 828, droprate = 250}, -- square_of_velvet_cloth
+            {itemid = 826, droprate = 250}, -- square_of_linen_cloth
+            {itemid = 827, droprate = 250}, -- square_of_wool_cloth
         },
         {
-            {itemid =     0, droprate =  600}, -- nothing
-            {itemid =  1601, droprate =  200}, -- mannequin_head
-            {itemid =  1603, droprate =  200}, -- mannequin_hands
+            {itemid =    0, droprate = 600}, -- nothing
+            {itemid = 1601, droprate = 200}, -- mannequin_head
+            {itemid = 1603, droprate = 200}, -- mannequin_hands
         },
     },
     -- KSNM Early Bird Catches the Wyrm
     [107] =
     {
-        {
-            {itemid = 3339, droprate = 1000}, -- Jug Of Honey Wine
-        },
         {
             {itemid = 1441, droprate = 312}, -- Libation Abjuration
             {itemid = 17694, droprate = 182}, -- Guespiere
@@ -605,6 +602,124 @@ local loot =
             {itemid =  4175, droprate =   99}, -- vile_elixir_+1
         },
     },
+
+    -- Seaons Greetings
+    [111] =
+    {
+        {
+            {itemid = 17589, droprate = 200}, -- Thyrsusstab
+            {itemid = 18217, droprate = 200}, -- Rampager
+            {itemid = 17451, droprate = 200}, -- Morgenstern
+            {itemid = 18378, droprate = 200}, -- Subduer
+            {itemid = 17207, droprate = 200}, -- Expunger
+        },
+        {
+            {itemid = 17700, droprate = 250}, -- Durandal
+            {itemid = 18006, droprate = 250}, -- Hoplites Harp
+            {itemid = 17842, droprate = 250}, -- Sorrowful Harp
+            {itemid = 14762, droprate = 250}, -- Attila's Earring
+        },
+        {
+            {itemid = 655,   droprate = 333}, -- Adaman Ingot
+            {itemid = 747,   droprate = 333}, -- Orichalcum Ingot
+            {itemid = 15328, droprate = 333}, -- Root Sabots
+        },
+        {
+            {itemid = 711,   droprate = 650}, -- Divine Log
+            {itemid = 1446,  droprate =  50}, -- Lacquer Tree Log
+            {itemid = 19024, droprate = 100}, -- Sword Strap
+            {itemid = 19025, droprate = 100}, -- Pole Grip
+            {itemid = 19026, droprate = 100}, -- Spear Strap
+        },
+        {
+            {itemid = 644,  droprate = 66}, -- Mythril Ore
+            {itemid = 645,  droprate = 66}, -- Darksteel Ore
+            {itemid = 700,  droprate = 66}, -- Mahogany Log
+            {itemid = 702,  droprate = 66}, -- Ebony Log
+            {itemid = 703,  droprate = 76}, -- Petrified Log
+            {itemid = 737,  droprate = 66}, -- Gold Ore
+            {itemid = 738,  droprate = 66}, -- Platinum Ore
+            {itemid = 766,  droprate = 66}, -- Wyvern Scales
+            {itemid = 830,  droprate = 66}, -- Rainbow Cloth
+            {itemid = 887,  droprate = 66}, -- Coral Fragment
+            {itemid = 895,  droprate = 66}, -- Ram Horn
+            {itemid = 902,  droprate = 66}, -- Demon Horn
+            {itemid = 1132, droprate = 66}, -- Raxa
+            {itemid = 4174, droprate = 66}, -- Vile Elixer
+            {itemid = 4175, droprate = 66}, -- Vile Elixer +1
+        },
+        {
+            {itemid = 658,  droprate =  50}, -- Damascus Ingot
+            {itemid = 836,  droprate =  50}, -- Damascene Cloth
+            {itemid = 844,  droprate = 300}, -- Phoenix Feather
+            {itemid = 942,  droprate = 100}, -- Philosopher's Stone
+            {itemid = 1110, droprate = 150}, -- Beetle Blood
+            {itemid = 1132, droprate = 350}, -- Raxa
+        },
+    },
+
+    -- Moa Constrictors
+     [113] =
+     {
+         {
+             {itemid = 854, droprate = 1000}, -- Cockatrice Skin
+         },
+         {
+             {itemid = 854, droprate = 1000}, -- Cockatrice Skin
+         },
+         {
+             {itemid = 0,    droprate = 800}, -- Nothing
+             {itemid = 1014, droprate = 200}, -- Dodo Skin
+         },
+         {
+             {itemid = 17207, droprate = 250}, -- Expunger
+             {itemid = 17451, droprate = 250}, -- Morgenstern
+             {itemid = 18005, droprate = 250}, -- Heart Snatcher
+             {itemid = 18053, droprate = 250}, -- Gravedigger
+         },
+         {
+             {itemid = 14872, droprate = 250}, -- Ostreger Mitts
+             {itemid = 15181, droprate = 250}, -- Pineal Hat
+             {itemid = 15325, droprate = 250}, -- Evoker's Boots
+             {itemid = 15387, droprate = 250}, -- Tracker's Kecks
+         },
+         {
+             {itemid = 655,   droprate = 250}, -- Adaman Ingot
+             {itemid = 747,   droprate = 350}, -- Orichalcum
+             {itemid = 12408, droprate = 350}, -- Absorbing Shield
+         },
+         {
+             {itemid = 0,     droprate = 300}, -- Nothing
+             {itemid = 19025, droprate = 500}, -- Pole Grip
+             {itemid = 19026, droprate = 100}, -- Spear Strap
+             {itemid = 19027, droprate = 100}, -- Claymore Grip
+         },
+         {
+             {itemid = 644,  droprate =  60}, -- Mythril Ore
+             {itemid = 645,  droprate =  60}, -- Darksteel ore
+             {itemid = 700,  droprate =  60}, -- Mahogany Log
+             {itemid = 702,  droprate =  60}, -- Ebony Log
+             {itemid = 703,  droprate =  60}, -- Petrified Log
+             {itemid = 737,  droprate =  60}, -- Gold ore
+             {itemid = 738,  droprate =  60}, -- Platinum ore
+             {itemid = 823,  droprate =  60}, -- Gold Thread
+             {itemid = 830,  droprate = 110}, -- Rainbow Cloth
+             {itemid = 866,  droprate =  60}, -- Wyvern Scales
+             {itemid = 887,  droprate =  60}, -- Coral Fragment
+             {itemid = 895,  droprate =  60}, -- Ram Horn
+             {itemid = 902,  droprate = 110}, -- Demon Horn
+             {itemid = 4173, droprate =  60}, -- Hi-Reraiser
+             {itemid = 4174, droprate =  60}, -- Vile Elixer
+         },
+         {
+             {itemid = 658,  droprate =  50}, -- Damascus Ingot
+             {itemid = 836,  droprate =  50}, -- Damascene Cloth
+             {itemid = 844,  droprate = 300}, -- Phoenix Feather
+             {itemid = 942,  droprate = 350}, -- Philosopher's Stone
+             {itemid = 1110, droprate =  50}, -- Beetle Blood
+             {itemid = 1132, droprate = 200}, -- Raxa
+         },
+     },
 }
 entity.onTrade = function(player, npc, trade)
 end

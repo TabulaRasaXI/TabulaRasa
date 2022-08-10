@@ -304,13 +304,15 @@ enum class Mod
     DUAL_WIELD    = 259, // Percent reduction in dual wield delay.
 
     // Warrior
-    DOUBLE_ATTACK      = 288,  // Percent chance to proc
-    DOUBLE_ATTACK_DMG  = 1038, // Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
-    WARCRY_DURATION    = 483,  // Warcy duration bonus from gear
-    BERSERK_EFFECT     = 948,  // Conqueror Berserk Effect
-    BERSERK_DURATION   = 954,  // Berserk Duration
-    AGGRESSOR_DURATION = 955,  // Aggressor Duration
-    DEFENDER_DURATION  = 956,  // Defender Duration
+    DOUBLE_ATTACK       = 288,  // Percent chance to proc
+    DOUBLE_ATTACK_DMG   = 1038, // Increases "Double Attack" damage/"Double Attack" damage + (in percents, e.g. +20 = +20% damage)
+    WARCRY_DURATION     = 483,  // Warcy duration bonus from gear
+    BERSERK_POTENCY     = 948,  // Augments "Berserk"/Enhances "Berserk" effect (Conqueror)
+    BERSERK_DURATION    = 954,  // Berserk Duration
+    AGGRESSOR_DURATION  = 955,  // Aggressor Duration
+    DEFENDER_DURATION   = 956,  // Defender Duration
+    ENHANCES_RESTRAINT  = 1045, // Enhances "Restraint" effect/"Restraint" + (Increases the damage bonus of Restraint by XXX%)
+    ENHANCES_BLOOD_RAGE = 1046, // Enhances "Blood Rage" effect/"Blood Rage" duration +
 
     // Monk
     BOOST_EFFECT        = 97,   // Boost power in tenths
@@ -905,6 +907,17 @@ enum class Mod
     PET_DMG_TAKEN_PHYSICAL = 1154, // Percent increase/decrease in pet physical damage taken for the target.
     PET_DMG_TAKEN_MAGICAL  = 1155, // Percent increase/decrease in pet physical damage taken for the target.
     PET_DMG_TAKEN_BREATH   = 1156, // Percent increase/decrease in pet physical damage taken for the target.
+    DIG_BYPASS_FATIGUE     = 1157, // Chocobo digging modifier found in "Blue Race Silks". Modifier works as a direct percent. Used in Chocobo_Digging.lua
+
+    FIRE_EEM          = 1158, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    ICE_EEM           = 1159, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    WIND_EEM          = 1160, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    EARTH_EEM         = 1161, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    THUNDER_EEM       = 1162, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    WATER_EEM         = 1163, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    LIGHT_EEM         = 1164, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    DARK_EEM          = 1165, // Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
+    TAME_SUCCESS_RATE = 1166, // Tame Success Rate +
 
     // IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN scripts/globals/status.lua ASWELL!
 
@@ -922,7 +935,7 @@ enum class Mod
     // 888
     // 936
     //
-    // SPARE = 1157, and onward
+    // SPARE = 1166, and onward
 };
 
 // temporary workaround for using enum class as unordered_map key until compilers support it

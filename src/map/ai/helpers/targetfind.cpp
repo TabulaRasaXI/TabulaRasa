@@ -235,7 +235,8 @@ void CTargetFind::addAllInMobList(CBattleEntity* PTarget, bool withPet)
         for (SpawnIDList_t::const_iterator it = PChar->SpawnMOBList.begin(); it != PChar->SpawnMOBList.end(); ++it)
         {
             CBattleEntity* PBattleTarget = dynamic_cast<CBattleEntity*>(it->second);
-            if (PBattleTarget && isMobOwner(PBattleTarget))
+            auto           diffY         = abs(PBattleTarget->loc.p.y - PChar->loc.p.y);
+            if (PBattleTarget && isMobOwner(PBattleTarget) && !(diffY > 6))
             {
                 addEntity(PBattleTarget, withPet);
             }

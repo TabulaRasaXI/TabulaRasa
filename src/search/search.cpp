@@ -550,10 +550,11 @@ void HandleAuctionHouseRequest(CTCPRequestPacket& PTCPRequest)
     for (uint8 i = 0; i < PacketsCount; ++i)
     {
         CAHItemsListPacket PAHPacket(20 * i);
+        uint16             itemListSize = static_cast<uint16>(ItemList.size());
 
-        PAHPacket.SetItemCount((uint16)ItemList.size());
+        PAHPacket.SetItemCount(itemListSize);
 
-        for (uint16 y = 20 * i; (y != 20 * (i + 1)) && (y < ItemList.size()); ++y)
+        for (uint16 y = 20 * i; (y != 20 * (i + 1)) && (y < itemListSize); ++y)
         {
             PAHPacket.AddItem(ItemList.at(y));
         }
@@ -607,7 +608,9 @@ search_req _HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
 
     uint16 areas[10];
 
-    uint32 flags = 0;
+    uint32 flags    = 0;
+    uint16 lsId     = 0;
+    bool   lsFilter = false;
 
     uint8* data = PTCPRequest.GetData();
     uint8  size = ref<uint8>(data, 0x10);
@@ -630,7 +633,7 @@ search_req _HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
         uint8 EntryType = (uint8)unpackBitsLE(&data[0x11], bitOffset, 5);
         bitOffset += 5;
 
-        if ((EntryType != SEARCH_FRIEND) && (EntryType != SEARCH_LINKSHELL) && (EntryType != SEARCH_COMMENT) && (EntryType != SEARCH_FLAGS2))
+        if ((EntryType != SEARCH_FRIEND) && (EntryType != SEARCH_LINKSHELL) && (EntryType != SEARCH_LINKSHELL2) && (EntryType != SEARCH_COMMENT) && (EntryType != SEARCH_FLAGS2))
         {
             if ((bitOffset + 3) >= workloadBits) // so 0000000 at the end does not get interpret as name entry
             {
@@ -768,9 +771,11 @@ search_req _HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
             }
             // the following 4 Entries were generated with /sea (ballista|friend|linkshell|away|inv)
             // so they may be off
-            case SEARCH_LINKSHELL: // 4 Byte
+            case SEARCH_LINKSHELL:  // 4 Byte
+            case SEARCH_LINKSHELL2: // 4 Byte
             {
-                unsigned int lsId = (unsigned int)unpackBitsLE(&data[0x11], bitOffset, 32);
+                lsFilter = true;
+                lsId     = (unsigned int)unpackBitsLE(&data[0x11], bitOffset, 32);
                 bitOffset += 32;
 
                 ShowInfo("Linkshell Entry found. Value: %.8X\n", lsId);
@@ -835,6 +840,9 @@ search_req _HandleSearchRequest(CTCPRequestPacket& PTCPRequest)
     sr.maxRank     = maxRank;
     sr.flags       = flags;
     sr.commentType = commentType;
+
+    sr.lsFilter = lsFilter;
+    sr.lsId     = lsId;
 
     sr.nameLen = nameLen;
     memcpy(sr.zoneid, areas, sizeof(sr.zoneid));

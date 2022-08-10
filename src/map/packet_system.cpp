@@ -334,62 +334,69 @@ void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PCh
         }
     }
 
-    if (PChar->m_moghouseID != 0)
+    // Only release client from "Downloading Data" if the packet sequence came in without a drop on 0x00D
+    // It is also possible that the client also never received our packets to release themselves from the loading screen.
+    // TODO: Need further research into the relationship between 0x00D and 0x00A, if any.
+    if (PChar->loc.zone != nullptr)
     {
-        // Update any mannequins that might be placed on zonein
-        // Build Mannequin model id list
-        auto getModelIdFromStorageSlot = [](CCharEntity* PChar, uint8 slot) -> uint16
+        if (PChar->m_moghouseID != 0)
         {
-            uint16 modelId = 0x0000;
-
-            if (slot == 0)
+            // Update any mannequins that might be placed on zonein
+            // Build Mannequin model id list
+            auto getModelIdFromStorageSlot = [](CCharEntity* PChar, uint8 slot) -> uint16
             {
-                return modelId;
-            }
+                uint16 modelId = 0x0000;
 
-            auto* PItem = PChar->getStorage(LOC_STORAGE)->GetItem(slot);
-            if (PItem == nullptr)
-            {
-                return modelId;
-            }
-
-            if (auto* PItemEquipment = dynamic_cast<CItemEquipment*>(PItem))
-            {
-                modelId = PItemEquipment->getModelId();
-            }
-
-            return modelId;
-        };
-
-        for (auto safeContainerId : { LOC_MOGSAFE, LOC_MOGSAFE2 })
-        {
-            CItemContainer* PContainer = PChar->getStorage(safeContainerId);
-            for (int slotIndex = 1; slotIndex <= PContainer->GetSize(); ++slotIndex)
-            {
-                CItem* PContainerItem = PContainer->GetItem(slotIndex);
-                if (PContainerItem != nullptr && PContainerItem->isType(ITEM_FURNISHING))
+                if (slot == 0)
                 {
-                    auto* PFurnishing = static_cast<CItemFurnishing*>(PContainerItem);
-                    if (PFurnishing->isInstalled() && PFurnishing->isMannequin())
+                    return modelId;
+                }
+
+                auto* PItem = PChar->getStorage(LOC_STORAGE)->GetItem(slot);
+                if (PItem == nullptr)
+                {
+                    return modelId;
+                }
+
+                if (auto* PItemEquipment = dynamic_cast<CItemEquipment*>(PItem))
+                {
+                    modelId = PItemEquipment->getModelId();
+                }
+
+                return modelId;
+            };
+
+            for (auto safeContainerId : { LOC_MOGSAFE, LOC_MOGSAFE2 })
+            {
+                CItemContainer* PContainer = PChar->getStorage(safeContainerId);
+                for (int slotIndex = 1; slotIndex <= PContainer->GetSize(); ++slotIndex)
+                {
+                    CItem* PContainerItem = PContainer->GetItem(slotIndex);
+                    if (PContainerItem != nullptr && PContainerItem->isType(ITEM_FURNISHING))
                     {
-                        auto*  PMannequin = PFurnishing;
-                        uint16 mainId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 0]);
-                        uint16 subId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 1]);
-                        uint16 rangeId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 2]);
-                        uint16 headId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 3]);
-                        uint16 bodyId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 4]);
-                        uint16 handsId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 5]);
-                        uint16 legId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 6]);
-                        uint16 feetId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 7]);
-                        PChar->pushPacket(new CInventoryCountPacket(safeContainerId, slotIndex, headId, bodyId, handsId, legId, feetId, mainId, subId, rangeId));
+                        auto* PFurnishing = static_cast<CItemFurnishing*>(PContainerItem);
+                        if (PFurnishing->isInstalled() && PFurnishing->isMannequin())
+                        {
+                            auto*  PMannequin = PFurnishing;
+                            uint16 mainId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 0]);
+                            uint16 subId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 1]);
+                            uint16 rangeId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 2]);
+                            uint16 headId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 3]);
+                            uint16 bodyId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 4]);
+                            uint16 handsId    = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 5]);
+                            uint16 legId      = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 6]);
+                            uint16 feetId     = getModelIdFromStorageSlot(PChar, PMannequin->m_extra[10 + 7]);
+                            PChar->pushPacket(new CInventoryCountPacket(safeContainerId, slotIndex, headId, bodyId, handsId, legId, feetId, mainId, subId, rangeId));
+                        }
                     }
                 }
             }
         }
+
+        PChar->pushPacket(new CDownloadingDataPacket());
+        PChar->pushPacket(new CZoneInPacket(PChar, PChar->currentEvent->eventId));
+        PChar->pushPacket(new CZoneVisitedPacket(PChar));
     }
-    PChar->pushPacket(new CDownloadingDataPacket());
-    PChar->pushPacket(new CZoneInPacket(PChar, PChar->currentEvent->eventId));
-    PChar->pushPacket(new CZoneVisitedPacket(PChar));
 }
 
 /************************************************************************
@@ -540,7 +547,7 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
         sql->Query("UPDATE char_stats SET zoning = 1 WHERE charid = %u", PChar->id);
         charutils::CheckEquipLogic(PChar, SCRIPT_CHANGEZONE, PChar->getZone());
 
-        if (PChar->CraftContainer->getItemsCount() > 0 && PChar->animation == ANIMATION_SYNTH)
+        if ((PChar->CraftContainer->getItemsCount() > 0 && PChar->animation == ANIMATION_SYNTH) || PChar->GetLocalVar("InSynth") != 0)
         {
             // NOTE:
             // Supposed non-losable items are reportely lost if this condition is met:
@@ -549,7 +556,9 @@ void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PCh
             // interrupted in some way, such as by being attacked or moving to another area (e.g. ship docking).
 
             ShowWarning("SmallPacket0x00D: %s attempting to zone in the middle of a synth, failing their synth!", PChar->GetName());
+            PChar->CraftContainer->m_failType = 3;
             synthutils::doSynthFail(PChar);
+            PChar->SetLocalVar("InSynth", 0);
         }
     }
 
@@ -614,7 +623,7 @@ void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PCh
         }
     }
 
-    luautils::AfterZoneIn(PChar);
+    PChar->PAI->QueueAction(queueAction_t(4000ms, false, luautils::AfterZoneIn));
 
     // todo: kill player til theyre dead and bsod
     const char* fmtQuery = "SELECT version_mismatch FROM accounts_sessions WHERE charid = %u";
@@ -1037,7 +1046,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
                     charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -1);
 
                     PChar->pushPacket(new CInventoryFinishPacket());
-                    PChar->pushPacket(new CChocoboDiggingPacket(PChar));
+                    PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CChocoboDiggingPacket(PChar));
 
                     // dig is possible
                     luautils::OnChocoboDig(PChar, false);
@@ -1306,7 +1315,7 @@ void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PCh
     CItemLinkshell* ItemLinkshell = dynamic_cast<CItemLinkshell*>(PItem);
     if (ItemLinkshell)
     {
-        if (ItemLinkshell->GetLSType() == LSTYPE_LINKSHELL)
+        if (ItemLinkshell && ItemLinkshell->GetLSType() == LSTYPE_LINKSHELL)
         {
             uint32      lsid       = ItemLinkshell->GetLSID();
             CLinkshell* PLinkshell = linkshell::GetLinkshell(lsid);
@@ -1319,16 +1328,13 @@ void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PCh
         }
     }
 
-    // Linkshells (other than Linkpearls and Pearlsacks) and temporary items cannot be stored in the Recycle Bin.
-    // TODO: Are there any special messages here?
-    if (PItem->isType(ITEM_LINKSHELL) || container == CONTAINER_ID::LOC_TEMPITEMS)
+    if (charutils::UpdateItem(PChar, container, slotID, -quantity) != 0)
     {
-        charutils::DropItem(PChar, container, slotID, quantity, ItemID);
+        // Todo: add item NAME to this msg before ID. Problem is it's not a string.
+        PChar->pushPacket(new CMessageStandardPacket(nullptr, ItemID, quantity, MsgStd::ThrowAway));
+        PChar->pushPacket(new CInventoryFinishPacket());
         return;
     }
-
-    // Otherwise, to the recycle bin!
-    charutils::AddItemToRecycleBin(PChar, container, slotID, quantity);
 }
 
 /************************************************************************
@@ -2216,7 +2222,16 @@ void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PCh
 
     if (msg_language == 0x02)
     {
-        PChar->pushPacket(new CServerMessagePacket(settings::get<std::string>("main.SERVER_MESSAGE"), msg_language, msg_timestamp, msg_offset));
+        std::string login_message = settings::get<std::string>("main.SERVER_MESSAGE");
+        if (settings::get<bool>("main.ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE"))
+        {
+            login_message = login_message + (settings::get<std::string>("main.TRUST_ALTER_EGO_EXTRAVAGANZA_MESSAGE"));
+        }
+        if (settings::get<bool>("main.ENABLE_TRUST_ALTER_EGO_EXPO_ANNOUNCE"))
+        {
+            login_message = login_message + (settings::get<std::string>("main.TRUST_ALTER_EGO_EXPO_MESSAGE"));
+        }
+        PChar->pushPacket(new CServerMessagePacket(login_message, msg_language, msg_timestamp, msg_offset));
     }
 
     PChar->pushPacket(new CCharSyncPacket(PChar));
@@ -3005,7 +3020,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (PItem->isSubType(ITEM_CHARGED) && ((CItemUsable*)PItem)->getCurrentCharges() < ((CItemUsable*)PItem)->getMaxCharges())
                 {
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0));
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity));
                     return;
                 }
                 PChar->pushPacket(new CAuctionHousePacket(action, PItem, quantity, price));
@@ -3043,7 +3058,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             }
             else
             {
-                PChar->pushPacket(new CAuctionHousePacket(action, 246, 0, 0)); // try again in a little while msg
+                PChar->pushPacket(new CAuctionHousePacket(action, 246, 0, 0, quantity)); // try again in a little while msg
                 break;
             }
         }
@@ -3066,7 +3081,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
             {
                 if (PItem->isSubType(ITEM_CHARGED) && ((CItemUsable*)PItem)->getCurrentCharges() < ((CItemUsable*)PItem)->getMaxCharges())
                 {
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0));
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity));
                     return;
                 }
                 uint32 auctionFee = 0;
@@ -3075,7 +3090,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                     if (PItem->getStackSize() == 1 || PItem->getStackSize() != PItem->getQuantity())
                     {
                         ShowError("SmallPacket0x04E::AuctionHouse: Incorrect quantity of item %s", PItem->getName());
-                        PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Failed to place up
+                        PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // Failed to place up
                         return;
                     }
                     auctionFee = (uint32)(settings::get<uint32>("map.AH_BASE_FEE_STACKS") + (price * settings::get<float>("map.AH_TAX_RATE_STACKS") / 100));
@@ -3090,7 +3105,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (PChar->getStorage(LOC_INVENTORY)->GetItem(0)->getQuantity() < auctionFee)
                 {
                     // ShowDebug(CL_CYAN"%s Can't afford the AH fee",PChar->GetName());
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Not enough gil to pay fee
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // Not enough gil to pay fee
                     return;
                 }
 
@@ -3110,7 +3125,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (settings::get<uint8>("map.AH_LIST_LIMIT") && ah_listings >= settings::get<uint8>("map.AH_LIST_LIMIT"))
                 {
                     // ShowDebug(CL_CYAN"%s already has %d items on the AH",PChar->GetName(), ah_listings);
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // Failed to place up
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // Failed to place up
                     return;
                 }
 
@@ -3119,13 +3134,13 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                 if (sql->Query(fmtQuery, PItem->getID(), quantity == 0, PChar->id, PChar->GetName(), (uint32)time(nullptr), price) == SQL_ERROR)
                 {
                     ShowError("SmallPacket0x04E::AuctionHouse: Cannot insert item %s to database", PItem->getName());
-                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0)); // failed to place up
+                    PChar->pushPacket(new CAuctionHousePacket(action, 197, 0, 0, quantity)); // failed to place up
                     return;
                 }
                 charutils::UpdateItem(PChar, LOC_INVENTORY, slot, -(int32)(quantity != 0 ? 1 : PItem->getStackSize()));
                 charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)auctionFee); // Deduct AH fee
 
-                PChar->pushPacket(new CAuctionHousePacket(action, 1, 0, 0));                 // Merchandise put up on auction msg
+                PChar->pushPacket(new CAuctionHousePacket(action, 1, 0, 0, quantity));       // Merchandise put up on auction msg
                 PChar->pushPacket(new CAuctionHousePacket(0x0C, (uint8)ah_listings, PChar)); // Inform history of slot
             }
         }
@@ -3136,7 +3151,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
 
             if (PChar->getStorage(LOC_INVENTORY)->GetFreeSlotsCount() == 0)
             {
-                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0));
+                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0, quantity));
             }
             else
             {
@@ -3150,7 +3165,7 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                         {
                             if (PChar->getStorage(LocID)->SearchItem(itemid) != ERROR_SLOTID)
                             {
-                                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0));
+                                PChar->pushPacket(new CAuctionHousePacket(action, 0xE5, 0, 0, quantity));
                                 return;
                             }
                         }
@@ -3171,14 +3186,14 @@ void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PCh
                             {
                                 charutils::UpdateItem(PChar, LOC_INVENTORY, 0, -(int32)(price));
 
-                                PChar->pushPacket(new CAuctionHousePacket(action, 0x01, itemid, price));
+                                PChar->pushPacket(new CAuctionHousePacket(action, 0x01, itemid, price, quantity));
                                 PChar->pushPacket(new CInventoryFinishPacket());
                             }
                             return;
                         }
                     }
                 }
-                PChar->pushPacket(new CAuctionHousePacket(action, 0xC5, itemid, price));
+                PChar->pushPacket(new CAuctionHousePacket(action, 0xC5, itemid, price, quantity));
             }
         }
         break;
@@ -3359,7 +3374,7 @@ void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PCh
             // uint8 locationId = data.ref<uint8>(i + 0x02);
             uint16 itemId = data.ref<uint16>(i + 0x04);
 
-            if (equipSlotId > SLOT_BACK)
+            if (equipSlotId > SLOT_BACK || equipSlotId == SLOT_RANGED || equipSlotId == SLOT_AMMO)
             {
                 continue;
             }

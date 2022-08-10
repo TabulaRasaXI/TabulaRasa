@@ -92,11 +92,11 @@ public:
     void updateEvent(sol::variadic_args va);       // Updates event
     void updateEventString(sol::variadic_args va); // (string, string, string, string, uint32, ...)
     auto getEventTarget() -> std::optional<CLuaBaseEntity>;
-    bool isInEvent();       // Returns true if the player is in an event
-    void release();         // Stops event
-    bool startSequence();   // Flags the player as being in a sequence
-    bool didGetMessage();   // Used by interaction framework to determine if player triggered something else
-    void resetGotMessage(); // Used by interaction framework to reset if player triggered something else
+    bool isInEvent();                    // Returns true if the player is in an event
+    void release(sol::object const& p0); // Stops event
+    bool startSequence();                // Flags the player as being in a sequence
+    bool didGetMessage();                // Used by interaction framework to determine if player triggered something else
+    void resetGotMessage();              // Used by interaction framework to reset if player triggered something else
 
     void  setFlag(uint32 flags);
     uint8 getMoghouseFlag();
@@ -263,6 +263,7 @@ public:
     bool   checkNameFlags(uint32 flags); // this is check and not get because it tests for a flag, it doesn't return all flags
     uint16 getModelId();
     void   setModelId(uint16 modelId, sol::object const& slotObj);
+    void   restoreNpcLook();
     void   setCostume(uint16 costume);
     uint16 getCostume();
     uint16 getCostume2(); // set monstrosity costume
@@ -647,14 +648,22 @@ public:
     void  handleAfflatusMiseryDamage(double damage);
 
     bool   isWeaponTwoHanded();
-    int    getMeleeHitDamage(CLuaBaseEntity* PLuaBaseEntity, sol::object const& arg1); // gets the damage of a single hit vs the specified mob
-    uint16 getWeaponDmg();                                                             // gets the current equipped weapons' DMG rating
-    uint16 getWeaponDmgRank();                                                         // gets the current equipped weapons' DMG rating for Rank calc
-    uint16 getOffhandDmg();                                                            // gets the current equipped offhand's DMG rating (used in WS calcs)
-    uint16 getOffhandDmgRank();                                                        // gets the current equipped offhand's DMG rating for Rank calc
-    uint16 getRangedDmg();                                                             // Get ranged weapon DMG rating
-    uint16 getRangedDmgRank();                                                         // Get ranged weapond DMG rating used for calculating rank
-    uint16 getAmmoDmg();                                                               // Get ammo DMG rating
+    int    getMeleeHitDamage(CLuaBaseEntity* PLuaBaseEntity, sol::object const& arg1);                                                      // gets the damage of a single hit vs the specified mob
+    float  getPDIF(CLuaBaseEntity* PLuaBaseEntity, bool isCritical, float bonusAttPercent, uint16 slot, uint16 ignoredDef, bool isGuarded); // Gets PDIF for an attack.
+    float  getRangedPDIF(CLuaBaseEntity* PLuaBaseEntity, bool isCritical, uint16 ignoredDef);                                               // Gets PDIF for an attack.
+    uint8  getGuardRate(CLuaBaseEntity* PLuaBaseEntity);                                                                                    // Returns the guard rate for an attack.
+    uint8  getBlockRate(CLuaBaseEntity* PLuaBaseEntity);                                                                                    // Returns the block rate for an attack.
+    uint8  getParryRate(CLuaBaseEntity* PLuaBaseEntity);                                                                                    // Returns the parry rate for an attack.
+    uint8  getCHitRate(CLuaBaseEntity* PLuaBaseEntity);                                                                                     // Returns the hit rate for an attack.
+    uint8  getCRangedHitRate(CLuaBaseEntity* PLuaBaseEntity);                                                                               // Returns the ranged hit rate for an attack.
+    uint8  getShieldAbsorptionRate();                                                                                                       // Returns the shield absorption for an attack.
+    uint16 getWeaponDmg();                                                                                                                  // gets the current equipped weapons' DMG rating
+    uint16 getWeaponDmgRank();                                                                                                              // gets the current equipped weapons' DMG rating for Rank calc
+    uint16 getOffhandDmg();                                                                                                                 // gets the current equipped offhand's DMG rating (used in WS calcs)
+    uint16 getOffhandDmgRank();                                                                                                             // gets the current equipped offhand's DMG rating for Rank calc
+    uint16 getRangedDmg();                                                                                                                  // Get ranged weapon DMG rating
+    uint16 getRangedDmgRank();                                                                                                              // Get ranged weapond DMG rating used for calculating rank
+    uint16 getAmmoDmg();                                                                                                                    // Get ammo DMG rating
 
     void removeAmmo();
 
@@ -680,7 +689,7 @@ public:
     void   trustPartyMessage(uint32 message_id);
     void   addSimpleGambit(uint16 targ, uint16 cond, uint32 condition_arg, uint16 react, uint16 select, uint32 selector_arg, sol::object const& retry);
     int32  addFullGambit(lua_State*);
-    void   setTrustTPSkillSettings(uint16 trigger, uint16 select);
+    void   setTrustTPSkillSettings(uint16 trigger, uint16 select, sol::object const& value);
 
     bool isJugPet(); // If the entity has a pet, test if it is a jug pet.
     bool hasValidJugPetItem();
@@ -828,6 +837,7 @@ public:
     bool deleteRaisedChocobo();
 
     bool clearSession(std::string const& playerName);
+    void sendNpcEmote(CLuaBaseEntity* PBaseEntity, sol::object const& p0, sol::object const& p1, sol::object const& p2);
 
     static void Register();
 };

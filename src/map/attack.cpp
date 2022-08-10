@@ -24,6 +24,7 @@
 #include "attackround.h"
 #include "entities/battleentity.h"
 #include "items/item_weapon.h"
+#include "job_points.h"
 #include "status_effect_container.h"
 #include "utils/puppetutils.h"
 
@@ -88,13 +89,13 @@ bool CAttack::IsCritical() const
  *  Sets the critical flag.                                             *
  *                                                                      *
  ************************************************************************/
-void CAttack::SetCritical(bool value, uint16 slot)
+void CAttack::SetCritical(bool value, uint16 slot, bool isGuarded)
 {
     m_isCritical = value;
 
     if (m_attackType == PHYSICAL_ATTACK_TYPE::DAKEN)
     {
-        m_damageRatio = battleutils::GetRangedDamageRatio(m_attacker, m_victim, m_isCritical);
+        m_damageRatio = battleutils::GetRangedDamageRatio(m_attacker, m_victim, m_isCritical, 0);
     }
     else
     {
@@ -107,7 +108,7 @@ void CAttack::SetCritical(bool value, uint16 slot)
             }
         }
 
-        m_damageRatio = battleutils::GetDamageRatio(m_attacker, m_victim, m_isCritical, attBonus, slot);
+        m_damageRatio = battleutils::GetDamageRatio(m_attacker, m_victim, m_isCritical, attBonus, slot, 0, isGuarded);
     }
 }
 
@@ -345,48 +346,45 @@ bool CAttack::CheckAnticipated()
 
     // power stores how many times this effect has anticipated
     auto pastAnticipations = effect->GetPower();
-
-    if (pastAnticipations > 7)
+    if (pastAnticipations >= 6)
     {
         // max 7 anticipates!
         m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        return false;
+        m_anticipated = true;
+        return true;
     }
 
     bool hasSeigan = m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN, 0);
 
-    if (!hasSeigan && pastAnticipations == 0)
+    if (!hasSeigan)
     {
         m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
         m_anticipated = true;
         return true;
     }
-    else if (!hasSeigan)
-    {
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        return false;
-    }
     else
     { // do have seigan, decay anticipations correctly (guesstimated)
         // 5-6 anticipates is a 'lucky' streak, going to assume 15% decay per proc, with a 100% base w/ Seigan
-        if (xirand::GetRandomNumber(100) < (100 - (pastAnticipations * 15) + m_victim->getMod(Mod::THIRD_EYE_ANTICIPATE_RATE)))
+        if (xirand::GetRandomNumber(100) >= (100 - ((pastAnticipations + 1) * 15) + m_victim->getMod(Mod::THIRD_EYE_ANTICIPATE_RATE)))
         {
-            // increment power and don't remove
-            effect->SetPower(effect->GetPower() + 1);
-            // chance to counter - 25% base
-            if (xirand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
-            {
-                if (m_victim->PAI->IsEngaged())
-                {
-                    m_isCountered = true;
-                    m_isCritical  = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
-                }
-            }
-            m_anticipated = true;
-            return true;
+            m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
         }
-        m_victim->StatusEffectContainer->DelStatusEffect(EFFECT_THIRD_EYE);
-        return false;
+
+        // increment power and don't remove
+        effect->SetPower(effect->GetPower() + 1);
+        // chance to counter - 25% base
+        if (xirand::GetRandomNumber(100) < 25 + m_victim->getMod(Mod::THIRD_EYE_COUNTER_RATE))
+        {
+            if (m_victim->PAI->IsEngaged() && facing(m_victim->loc.p, m_attacker->loc.p, 40) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_SLEEP) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_LULLABY) &&
+                !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_PETRIFICATION) && !m_victim->StatusEffectContainer->HasStatusEffect(EFFECT_TERROR))
+            {
+                m_isCountered = true;
+                m_isCritical  = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
+            }
+        }
+
+        m_anticipated = true;
+        return true;
     }
     // return false;
 }
@@ -427,9 +425,11 @@ bool CAttack::CheckCounter()
         seiganChance = std::clamp<uint16>(seiganChance, 0, 100);
         seiganChance /= 4;
     }
-    if ((xirand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80) ||
-         xirand::GetRandomNumber(100) < seiganChance) &&
-        facing(m_victim->loc.p, m_attacker->loc.p, 64) && xirand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))
+    // clang-format off
+    if (((xirand::GetRandomNumber(100) < std::clamp<uint16>(m_victim->getMod(Mod::COUNTER) + meritCounter, 0, 80)) ||
+        (xirand::GetRandomNumber(100) < std::clamp<uint16>(seiganChance, 0, 80))) &&
+            (facing(m_victim->loc.p, m_attacker->loc.p, 64) && (xirand::GetRandomNumber(100) < battleutils::GetHitRate(m_victim, m_attacker))))
+    // clang-format on
     {
         m_isCountered = true;
         m_isCritical  = (xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(m_victim, m_attacker, false));
@@ -471,7 +471,7 @@ bool CAttack::CheckCover()
  *  Processes the damage for this swing.                                    *
  *                                                                      *
  ************************************************************************/
-void CAttack::ProcessDamage(bool isCritical)
+void CAttack::ProcessDamage(bool isCritical, bool isGuarded)
 {
     // Sneak attack.
     if (m_attacker->GetMJob() == JOB_THF && m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK) &&
@@ -488,23 +488,34 @@ void CAttack::ProcessDamage(bool isCritical)
     }
 
     SLOTTYPE slot = (SLOTTYPE)GetWeaponSlot();
+
+    if (m_attacker->objtype == TYPE_MOB)
+    {
+        auto* PMob    = static_cast<CBaseEntity*>(m_attacker);
+        auto* PTarget = static_cast<CBaseEntity*>(m_victim);
+        if (distance(PMob->loc.p, PTarget->loc.p) > 2)
+        {
+            slot = SLOT_RANGED;
+        }
+    }
+
     if (m_attackRound->IsH2H())
     {
         m_naturalH2hDamage = (int32)(m_attacker->GetSkill(SKILL_HAND_TO_HAND) * 0.11f) + 3;
         m_baseDamage       = m_attacker->GetMainWeaponDmg();
-        m_damage           = (uint32)(((m_baseDamage + m_naturalH2hDamage + m_trickAttackDamage + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_MAIN)));
+        m_damage           = (uint32)(((m_baseDamage + m_naturalH2hDamage + m_trickAttackDamage + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_MAIN, 0, isGuarded)));
     }
     else if (slot == SLOT_MAIN)
     {
-        m_damage = (uint32)(((m_attacker->GetMainWeaponDmg() + m_trickAttackDamage + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_MAIN)));
+        m_damage = (uint32)(((m_attacker->GetMainWeaponDmg() + m_trickAttackDamage + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_MAIN, 0, isGuarded)));
     }
     else if (slot == SLOT_SUB)
     {
-        m_damage = (uint32)(((m_attacker->GetSubWeaponDmg() + m_trickAttackDamage + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_SUB)));
+        m_damage = (uint32)(((m_attacker->GetSubWeaponDmg() + m_trickAttackDamage + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_SUB, 0, isGuarded)));
     }
-    else if (slot == SLOT_AMMO)
+    else if (slot == SLOT_AMMO || slot == SLOT_RANGED)
     {
-        m_damage = (uint32)((m_attacker->GetRangedWeaponDmg() + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_AMMO));
+        m_damage = (uint32)((m_attacker->GetRangedWeaponDmg() + battleutils::GetFSTR(m_attacker, m_victim, slot)) * battleutils::GetDamageRatio(m_attacker, m_attacker->GetBattleTarget(), isCritical, 0, SLOT_AMMO, 0, isGuarded));
     }
 
     // Apply "Double Attack" damage and "Triple Attack" damage mods
@@ -578,4 +589,47 @@ void CAttack::ProcessDamage(bool isCritical)
         }
     }
     m_isBlocked = attackutils::IsBlocked(m_attacker, m_victim);
+
+    // Apply Restraint Weaponskill Damage Modifier
+    // Effect power tracks the total bonus
+    // Effect sub power tracks remainder left over from whole percentage flooring
+    if (m_isFirstSwing && m_attacker->StatusEffectContainer->HasStatusEffect(EFFECT_RESTRAINT))
+    {
+        CStatusEffect* effect = m_attacker->StatusEffectContainer->GetStatusEffect(EFFECT_RESTRAINT);
+
+        if (effect->GetPower() < 30)
+        {
+            uint8 jpBonus = 0;
+
+            if (m_attacker->objtype == TYPE_PC)
+            {
+                jpBonus = static_cast<CCharEntity*>(m_attacker)->PJobPoints->GetJobPointValue(JP_RESTRAINT_EFFECT) * 2;
+            }
+
+            // Convert weapon delay and divide
+            // Pull remainder of previous hit's value from Effect sub Power
+            float boostPerRound = ((m_attacker->GetWeaponDelay(false) / 1000.0f) * 60.0f) / 385.0f;
+            float remainder     = effect->GetSubPower() / 100.0f;
+
+            // Cap floor at 1 WSD per hit
+            // Calculate bonuses from Enhances Restraint, Job Point upgrades, and remainder from previous hit
+            boostPerRound = std::clamp<float>(boostPerRound, 1, boostPerRound);
+            boostPerRound = (boostPerRound * (1 + m_attacker->getMod(Mod::ENHANCES_RESTRAINT) / 100.0f) * (1 + jpBonus / 100.0f)) + remainder;
+
+            // Calculate new remainder and multiply by 100 so significant digits aren't lost
+            // Floor Boost per Round
+            remainder     = (1 - (std::ceil(boostPerRound) - boostPerRound)) * 100;
+            boostPerRound = std::floor(boostPerRound);
+
+            // Cap total power to +30% WSD
+            if (effect->GetPower() + boostPerRound > 30)
+            {
+                boostPerRound = 30 - effect->GetPower();
+            }
+
+            effect->SetPower(effect->GetPower() + boostPerRound);
+            effect->SetSubPower(remainder);
+            m_attacker->addModifier(Mod::ALL_WSDMG_FIRST_HIT, boostPerRound);
+        }
+    }
 }

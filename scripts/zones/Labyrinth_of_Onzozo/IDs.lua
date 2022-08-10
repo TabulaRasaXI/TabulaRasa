@@ -86,10 +86,10 @@ zones[xi.zone.LABYRINTH_OF_ONZOZO] =
         MYSTICMAKER_PROFBLIX    = 17649693,
         UBUME                   = 17649860,
         MEGAPOD_MEGALOPS        = 17649861,
+        ONZOZO_PH               = 17649730,
     },
     npc =
     {
-        CASKET_BASE    = 17649867,
         TREASURE_CHEST = 17649900,
     },
 }

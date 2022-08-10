@@ -452,7 +452,7 @@ xi.quest.id =
         STORMS_OF_FATE                  = 86,
         MIXED_SIGNALS                   = 87,
         SHADOWS_OF_THE_DEPARTED         = 88,
-        APOCALYPSE_NIGH                 = 89,
+        APOCALYPSE_NIGH                 = 89, -- ± Converted
         LURE_OF_THE_WILDCAT             = 90, -- ±
         THE_ROAD_TO_AHT_URHGAN          = 91, -- + Converted
         CHOCOBO_ON_THE_LOOSE            = 92, -- + Converted
@@ -639,12 +639,12 @@ xi.quest.id =
         AN_UNDYING_PLEDGE               = 149,
 
         -- Misc (160-165)
-        WRATH_OF_THE_OPO_OPOS           = 160,
-        WANDERING_SOULS                 = 161,
-        SOUL_SEARCHING                  = 162,
+        WRATH_OF_THE_OPO_OPOS           = 160, -- ± Converted
+        WANDERING_SOULS                 = 161, -- ± Converted
+        SOUL_SEARCHING                  = 162, -- ± Converted
         DIVINE_MIGHT                    = 163, -- ±
         DIVINE_MIGHT_REPEAT             = 164, -- ±
-        OPEN_SESAME                     = 165,
+        OPEN_SESAME                     = 165, -- ± Converted
 
         -- Rabao (192-201)
         DONT_FORGET_THE_ANTIDOTE        = 192, -- ±
@@ -734,7 +734,7 @@ xi.quest.id =
     -----------------------------------
     [xi.quest.area[xi.quest.log_id.CRYSTAL_WAR]] =
     {
-        LOST_IN_TRANSLOCATION            = 0,  -- +
+        LOST_IN_TRANSLOCATION            = 0,  -- + Converted
         MESSAGE_ON_THE_WINDS             = 1,  -- + Converted
         THE_WEEKLY_ADVENTURER            = 2,
         HEALING_HERBS                    = 3,
@@ -785,8 +785,8 @@ xi.quest.id =
         A_JEWELERS_LAMENT                = 48,
         BENEATH_THE_MASK                 = 49,
         WHAT_PRICE_LOYALTY               = 50,
-        SONGBIRDS_IN_A_SNOWSTORM         = 51,
-        BLOOD_OF_HEROES                  = 52,
+        SONGBIRDS_IN_A_SNOWSTORM         = 51, -- + Converted
+        BLOOD_OF_HEROES                  = 52, -- + Converted
         SINS_OF_THE_MOTHERS              = 53,
         HOWL_FROM_THE_HEAVENS            = 54,
         SUCCOR_TO_THE_SIDHE              = 55,
@@ -794,8 +794,8 @@ xi.quest.id =
         SON_AND_FATHER                   = 57,
         THE_TRUTH_LIES_HID               = 58,
         BONDS_OF_MYTHRIL                 = 59,
-        CHASING_SHADOWS                  = 60,
-        FACE_OF_THE_FUTURE               = 61,
+        CHASING_SHADOWS                  = 60, -- + Converted
+        FACE_OF_THE_FUTURE               = 61, -- + Converted
         MANIFEST_DESTINY                 = 62,
         AT_JOURNEYS_END                  = 63,
         HER_MEMORIES_HOMECOMING_QUEEN    = 64,

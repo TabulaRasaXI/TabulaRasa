@@ -1,7 +1,5 @@
 -----------------------------------
---
 -- Zone: Eastern_Altepa_Desert (114)
---
 -----------------------------------
 local ID = require("scripts/zones/Eastern_Altepa_Desert/IDs")
 require("scripts/quests/i_can_hear_a_rainbow")
@@ -56,7 +54,11 @@ end
 zone_object.onZoneOut = function(player)
     if player:hasStatusEffect(xi.effect.BATTLEFIELD) then
         player:delStatusEffect(xi.effect.BATTLEFIELD)
-	end
+    end
+end
+
+zone_object.onGameDay = function()
+    SetServerVariable("[DIG]ZONE114_ITEMS", 0)
 end
 
 zone_object.onRegionEnter = function(player, region)

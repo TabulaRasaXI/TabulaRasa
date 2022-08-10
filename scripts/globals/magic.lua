@@ -23,6 +23,7 @@ local strongAffinityDmg      = {xi.mod.FIRE_AFFINITY_DMG,     xi.mod.ICE_AFFINIT
 local strongAffinityAcc      = {xi.mod.FIRE_AFFINITY_ACC,     xi.mod.ICE_AFFINITY_ACC,     xi.mod.WIND_AFFINITY_ACC,      xi.mod.EARTH_AFFINITY_ACC,     xi.mod.THUNDER_AFFINITY_ACC,       xi.mod.WATER_AFFINITY_ACC,      xi.mod.LIGHT_AFFINITY_ACC,  xi.mod.DARK_AFFINITY_ACC}
 xi.magic.resistMod           = {xi.mod.FIRE_MEVA,             xi.mod.ICE_MEVA,             xi.mod.WIND_MEVA,              xi.mod.EARTH_MEVA,             xi.mod.THUNDER_MEVA,               xi.mod.WATER_MEVA,              xi.mod.LIGHT_MEVA,          xi.mod.DARK_MEVA}
 xi.magic.specificDmgTakenMod = {xi.mod.FIRE_SDT,              xi.mod.ICE_SDT,              xi.mod.WIND_SDT,               xi.mod.EARTH_SDT,              xi.mod.THUNDER_SDT,                xi.mod.WATER_SDT,               xi.mod.LIGHT_SDT,           xi.mod.DARK_SDT}
+xi.magic.eleEvaMult          = {xi.mod.FIRE_EEM,              xi.mod.ICE_EEM,              xi.mod.WIND_EEM,               xi.mod.EARTH_EEM,              xi.mod.THUNDER_EEM,                xi.mod.WATER_EEM,               xi.mod.LIGHT_EEM,           xi.mod.DARK_EEM}
 xi.magic.absorbMod           = {xi.mod.FIRE_ABSORB,           xi.mod.ICE_ABSORB,           xi.mod.WIND_ABSORB,            xi.mod.EARTH_ABSORB,           xi.mod.LTNG_ABSORB,                xi.mod.WATER_ABSORB,            xi.mod.LIGHT_ABSORB,        xi.mod.DARK_ABSORB}
 local nullMod                = {xi.mod.FIRE_NULL,             xi.mod.ICE_NULL,             xi.mod.WIND_NULL,              xi.mod.EARTH_NULL,             xi.mod.LTNG_NULL,                  xi.mod.WATER_NULL,              xi.mod.LIGHT_NULL,          xi.mod.DARK_NULL}
 local blmMerit               = {xi.merit.FIRE_MAGIC_POTENCY,  xi.merit.ICE_MAGIC_POTENCY,  xi.merit.WIND_MAGIC_POTENCY,   xi.merit.EARTH_MAGIC_POTENCY,  xi.merit.LIGHTNING_MAGIC_POTENCY,  xi.merit.WATER_MAGIC_POTENCY}
@@ -121,8 +122,12 @@ local function getSpellBonusAcc(caster, target, spell, params)
     if casterJob == xi.job.DRK then
         -- Add MACC for Dark Seal
         if skill == xi.skill.DARK_MAGIC and caster:hasStatusEffect(xi.effect.DARK_SEAL) then
-            magicAccBonus = magicAccBonus + 256
+            magicAccBonus = magicAccBonus + 75
         end
+    end
+
+    if caster:hasStatusEffect(xi.effect.ELEMENTAL_SEAL) then
+        magicAccBonus = magicAccBonus + 75
     end
 
     if casterJob == xi.job.RDM then
@@ -169,14 +174,14 @@ local function getSpellBonusAcc(caster, target, spell, params)
     return magicAccBonus
 end
 
-local function calculateMagicHitRate(magicacc, magiceva, dLvl)
+local function calculateMagicHitRate(magicacc, magiceva)
     local p = 0
     local magicAccDiff = magicacc - magiceva
 
     if magicAccDiff < 0 then
-        p = utils.clamp(50 + math.floor(magicAccDiff / 2), 5, 95)
+        p = utils.clamp(((50 + math.floor(magicAccDiff / 2))), 5, 95)
     else
-        p = utils.clamp(50 + magicAccDiff, 5, 95)
+        p = utils.clamp(((50 + magicAccDiff)), 5, 95)
     end
 
     return p
@@ -503,12 +508,12 @@ function applyResistanceEffect(caster, target, spell, params)
     end
 
     if effect ~= nil then
-        effectRes = effectRes - getEffectResistance(target, effect)
+        effectRes = effectRes - getEffectResistance(target, effect, false, caster)
     end
 
     local p = getMagicHitRate(caster, target, skill, element, effectRes, magicaccbonus, diff)
 
-    return getMagicResist(p)
+    return getMagicResist(p, target,params.element)
 end
 
 -- Applies resistance for things that may not be spells - ie. Quick Draw
@@ -521,7 +526,7 @@ function applyResistanceAddEffect(player, target, element, bonus)
 
     local p = getMagicHitRate(player, target, 0, element, 0, bonus)
 
-    return getMagicResist(p)
+    return getMagicResist(p, target, element)
 end
 
 function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc, dStat)
@@ -607,8 +612,8 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     end
 
     if element ~= xi.magic.ele.NONE then
-        if target:isMob() then
-            tryBuildResistance(target, xi.magic.resistMod[element], nil, false)
+        if target:isMob() and target:isNM() then
+            tryBuildResistance(target, xi.magic.resistMod[element], nil, caster)
         end
 
         resMod = target:getMod(xi.magic.resistMod[element])
@@ -634,17 +639,30 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     local maccFood = magicacc * (caster:getMod(xi.mod.FOOD_MACCP)/100)
     magicacc = magicacc + utils.clamp(maccFood, 0, caster:getMod(xi.mod.FOOD_MACC_CAP))
 
-    return calculateMagicHitRate(magicacc, magiceva, dLvl)
+    return calculateMagicHitRate(magicacc, magiceva)
 end
 
 -- Returns resistance value from given magic hit rate (p)
-function getMagicResist(magicHitRate)
+function getMagicResist(magicHitRate, target, element)
+    local evaMult = 1
 
-    local p = magicHitRate / 100
+    if target ~= nil and element ~= nil and target:getObjType() == xi.objType.MOB then
+        evaMult = target:getMod(xi.magic.eleEvaMult[element]) / 100
+        local sortEvaMult = {1.50, 1.30, 1.15, 1.00, 0.85, 0.70, 0.60, 0.50, 0.40, 0.30, 0.25, 0.20, 0.15, 0.10, 0.05}
+
+        for _, tier in pairs(sortEvaMult) do -- Finds the highest tier for the resist.
+            if evaMult > tier then
+                evaMult = tier
+                break
+            end
+        end
+    end
+
+    local p = utils.clamp(((magicHitRate * evaMult) / 100), 0.05, 0.95)
     local resist = 1
 
     -- Resistance thresholds based on p.  A higher p leads to lower resist rates, and a lower p leads to higher resist rates.
-    local half      = (1 - p)
+    local half     = (1 - p)
     local quart     = ((1 - p)^2)
     local eighth    = ((1 - p)^3)
     local sixteenth = ((1 - p)^4)
@@ -666,22 +684,15 @@ function getMagicResist(magicHitRate)
     return resist
 end
 
-function tryBuildResistance(target, resistance, isEnfeeb)
-    local isNM = target:isNM()
+function tryBuildResistance(target, resistance, isEnfeeb, caster)
     local baseRes = target:getLocalVar(string.format("[RES]Base_%s", resistance))
     local castCool = target:getLocalVar(string.format("[RES]CastCool_%s", resistance))
     local builtPercent = target:getLocalVar(string.format("[RES]BuiltPercent_%s", resistance))
     local coolTime = 20
-    local buildPercent = 0
+    local buildPercent = 40
 
     if baseRes == 0 then
         target:setLocalVar(string.format("[RES]Base_%s", resistance), target:getMod(resistance))
-    end
-
-    if isNM == true then
-        buildPercent = 40 -- Equivalent to 4% Resistance Build (40/1000)
-    else
-        buildPercent = 20 -- Equivalent to 2% Resistance Build (20/1000)
     end
 
     if not isEnfeeb then
@@ -706,7 +717,7 @@ end
 
 -- Returns the amount of resistance the
 -- target has to the given effect (stun, sleep, etc..)
-function getEffectResistance(target, effect, returnBuild)
+function getEffectResistance(target, effect, returnBuild, caster)
     local effectres = 0
     local buildres = 0
     local statusres = target:getMod(xi.mod.STATUSRES)
@@ -746,8 +757,8 @@ function getEffectResistance(target, effect, returnBuild)
         return buildres
     end
 
-    if target:isMob() and effectres ~= 0 then
-        tryBuildResistance(target, effectres, true)
+    if target:isMob() and target:isNM() and effectres ~= 0 then
+        tryBuildResistance(target, effectres, true, caster)
     end
 
     if effectres ~= 0 then
@@ -781,7 +792,7 @@ function handleAfflatusMisery(caster, spell, dmg)
     return dmg
 end
 
- function finalMagicAdjustments(caster, target, spell, dmg)
+function finalMagicAdjustments(caster, target, spell, dmg)
     --Handles target's HP adjustment and returns UNSIGNED dmg (absorb message is set in this function)
 
     -- handle multiple targets
@@ -1415,10 +1426,10 @@ function calculateDuration(duration, magicSkill, spellGroup, caster, target, use
     return math.floor(duration)
 end
 
-function calculateBuildDuration(target, duration, effect)
+function calculateBuildDuration(target, duration, effect, caster)
 
     if target:isMob() then
-        local buildRes = getEffectResistance(target, effect, true)
+        local buildRes = getEffectResistance(target, effect, true, caster)
 
         if target:getMod(buildRes) ~= 0 then
             local builtRes = target:getLocalVar(string.format("[RESBUILD]Base_%s", buildRes))
