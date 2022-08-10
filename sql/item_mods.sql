@@ -667,7 +667,8 @@ INSERT INTO `item_mods` VALUES (10373,115,12); -- ELEM: 12
 INSERT INTO `item_mods` VALUES (10382,1,1); -- DEF: 1
 
 -- Dream Mittens +1
-INSERT INTO `item_mods` VALUES (10383,1,2); -- DEF: 2
+INSERT INTO `item_mods` VALUES (10383,1,2);    -- DEF: 2
+INSERT INTO `item_mods` VALUES (10383,947,30); -- Dream mittens +1 invisible duration +30
 
 -- Cumulus Masque
 INSERT INTO `item_mods` VALUES (10384,1,1); -- DEF: 1
@@ -18839,6 +18840,7 @@ INSERT INTO `item_mods` VALUES (13908,2,20);   -- HP: 20
 INSERT INTO `item_mods` VALUES (13908,5,20);   -- MP: 20
 INSERT INTO `item_mods` VALUES (13908,114,10); -- ENFEEBLE: 10
 INSERT INTO `item_mods` VALUES (13908,370,1);  -- REGEN: 1
+INSERT INTO `item_mods` VALUES (13908,53,1);   -- DRAGON AFFINITY: 1
 
 -- Blood Mask
 INSERT INTO `item_mods` VALUES (13909,1,35);   -- DEF: 35
@@ -18846,6 +18848,7 @@ INSERT INTO `item_mods` VALUES (13909,2,22);   -- HP: 22
 INSERT INTO `item_mods` VALUES (13909,5,22);   -- MP: 22
 INSERT INTO `item_mods` VALUES (13909,114,11); -- ENFEEBLE: 11
 INSERT INTO `item_mods` VALUES (13909,370,1);  -- REGEN: 1
+INSERT INTO `item_mods` VALUES (13909,53,1);   -- DRAGON AFFINITY: 1
 
 -- Kaiser Schaller
 INSERT INTO `item_mods` VALUES (13911,1,41);  -- DEF: 41
@@ -19660,6 +19663,7 @@ INSERT INTO `item_mods` VALUES (14058,5,20);   -- MP: 20
 INSERT INTO `item_mods` VALUES (14058,24,10);  -- RATT: 10
 INSERT INTO `item_mods` VALUES (14058,26,10);  -- RACC: 10
 INSERT INTO `item_mods` VALUES (14058,116,10); -- DARK: 10
+INSERT INTO `item_mods` VALUES (14058,53,1);   -- DRAGON AFFINITY: 1
 
 -- Blood Finger Gauntlets
 INSERT INTO `item_mods` VALUES (14059,1,27);   -- DEF: 27
@@ -19668,6 +19672,7 @@ INSERT INTO `item_mods` VALUES (14059,5,22);   -- MP: 22
 INSERT INTO `item_mods` VALUES (14059,24,11);  -- RATT: 11
 INSERT INTO `item_mods` VALUES (14059,26,11);  -- RACC: 11
 INSERT INTO `item_mods` VALUES (14059,116,11); -- DARK: 11
+INSERT INTO `item_mods` VALUES (14059,53,1);   -- DRAGON AFFINITY: 1
 
 -- Timarli Dastanas
 INSERT INTO `item_mods` VALUES (14060,1,21);    -- DEF: 21
@@ -20205,6 +20210,7 @@ INSERT INTO `item_mods` VALUES (14160,16,20); -- ICE_RES: 20
 INSERT INTO `item_mods` VALUES (14160,17,20); -- WIND_RES: 20
 INSERT INTO `item_mods` VALUES (14160,18,20); -- EARTH_RES: 20
 INSERT INTO `item_mods` VALUES (14160,21,20); -- LIGHT_RES: 20
+INSERT INTO `item_mods` VALUES (14160,53,1);   -- DRAGON AFFINITY: 1
 
 -- Blood Greaves
 INSERT INTO `item_mods` VALUES (14161,1,25);  -- DEF: 25
@@ -20216,6 +20222,7 @@ INSERT INTO `item_mods` VALUES (14161,16,21); -- ICE_RES: 21
 INSERT INTO `item_mods` VALUES (14161,17,21); -- WIND_RES: 21
 INSERT INTO `item_mods` VALUES (14161,18,21); -- EARTH_RES: 21
 INSERT INTO `item_mods` VALUES (14161,21,21); -- LIGHT_RES: 21
+INSERT INTO `item_mods` VALUES (14161,53,1);   -- DRAGON AFFINITY: 1
 
 -- Agronas Leggings
 INSERT INTO `item_mods` VALUES (14162,1,15);     -- DEF: 15
@@ -21425,6 +21432,7 @@ INSERT INTO `item_mods` VALUES (14367,5,40);      -- MP: 40
 INSERT INTO `item_mods` VALUES (14367,12,10);     -- INT: 10
 INSERT INTO `item_mods` VALUES (14367,13,10);     -- MND: 10
 INSERT INTO `item_mods` VALUES (14367,162,-1000); -- DMGBREATH: -1000
+INSERT INTO `item_mods` VALUES (14367,53,1);      -- DRAGON AFFINITY: 1
 
 -- Blood Scale Mail
 INSERT INTO `item_mods` VALUES (14368,1,53);      -- DEF: 53
@@ -21433,6 +21441,7 @@ INSERT INTO `item_mods` VALUES (14368,5,42);      -- MP: 42
 INSERT INTO `item_mods` VALUES (14368,12,11);     -- INT: 11
 INSERT INTO `item_mods` VALUES (14368,13,11);     -- MND: 11
 INSERT INTO `item_mods` VALUES (14368,162,-1100); -- DMGBREATH: -1100
+INSERT INTO `item_mods` VALUES (14368,53,1);      -- DRAGON AFFINITY: 1
 
 -- Arcane Robe
 INSERT INTO `item_mods` VALUES (14369,1,51);  -- DEF: 51
@@ -28786,7 +28795,8 @@ INSERT INTO `item_mods` VALUES (15751,16,11); -- ICE_RES: 11
 INSERT INTO `item_mods` VALUES (15752,1,1); -- DEF: 1
 
 -- Dream Boots +1
-INSERT INTO `item_mods` VALUES (15753,1,2); -- DEF: 2
+INSERT INTO `item_mods` VALUES (15753,1,2);    -- DEF: 2
+INSERT INTO `item_mods` VALUES (15753,946,30); -- dream boots +1 sneak duration +30
 
 -- Sprinters Shoes
 INSERT INTO `item_mods` VALUES (15754,1,1); -- DEF: 1
@@ -30880,7 +30890,8 @@ INSERT INTO `item_mods` VALUES (16276,71,1);  -- MPHEAL: 1
 INSERT INTO `item_mods` VALUES (16276,72,1);  -- HPHEAL: 1
 
 -- Bandolero Scarf
-INSERT INTO `item_mods` VALUES (16277,68,5); -- EVA: 5
+INSERT INTO `item_mods` VALUES (16277,68,5);   -- EVA: 5
+INSERT INTO `item_mods` VALUES (16277,897,95); -- Gilfinder + 95
 
 -- Pipers Torque
 INSERT INTO `item_mods` VALUES (16278,14,5);  -- CHR: 5
@@ -38618,7 +38629,7 @@ INSERT INTO `item_mods` VALUES (19023,5,20);  -- MP: 20
 INSERT INTO `item_mods` VALUES (19023,27,-2); -- ENMITY: -2
 
 -- Sword Strap
-INSERT INTO `item_mods` VALUES (19024,380,3); -- DELAYP: 3
+INSERT INTO `item_mods` VALUES (19024,380,-3); -- DELAYP: 3
 
 -- Pole Grip
 INSERT INTO `item_mods` VALUES (19025,288,2); -- DOUBLE_ATTACK: 2
