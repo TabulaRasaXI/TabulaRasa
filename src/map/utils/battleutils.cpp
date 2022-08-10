@@ -3603,6 +3603,15 @@ namespace battleutils
                 break;
         }
 
+        if (PAttacker->objtype == TYPE_PC && PAttacker->getMod(Mod::WYRMAL_ABJ_KILLER_EFFECT) > 0)
+        {
+            // take the max of humanoid or dragon killer
+            KillerEffect = std::max<int32>(KillerEffect, PDefender->getMod(Mod::DRAGON_KILLER));
+        }
+
+        if (PDefender->objtype == TYPE_PC && PDefender->GetMLevel() > 74 && PDefender->GetMJob() == JOB_BST)
+            KillerEffect += ((CCharEntity*)PDefender)->PMeritPoints->GetMeritValue(MERIT_KILLER_EFFECTS, ((CCharEntity*)PDefender));
+
         // Add intimidation rate from Bully
         if (CStatusEffect* PDoubtEffect = PAttacker->StatusEffectContainer->GetStatusEffect(EFFECT_DOUBT))
         {
@@ -4295,8 +4304,14 @@ namespace battleutils
             minSlope        = (minZpoint - mobZ) / (minXpoint - mobX);
         }
 
-        auto checkPosition = [&](CBattleEntity* PEntity) -> bool
+        // Determines if a given party/alliance member is a valid candidate for Trick Attack
+        auto isValidTrickAttackHelper = [&](CBattleEntity* PEntity) -> bool
         {
+            // Dead PEntity should not be TA-able
+            if (PEntity->isDead())
+            {
+                return false;
+            }
             if (taUser->id != PEntity->id && distance(PEntity->loc.p, PMob->loc.p) <= distance(taUser->loc.p, PMob->loc.p))
             {
                 float memberXdif = PEntity->loc.p.x - mobX;
@@ -4328,7 +4343,7 @@ namespace battleutils
             {
                 for (auto* PTrust : PChar->PTrusts)
                 {
-                    if (checkPosition(PTrust))
+                    if (isValidTrickAttackHelper(PTrust))
                     {
                         return PTrust;
                     }
@@ -4347,7 +4362,7 @@ namespace battleutils
                     for (std::size_t i = 0; i < a->members.size(); ++i)
                     {
                         CBattleEntity* member = a->members.at(i);
-                        if (checkPosition(member))
+                        if (isValidTrickAttackHelper(member))
                         {
                             return member;
                         }
@@ -4363,7 +4378,7 @@ namespace battleutils
             { // No alliance
                 for (auto member : taUser->PParty->members)
                 {
-                    if (checkPosition(member))
+                    if (isValidTrickAttackHelper(member))
                     {
                         return member;
                     }

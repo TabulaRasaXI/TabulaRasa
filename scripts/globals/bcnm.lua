@@ -24,7 +24,7 @@ local battlefields =
     [xi.zone.BEARCLAW_PINNACLE] =
     {
         { 0,  640,    0},   -- Flames of the Dead (PM5-3 U3)
-     -- { 1,  641,    0},   -- Follow the White Rabbit (ENM)
+        { 1,  641,    0},   -- Follow the White Rabbit (ENM)
      -- { 2,  642,    0},   -- When Hell Freezes Over (ENM)
         { 3,  643,    0},   -- Brothers (ENM)
         { 4,  644,    0},   -- Holy Cow (ENM)
@@ -105,8 +105,8 @@ local battlefields =
     {
         { 0,  960,    0},   -- Ancient Vows (PM2-5)
         { 1,  961,    0},   -- The Savage (PM4-2)
-     -- { 2,  962,    0},   -- Fire in the Sky (ENM)
-     -- { 3,  963,    0},   -- Bad Seed (ENM)
+        { 2,  962,    0},   -- Fire in the Sky (ENM)
+        { 3,  963,    0},   -- Bad Seed (ENM)
      -- { 4,  964,    0},   -- Bugard in the Clouds (ENM)
      -- { 5,  965,    0},   -- Beloved of the Atlantes (ENM)
         { 6,  966,    0},   -- Uninvited Guests (Quest)
