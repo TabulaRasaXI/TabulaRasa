@@ -28,11 +28,16 @@ zone_object.onInitialize = function(zone)
 
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
 
-    local respawnTime = 900 + math.random(0, 6) * 1800 -- 0:15 to 3:15 spawn timer in 30 minute intervals
-    for offset = 1, 10 do
-        GetMobByID(ID.mob.KING_ARTHRO - offset):setRespawnTime(respawnTime)
+    local respawnTime = GetServerVariable("[Spawn]King_Arthro_Crabs")
+    if respawnTime > os.time() then
+        for offset = 1, 10 do
+            GetMobByID(ID.mob.KING_ARTHRO - offset):setRespawnTime(respawnTime - os.time())
+        end
+    else
+        for offset = 1, 10 do
+            SpawnMob(ID.mob.KING_ARTHRO - offset)
+        end
     end
-
     xi.voidwalker.zoneOnInit(zone)
 end
 
