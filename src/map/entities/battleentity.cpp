@@ -194,7 +194,14 @@ void CBattleEntity::UpdateHealth()
 
 uint8 CBattleEntity::GetHPP() const
 {
-    return (uint8)ceil(((float)health.hp / (float)GetMaxHP()) * 100);
+    uint8 hpp = (uint8)floor(((float)health.hp / (float)GetMaxHP()) * 100);
+    // handle the edge case where a floor would show a mob with 1/1000 hp as 0
+    if (hpp == 0 && health.hp > 0)
+    {
+        hpp = 1;
+    }
+
+    return hpp;
 }
 
 int32 CBattleEntity::GetMaxHP() const
@@ -2083,6 +2090,11 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
 
             // Check & Handle Afflatus Misery Accuracy Bonus
             battleutils::HandleAfflatusMiseryAccuracyBonus(this);
+
+            if (PTarget->objtype == TYPE_PC)
+            {
+                charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+            }
         }
 
         // If we didn't hit at all, set param to 0 if we didn't blink any shadows.

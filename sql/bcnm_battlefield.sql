@@ -1141,6 +1141,24 @@ INSERT INTO `bcnm_battlefield` VALUES (611,3,17641496,3);
 INSERT INTO `bcnm_battlefield` VALUES (640,1,16801793,3); -- flames_for_the_dead
 INSERT INTO `bcnm_battlefield` VALUES (640,2,16801794,3);
 INSERT INTO `bcnm_battlefield` VALUES (640,3,16801795,3);
+INSERT INTO `bcnm_battlefield` VALUES (641,1,16801796,3); -- Follow the White Rabbit
+INSERT INTO `bcnm_battlefield` VALUES (641,1,16801797,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,1,16801798,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,1,16801799,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,1,16801800,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,1,16801801,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,2,16801803,3);
+INSERT INTO `bcnm_battlefield` VALUES (641,2,16801804,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,2,16801805,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,2,16801806,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,2,16801807,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,2,16801808,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,3,16801810,3);
+INSERT INTO `bcnm_battlefield` VALUES (641,3,16801811,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,3,16801812,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,3,16801813,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,3,16801814,2);
+INSERT INTO `bcnm_battlefield` VALUES (641,3,16801815,2);
 INSERT INTO `bcnm_battlefield` VALUES (643,1,16801841,3); -- brothers
 INSERT INTO `bcnm_battlefield` VALUES (643,1,16801842,3);
 INSERT INTO `bcnm_battlefield` VALUES (643,2,16801844,3);
@@ -1382,6 +1400,12 @@ INSERT INTO `bcnm_battlefield` VALUES (960,3,16904201,3);
 INSERT INTO `bcnm_battlefield` VALUES (961,1,16904202,3); -- savage
 INSERT INTO `bcnm_battlefield` VALUES (961,2,16904203,3);
 INSERT INTO `bcnm_battlefield` VALUES (961,3,16904204,3);
+INSERT INTO `bcnm_battlefield` VALUES (962,1,16904211,3); -- Fire in the Sky
+INSERT INTO `bcnm_battlefield` VALUES (962,2,16904213,3);
+INSERT INTO `bcnm_battlefield` VALUES (962,3,16904215,3);
+INSERT INTO `bcnm_battlefield` VALUES (963,1,16904205,3); -- Bad Seed
+INSERT INTO `bcnm_battlefield` VALUES (963,2,16904207,3);
+INSERT INTO `bcnm_battlefield` VALUES (963,3,16904209,3);
 INSERT INTO `bcnm_battlefield` VALUES (966,1,16904232,0); -- uninvited guests
 INSERT INTO `bcnm_battlefield` VALUES (966,1,16904233,3);
 INSERT INTO `bcnm_battlefield` VALUES (966,1,16904234,2);

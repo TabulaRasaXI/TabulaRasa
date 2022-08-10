@@ -1107,7 +1107,10 @@ INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1746);
 -- INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1748);
 -- INSERT INTO `mob_skill_lists` VALUES ('Troll',246,1749);
 -- 247: Tube
--- 248: free
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,567);
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,568);
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,569);
+INSERT INTO `mob_skill_lists` VALUES ('Razon',248,570);
 INSERT INTO `mob_skill_lists` VALUES ('Ullikummi',249,1035);
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite_shell',250,1571); -- gas_shell
 INSERT INTO `mob_skill_lists` VALUES ('Uragnite_shell',250,1572); -- venom_shell
@@ -1907,10 +1910,11 @@ INSERT INTO `mob_skill_lists` VALUES ('CureRabbit',404,257);
 INSERT INTO `mob_skill_lists` VALUES ('CureRabbit',404,258);
 INSERT INTO `mob_skill_lists` VALUES ('CureRabbit',404,259);
 INSERT INTO `mob_skill_lists` VALUES ('CureRabbit',404,323);
-INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,257);
-INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,259);
-INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,323);
-INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,661);
+INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,257); -- foot kick
+INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,259); -- whirl claws
+INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,323); -- wild carrot
+INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,661); -- snow cloud
+INSERT INTO `mob_skill_lists` VALUES ('SnowRabbit',405,1362); -- wild ginseng
 INSERT INTO `mob_skill_lists` VALUES ('Seed_Mandragora',406,2410);
 INSERT INTO `mob_skill_lists` VALUES ('Seed_Orc',407,605);
 INSERT INTO `mob_skill_lists` VALUES ('Seed_Orc',407,606);
@@ -3872,8 +3876,13 @@ INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1355);
 INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1356);
 INSERT INTO `mob_skill_lists` VALUES ('Jailer_of_Hope', 1202, 1358);
 INSERT INTO `mob_skill_lists` VALUES ('Zipacna',1203,678);
+INSERT INTO `mob_skill_lists` VALUES ('EldritchEdge',1204,397);
+INSERT INTO `mob_skill_lists` VALUES ('DynastBeetle',1205,341);
+INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,452); -- Screwdriver
+INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,453); -- Water Wall
+INSERT INTO `mob_skill_lists` VALUES ('Barbastelle',1207,392); -- Ultrasonics
 
--- Next available ID: 1204
+-- Next available ID: 1208
 
 -- ------------------------------------------------------------
 -- Start of Ambuscade section
