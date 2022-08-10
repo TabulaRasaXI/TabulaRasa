@@ -20,7 +20,7 @@ xi.eraShops.Mjoll =
     5063,   1000, 3, -- Scroll of Ice Threnody
 }
 
-xi.customShop.Sororo =
+xi.eraShops.Sororo =
 {
     4641,  1165, 1, -- Diaga
     4662,  7025, 1, -- Stoneskin

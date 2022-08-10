@@ -45,9 +45,11 @@ entity.onMobDespawn = function(mob)
 
     -- Set respawn of 21:05 to 24:05
     local respawnTime = 75900 + math.random(0, 6) * 1800 -- 21:05 to 24:05 respawn timer in 30 minute intervals
+    print(respawnTime)
     for offset = 1, 10 do
         GetMobByID(kingArthroID - offset):setRespawnTime(respawnTime)
     end
+    SetServerVariable("[Spawn]King_Arthro_Crabs", os.time() + respawnTime)
 end
 
 return entity
