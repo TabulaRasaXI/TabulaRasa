@@ -325,10 +325,11 @@ INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,284);
 INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,285);
 INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,286);
 INSERT INTO `mob_skill_lists` VALUES ('Dhalmel',80,287);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,362);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,363);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,364);
-INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,365);
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,362); -- double claw
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,363); -- grapple
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,364); -- filamented hold
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,365); -- spinning top
+INSERT INTO `mob_skill_lists` VALUES ('Diremite',81,1361); -- Viscid Secretion
 INSERT INTO `mob_skill_lists` VALUES ('Djinn',82,2216);
 INSERT INTO `mob_skill_lists` VALUES ('Djinn',82,2217);
 INSERT INTO `mob_skill_lists` VALUES ('Djinn',82,2218);
@@ -423,11 +424,11 @@ INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,371);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,372);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,373);
 INSERT INTO `mob_skill_lists` VALUES ('IceLizard',97,621);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,515);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,516);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,517);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,518);
-INSERT INTO `mob_skill_lists` VALUES ('Eft',98,519);
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,515); -- toxic spit
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,516); -- geist wall
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,517); -- numbing noise
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,518); -- nimble snap
+INSERT INTO `mob_skill_lists` VALUES ('Eft',98,519); -- cyclotail
 -- 99 to 106: Elementals
 INSERT INTO `mob_skill_lists` VALUES ('Eruca',107,344);
 INSERT INTO `mob_skill_lists` VALUES ('Eruca',107,346);
@@ -1947,7 +1948,18 @@ INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1242); -- empty cutter
 INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1243); -- trinary tap
 INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1251); -- trinary tap
 INSERT INTO `mob_skill_lists` VALUES ('Cogitator',413,1252); -- shadow spread
--- 414 to 431: free
+-- 414 to 429: free
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,49); -- Power Slash
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,50); -- Frostbite
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,51); -- Freezebite
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,52); -- Shockwave
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,53); -- Crescent Moon
+INSERT INTO `mob_skill_lists` VALUES ('Automaton_Assault',430,54); -- Sickle Moon
+INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,396); -- Smite of Fury
+INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,397); -- Flurry of Rage
+INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,398); -- Whispers of ire
+INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,513); -- Smite of Rage
+INSERT INTO `mob_skill_lists` VALUES ('Gladiatorial_Weapon',431,514); -- Whirl of Rage
 INSERT INTO `mob_skill_lists` VALUES ('Gilagoge_Tlugvi',432,332); -- entangle
 INSERT INTO `mob_skill_lists` VALUES ('Goga_Tlugvi',433,2162); -- leafstorm
 INSERT INTO `mob_skill_lists` VALUES ('Ulagohvsdi_Tlugvi',434,2162); -- pinecone bomb
@@ -3881,6 +3893,7 @@ INSERT INTO `mob_skill_lists` VALUES ('DynastBeetle',1205,341);
 INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,452); -- Screwdriver
 INSERT INTO `mob_skill_lists` VALUES ('Swamfisk',1206,453); -- Water Wall
 INSERT INTO `mob_skill_lists` VALUES ('Barbastelle',1207,392); -- Ultrasonics
+INSERT INTO `mob_skill_lists` VALUES ('Blighting_Brand',1208,398);
 
 -- Next available ID: 1208
 

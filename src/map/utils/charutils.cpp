@@ -2916,7 +2916,19 @@ namespace charutils
             // Add 79 to get the modifier ID
             skillBonus += PChar->getMod(static_cast<Mod>(i + 79));
 
-            PChar->WorkingSkills.rank[i] = battleutils::GetSkillRank((SKILLTYPE)i, PChar->GetMJob());
+            uint8 mainSkillRank = battleutils::GetSkillRank((SKILLTYPE)i, PChar->GetMJob());
+            uint8 subSkillRank  = battleutils::GetSkillRank((SKILLTYPE)i, PChar->GetSJob());
+
+            PChar->WorkingSkills.rank[i] = mainSkillRank;
+
+            if (mainSkillRank != 0)
+            {
+                PChar->RealSkills.rank[i] = mainSkillRank;
+            }
+            else
+            {
+                PChar->RealSkills.rank[i] = subSkillRank;
+            }
 
             if (MaxMSkill != 0)
             {
@@ -6304,9 +6316,18 @@ namespace charutils
                                 "boundary = %u "
                                 "WHERE charid = %u;";
 
-            sql->Query(Query, PChar->loc.destination,
-                       (PChar->m_moghouseID || PChar->loc.destination == PChar->getZone()) ? PChar->getZone() : PChar->loc.prevzone, PChar->loc.p.rotation,
-                       PChar->loc.p.x, PChar->loc.p.y, PChar->loc.p.z, PChar->m_moghouseID, PChar->loc.boundary, PChar->id);
+            // Fix so that pos_prevzone is correctly saved into the database
+
+            sql->Query(Query,
+                       PChar->loc.destination,
+                       (PChar->m_moghouseID || PChar->loc.destination != PChar->getZone()) ? PChar->getZone() : PChar->loc.prevzone,
+                       PChar->loc.p.rotation,
+                       PChar->loc.p.x,
+                       PChar->loc.p.y,
+                       PChar->loc.p.z,
+                       PChar->m_moghouseID,
+                       PChar->loc.boundary,
+                       PChar->id);
         }
         else
         {
