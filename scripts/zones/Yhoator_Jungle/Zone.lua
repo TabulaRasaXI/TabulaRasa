@@ -12,6 +12,7 @@ require("scripts/globals/helm")
 require("scripts/globals/zone")
 require("scripts/globals/beastmentreasure")
 require("scripts/missions/amk/helpers")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -21,7 +22,7 @@ end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.WOODLAND_SAGE)
-    GetMobByID(ID.mob.WOODLAND_SAGE):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.WOODLAND_SAGE)
 
     if xi.settings.main.ENABLE_WOTG == 1 then
         UpdateNMSpawnPoint(ID.mob.POWDERER_PENNY)
@@ -32,7 +33,7 @@ zone_object.onInitialize = function(zone)
     GetMobByID(ID.mob.BISQUE_HEELED_SUNBERRY):setRespawnTime(math.random(900, 10800))
 
     UpdateNMSpawnPoint(ID.mob.BRIGHT_HANDED_KUNBERRY)
-    GetMobByID(ID.mob.BRIGHT_HANDED_KUNBERRY):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.BRIGHT_HANDED_KUNBERRY)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 

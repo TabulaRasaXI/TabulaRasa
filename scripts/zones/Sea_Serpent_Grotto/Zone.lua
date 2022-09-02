@@ -6,6 +6,7 @@
 local ID = require("scripts/zones/Sea_Serpent_Grotto/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/treasure")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -23,7 +24,7 @@ zone_object.onInitialize = function(zone)
         DespawnMob(mantaTwo)
         SpawnMob(mantaOne)
     end
-
+    xi.mob.NMPersistCache(ID.mob.OCEAN_SAHAGIN)
     xi.treasure.initZone(zone)
 end
 

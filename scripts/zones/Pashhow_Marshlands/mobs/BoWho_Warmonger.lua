@@ -5,6 +5,7 @@
 require("scripts/globals/regimes")
 mixins = {require("scripts/mixins/job_special")}
 local ID = require("scripts/zones/Pashhow_Marshlands/IDs")
+require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
@@ -61,7 +62,8 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(75600 + math.random(600, 900)) -- 21 hours, plus 10 to 15 min
+    local respawn = 75600 + math.random(600, 900) -- 21 hours, plus 10 to 15 min
+    xi.mob.NMPersist(mob,respawn)
     DespawnMob(ID.mob.BOWHO_GUARD1)
     DespawnMob(ID.mob.BOWHO_GUARD2)
 end
