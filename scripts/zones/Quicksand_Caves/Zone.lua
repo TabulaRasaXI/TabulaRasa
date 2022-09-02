@@ -10,6 +10,7 @@ require("scripts/globals/npc_util")
 require("scripts/globals/settings")
 require("scripts/globals/treasure")
 require("scripts/globals/status")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -35,6 +36,7 @@ zone_object.onInitialize = function(zone)
     zone:registerRegion(32, 215, 6, -17, 217, 8, -15)     -- K-6 (Map 3)
     zone:registerRegion(33, -297, 6, 415, -295, 8, 417)   -- E-7 (Map 6)
     zone:registerRegion(34, -137, 6, -177, -135, 8, -175) -- G-7 (Map 8)
+    xi.mob.NMPersistCache(ID.mob.ANTICAN_CONSUL)
 
     xi.treasure.initZone(zone)
 

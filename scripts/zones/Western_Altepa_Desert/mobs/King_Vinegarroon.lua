@@ -65,8 +65,7 @@ end
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
     local respawn = 75600 -- 21h
-    mob:setRespawnTime(respawn)
-    mob:setLocalVar("respawn", os.time() + respawn)
+    SetServerVariable(string.format("[SPAWN]%s", mob:getName()), respawn + os.time())
     DisallowRespawn(mob:getID(), true)
 end
 

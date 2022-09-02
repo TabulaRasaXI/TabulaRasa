@@ -7,6 +7,7 @@ require("scripts/globals/chocobo_digging")
 require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/missions/amk/helpers")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -21,10 +22,10 @@ zone_object.onInitialize = function(zone)
     end
 
     UpdateNMSpawnPoint(ID.mob.CACTROT_RAPIDO)
-    GetMobByID(ID.mob.CACTROT_RAPIDO):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.CACTROT_RAPIDO)
 
     UpdateNMSpawnPoint(ID.mob.CENTURIO_XII_I)
-    GetMobByID(ID.mob.CENTURIO_XII_I):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.CENTURIO_XII_I)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.chocobo.initZone(zone)

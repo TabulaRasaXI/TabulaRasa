@@ -4,6 +4,7 @@
 -----------------------------------
 require("scripts/globals/pathfind")
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
@@ -154,7 +155,8 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(172800, 259200)) -- 2 to 3 days
+    local respawn = math.random(172800, 259200) -- 2 to 3 days
+    xi.mob.NMPersist(mob,respawn)
 end
 
 return entity

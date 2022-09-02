@@ -2,6 +2,8 @@
 -- Area: Fei'Yin
 --   NM: Western Shadow
 -----------------------------------
+require("scripts/globals/mobs")
+
 local entity = {}
 
 entity.onMobSpawn = function(mob)
@@ -9,6 +11,10 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
+end
+
+entity.onMobDespawn = function(mob)
+    xi.mob.lotteryPersist(mob,36000)
 end
 
 return entity

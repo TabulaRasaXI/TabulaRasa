@@ -34,6 +34,27 @@ xi.mob.onMobDeathEx = function(mob, player, isKiller, isWeaponSkillKill)
 end
 
 -----------------------------------
+-- timed NMs
+-----------------------------------
+
+-- Needs to be added to the NM's onDespawn() function.
+xi.mob.NMPersist = function(mob, respawn)
+    SetServerVariable(string.format("[SPAWN]%s", mob:getName()), respawn + os.time())
+    mob:setRespawnTime(respawn)
+end
+
+-- Needs to be added to the NM's zone onInit() function.
+xi.mob.NMPersistCache = function(mobId)
+    local mob = GetMobByID(mobId)
+    local respawn = GetServerVariable(string.format("[SPAWN]%s", mob:getName()))
+    if respawn > os.time() then
+        GetMobByID(mobId):setRespawnTime(respawn - os.time())
+    else
+        SpawnMob(mobId)
+    end
+end
+
+-----------------------------------
 -- placeholder / lottery NMs
 -----------------------------------
 

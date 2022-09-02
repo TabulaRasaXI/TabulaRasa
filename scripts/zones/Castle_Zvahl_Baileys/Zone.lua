@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Castle_Zvahl_Baileys/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/treasure")
 require("scripts/globals/zone")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -23,16 +24,16 @@ zone_object.onInitialize = function(zone)
     end
 
     UpdateNMSpawnPoint(ID.mob.MARQUIS_ALLOCEN)
-    GetMobByID(ID.mob.MARQUIS_ALLOCEN):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.MARQUIS_ALLOCEN)
 
     UpdateNMSpawnPoint(ID.mob.MARQUIS_AMON)
-    GetMobByID(ID.mob.MARQUIS_AMON):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.MARQUIS_AMON)
 
     UpdateNMSpawnPoint(ID.mob.DUKE_HABORYM)
-    GetMobByID(ID.mob.DUKE_HABORYM):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.DUKE_HABORYM)
 
     UpdateNMSpawnPoint(ID.mob.GRAND_DUKE_BATYM)
-    GetMobByID(ID.mob.GRAND_DUKE_BATYM):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.GRAND_DUKE_BATYM)
 
     xi.treasure.initZone(zone)
 end

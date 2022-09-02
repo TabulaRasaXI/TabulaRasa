@@ -7,6 +7,7 @@ local ID = require("scripts/zones/Garlaige_Citadel/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/treasure")
 require("scripts/globals/status")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -28,13 +29,13 @@ zone_object.onInitialize = function(zone)
     zone:registerRegion(22, -130, -1, 322, -128, 1, 324)
 
     UpdateNMSpawnPoint(ID.mob.OLD_TWO_WINGS)
-    GetMobByID(ID.mob.OLD_TWO_WINGS):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.OLD_TWO_WINGS)
 
     UpdateNMSpawnPoint(ID.mob.SKEWER_SAM)
-    GetMobByID(ID.mob.SKEWER_SAM):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.SKEWER_SAM)
 
     UpdateNMSpawnPoint(ID.mob.SERKET)
-    GetMobByID(ID.mob.SERKET):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.SERKET)
 
     xi.treasure.initZone(zone)
 end
