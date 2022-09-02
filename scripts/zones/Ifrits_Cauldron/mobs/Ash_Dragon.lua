@@ -3,6 +3,7 @@
 --  Mob: Ash Dragon
 -----------------------------------
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
@@ -16,7 +17,8 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(259200, 432000)) -- 3 to 5 days
+    local respawn = math.random(259200, 432000) -- 3 to 5 days
+    xi.mob.NMPersist(mob,respawn)
 end
 
 return entity

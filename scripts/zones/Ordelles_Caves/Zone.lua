@@ -7,12 +7,13 @@ local ID = require("scripts/zones/Ordelles_Caves/IDs")
 require("scripts/globals/conquest")
 require("scripts/globals/treasure")
 require("scripts/globals/zone")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.MORBOLGER)
-    GetMobByID(ID.mob.MORBOLGER):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.MORBOLGER)
 
     xi.treasure.initZone(zone)
 end

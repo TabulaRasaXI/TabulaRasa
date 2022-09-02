@@ -559,9 +559,48 @@ end
 -- Applies resistance for additional effects
 function applyResistanceAddEffect(player, target, element, bonus)
 
-    local p = getMagicHitRate(player, target, 0, element, 0, bonus)
+    -- Resist everything if real magic shield is active (see effects/magic_shield)
+    if checkMagicShield(target) then return 0 end
 
+    -- Init vars
+    if bonus == nil then bonus = 0 end
+    local magicacc = bonus
+    local magiceva = 0
+    local resMod = 0
+
+    -- Check element scaling
+    if element ~= xi.magic.ele.NONE then
+
+        -- Add resistance to NMs
+        if target:isMob() and target:isNM() then
+            tryBuildResistance(target, xi.magic.resistMod[element], nil, player)
+        end
+
+        -- Check elemental resistance
+        resMod = target:getMod(xi.magic.resistMod[element])
+    end
+
+    if target:isPC() then
+        magiceva = resMod
+    else
+        local dLvl = utils.clamp(target:getMainLvl() - player:getMainLvl(), 0, 99) -- Mobs should not have a disadvantage when targeted
+        magiceva = (4 * dLvl) + resMod
+    end
+
+    local p = calculateMagicHitRate(magicacc, magiceva)
     return getMagicResist(p, target, element)
+end
+
+function checkMagicShield(target)
+    -- resist everything if real magic shield is active (see effects/magic_shield)
+    if target:hasStatusEffect(xi.effect.MAGIC_SHIELD) then
+        local magicshieldsub = target:getStatusEffect(xi.effect.MAGIC_SHIELD)
+
+        if magicshieldsub:getSubPower() == 0 then
+            return true
+        end
+    end
+    return false
 end
 
 function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc, dStat)
@@ -572,13 +611,7 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     local dStatAcc = 0
 
     -- resist everything if real magic shield is active (see effects/magic_shield)
-    if target:hasStatusEffect(xi.effect.MAGIC_SHIELD) then
-        local magicshieldsub = target:getStatusEffect(xi.effect.MAGIC_SHIELD)
-
-        if magicshieldsub:getSubPower() == 0 then
-            return 0
-        end
-    end
+    if checkMagicShield(target) then return 0 end
 
     if bonusAcc == nil then
         bonusAcc = 0

@@ -7,6 +7,7 @@ require("scripts/globals/chocobo_digging")
 require("scripts/globals/conquest")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -16,7 +17,8 @@ end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.ROC)
-    GetMobByID(ID.mob.ROC):setRespawnTime(math.random(900, 10800))
+--    GetMobByID(ID.mob.ROC):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.ROC)
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
     xi.voidwalker.zoneOnInit(zone)
 end

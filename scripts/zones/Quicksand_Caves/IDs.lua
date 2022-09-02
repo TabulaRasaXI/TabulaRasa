@@ -104,6 +104,7 @@ zones[xi.zone.QUICKSAND_CAVES] =
         TRIBUNUS_VII_I        = 17629643,
         GIRTABLULU            = 17629645,
         NUSSKNACKER           = 17629403,
+        ANTICAN_CONSUL        = 17629641,
     },
     npc =
     {
