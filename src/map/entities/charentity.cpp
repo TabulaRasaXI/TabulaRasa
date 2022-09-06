@@ -82,6 +82,7 @@
 #include "../utils/charutils.h"
 #include "../utils/gardenutils.h"
 #include "../utils/moduleutils.h"
+#include "../utils/petutils.h"
 #include "../weapon_skill.h"
 #include "automatonentity.h"
 #include "charentity.h"
@@ -2086,6 +2087,12 @@ void CCharEntity::Die()
     }
 
     battleutils::RelinquishClaim(this);
+
+    if (this->PPet)
+    {
+        petutils::DespawnPet(this);
+    }
+
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
 
