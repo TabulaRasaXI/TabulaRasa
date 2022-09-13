@@ -1,20 +1,24 @@
 -----------------------------------
 -- Zone: FeiYin (204)
 -----------------------------------
-local ID = require('scripts/zones/FeiYin/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/keyitems')
-require('scripts/globals/missions')
-require('scripts/globals/treasure')
-require('scripts/globals/quests')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/FeiYin/IDs")
+require("scripts/globals/conquest")
+require("scripts/globals/keyitems")
+require("scripts/globals/missions")
+require("scripts/globals/treasure")
+require("scripts/globals/quests")
+require("scripts/globals/zone")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.CAPRICIOUS_CASSIE)
-    GetMobByID(ID.mob.CAPRICIOUS_CASSIE):setRespawnTime(math.random(900, 10800))
-
+    xi.mob.NMPersistCache(ID.mob.CAPRICIOUS_CASSIE)
+    xi.mob.lotteryPersistCache(zone, ID.mob.NORTHEN_SHADOW)
+    xi.mob.lotteryPersistCache(zone, ID.mob.EASTERN_SHADOW)
+    xi.mob.lotteryPersistCache(zone, ID.mob.SOUTHERN_SHADOW)
+    xi.mob.lotteryPersistCache(zone, ID.mob.WESTERN_SHADOW)
     xi.treasure.initZone(zone)
 end
 

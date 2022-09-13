@@ -1,13 +1,14 @@
 -----------------------------------
 -- Zone: Pashhow_Marshlands (109)
 -----------------------------------
-local ID = require('scripts/zones/Pashhow_Marshlands/IDs')
-require('scripts/quests/i_can_hear_a_rainbow')
-require('scripts/globals/chocobo_digging')
-require('scripts/globals/conquest')
-require('scripts/globals/missions')
-require('scripts/globals/zone')
-require('scripts/missions/amk/helpers')
+local ID = require("scripts/zones/Pashhow_Marshlands/IDs")
+require("scripts/quests/i_can_hear_a_rainbow")
+require("scripts/globals/chocobo_digging")
+require("scripts/globals/conquest")
+require("scripts/globals/missions")
+require("scripts/globals/zone")
+require("scripts/missions/amk/helpers")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -17,7 +18,7 @@ end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.BOWHO_WARMONGER)
-    GetMobByID(ID.mob.BOWHO_WARMONGER):setRespawnTime(75600 + math.random(600, 900)) -- 21 hours, plus 10 to 15 min
+    xi.mob.NMPersistCache(ID.mob.BOWHO_WARMONGER)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)

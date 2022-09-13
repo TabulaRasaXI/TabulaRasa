@@ -4,6 +4,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Eastern_Altepa_Desert/IDs")
 mixins = {require("scripts/mixins/job_special")}
+require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
@@ -47,7 +48,8 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(75600 + math.random(0, 600)) -- 21 hours, 10 minute window
+    local respawn = 75600 + math.random(0, 600) -- 21 to 24 hours
+    xi.mob.NMPersist(mob,respawn)
     DespawnMob(ID.mob.CENTURIO_XII_I + 1)
     DespawnMob(ID.mob.CENTURIO_XII_I + 2)
 end

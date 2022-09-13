@@ -3306,6 +3306,7 @@ xi.items =
     COFFINMAKER                     = 17275,
     CHAKRAM                         = 17284,
     PEBBLE                          = 17296,
+    QUAKE_GRENADE                   = 17314,
     ICE_ARROW                       = 17323,
     CROSSBOW_BOLT                   = 17336,
     CARBON_FISHING_ROD              = 17384,

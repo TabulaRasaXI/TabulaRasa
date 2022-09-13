@@ -1,8 +1,9 @@
 -----------------------------------
 -- Zone: Bostaunieux_Oubliette (167)
 -----------------------------------
-local ID = require('scripts/zones/Bostaunieux_Oubliette/IDs')
-require('scripts/globals/conquest')
+local ID = require("scripts/zones/Bostaunieux_Oubliette/IDs")
+require("scripts/globals/conquest")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -14,7 +15,7 @@ zone_object.onInitialize = function(zone)
     GetMobByID(ID.mob.PHANDURON_THE_CONDEMNED):setRespawnTime(math.random(900, 10800))
 
     UpdateNMSpawnPoint(ID.mob.BLOODSUCKER)
-    GetMobByID(ID.mob.BLOODSUCKER):setRespawnTime(3600)
+    xi.mob.NMPersistCache(ID.mob.BLOODSUCKER)
 end
 
 zone_object.onZoneIn = function(player, prevZone)

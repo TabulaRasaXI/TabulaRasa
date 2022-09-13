@@ -8,6 +8,7 @@ mixins =
     require("scripts/mixins/job_special"),
 }
 require("scripts/globals/titles")
+require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
@@ -21,7 +22,8 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    mob:setRespawnTime(math.random(75600, 86400)) -- 21 to 24 hours
+    local respawn = math.random(75600, 86400) -- 21 to 24 hours
+    xi.mob.NMPersist(mob,respawn)
 end
 
 return entity

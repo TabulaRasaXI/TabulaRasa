@@ -1,14 +1,15 @@
 -----------------------------------
 -- Zone: Western_Altepa_Desert (125)
 -----------------------------------
-local ID = require('scripts/zones/Western_Altepa_Desert/IDs')
-require('scripts/quests/i_can_hear_a_rainbow')
-require('scripts/globals/chocobo_digging')
-require('scripts/globals/conquest')
-require('scripts/globals/world')
-require('scripts/globals/zone')
-require('scripts/globals/beastmentreasure')
-require('scripts/missions/amk/helpers')
+local ID = require("scripts/zones/Western_Altepa_Desert/IDs")
+require("scripts/quests/i_can_hear_a_rainbow")
+require("scripts/globals/chocobo_digging")
+require("scripts/globals/conquest")
+require("scripts/globals/world")
+require("scripts/globals/zone")
+require("scripts/globals/beastmentreasure")
+require("scripts/missions/amk/helpers")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -18,8 +19,6 @@ end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
-    GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(math.random(900, 10800))
-
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
 
@@ -78,7 +77,7 @@ zone_object.onZoneWeatherChange = function(weather)
     end
 
     local kingV = GetMobByID(ID.mob.KING_VINEGARROON)
-    local kvre = kingV:getLocalVar("respawn")
+    local kvre = GetServerVariable(string.format("[SPAWN]%s", kingV:getName()))
     if not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.DUST_STORM then
         -- 10% chance for KV pop at start of single earth weather
         local chance = math.random(1, 10)

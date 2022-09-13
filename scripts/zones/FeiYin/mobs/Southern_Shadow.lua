@@ -18,4 +18,8 @@ end
 entity.onMobDeath = function(mob, player, isKiller)
 end
 
+entity.onMobDespawn = function(mob)
+    xi.mob.lotteryPersist(mob,57600)
+end
+
 return entity

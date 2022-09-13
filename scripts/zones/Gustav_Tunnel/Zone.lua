@@ -1,14 +1,15 @@
 -----------------------------------
 -- Zone: Gustav Tunnel (212)
 -----------------------------------
-local ID = require('scripts/zones/Gustav_Tunnel/IDs')
-require('scripts/globals/conquest')
+local ID = require("scripts/zones/Gustav_Tunnel/IDs")
+require("scripts/globals/conquest")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.BUNE)
-    GetMobByID(ID.mob.BUNE):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.BUNE)
 end
 
 zone_object.onConquestUpdate = function(zone, updatetype)

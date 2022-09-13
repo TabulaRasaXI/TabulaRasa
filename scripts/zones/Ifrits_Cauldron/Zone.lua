@@ -1,16 +1,17 @@
 -----------------------------------
 -- Zone: Ifrits_Cauldron (205)
 -----------------------------------
-local ID = require('scripts/zones/Ifrits_Cauldron/IDs')
-require('scripts/globals/conquest')
-require('scripts/globals/treasure')
-require('scripts/globals/helm')
+local ID = require("scripts/zones/Ifrits_Cauldron/IDs")
+require("scripts/globals/conquest")
+require("scripts/globals/treasure")
+require("scripts/globals/helm")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.ASH_DRAGON)
-    GetMobByID(ID.mob.ASH_DRAGON):setRespawnTime(math.random(900, 10800))
+    xi.mob.NMPersistCache(ID.mob.ASH_DRAGON)
 
     xi.treasure.initZone(zone)
     xi.helm.initZone(zone, xi.helm.type.MINING)

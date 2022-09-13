@@ -77,6 +77,10 @@ zones[xi.zone.FEIYIN] =
         MISER_MURPHY        = 17612849,
         DABOTZS_GHOST       = 17613128,
         CAPRICIOUS_CASSIE   = 17613129,
+        NORTHEN_SHADOW      = 17613102,
+        EASTERN_SHADOW      = 17613109,
+        SOUTHERN_SHADOW     = 17613120,
+        WESTERN_SHADOW      = 17613095
     },
     npc =
     {

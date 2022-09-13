@@ -1,12 +1,13 @@
 -----------------------------------
 -- Zone: Rolanberry_Fields (110)
 -----------------------------------
-local ID = require('scripts/zones/Rolanberry_Fields/IDs')
-require('scripts/quests/i_can_hear_a_rainbow')
-require('scripts/globals/chocobo_digging')
-require('scripts/globals/conquest')
-require('scripts/globals/missions')
-require('scripts/globals/zone')
+local ID = require("scripts/zones/Rolanberry_Fields/IDs")
+require("scripts/quests/i_can_hear_a_rainbow")
+require("scripts/globals/chocobo_digging")
+require("scripts/globals/conquest")
+require("scripts/globals/missions")
+require("scripts/globals/zone")
+require("scripts/globals/mobs")
 -----------------------------------
 local zone_object = {}
 
@@ -16,7 +17,7 @@ end
 
 zone_object.onInitialize = function(zone)
     UpdateNMSpawnPoint(ID.mob.SIMURGH)
-    GetMobByID(ID.mob.SIMURGH):setRespawnTime(math.random(900, 7200))
+    xi.mob.NMPersistCache(ID.mob.SIMURGH)
     xi.voidwalker.zoneOnInit(zone)
 end
 
