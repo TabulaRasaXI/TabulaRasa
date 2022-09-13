@@ -61,6 +61,7 @@
 #include "../battlefield.h"
 #include "../char_recast_container.h"
 #include "../conquest_system.h"
+#include "../enmity_container.h"
 #include "../item_container.h"
 #include "../items/item_furnishing.h"
 #include "../items/item_usable.h"
@@ -82,9 +83,11 @@
 #include "../utils/charutils.h"
 #include "../utils/gardenutils.h"
 #include "../utils/moduleutils.h"
+#include "../utils/petutils.h"
 #include "../weapon_skill.h"
 #include "automatonentity.h"
 #include "charentity.h"
+#include "mobentity.h"
 #include "trustentity.h"
 
 CCharEntity::CCharEntity()
@@ -816,6 +819,10 @@ void CCharEntity::delTrait(CTrait* PTrait)
 bool CCharEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 {
     TracyZoneScoped;
+    if (PInitiator->objtype == TYPE_PC && StatusEffectContainer->GetLevelRestrictionEffect() != PInitiator->StatusEffectContainer->GetLevelRestrictionEffect())
+    {
+        return false;
+    }
     if (StatusEffectContainer->GetConfrontationEffect() != PInitiator->StatusEffectContainer->GetConfrontationEffect())
     {
         return false;
@@ -1468,7 +1475,15 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             actionTarget.param           = 0;
             auto prevMsg                 = actionTarget.messageID;
 
+            // Check for special situations from Steal (The Tenshodo Showdown quest)
+            if (PAbility->getID() == ABILITY_STEAL)
+            {
+                // Force a specific result to be stolen based on the mob LUA
+                actionTarget.param = luautils::OnSteal(this, PTarget, PAbility, &action);
+            }
+
             int32 value = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+
             if (prevMsg == actionTarget.messageID)
             {
                 actionTarget.messageID = PAbility->getMessage();
@@ -1489,7 +1504,15 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
             state.ApplyEnmity();
         }
-        PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+
+        if (charge)
+        {
+            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, charge->chargeTime, charge->maxCharges);
+        }
+        else
+        {
+            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+        }
 
         uint16 recastID = PAbility->getRecastId();
         if (settings::get<bool>("map.BLOOD_PACT_SHARED_TIMER") && (recastID == 173 || recastID == 174))
@@ -1746,6 +1769,11 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         }
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
+    }
+    else if (!hitOccured && PTarget->objtype == TYPE_MOB)
+    {
+        // 1 ce for a missed attack for TH application
+        ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity((CBattleEntity*)this, 1, 0);
     }
 
     battleutils::ClaimMob(PTarget, this);
@@ -2104,6 +2132,12 @@ void CCharEntity::Die()
     }
 
     battleutils::RelinquishClaim(this);
+
+    if (this->PPet)
+    {
+        petutils::DespawnPet(this);
+    }
+
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
 

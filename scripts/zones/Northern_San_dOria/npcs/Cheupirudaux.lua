@@ -61,19 +61,7 @@ entity.onTrigger = function(player, npc)
         end
     end
 
-    if expertQuestStatus == 550 then
-        --[[
-        Feeding the proper parameter currently hangs the client in cutscene. This may
-        possibly be due to an unimplemented packet or function (display recipe?) Work
-        around to present dialog to player to let them know the trade is ready to be
-        received by triggering with lower rank up parameters.
-        --]]
-        player:showText(npc, 7062)
-        player:showText(npc, 7064)
-        player:startEvent(621, testItem, realSkill, 44, guildMember, 0, 0, 0, 0)
-    else
-        player:startEvent(621, testItem, realSkill, rankCap, guildMember, expertQuestStatus, 0, 0, 0)
-    end
+    player:startEvent(621, testItem, realSkill, rankCap, guildMember, expertQuestStatus, 0, 0, 0)
 end
 
 -- 621  622  759  16  0
@@ -102,6 +90,8 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 4098) -- Wind Crystal
             xi.crafting.signupGuild(player, xi.crafting.guild.woodworking)
         end
+    elseif (csid == 621 and option > 900) then
+        player:resetLocalVars()
     else
         if player:getLocalVar("WoodworkingTraded") == 1 then
             player:tradeComplete()

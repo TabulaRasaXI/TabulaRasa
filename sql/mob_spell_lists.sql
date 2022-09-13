@@ -1434,9 +1434,11 @@ INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,361,1,255); -- blindga
 INSERT INTO `mob_spell_lists` VALUES ('Diabolos_Club',108,367,1,255); -- death (1~255)
 
 -- Ouryu (109)
-INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,54,1,255);  -- stoneskin (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,190,1,255); -- stonega_ii (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,357,1,255); -- slowga (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,190,1,80);   -- stonega_ii
+INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,191,80,255); -- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,255,80,255); -- break
+INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,357,1,80);   -- slowga
+INSERT INTO `mob_spell_lists` VALUES ('Ouryu',109,365,80,255); -- breakga
 
 -- Pasuk (110)
 INSERT INTO `mob_spell_lists` VALUES ('Pasuk',110,245,1,255); -- drain (1~255)
@@ -4771,24 +4773,38 @@ INSERT INTO `mob_spell_lists` VALUES ('Goblin_Collector',463,21,45,255); -- holy
 INSERT INTO `mob_spell_lists` VALUES ('Goblin_Collector',463,35,45,255); -- diaga_iii (45~255)
 INSERT INTO `mob_spell_lists` VALUES ('Goblin_Collector',463,40,45,255); -- banishga_iii (45~255)
 
--- Shikaree_X (464)
+-- Shikaree_X (464) (Higher level spells for quest battlefields)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,320,1,255); -- katon_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,321,70,255); -- katon_ni (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,323,1,255); -- hyoton_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,324,70,255); -- hyoton_ni (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,326,1,255); -- huton_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,327,70,255); -- huton_ni (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,329,1,255); -- doton_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,330,70,255); -- doton_ni (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,332,1,255); -- raiton_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,333,70,255); -- raiton_ni (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,335,1,255); -- suiton_ichi (1~255)
-INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,338,1,255); -- utsusemi_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,336,70,255); -- suiton_ichi (70~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,338,12,255); -- utsusemi_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,339,70,255); -- utsusemi_ni (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,344,1,255); -- hojo_ichi (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,347,1,255); -- kurayami_ichi (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_X',464,350,1,255); -- dokumori_ichi (1~255)
 
--- Shikaree_Y (465)
+-- Shikaree_Y (465) (Higher level spells for quest battlefields)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,144,1,255); -- fire (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,145,70,255); -- fire ii (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,149,1,255); -- blizzard (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,150,70,255); -- blizzard ii (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,154,1,255); -- aero (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,155,70,255); -- aero ii (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,159,1,255); -- stone (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,160,70,255); -- stone ii (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,164,1,255); -- thunder (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,165,70,255); -- thunder ii (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,169,1,255); -- water (1~255)
+INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,170,70,255); -- water ii (70~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,220,1,255); -- poison (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,225,1,255); -- poisonga (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Shikaree_Y',465,245,1,255); -- drain (1~255)
@@ -5044,6 +5060,26 @@ INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,3,1,255);  -- 
 INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,23,1,255); -- dia (1~255)
 INSERT INTO `mob_spell_lists` VALUES ('Slendlix_Spindlethumb',498,33,1,255); -- diaga (1~255)
 
+-- Totentaz Undead
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 190, 1, 255); -- stonega ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 200, 1, 255); -- waterga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 185, 1, 255); -- aeroga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 175, 1, 255); -- firaga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 180, 1, 255); -- blizzaga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 195, 1, 255); -- thundaga ii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 245, 1, 255); -- drain (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Totentanz_Undead', 499, 247, 1, 255); -- aspir (1~255)
+
+-- Gwyn Ap Knudd
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 191, 1, 255); -- stonega iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 201, 1, 255); -- waterga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 186, 1, 255); -- aeroga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 176, 1, 255); -- firaga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 181, 1, 255); -- blizzaga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 196, 1, 255); -- thundaga iii (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 245, 1, 255); -- drain (1~255)
+INSERT INTO `mob_spell_lists` VALUES('Gwyn_Ap_Knudd', 500, 247, 1, 255); -- aspir (1~255)
+
 -- AirSkyBoat Specific Starts at 5000
 -- 5000 -> 5010 is Era Dynamis
 
@@ -5288,6 +5324,14 @@ INSERT INTO `mob_spell_lists` VALUES('Hume_Automaton',5055,185,1,255); -- Aeroga
 INSERT INTO `mob_spell_lists` VALUES('Hume_Automaton',5055,190,1,255); -- Stonega II (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Hume_Automaton',5055,195,1,255); -- Thundaga II (1~255)
 INSERT INTO `mob_spell_lists` VALUES('Hume_Automaton',5055,200,1,255); -- Waterga II (1~255)
+
+-- Ziryu (5056)
+INSERT INTO `mob_spell_lists` VALUES ('Ziryu',5056,191,1,255);-- stonega_iii
+INSERT INTO `mob_spell_lists` VALUES ('Ziryu',5056,210,1,255); -- Quake
+INSERT INTO `mob_spell_lists` VALUES ('Ziryu',5056,54,1,255); -- Stoneskin
+
+-- Koenigstiger (5057)
+INSERT INTO `mob_spell_lists` VALUES ('Koenigstiger',5057,366,1,255);-- graviga
 
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
