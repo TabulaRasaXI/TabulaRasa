@@ -193,6 +193,7 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
             end
 
             finaldmg = avatarHitDmg(weaponDmg, fSTR, pDif, avatar, target) * dmgmod
+
             numHitsProcessed = 1
         end
 

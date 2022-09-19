@@ -1,7 +1,5 @@
 -----------------------------------
---
 -- Zone: Ifrits_Cauldron (205)
---
 -----------------------------------
 local ID = require("scripts/zones/Ifrits_Cauldron/IDs")
 require("scripts/globals/conquest")

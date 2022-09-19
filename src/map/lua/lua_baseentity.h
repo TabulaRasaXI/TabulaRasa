@@ -78,7 +78,7 @@ public:
 
     // Packets, Events, and Flags
     void injectPacket(std::string const& filename); // Send the character a packet kept in a file
-    void injectActionPacket(uint16 action, uint16 anim, uint16 spec, uint16 react, uint16 message);
+    void injectActionPacket(uint32 inTargetID, uint16 inCategory, uint16 inAnimationID, uint16 inSpecEffect, uint16 inReaction, uint16 inMessage, uint16 inActionParam, uint16 inParam);
     void entityVisualPacket(std::string const& command, sol::object const& entity);
     void entityAnimationPacket(const char* command, sol::object const& target);
 
@@ -390,9 +390,10 @@ public:
     uint8 getMeritCount();
     void  setMerits(uint8 numPoints); // set merits (testing only!)
 
-    uint8 getJobPointLevel(uint16 jpType); // Returns Value of Job Point Type
-    void  setJobPoints(uint16 amount);     // Set Job Points for current job
-    void  setCapacityPoints(uint16 amount);
+    uint16 getSpentJobPoints();
+    uint8  getJobPointLevel(uint16 jpType); // Returns Value of Job Point Type
+    void   setJobPoints(uint16 amount);     // Set Job Points for current job
+    void   setCapacityPoints(uint16 amount);
 
     uint32 getGil();
     void   addGil(int32 gil);
@@ -584,6 +585,7 @@ public:
     void  updateClaim(sol::object const& entity); // Adds Enmity to player for specified mob and claims
     bool  hasEnmity();                            // Does the player have any enmity at all from any source
     auto  getNotorietyList() -> sol::table;       // Returns a table with all of the entities on a chars notoriety list
+    void  clearEnmity(CLuaBaseEntity* PEntity);   // clears player enmity from notoriety list
     void  setClaimable(bool claimable);
     bool  getClaimable();
 
@@ -749,7 +751,7 @@ public:
     bool   isNM();
 
     uint8  getModelSize();
-    void   setMobFlags(uint32 flags, uint32 mobid); // Used to manipulate the mob's flags for testing.
+    void   setMobFlags(uint32 flags, sol::object const& mobId); // Used to manipulate the mob's flags, such as changing size.
     uint32 getMobFlags();
 
     void setNpcFlags(uint32 flags);

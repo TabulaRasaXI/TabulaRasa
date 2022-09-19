@@ -213,7 +213,7 @@ INSERT INTO `bcnm_info` VALUES (674,8,'sheep_in_antlions_clothing','nobody',0,90
 INSERT INTO `bcnm_info` VALUES (675,8,'shell_we_dance','nobody',0,1800,1800,75,18,675,15,0);
 INSERT INTO `bcnm_info` VALUES (676,8,'totentanz','nobody',0,1800,1800,75,18,676,15,0);
 INSERT INTO `bcnm_info` VALUES (677,8,'tango_with_a_tracker','nobody',0,1800,1800,0,6,0,7,0);
-INSERT INTO `bcnm_info` VALUES (678,8,'requiem_of_a_sin','nobody',0,1800,1800,0,6,0,7,0);
+INSERT INTO `bcnm_info` VALUES (678,8,'requiem_of_sin','nobody',0,1800,1800,0,6,0,7,0);
 INSERT INTO `bcnm_info` VALUES (679,8,'antagonistic_ambuscade','nobody',0,900,900,0,6,679,15,0);
 INSERT INTO `bcnm_info` VALUES (704,10,'darkness_named','nobody',0,1800,1800,40,6,0,5,1);
 INSERT INTO `bcnm_info` VALUES (705,10,'test_your_mite','nobody',0,1800,1800,40,18,705,15,0);
@@ -237,8 +237,8 @@ INSERT INTO `bcnm_info` VALUES (864,23,'desires_of_emptiness','nobody',0,1800,18
 INSERT INTO `bcnm_info` VALUES (865,23,'pulling_the_plug','nobody',0,1800,1800,50,18,865,15,0);
 INSERT INTO `bcnm_info` VALUES (866,23,'empty_aspirations','nobody',0,900,900,0,6,0,5,0);
 INSERT INTO `bcnm_info` VALUES (896,29,'storms_of_fate','nobody',0,1800,1800,0,18,0,7,0);
-INSERT INTO `bcnm_info` VALUES (897,29,'wyrmking_descends','nobody',0,3600,3600,0,18,897,7,0);
-INSERT INTO `bcnm_info` VALUES (928,30,'ouryu_cometh','nobody',0,3600,3600,0,18,928,7,0);
+INSERT INTO `bcnm_info` VALUES (897,29,'wyrmking_descends','nobody',0,3600,3600,0,18,0,7,0);
+INSERT INTO `bcnm_info` VALUES (928,30,'ouryu_cometh','nobody',0,3600,3600,0,18,0,7,0);
 INSERT INTO `bcnm_info` VALUES (960,31,'ancient_vows','nobody',0,1800,1800,40,6,0,5,1);
 INSERT INTO `bcnm_info` VALUES (961,31,'savage','nobody',0,1800,1800,50,6,0,5,1);
 INSERT INTO `bcnm_info` VALUES (962,31,'fire_in_the_sky','nobody',0,900,900,40,18,962,15,0);

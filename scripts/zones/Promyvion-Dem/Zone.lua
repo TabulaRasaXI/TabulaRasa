@@ -1,16 +1,16 @@
 -----------------------------------
 -- Zone: Promyvion-Dem (18)
 -----------------------------------
-local ID = require("scripts/zones/Promyvion-Dem/IDs")
-require("scripts/globals/promyvion")
-require("scripts/globals/keyitems")
-require("scripts/globals/missions")
-require("scripts/globals/settings")
-require("scripts/globals/status")
+local ID = require('scripts/zones/Promyvion-Dem/IDs')
+require('scripts/globals/promyvion')
+require('scripts/globals/settings')
+require('scripts/globals/status')
 -----------------------------------
 local zone_object = {}
 
 zone_object.onInitialize = function(zone)
+--    UpdateNMSpawnPoint(ID.mob.SATIATOR)
+--    GetMobByID(ID.mob.SATIATOR):setRespawnTime(math.random(3600, 21600))
     xi.promyvion.initZone(zone)
 end
 
@@ -38,6 +38,11 @@ zone_object.onRegionLeave = function(player, region)
 end
 
 zone_object.onEventUpdate = function(player, csid, option)
+    if csid >= 30 and csid <= 45 then
+        for _, entry in pairs(player:getNotorietyList()) do
+            entry:clearEnmity(player) -- reset hate on player after teleporting
+        end
+    end
 end
 
 zone_object.onEventFinish = function(player, csid, option)
