@@ -4,7 +4,6 @@
 -----------------------------------
 require("scripts/globals/regimes")
 mixins = {require("scripts/mixins/job_special")}
-
 -----------------------------------
 local entity = {}
 

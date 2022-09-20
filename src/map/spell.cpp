@@ -29,6 +29,7 @@
 #include "map.h"
 #include "spell.h"
 #include "status_effect_container.h"
+#include "utils/battleutils.h"
 #include "utils/blueutils.h"
 
 CSpell::CSpell(SpellID id)
@@ -169,6 +170,11 @@ bool CSpell::isDebuff()
 bool CSpell::isNa()
 {
     return (static_cast<uint16>(m_ID) >= 14 && static_cast<uint16>(m_ID) <= 20) || m_ID == SpellID::Erase;
+}
+
+bool CSpell::isRaise()
+{
+    return (static_cast<uint16>(m_ID) >= 12 && static_cast<uint16>(m_ID) <= 13) || m_ID == SpellID::Raise_III || m_ID == SpellID::Arise;
 }
 
 bool CSpell::isSevere()
@@ -405,6 +411,11 @@ float CSpell::getRange() const
     return m_range;
 }
 
+uint16 CSpell::getConeAngle()
+{
+    return m_coneAngle;
+}
+
 void CSpell::setContentTag(int8* contentTag)
 {
     m_contentTag = contentTag;
@@ -413,6 +424,11 @@ void CSpell::setContentTag(int8* contentTag)
 void CSpell::setRange(float range)
 {
     m_range = range;
+}
+
+void CSpell::setConeAngle(uint16 angle)
+{
+    m_coneAngle = angle;
 }
 
 // Implement namespace to work with spells
@@ -425,7 +441,8 @@ namespace spell
     void LoadSpellList()
     {
         const char* Query = "SELECT spellid, name, jobs, `group`, family, validTargets, skill, castTime, recastTime, animation, animationTime, mpCost, \
-                             AOE, base, element, zonemisc, multiplier, message, magicBurstMessage, CE, VE, requirements, content_tag, spell_range \
+                             AOE, base, element, zonemisc, multiplier, message, magicBurstMessage, CE, VE, requirements, content_tag, spell_range, \
+                             spell_radius, spell_cone, spell_radius_type \
                              FROM spell_list;";
 
         int32 ret = sql->Query(Query);
@@ -471,12 +488,14 @@ namespace spell
                 char* contentTag = (char*)sql->GetData(22);
                 PSpell->setContentTag((int8*)contentTag);
 
-                PSpell->setRange(static_cast<float>(sql->GetIntData(23)) / 10);
+                PSpell->setRange(static_cast<float>(sql->GetIntData(23)) / 10.0);
+                PSpell->setRadius(static_cast<float>(sql->GetIntData(24)) / 10.0);
+                PSpell->setConeAngle(sql->GetIntData(25));
 
-                if (PSpell->getAOE())
+                int radiusType = sql->GetIntData(26);
+                if (radiusType == 1)
                 {
-                    // default radius
-                    PSpell->setRadius(10);
+                    PSpell->setFlag(PSpell->getFlag() | SPELLFLAG_ATTACKER_RADIUS);
                 }
 
                 PSpellList[static_cast<uint16>(PSpell->getID())] = PSpell;
@@ -540,7 +559,7 @@ namespace spell
 
         const char* blueQuery = "SELECT blue_spell_list.spellid, blue_spell_list.mob_skill_id, blue_spell_list.set_points, \
                                 blue_spell_list.trait_category, blue_spell_list.trait_category_weight, blue_spell_list.primary_sc, \
-                                blue_spell_list.secondary_sc, spell_list.content_tag \
+                                blue_spell_list.secondary_sc, blue_spell_list.tertiary_sc, spell_list.content_tag \
                              FROM blue_spell_list JOIN spell_list on blue_spell_list.spellid = spell_list.spellid;";
 
         ret = sql->Query(blueQuery);
@@ -549,7 +568,7 @@ namespace spell
         {
             while (sql->NextRow() == SQL_SUCCESS)
             {
-                char* contentTag = (char*)sql->GetData(7);
+                char* contentTag = (char*)sql->GetData(8);
                 if (!luautils::IsContentEnabled(contentTag))
                 {
                     continue;
@@ -570,6 +589,7 @@ namespace spell
                 ((CBlueSpell*)PSpellList[spellId])->setTraitWeight(sql->GetIntData(4));
                 ((CBlueSpell*)PSpellList[spellId])->setPrimarySkillchain(sql->GetIntData(5));
                 ((CBlueSpell*)PSpellList[spellId])->setSecondarySkillchain(sql->GetIntData(6));
+                ((CBlueSpell*)PSpellList[spellId])->setTertiarySkillchain(sql->GetIntData(7));
                 PMobSkillToBlueSpell.insert(std::make_pair(sql->GetIntData(1), spellId));
             }
         }
@@ -681,9 +701,16 @@ namespace spell
                 return true;
             }
 
-            if (PCaster->objtype == TYPE_PC && spell->getSpellGroup() == SPELLGROUP_TRUST)
+            if (PCaster->objtype == TYPE_PC)
             {
-                return true; // every PC can use trusts
+                if (spell->getSpellGroup() == SPELLGROUP_TRUST)
+                {
+                    return true; // every PC can use trusts
+                }
+                else if (luautils::OnCanUseSpell(PCaster, spell))
+                {
+                    return true;
+                }
             }
 
             if (PCaster->GetMLevel() >= JobMLVL)
@@ -794,22 +821,35 @@ namespace spell
     float GetSpellRadius(CSpell* spell, CBattleEntity* entity)
     {
         float total = spell->getRadius();
+        float bonus = 1.0;
 
         // brd gets bonus radius from string skill
-        if (spell->getSpellGroup() == SPELLGROUP_SONG && (spell->getValidTarget() & TARGET_SELF))
+        if (spell->getSpellGroup() == SPELLGROUP_SONG)
         {
             if (entity->objtype == TYPE_MOB || (entity->GetMJob() == JOB_BRD && entity->objtype == TYPE_PC && ((CCharEntity*)entity)->getEquip(SLOT_RANGED) &&
                                                 ((CItemWeapon*)((CCharEntity*)entity)->getEquip(SLOT_RANGED))->getSkillType() == SKILL_STRING_INSTRUMENT))
             {
-                total += ((float)entity->GetSkill(SKILL_STRING_INSTRUMENT) / 276) * 10;
-            }
+                // Get the string skill cap at the song's level
+                float baseSkill = battleutils::GetMaxSkill(SKILL_STRING_INSTRUMENT, JOB_BRD, spell->getJob(JOB_BRD));
 
-            if (total > 20)
-            {
-                total = 20;
+                // Get the entity's current string skill
+                float currentSkill = entity->GetSkill(SKILL_STRING_INSTRUMENT);
+
+                // Linearly interpolate [max skill, max skill x2] -> [1, 2]
+                if (baseSkill > 0)
+                {
+                    bonus = currentSkill / baseSkill;
+                }
             }
+            // Clamp bonus
+            bonus = std::clamp<float>(bonus, 1.0, 2.0);
         }
 
-        return total;
+        return bonus * total;
+    }
+
+    float GetSpellConeAngle(CSpell* spell, CBattleEntity* entity)
+    {
+        return spell->getConeAngle();
     }
 }; // namespace spell

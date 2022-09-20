@@ -1,7 +1,5 @@
 -----------------------------------
---
 -- Zone: Yhoator_Jungle (124)
---
 -----------------------------------
 local ID = require("scripts/zones/Yhoator_Jungle/IDs")
 require("scripts/quests/i_can_hear_a_rainbow")
