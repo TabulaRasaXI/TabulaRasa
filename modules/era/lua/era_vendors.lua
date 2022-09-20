@@ -161,6 +161,25 @@ xi.eraShops.Taza =
     4774, 45930, -- Scroll of Thunder III
 }
 
+xi.eraShops.Yoskolo =
+{
+    4509,    10, -- Distilled Water
+    4422,   184, -- Orange Juice
+    4423,   276, -- Apple Juice
+    4424,  1012, -- Melon Juice
+    4441,   855, -- Grape Juice
+    4442,   368, -- Pineapple Juice
+    4556,  5544, -- Icecap Rolanberry
+    5046,  6380, -- Scroll of Fire Carol
+    5047,  7440, -- Scroll of Ice Carol
+    5048,  5940, -- Scroll of Wind Carol
+    5049,  4600, -- Scroll of Earth Carol
+    5050,  7920, -- Scroll of Lightning Carol
+    5051,  5000, -- Scroll of Water Carol
+    5052,  4200, -- Scroll of Light Carol
+    5053,  8400, -- Scroll of Dark Carol
+}
+
 --Nashmau
 xi.eraShops.Mamaroon =
 {
@@ -239,10 +258,10 @@ xi.eraShops.Brave_Ox =
     4720,  31850, -- Flash
     4750, 546000, -- Reraise III
     4638,  78260, -- Banish III
-    4701, 20092, -- Cura
-    4702, 62192, -- Sacrifice
-    4703, 64584, -- Esuna
-    4704, 30967, -- Auspice
+    -- 4701, 20092, -- Cura
+    -- 4702, 62192, -- Sacrifice
+    -- 4703, 64584, -- Esuna
+    -- 4704, 30967, -- Auspice
 }
 
 -- Tavnazian Safehold
@@ -301,6 +320,16 @@ xi.eraShops.Mono_Nchaa =
     5009,  2649, 3, -- Scroll of Hunter's Prelude
 }
 
+xi.eraShops.Wije_Tiren =
+{
+    4148,   290,       --Antidote
+    4509,    10,       --Distilled Water
+    4151,   728,       --Echo Drops
+    4128,  4445,       --Ether
+    4150,  2387,       --Eye Drops
+    4112,   837,       --Potion
+    5014,    98,       --Scroll of Herb Pastoral
+}
 
 local lookupTable =
 --[[
@@ -322,7 +351,8 @@ local lookupTable =
     {"standard", "Lower_Jeuno", "Susu", xi.eraShops.Susu, xi.quest.fame_area.JEUNO, "WAAG_DEEG_SHOP_DIALOG", 1},
     {"standard", "Lower_Jeuno", "Stinknix", xi.eraShops.Stinknix, xi.quest.fame_area.JEUNO, "JUNK_SHOP_DIALOG", 1},
     {"standard", "Lower_Jeuno", "Taza", xi.eraShops.Taza, xi.quest.fame_area.JEUNO, "WAAG_DEEG_SHOP_DIALOG", 1},
-    -- Mhaura
+    {"standard", "Lower_Jeuno", "Yoskolo", xi.eraShops.Yoskolo, xi.quest.fame_area.JEUNO, "YOSKOLO_SHOP_DIALOG", 1},
+   -- Mhaura
     {"none", "Mhaura", "Tya_Padolih", xi.settings.main.ENABLE_WOTG},
     -- Nashmau
     {"none", "Nashmau","Chichiroon"},
@@ -351,6 +381,7 @@ local lookupTable =
     -- Windurst Woods
     {"nation", "Windurst_Woods", "Mono_Nchaa", xi.eraShops.Mono_Nchaa, xi.nation.WINDURST, "MONONCHAA_SHOP_DIALOG", 1},
     {"standard", "Windurst_Woods", "Valeriano", xi.eraShops.Valeriano, xi.quest.fame_area.WINDURST, "VALERIANO_SHOP_DIALOG", 1},
+    {"standard", "Windurst_Woods", "Wije_Tiren", xi.eraShops.Wije_Tiren, xi.quest.fame_area.WINDURST, "WIJETIREN_SHOP_DIALOG", 1},
 }
 
 for _, shop in pairs(lookupTable) do
