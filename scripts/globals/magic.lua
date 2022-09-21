@@ -609,6 +609,7 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     local resMod = 0
     local dLvl = target:getMainLvl() - caster:getMainLvl()
     local dStatAcc = 0
+    effectRes = 1 - (effectRes / 100)
 
     -- resist everything if real magic shield is active (see effects/magic_shield)
     if checkMagicShield(target) then return 0 end
@@ -684,8 +685,6 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
             tryBuildResistance(target, xi.magic.resistMod[element], nil, caster)
         end
 
-        resMod = target:getMod(xi.magic.resistMod[element])
-
         -- Add acc for elemental affinity accuracy and element specific accuracy
         local affinityBonus = AffinityBonusAcc(caster, element)
         local elementBonus = caster:getMod(spellAcc[element])
@@ -693,10 +692,10 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     end
 
     if target:isPC() then
-        magiceva = target:getMod(xi.mod.MEVA) + resMod + effectRes
+        magiceva = target:getMod(xi.mod.MEVA) + resMod
     else
-        dLvl = utils.clamp(dLvl, 0, 99) -- Mobs should not have a disadvantage when targeted
-        magiceva = target:getMod(xi.mod.MEVA) + (4 * dLvl) + resMod + effectRes
+        dLvl = utils.clamp(dLvl, 0, 200) -- Mobs should not have a disadvantage when targeted
+        magiceva = (target:getMod(xi.mod.MEVA) + (4 * dLvl)) + resMod
     end
 
     bonusAcc = bonusAcc + caster:getMerit(xi.merit.MAGIC_ACCURACY) + caster:getMerit(xi.merit.NIN_MAGIC_ACCURACY)
@@ -927,7 +926,7 @@ function finalMagicAdjustments(caster, target, spell, dmg)
     end
 
     return dmg
- end
+end
 
 function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
     -- Handles target's HP adjustment and returns SIGNED dmg (negative values on absorb)

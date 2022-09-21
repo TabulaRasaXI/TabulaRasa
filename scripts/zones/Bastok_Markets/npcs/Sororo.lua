@@ -27,7 +27,7 @@ entity.onTrigger = function(player, npc)
         4606,    82, 3, -- Dia
         4651,   219, 3, -- Protect
         4656,  1584, 3, -- Shell
-	    4663,   368, 3, -- Aquaveil
+        4721, 29700, 3, -- Repose
     }
 
     player:showText(npc, ID.text.SORORO_SHOP_DIALOG)

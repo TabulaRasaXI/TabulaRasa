@@ -1,7 +1,5 @@
 -----------------------------------
---
 -- Zone: Quicksand_Caves (208)
---
 -----------------------------------
 local ID = require("scripts/zones/Quicksand_Caves/IDs")
 require("scripts/globals/conquest")
@@ -79,15 +77,19 @@ zone_object.onRegionEnter = function(player, region)
             [30] = function (x)
                 player:setPos(496, -6, -816)
             end,
+
             [31] = function (x)
                 player:setPos(816, -6, -743)
             end,
+
             [32] = function (x)
                 player:setPos(216, 9, -16)
             end,
+
             [33] = function (x)
                 player:setPos(-296, 9, 416)
             end,
+
             [34] = function (x)
                 player:setPos(-136, 9, -176)
             end,
@@ -112,7 +114,7 @@ end
 zone_object.onRegionLeave = function(player, region)
     local regionID = region:GetRegionID()
 
-    if (regionID < 30) then
+    if regionID < 30 then
         -- local door = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + regionID - 1)
         local plate = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + regionID)
 

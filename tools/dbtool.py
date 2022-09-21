@@ -46,7 +46,7 @@ except Exception as e:
 
 def populate_migrations():
     migration_list = []
-    for file in os.scandir("migrations"):
+    for file in sorted(os.scandir("migrations"), key=lambda e: e.name):
         if file.name.endswith(".py") and file.name != "utils.py":
             name = file.name.replace(".py", "")
             module = importlib.import_module("migrations." + name)
@@ -89,9 +89,6 @@ player_data = [
     'server_variables.sql',
     'unity_system.sql',
     'zone_settings.sql',
-    'account_ip_record.sql',
-    'audit_chat.sql',
-    'audit_gm.sql',
 ]
 
 import_files = []

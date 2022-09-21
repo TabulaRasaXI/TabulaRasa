@@ -79,16 +79,6 @@ entity.onTrigger = function(player, npc)
 
         -- The Parameters are Item IDs for the Recipe
         player:startEvent(944, item, 2773, 917, 917, 2776, 4103)
-    elseif expertQuestStatus == 550 then
-        --[[
-        Feeding the proper parameter currently hangs the client in cutscene. This may
-        possibly be due to an unimplemented packet or function (display recipe?) Work
-        around to present dialog to player to let them know the trade is ready to be
-        received by triggering with lower rank up parameters.
-        --]]
-        player:showText(npc, 7014)
-        player:showText(npc, 7016)
-        player:startEvent(648, testItem, realSkill, 44, guildMember, 0, 0, 0, 0)
     else
         player:startEvent(648, testItem, realSkill, rankCap, guildMember, expertQuestStatus, 0, 0, 0)
     end
@@ -121,6 +111,8 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, crystal)
             xi.crafting.signupGuild(player, xi.crafting.guild.leathercraft)
         end
+    elseif (csid == 648 and option > 900) then
+        player:resetLocalVars()
     else
         if player:getLocalVar("LeathercraftTraded") == 1 then
             player:tradeComplete()
