@@ -692,10 +692,10 @@ function getMagicHitRate(caster, target, skillType, element, effectRes, bonusAcc
     end
 
     if target:isPC() then
-        magiceva = target:getMod(xi.mod.MEVA) * ((100 + effectRes + resMod) / 100)
+        magiceva = target:getMod(xi.mod.MEVA) + resMod
     else
         dLvl = utils.clamp(dLvl, 0, 200) -- Mobs should not have a disadvantage when targeted
-        magiceva = (target:getMod(xi.mod.MEVA) + (4 * dLvl)) * ((100 + effectRes + resMod) / 100)
+        magiceva = (target:getMod(xi.mod.MEVA) + (4 * dLvl)) + resMod
     end
 
     bonusAcc = bonusAcc + caster:getMerit(xi.merit.MAGIC_ACCURACY) + caster:getMerit(xi.merit.NIN_MAGIC_ACCURACY)
