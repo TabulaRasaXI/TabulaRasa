@@ -85,3 +85,8 @@ custom/sql/exp_base_zilart.sql
 custom/sql/rare_ex_NM_drops.sql
 custom/sql/starter_zone_fast_repops.sql
 custom/sql/disable_weather_latents.sql
+custom/sql/cluster_zone_settings.sql
+custom/sql/exp_base_zilart.sql
+custom/sql/ka_speedbelt_drop.sql
+custom/sql/starter_zone_fast_repops.sql
+custom/sql/ooe_mob_drops.sql
