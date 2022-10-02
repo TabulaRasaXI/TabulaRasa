@@ -11,7 +11,7 @@ xi.dynamis = xi.dynamis or {}
 xi.dynamis.onSpawnAngra = function(mob)
     xi.dynamis.setMegaBossStats(mob)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 25)
-    mob:setRoamFlags(xi.roamFlag.EVENT)
+    mob:setRoamFlags(xi.roamFlag.SCRIPTED)
     xi.mix.jobSpecial.config(mob, {
         between = 300,
         specials =
@@ -19,6 +19,10 @@ xi.dynamis.onSpawnAngra = function(mob)
             {id = xi.jsa.CHAINSPELL, hpp = 25},
         },
     })
+end
+
+xi.dynamis.onEngagedAngra = function(mob, target)
+    mob:setLocalVar("teleTime", os.time())
 end
 
 xi.dynamis.onFightAngra = function(mob, target)
@@ -38,7 +42,7 @@ xi.dynamis.onFightAngra = function(mob, target)
     }
 
     local teleTime = mob:getLocalVar("teleTime")
-    if mob:getBattleTime() - teleTime > 30 then
+    if os.time() - teleTime > 30 then
         randPos = teles[math.random((1), (8))]
         xi.dynamis.teleport(mob, 1000)
         mob:setPos(randPos, 0)
@@ -53,7 +57,7 @@ xi.dynamis.onFightAngra = function(mob, target)
                 end
             end
         end
-        mob:setLocalVar("teleTime", mob:getBattleTime())
+        mob:setLocalVar("teleTime", os.time())
     end
 
     for _, childIndex in pairs(children) do

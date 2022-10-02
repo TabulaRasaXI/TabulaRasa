@@ -116,22 +116,22 @@ xi.dynamis.mobList[zoneID][24 ].info = {"NM", "Cirrate Christelle", nil, nil, "M
 xi.dynamis.mobList[zoneID][289].info = {"NM", "Nightmare Morbol", nil, nil, "morbol1_killed"} -- Spawned by Cirrate Christelle
 xi.dynamis.mobList[zoneID][290].info = {"NM", "Nightmare Morbol", nil, nil, "morbol2_killed"} -- Spawned by Cirrate Christelle
 -- Spawns
-xi.dynamis.mobList[zoneID][25 ].info = {"Statue",    "Goblin Replica",       "Goblin", nil, nil} -- (025-G)
-xi.dynamis.mobList[zoneID][26 ].info = {"Statue",    "Manifest Icon",        "Yagudo", nil, nil} -- (026-Y)
+xi.dynamis.mobList[zoneID][25 ].info = {"Statue",    "Goblin Replica",       "Goblin", nil, nil}  -- (025-G)
+xi.dynamis.mobList[zoneID][26 ].info = {"Statue",    "Manifest Icon",        "Yagudo", nil, nil}  -- (026-Y)
 xi.dynamis.mobList[zoneID][27 ].info = {"Statue",    "Adamantking Effigy",    "Quadav", nil, nil} -- (027-Q)
-xi.dynamis.mobList[zoneID][28 ].info = {"Statue",    "Serjeant Tombstone",   "Orc",    nil, nil} -- (028-O)
-xi.dynamis.mobList[zoneID][29 ].info = {"Nightmare", "Nightmare Manticore",  nil,      nil, nil} -- ( 029 ) Nightmare Manticore (×3)
-xi.dynamis.mobList[zoneID][136].info = {"Nightmare", "Nightmare Manticore",  nil,      nil, nil} -- ( 029 )
-xi.dynamis.mobList[zoneID][137].info = {"Nightmare", "Nightmare Manticore",  nil,      nil, nil} -- ( 029 )
-xi.dynamis.mobList[zoneID][30 ].info = {"Nightmare", "Nightmare Hippogryph", nil,      nil, nil} -- ( 030 ) Nightmare Hippogryph (×3)
-xi.dynamis.mobList[zoneID][138].info = {"Nightmare", "Nightmare Hippogryph", nil,      nil, nil} -- ( 030 )
-xi.dynamis.mobList[zoneID][139].info = {"Nightmare", "Nightmare Hippogryph", nil,      nil, nil} -- ( 030 )
-xi.dynamis.mobList[zoneID][31 ].info = {"Nightmare", "Nightmare Sabotender", nil,      nil, nil} -- ( 031 ) Nightmare Sabotender (×3)
-xi.dynamis.mobList[zoneID][140].info = {"Nightmare", "Nightmare Sabotender", nil,      nil, nil} -- ( 031 )
-xi.dynamis.mobList[zoneID][141].info = {"Nightmare", "Nightmare Sabotender", nil,      nil, nil} -- ( 031 )
-xi.dynamis.mobList[zoneID][32 ].info = {"Nightmare", "Nightmare Sheep",      nil,      nil, nil} -- ( 032 ) Nightmare Sheep (×3)
-xi.dynamis.mobList[zoneID][142].info = {"Nightmare", "Nightmare Sheep",      nil,      nil, nil} -- ( 032 )
-xi.dynamis.mobList[zoneID][143].info = {"Nightmare", "Nightmare Sheep",      nil,      nil, nil} -- ( 032 )
+xi.dynamis.mobList[zoneID][28 ].info = {"Statue",    "Serjeant Tombstone",   "Orc",    nil, nil}  -- (028-O)
+xi.dynamis.mobList[zoneID][29 ].info = {"Nightmare", "Nightmare Manticore",  nil,      nil, nil}  -- ( 029 ) Nightmare Manticore (×3)
+xi.dynamis.mobList[zoneID][136].info = {"Nightmare", "Nightmare Manticore",  nil,      nil, nil}  -- ( 029 )
+xi.dynamis.mobList[zoneID][137].info = {"Nightmare", "Nightmare Manticore",  nil,      nil, nil}  -- ( 029 )
+xi.dynamis.mobList[zoneID][30 ].info = {"Nightmare", "Nightmare Hippogryph", nil,      nil, nil}  -- ( 030 ) Nightmare Hippogryph (×3)
+xi.dynamis.mobList[zoneID][138].info = {"Nightmare", "Nightmare Hippogryph", nil,      nil, nil}  -- ( 030 )
+xi.dynamis.mobList[zoneID][139].info = {"Nightmare", "Nightmare Hippogryph", nil,      nil, nil}  -- ( 030 )
+xi.dynamis.mobList[zoneID][31 ].info = {"Nightmare", "Nightmare Sabotender", nil,      nil, nil}  -- ( 031 ) Nightmare Sabotender (×3)
+xi.dynamis.mobList[zoneID][140].info = {"Nightmare", "Nightmare Sabotender", nil,      nil, nil}  -- ( 031 )
+xi.dynamis.mobList[zoneID][141].info = {"Nightmare", "Nightmare Sabotender", nil,      nil, nil}  -- ( 031 )
+xi.dynamis.mobList[zoneID][32 ].info = {"Nightmare", "Nightmare Sheep",      nil,      nil, nil}  -- ( 032 ) Nightmare Sheep (×3)
+xi.dynamis.mobList[zoneID][142].info = {"Nightmare", "Nightmare Sheep",      nil,      nil, nil}  -- ( 032 )
+xi.dynamis.mobList[zoneID][143].info = {"Nightmare", "Nightmare Sheep",      nil,      nil, nil}  -- ( 032 )
 
 -- Initial Statues based on https://enedin.be/dyna/html/zone/frame_val1.htm
 -- Funguar NM Area
@@ -440,9 +440,9 @@ xi.dynamis.mobList[zoneID].waveDefeatRequirements =
 
 xi.dynamis.mobList[zoneID][1].wave =
 {
-    21 , -- ( 021 ) Recover subjobs
-    22 , -- ( 022 ) Recover subjobs
-    23 , -- ( 023 ) Recover subjobs
+    21 , -- ( 021 ) Nightmare Flys - Recover subjobs
+    22 , -- ( 022 ) Nightmare Flys - Recover subjobs
+    23 , -- ( 023 ) Nightmare Flys - Recover subjobs
     5  , -- ( 005 ) Fairy Ring
     10 , -- ( 010 ) Flytrap NMs
     15 , -- ( 015 ) Stcemqestcint
@@ -463,7 +463,39 @@ xi.dynamis.mobList[zoneID][1].wave =
     16 , -- (016-Q) Adamantking Effigy
     17 , -- (017-Q) Adamantking Effigy
     18 , -- (018-Q) Adamantking Effigy
-    19 , -- (019-Q) Adamantking Effigy
+    19   -- (019-Q) Adamantking Effigy
+}
+
+xi.dynamis.mobList[zoneID][2].wave =
+{
+    25 , -- (025-G) Goblin Replica
+    26 , -- (026-Y) Manifest Icon
+    27 , -- (027-Q) Adamantking Effigy
+    28 , -- (028-O) Serjeant Tombstone
+    29 , -- ( 029 ) Nightmare Manticore (×3)
+    30 , -- ( 030 ) Nightmare Hippogryph (×3)
+    31 , -- ( 031 ) Nightmare Sabotender (×3)
+    32 , -- ( 032 ) Nightmare Sheep (×3)
+    33 , -- (033-Y) Manifest Icon
+    34 , -- (034-Y) Manifest Icon
+    35 , -- (035-Y) Manifest Icon
+    36 , -- (036-Y) Manifest Icon
+    37 , -- (037-Y) Manifest Icon
+    38 , -- (038-G) Goblin Replica
+    39 , -- (039-G) Goblin Replica
+    40 , -- (040-G) Goblin Replica
+    41 , -- (041-G) Goblin Replica
+    42 , -- (042-G) Goblin Replica
+    43 , -- (043-O) Serjeant Tombstone
+    44 , -- (044-O) Serjeant Tombstone
+    45 , -- (045-O) Serjeant Tombstone
+    46 , -- (046-O) Serjeant Tombstone
+    47 , -- (047-O) Serjeant Tombstone
+    48 , -- (048-Q) Adamantking Effigy
+    49 , -- (049-Q) Adamantking Effigy
+    50 , -- (050-Q) Adamantking Effigy
+    51 , -- (051-Q) Adamantking Effigy
+    52 , -- (052-Q) Adamantking Effigy
     110, -- ( 110 ) Nightmare Manticore (×3)
     111, -- ( 111 ) Nightmare Manticore (×3)
     112, -- ( 112 ) Nightmare Manticore (×3)
@@ -541,30 +573,6 @@ xi.dynamis.mobList[zoneID][1].wave =
     84 , -- ( 084 ) Nightmare Hippogryph (×3)
     85 , -- ( 085 ) Nightmare Hippogryph (×3)
     86   -- ( 086 ) Nightmare Hippogryph (×3)
-}
-
-xi.dynamis.mobList[zoneID][2].wave =
-{
-    33 , -- (033-Y) Manifest Icon
-    34 , -- (034-Y) Manifest Icon
-    35 , -- (035-Y) Manifest Icon
-    36 , -- (036-Y) Manifest Icon
-    37 , -- (037-Y) Manifest Icon
-    38 , -- (038-G) Goblin Replica
-    39 , -- (039-G) Goblin Replica
-    40 , -- (040-G) Goblin Replica
-    41 , -- (041-G) Goblin Replica
-    42 , -- (042-G) Goblin Replica
-    43 , -- (043-O) Serjeant Tombstone
-    44 , -- (044-O) Serjeant Tombstone
-    45 , -- (045-O) Serjeant Tombstone
-    46 , -- (046-O) Serjeant Tombstone
-    47 , -- (047-O) Serjeant Tombstone
-    48 , -- (048-Q) Adamantking Effigy
-    49 , -- (049-Q) Adamantking Effigy
-    50 , -- (050-Q) Adamantking Effigy
-    51 , -- (051-Q) Adamantking Effigy
-    52   -- (052-Q) Adamantking Effigy
 }
 
 ----------------------------------------------------------------------------------------------------
@@ -709,8 +717,6 @@ xi.dynamis.mobList[zoneID][128].nmchildren = { true, 283, 284                   
 xi.dynamis.mobList[zoneID][129].nmchildren = { true, 285, 286                       } -- ( 129 ) Nightmare Sabotender (×3)
 -- NMs
 xi.dynamis.mobList[zoneID][10 ].nmchildren = { true, 287, 288                       } -- ( 010 ) Dragontrap (×3)
-xi.dynamis.mobList[zoneID][24 ].nmchildren = { true, 25, 26, 27, 28, 29, 30, 31, 32 } -- ( 024 ) Cirrate Christelle
-
 
 ------------------------------------------
 --          Mob Position Info           --
