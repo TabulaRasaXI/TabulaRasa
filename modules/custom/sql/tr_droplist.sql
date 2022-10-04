@@ -13262,7 +13262,7 @@ INSERT INTO `mob_droplist` VALUES (1651,0,0,1000,14959,@UNCOMMON); -- Mercenarys
 -- ZoneID: 151 - Mee Deggi The Punisher
 INSERT INTO `mob_droplist` VALUES (1652,2,0,1000,656,0);       -- Beastcoin (Steal)
 INSERT INTO `mob_droplist` VALUES (1652,1,1,1000,16703,900);   -- Impact Knuckles (Group 1 - 90.0%)
-INSERT INTO `mob_droplist` VALUES (1652,1,1,1000,13952,100); -- Ochiudo's Kote (Group 1 - 10%)
+INSERT INTO `mob_droplist` VALUES (1652,1,1,1000,14986,100);   -- Ochimusha Kote (Group 1 - 10%)
 
 -- ZoneID:  24 - Megalobugard
 INSERT INTO `mob_droplist` VALUES (1653,0,0,1000,15324,@UNCOMMON); -- Caitiffs Socks (Uncommon, 10%)
