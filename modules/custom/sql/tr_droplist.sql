@@ -12294,7 +12294,7 @@ INSERT INTO `mob_droplist` VALUES (1503,0,0,1000,18445,@VCOMMON); -- Amakura (Ve
 
 -- ZoneID: 107 - Leaping Lizzy
 INSERT INTO `mob_droplist` VALUES (1504,0,0,1000,926,@VCOMMON);  -- Lizard Tail (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (1504,0,0,1000,13014,@RARE);   -- Leaaping Boots (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1504,0,0,1000,15351,@RARE);   -- Bounding Boots (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1504,0,0,1000,852,@RARE);     -- Lizard Skin (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1504,2,0,1000,4362,0);        -- Lizard Egg (Steal)
 
