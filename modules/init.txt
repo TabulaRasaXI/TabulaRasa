@@ -63,11 +63,11 @@ era/lua_dynamis/mobskills/era_qufim_tp_moves.lua
 era/lua_dynamis/mobskills/era_xarcabard_tp_moves.lua
 era/lua_dynamis/globals/era_dynamis_zones.lua
 #-----------------------
-#        Renamer
+#       Renamer
 #-----------------------
 renamer
 #-----------------------
-#		Custom
+#       Custom
 #-----------------------
 custom/commands/
 custom/cpp/ah_announcement.cpp
@@ -85,8 +85,7 @@ custom/sql/exp_base_zilart.sql
 custom/sql/starter_zone_fast_repops.sql
 custom/sql/disable_weather_latents.sql
 custom/sql/exp_base_zilart.sql
-custom/sql/ka_speedbelt_drop.sql
 custom/sql/starter_zone_fast_repops.sql
 custom/sql/ooe_mob_drops.sql
 custom/sql/tr_droplist.sql
-custom/sql/rare_ex_NM_drops.sql
+custom/sql/rare_NM_drops.sql
