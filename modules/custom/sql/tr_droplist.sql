@@ -18630,7 +18630,7 @@ INSERT INTO `mob_droplist` VALUES (2348,2,0,1000,920,0);          -- Malboro Vin
 INSERT INTO `mob_droplist` VALUES (2349,0,0,1000,637,@VCOMMON);   -- Vial Of Slime Oil (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2349,0,0,1000,637,@VCOMMON);   -- Vial Of Slime Oil (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2349,0,0,1000,1030,@UNCOMMON);     -- Ordelle Chest Key (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2349,0,0,1000,15551,@RARE);   -- Shikaree Ring (Rare 5%)
+INSERT INTO `mob_droplist` VALUES (2349,0,0,1000,13514,@RARE);   -- Archer's Ring (Rare 5%)
 
 -- ZoneID:   1 - Stubborn Dredvodd
 INSERT INTO `mob_droplist` VALUES (2350,0,0,1000,15296,@ALWAYS); -- Tathlum Belt (Always, 100%)
