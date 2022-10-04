@@ -1257,6 +1257,7 @@ INSERT INTO `mob_skill_lists` VALUES ('KingV',274,723);
 INSERT INTO `mob_skill_lists` VALUES ('KingV',274,355);
 -- 275: Matamata
 -- 276: Crepuscular Worm
+INSERT INTO `mob_skill_lists` VALUES ('Genbu',277,804);
 INSERT INTO `mob_skill_lists` VALUES ('Genbu',277,805);
 INSERT INTO `mob_skill_lists` VALUES ('Genbu',277,806);
 INSERT INTO `mob_skill_lists` VALUES ('Genbu',277,807);
@@ -1497,6 +1498,7 @@ INSERT INTO `mob_skill_lists` VALUES ('AbsoluteVirtue',329,1382);
 INSERT INTO `mob_skill_lists` VALUES ('AbsoluteVirtue',329,1383);
 INSERT INTO `mob_skill_lists` VALUES ('AbsoluteVirtue',329,1384);
 INSERT INTO `mob_skill_lists` VALUES ('AbsoluteVirtue',329,1386);
+INSERT INTO `mob_skill_lists` VALUES ('PetGenbu',330,804);
 INSERT INTO `mob_skill_lists` VALUES ('PetGenbu',330,805);
 INSERT INTO `mob_skill_lists` VALUES ('PetGenbu',330,806);
 INSERT INTO `mob_skill_lists` VALUES ('PetGenbu',330,807);
