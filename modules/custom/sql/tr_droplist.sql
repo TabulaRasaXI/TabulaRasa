@@ -16644,7 +16644,7 @@ INSERT INTO `mob_droplist` VALUES (2068,0,0,1000,5366,@VCOMMON); -- Castellanus 
 
 -- ZoneID: 151 - Quu Domi The Gallant
 INSERT INTO `mob_droplist` VALUES (2069,1,1,1000,16820,900); -- Strider Sword (Group 1 - 90.0%)
-INSERT INTO `mob_droplist` VALUES (2069,1,1,1000,13054,100); -- Fuma Kyahan (Group 1 - 10.0%)
+INSERT INTO `mob_droplist` VALUES (2069,1,1,1000,13054,100); -- Sarutobi Kyahan (Group 1 - 10.0%)
 
 -- ZoneID:  95 - Rafflesia
 INSERT INTO `mob_droplist` VALUES (2070,0,0,1000,2513,60); -- Rafflesia Vine (6.0%)
