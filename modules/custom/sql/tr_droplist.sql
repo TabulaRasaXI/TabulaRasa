@@ -17994,7 +17994,7 @@ INSERT INTO `mob_droplist` VALUES (2254,2,0,1000,4569,0);       -- Bowl Of Quada
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,4172,@ALWAYS);    -- Reraiser (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,4174,@ALWAYS);    -- Vile Elixir (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,17416,@ALWAYS);   -- Arcana Breaker (Always, 100%)
-INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,13189,@UNCOMMON); -- Strider Boots (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,15736,@UNCOMMON); -- Trotter Boots (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,658,@RARE);       -- Damascus Ingot (Rare, 5%)
 
 -- ZoneID: 254 - Sinister Seidel
