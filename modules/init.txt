@@ -63,6 +63,10 @@ era/lua_dynamis/mobskills/era_qufim_tp_moves.lua
 era/lua_dynamis/mobskills/era_xarcabard_tp_moves.lua
 era/lua_dynamis/globals/era_dynamis_zones.lua
 #-----------------------
+#    CoP Zones Access
+#-----------------------
+era/lua/disable_carpenters_landing_shutter.lua
+#-----------------------
 #       Renamer
 #-----------------------
 renamer
