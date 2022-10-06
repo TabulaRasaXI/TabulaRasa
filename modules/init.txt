@@ -66,6 +66,7 @@ era/lua_dynamis/globals/era_dynamis_zones.lua
 #    CoP Zones Access
 #-----------------------
 era/lua/disable_carpenters_landing_shutter.lua
+era/sql/disable_walking_into_cop_zones.sql
 #-----------------------
 #       Renamer
 #-----------------------
