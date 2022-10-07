@@ -65,7 +65,6 @@ era/lua_dynamis/globals/era_dynamis_zones.lua
 #-----------------------
 #    CoP Zones Access
 #-----------------------
-era/lua/disable_npcs_into_cop_zones.lua
 era/sql/disable_walking_into_cop_zones.sql
 #-----------------------
 #       Renamer
