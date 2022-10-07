@@ -1324,7 +1324,7 @@ local helmInfo =
 -- colored rocks. do not change this order!
 -----------------------------------
 
-local rocks = {769, 771, 770, 772, 773, 774, 776, 775}
+local rocks = {769, 773, 772, 771, 774, 770, 776, 775}
 
 -----------------------------------
 -- local functions
@@ -1377,7 +1377,7 @@ local function pickItem(player, info)
 
     -- if we picked a colored rock, change it to the day's element
     if item == 769 then
-        item = rocks[VanadielDayElement() + 1]
+        item = rocks[VanadielDayElement()]
     end
 
     return item
