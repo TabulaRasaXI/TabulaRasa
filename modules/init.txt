@@ -81,7 +81,7 @@ custom/lua/conquest_npc_shops_always_open.lua
 custom/lua/conquest_regional_npcs_always_up.lua
 custom/lua/custom_conquest.lua
 custom/lua/custom_containers.lua
-#custom/lua/disable_zones.lua
+custom/lua/disable_zones.lua
 custom/lua/guild_no_kits.lua
 custom/lua/new_player_linkshell.lua
 custom/sql/cluster_zone_settings.sql
