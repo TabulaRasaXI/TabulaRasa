@@ -13763,7 +13763,7 @@ INSERT INTO `mob_droplist` VALUES (1734,2,0,1000,920,0);   -- Malboro Vine (Stea
 INSERT INTO `mob_droplist` VALUES (1735,0,0,1000,920,@VCOMMON);    -- Malboro Vine (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1735,0,0,1000,920,@VCOMMON);    -- Malboro Vine (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1735,0,0,1000,920,@VCOMMON);    -- Malboro Vine (Very Common, 24%)
-INSERT INTO `mob_droplist` VALUES (1735,0,0,1000,20672,@COMMON); -- Ice Brand (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (1735,0,0,1000,16937,@COMMON);   -- Icicle Sword (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1735,2,0,1000,920,0);           -- Malboro Vine (Steal)
 
 -- ZoneID: 193 - Morbolger
