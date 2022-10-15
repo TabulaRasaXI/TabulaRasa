@@ -78,14 +78,12 @@ custom/lua/conquest_regional_npcs_always_up.lua
 custom/lua/custom_conquest.lua
 custom/lua/custom_containers.lua
 custom/lua/disable_zones.lua
-custom/lua/guild_no_kits.lua
+custom/lua/guild_always_open.lua
 custom/lua/new_player_linkshell.lua
 custom/sql/cluster_zone_settings.sql
 custom/sql/exp_base_zilart.sql
 custom/sql/starter_zone_fast_repops.sql
 custom/sql/disable_weather_latents.sql
-custom/sql/exp_base_zilart.sql
-custom/sql/starter_zone_fast_repops.sql
 custom/sql/ooe_mob_drops.sql
 custom/sql/tr_droplist.sql
 custom/sql/rare_NM_drops.sql
