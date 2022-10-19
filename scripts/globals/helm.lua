@@ -1394,6 +1394,7 @@ local helmInfo =
 -- colored rocks array
 -----------------------------------
 
+
 local rocks =
 {
     [xi.magic.element.FIRE] = xi.items.RED_ROCK,
@@ -1405,6 +1406,7 @@ local rocks =
     [xi.magic.element.LIGHT] = xi.items.WHITE_ROCK,
     [xi.magic.element.DARK] = xi.items.BLACK_ROCK,
 }
+
 
 -----------------------------------
 -- local functions
