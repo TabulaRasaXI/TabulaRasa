@@ -81,7 +81,7 @@ quest.sections =
             ['_6n2'] =
             {
                 onTrigger = function(player, npc)
-                    if quest:getVar(player, 'Prog') == 2 then -- First meeting at house of hero.
+                    if quest:getVar(player, 'Prog') == 1 then -- First meeting at house of hero.
                         if player:getRank(xi.nation.WINDURST) < 9 then
                             return quest:progressEvent(386) -- Meet Joker.
                         else
