@@ -320,7 +320,7 @@ end
 function doEnspell(caster, target, spell, effect)
     -- Calculate Bonus duration
     local baseDuration = 0
-    if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK then
+    if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK or caster:getEquipID(xi.slot.SUB) == xi.items.BUZZARD_TUCK then
         baseDuration = 210
     else
         baseDuration = 180
@@ -333,7 +333,7 @@ function doEnspell(caster, target, spell, effect)
 
     -- Add effect bonuses from equipment
     local potencybonus = 0
-    if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK then
+    if caster:getEquipID(xi.slot.MAIN) == xi.items.BUZZARD_TUCK or caster:getEquipID(xi.slot.SUB) == xi.items.BUZZARD_TUCK then
         potencybonus = 2 + potencybonus
     elseif caster:getEquipID(xi.slot.EAR1) == xi.items.LYCOPODIUM_EARRING or caster:getEquipID(xi.slot.EAR2) == xi.items.LYCOPODIUM_EARRING then
         potencybonus = 2 + potencybonus
@@ -342,7 +342,7 @@ function doEnspell(caster, target, spell, effect)
     elseif(caster:getHPP() <= 75 and caster:getTP() <= 100) and
     (caster:getEquipID(xi.slot.RING1) == xi.items.FENCERS_RING or caster:getEquipID(xi.slot.RING2) == xi.items.FENCERS_RING) then
         potencybonus = 5 + potencybonus
-    elseif caster:getEquipID(xi.slot.MAIN) == xi.items.ENHANCING_SWORD then
+    elseif caster:getEquipID(xi.slot.MAIN) == xi.items.ENHANCING_SWORD or caster:getEquipID(xi.slot.SUB) == xi.items.ENHANCING_SWORD then
         potencybonus = 5 + potencybonus
     end
 
