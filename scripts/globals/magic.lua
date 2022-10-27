@@ -122,12 +122,12 @@ local function getSpellBonusAcc(caster, target, spell, params)
     if casterJob == xi.job.DRK then
         -- Add MACC for Dark Seal
         if skill == xi.skill.DARK_MAGIC and caster:hasStatusEffect(xi.effect.DARK_SEAL) then
-            magicAccBonus = magicAccBonus + 75
+            magicAccBonus = magicAccBonus + 256
         end
     end
 
     if caster:hasStatusEffect(xi.effect.ELEMENTAL_SEAL) then
-        magicAccBonus = magicAccBonus + 75
+        magicAccBonus = magicAccBonus + 256
     end
 
     if casterJob == xi.job.RDM then
