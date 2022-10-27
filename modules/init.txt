@@ -74,7 +74,7 @@ renamer
 #       Custom
 #-----------------------
 custom/commands/
-custom/cpp/ah_announcement.cpp
+#custom/cpp/ah_announcement.cpp
 custom/cpp/ah_pagination.cpp
 custom/lua/conquest_crystal_trade_fix.lua
 custom/lua/conquest_npc_shops_always_open.lua
