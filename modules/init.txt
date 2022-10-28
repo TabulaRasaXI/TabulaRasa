@@ -97,3 +97,8 @@ custom/sql/tr_mob_spawn_adjustments.sql
 #       Custom Job Adjustments
 #------------------------------
 custom/job_adjustments/
+
+#------------------------------
+#       Rerun Dynamis SQL
+#------------------------------
+era/sql/era_dyna_sql.sql
