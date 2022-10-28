@@ -125,7 +125,7 @@ entity.onPath = function(mob)
 end
 
 entity.onMobSpawn = function(mob)
-    mob:setSpeed(250)
+    mob:setSpeed(125)
     entity.onPath(mob)
 end
 
@@ -138,7 +138,7 @@ entity.onMobFight = function(mob)
 end
 
 entity.onMobDisengage = function(mob)
-    mob:setSpeed(250)
+    mob:setSpeed(125)
     mob:setAnimationSub(5)
 end
 
