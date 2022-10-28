@@ -74,7 +74,7 @@ renamer
 #       Custom
 #-----------------------
 custom/commands/
-custom/cpp/ah_announcement.cpp
+#custom/cpp/ah_announcement.cpp
 custom/cpp/ah_pagination.cpp
 custom/lua/conquest_crystal_trade_fix.lua
 custom/lua/conquest_npc_shops_always_open.lua
@@ -92,7 +92,7 @@ custom/sql/exp_base_zilart.sql
 custom/sql/ooe_mob_drops.sql
 custom/sql/tr_droplist.sql
 custom/sql/rare_NM_drops.sql
-
+custom/sql/tr_mob_spawn_adjustments.sql
 #------------------------------
 #       Custom Job Adjustments
 #------------------------------
