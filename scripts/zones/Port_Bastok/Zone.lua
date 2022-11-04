@@ -6,19 +6,19 @@ require('scripts/globals/conquest')
 require('scripts/globals/settings')
 require('scripts/globals/zone')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     zone:registerRegion(1, -112, -3, -17, -96, 3, -3)     -- event COP
     zone:registerRegion(2, 53.5, 5, -165.3, 66.5, 6, -72) -- drawbridge area
     xi.conquest.toggleRegionalNPCs(zone)
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     -- FIRST LOGIN (START CS)
@@ -44,25 +44,33 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zone_object.onRegionEnter = function(player, region)
+zoneObject.onRegionEnter = function(player, region)
 end
 
-zone_object.onRegionLeave = function(player, region)
+zoneObject.onRegionLeave = function(player, region)
 end
 
-zone_object.onTransportEvent = function(player, transport)
-    player:startEvent(71)
+zoneObject.onTransportEvent = function(player, transport)
+    if player:getLocalVar('[AIRSHIP]Paid') == 1 then
+        player:startEvent(71)
+    else
+        player:setPos(-93.8551, -2.6121, -7.9205, 253)
+        player:setLocalVar('[AIRSHIP]Paid', 0)
+    end
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
     if csid == 1 then
         player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
     elseif (csid == 71) then
         player:setPos(0, 0, 0, 0, 224)
+        player:setLocalVar('[AIRSHIP]Paid', 1)
+    elseif csid == 140 and option == 0 then
+        player:setLocalVar('[AIRSHIP]Paid', 0)
     end
 end
 
-return zone_object
+return zoneObject

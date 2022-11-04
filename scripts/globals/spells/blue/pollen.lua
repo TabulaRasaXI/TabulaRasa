@@ -17,17 +17,17 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local minCure = 14
     local divisor = 1
     local constant = -6
-    local power = getCurePowerOld(caster)
+    local power = xi.magic.getCurePowerOld(caster)
 
     if (power > 99) then
         divisor = 57
@@ -37,9 +37,9 @@ spell_object.onSpellCast = function(caster, target, spell)
         constant = 9
     end
 
-    local final = getCureFinal(caster, spell, getBaseCureOld(power, divisor, constant), minCure, true)
+    local final = xi.magic.getCureFinal(caster, spell, xi.magic.getBaseCureOld(power, divisor, constant), minCure, true)
 
-    final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD)/100))
+    final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))
 
     if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == xi.objType.PC or target:getObjType() == xi.objType.MOB)) then
         --Applying server mods
@@ -60,4 +60,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return final
 end
 
-return spell_object
+return spellObject

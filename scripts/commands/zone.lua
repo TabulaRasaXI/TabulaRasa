@@ -282,7 +282,7 @@ function error(player, msg)
 end
 
 local function getBytePos(s, needle)
-    for i=1, string.len(s), 1 do
+    for i = 1, string.len(s), 1 do
         if (string.byte(s, i) == needle) then
             return i
         end
@@ -344,6 +344,12 @@ function onTrigger(player, bytes)
                 break
             end
         end
+    end
+
+    -- Confirm that the zone is active
+    if not IsZoneActive(zone) then
+        error(player, "Zone currently disabled.")
+        return
     end
 
     -- send player to destination

@@ -13,9 +13,9 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     if (player:getAnimation() ~= 1) then
         return xi.msg.basic.REQUIRES_COMBAT, 0
     else
@@ -44,9 +44,9 @@ ability_object.onAbilityCheck = function(player, target, ability)
     end
 end
 
-ability_object.onUseAbility = function(player, target, ability, action)
+abilityObject.onUseAbility = function(player, target, ability, action)
     --get fstr
-    local fstr = fSTR(player:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), player:getWeaponDmgRank())
+    local fstr = xi.weaponskills.fSTR(player:getStat(xi.mod.STR), target:getStat(xi.mod.VIT), player:getWeaponDmgRank())
 
     local params = {}
     params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
@@ -62,13 +62,13 @@ ability_object.onUseAbility = function(player, target, ability, action)
     end
 
     local base = weaponDamage + fstr
-    local cratio, _ = cMeleeRatio(player, target, params, 0, 0, xi.slot.MAIN)
+    local cratio, _ = xi.weaponskills.cMeleeRatio(player, target, params, 0, 0, xi.slot.MAIN)
     local isSneakValid = player:hasStatusEffect(xi.effect.SNEAK_ATTACK)
     if (isSneakValid and not player:isBehind(target)) then
         isSneakValid = false
     end
-    local pdif = generatePdif (cratio[1], cratio[2], true)
-    local hitrate = getHitRate(player, target, true)
+    local pdif = cratio[1]
+    local hitrate = xi.weaponskills.getHitRate(player, target, true)
 
     if (math.random() <= hitrate or isSneakValid) then
         local hit = 3
@@ -78,7 +78,7 @@ ability_object.onUseAbility = function(player, target, ability, action)
         params.diff = 0
         params.skillType = player:getWeaponSkillType(xi.slot.MAIN)
         params.bonus = 50 - target:getMod(xi.mod.STUNRES) + player:getMod(xi.mod.VFLOURISH_MACC) + player:getJobPointLevel(xi.jp.FLOURISH_I_EFFECT)
-        local resist = applyResistance(player, target, spell, params)
+        local resist = xi.magic.applyResistance(player, target, spell, params)
 
         if resist > 0.25 then
             target:addStatusEffect(xi.effect.STUN, 1, 0, 2)
@@ -99,4 +99,4 @@ ability_object.onUseAbility = function(player, target, ability, action)
     end
 end
 
-return ability_object
+return abilityObject

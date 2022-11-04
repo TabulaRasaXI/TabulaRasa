@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setjobpoints <amount> {player}")
+    player:PrintToPlayer("!setjobpoints <amount> (player)")
 end
 
 function onTrigger(player, amount, target)
@@ -40,7 +40,7 @@ function onTrigger(player, amount, target)
 
     local jobNameByNum = {}
     for k, v in pairs(xi.job) do
-        jobNameByNum[v]=k
+        jobNameByNum[v] = k
     end
 
     -- set job points

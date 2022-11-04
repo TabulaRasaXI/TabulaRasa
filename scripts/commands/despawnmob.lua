@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!despawnmob {mobID}")
+    player:PrintToPlayer("!despawnmob (mobID)")
 end
 
 function onTrigger(player, mobId)
@@ -26,7 +26,7 @@ function onTrigger(player, mobId)
         end
     else
         targ = GetMobByID(mobId)
-        if (targ == nil) then
+        if targ == nil then
             error(player, "Invalid mobID.")
             return
         end

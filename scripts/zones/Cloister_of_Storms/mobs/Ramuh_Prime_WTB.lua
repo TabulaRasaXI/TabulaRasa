@@ -20,7 +20,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENTHUNDER, {chance = 100, power = math.random(75, 125)})
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENTHUNDER, { chance = 100, power = math.random(75, 125) })
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill)
@@ -47,7 +47,7 @@ end
 entity.onMobFight = function(mob, target)
     if mob:getLocalVar("control") == 0 and mob:getHPP() < mob:getLocalVar("HPThreshold") then
         mob:setLocalVar("control", 1)
-        mob:useMobAbility(848)
+        mob:useMobAbility(893)
     end
 
     if mob:getLocalVar("timer") < os.time() then
@@ -74,8 +74,8 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-    if isKiller then
+entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller then
         for i = 1, 4 do
             if GetMobByID(mob:getID()+i):isAlive() then
                 GetMobByID(mob:getID()+i):setHP(0)

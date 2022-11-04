@@ -14,7 +14,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!delmission <logID> <missionID> {player}")
+    player:PrintToPlayer("!delmission <logID> <missionID> (player)")
 end
 
 function onTrigger(player, logId, missionId, target)
@@ -40,11 +40,11 @@ function onTrigger(player, logId, missionId, target)
 
     -- validate target
     local targ
-    if (target == nil) then
+    if target == nil then
         targ = player
     else
         targ = GetPlayerByName(target)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format("Player named '%s' not found!", target))
             return
         end

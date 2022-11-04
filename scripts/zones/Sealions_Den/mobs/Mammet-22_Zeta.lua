@@ -94,26 +94,28 @@ entity.onMobWeaponSkillPrepare = function(mob, target)
     switch (mob:getAnimationSub()): caseof
     {
         [forms.UNARMED] = function()
-            local wsChoice = math.random(1,2)
+            local wsChoice = math.random(1, 2)
             return tpMoves[forms.UNARMED][wsChoice]
         end,
         [forms.SWORD] = function()
-            local wsChoice = math.random(1,3)
+            local wsChoice = math.random(1, 3)
             return tpMoves[forms.SWORD][wsChoice]
         end,
         [forms.POLEARM] = function()
-            local wsChoice = math.random(1,3)
+            local wsChoice = math.random(1, 3)
             return tpMoves[forms.POLEARM][wsChoice]
         end,
         [forms.STAFF] = function()
-            local wsChoice = math.random(1,2)
+            local wsChoice = math.random(1, 2)
             return tpMoves[forms.STAFF][wsChoice]
         end,
     }
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-    oneToBeFeared.handleMammetDeath(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller then
+        oneToBeFeared.handleMammetDeath(mob, player, optParams)
+    end
 end
 
 entity.onEventFinish = function(player, csid, option)

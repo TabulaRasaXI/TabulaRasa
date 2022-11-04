@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setplayerlevel {player} <level>")
+    player:PrintToPlayer("!setplayerlevel (player) <level>")
 end
 
 function onTrigger(player, arg1, arg2)
@@ -21,7 +21,7 @@ function onTrigger(player, arg1, arg2)
     -- validate target
     if (arg2 ~= nil) then
         targ = GetPlayerByName(arg1)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format( "Player named '%s' not found!", arg1 ) )
             return
         end

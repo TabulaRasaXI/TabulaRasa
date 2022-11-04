@@ -12,7 +12,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!npchere {npcID} {noDepop}")
+    player:PrintToPlayer("!npchere (npcID) (noDepop)")
 end
 
 function onTrigger(player, npcId, noDepop)
@@ -28,7 +28,7 @@ function onTrigger(player, npcId, noDepop)
         end
     else
         targ = GetNPCByID(npcId)
-        if (targ == nil) then
+        if targ == nil then
             error(player, "Invalid npcID.")
             return
         end

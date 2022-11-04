@@ -82,7 +82,17 @@ bool CMobController::TryDeaggro()
             PMob->PEnmityContainer->Clear(PTarget->id);
         }
         PTarget = PMob->PEnmityContainer->GetHighestEnmity();
-        PMob->SetBattleTargetID(PTarget ? PTarget->targid : 0);
+        if (PTarget)
+        {
+            PMob->SetBattleTargetID(PTarget->targid);
+            // Reset deaggro time so that the mob is given time to actually try to path towards the new highest enmity target
+            TapDeaggroTime();
+        }
+        else
+        {
+            PMob->SetBattleTargetID(0);
+        }
+
         return TryDeaggro();
     }
 
@@ -152,7 +162,8 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
         TapDeaggroTime();
     }
 
-    return PMob->CanDeaggro() && (m_Tick >= m_DeaggroTime + 25s);
+    auto additionalDeaggroTime = std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
+    return PMob->CanDeaggro() && (m_Tick >= m_DeaggroTime + 25s + additionalDeaggroTime);
 }
 
 void CMobController::TryLink()
@@ -249,7 +260,7 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     float verticalDistance = abs(PMob->loc.p.y - PTarget->loc.p.y);
 
-    if (PMob->m_Family != 6 && verticalDistance > 8.0f)
+    if ((PMob->m_Family != 6 || PMob->getMobMod(LEDGE_AGGRO) != 0) && verticalDistance > 8.0f)
     {
         return false;
     }
@@ -259,8 +270,9 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
         return false;
     }
 
-    auto detects         = PMob->m_Detects;
-    auto currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
+    int16 detection       = PMob->getMobMod(MOBMOD_DETECTION);
+    auto  detects         = detection != 0 ? detection : PMob->m_Detects;
+    auto  currentDistance = distance(PTarget->loc.p, PMob->loc.p) + PTarget->getMod(Mod::STEALTH);
 
     bool detectSight  = (detects & DETECT_SIGHT) || forceSight;
     bool hasInvisible = false;
@@ -274,6 +286,10 @@ bool CMobController::CanDetectTarget(CBattleEntity* PTarget, bool forceSight)
 
     if (detectSight && !hasInvisible && currentDistance < PMob->getMobMod(MOBMOD_SIGHT_RANGE) && facing(PMob->loc.p, PTarget->loc.p, 64))
     {
+        if (PMob->getMobMod(LEDGE_AGGRO) != 0)
+        {
+            return true;
+        }
         return CanSeePoint(PTarget->loc.p);
     }
 
@@ -371,6 +387,10 @@ bool CMobController::MobSkill(int wsList)
         else if (PMobSkill->getValidTargets() == TARGET_SELF) // self
         {
             PActionTarget = PMob;
+        }
+        else if (PMobSkill->getValidTargets() == TARGET_PLAYER_PARTY) // party
+        {
+            PActionTarget = PTarget; // Mobs don't target other mobs unless scripted.
         }
         else
         {
@@ -551,6 +571,10 @@ void CMobController::CastSpell(SpellID spellid)
             // only buff other targets if i'm roaming
             if ((PSpell->getValidTarget() & TARGET_PLAYER_PARTY))
             {
+                // find the valid targets and build the target list
+                PMob->PAI->TargetFind->reset();
+                PMob->PAI->TargetFind->findWithinArea(PMob, AOE_RADIUS::ATTACKER, PSpell->getRange());
+
                 // chance to target my master
                 if (PMob->PMaster != nullptr && xirand::GetRandomNumber(2) == 0)
                 {
@@ -560,9 +584,6 @@ void CMobController::CastSpell(SpellID spellid)
                 else if (xirand::GetRandomNumber(2) == 0)
                 {
                     // chance to target party
-                    PMob->PAI->TargetFind->reset();
-                    PMob->PAI->TargetFind->findWithinArea(PMob, AOE_RADIUS::ATTACKER, PSpell->getRange());
-
                     if (!PMob->PAI->TargetFind->m_targets.empty())
                     {
                         // randomly select a target
@@ -573,6 +594,15 @@ void CMobController::CastSpell(SpellID spellid)
                         {
                             PCastTarget = PMob;
                         }
+                    }
+                }
+
+                // if any mobs are flagged with MOBMOD_ASSIST, override the target randomizer and assist them
+                for (auto* PAssistTarget : PMob->PAI->TargetFind->m_targets)
+                {
+                    if (PAssistTarget->objtype == TYPE_MOB && static_cast<CMobEntity*>(PAssistTarget)->getMobMod(MOBMOD_ASSIST))
+                    {
+                        PCastTarget = PAssistTarget;
                     }
                 }
             }
@@ -634,6 +664,102 @@ void CMobController::DoCombatTick(time_point tick)
         }
     }
 
+    if (PMob && PMob->PMaster && PMob->PMaster->objtype == TYPE_PC)
+    {
+        auto* PPet = static_cast<CPetEntity*>(PMob);
+        if (m_Tick <= PPet->m_lastCast + PPet->m_castCool ||
+            PPet->StatusEffectContainer->HasPreventActionEffect() ||
+            PPet->StatusEffectContainer->HasStatusEffect(EFFECT_SILENCE))
+        {
+            Move();
+            return;
+        }
+        else
+        {
+            if ((PPet->m_PetID < PETID_LIGHTSPIRIT || PPet->m_PetID == PETID_DARKSPIRIT) && TryCastSpell())
+            {
+                PPet->m_lastCast = m_Tick;
+                return;
+            }
+            else if (PPet->m_PetID == PETID_LIGHTSPIRIT)
+            {
+                CBattleEntity* PLowest       = nullptr;
+                float          lowestPercent = 100.f;
+                uint8          choice        = xirand::GetRandomNumber(2, 4);
+                uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
+
+                // clang-format off
+                PPet->PMaster->ForParty([&](CBattleEntity* PMember)
+                {
+                    if (PMember != nullptr && PPet->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PPet->loc.p, PMember->loc.p) <= 20 &&
+                        !PMember->isDead())
+                    {
+                        float memberPercent = PMember->health.hp / PMember->health.maxhp;
+                        if (PLowest == nullptr ||
+                            (lowestPercent >= memberPercent))
+                        {
+                            PLowest = PMember;
+                            lowestPercent = memberPercent;
+                        }
+                    }
+                });
+                // clang-format on
+
+                if (lowestPercent < 0.5f) // 50% HP
+                {
+                    choice = xirand::GetRandomNumber(100);
+
+                    if (choice <= 20)
+                    {
+                        choice = 1;
+                    }
+                    else if (choice <= 60)
+                    {
+                        choice = 2;
+                    }
+                    else
+                    {
+                        choice = 3;
+                    }
+                }
+
+                switch (choice)
+                {
+                    case 1:
+                        if (PPet->m_healSpells.size() > 0)
+                        {
+                            chosenSpell = xirand::GetRandomElement(PPet->m_healSpells);
+                        }
+                        break;
+                    case 2:
+                        if (PPet->m_buffSpells.size() > 0)
+                        {
+                            chosenSpell = xirand::GetRandomElement(PPet->m_buffSpells);
+                        }
+                        break;
+                    case 3:
+                        if (PPet->m_offensiveSpells.size() > 0)
+                        {
+                            chosenSpell = xirand::GetRandomElement(PPet->m_offensiveSpells);
+                        }
+                        break;
+                }
+
+                if (CanCastSpells())
+                {
+                    CastSpell(static_cast<SpellID>(chosenSpell));
+                }
+
+                if (PPet)
+                {
+                    PPet->m_lastCast = m_Tick;
+                }
+
+                return;
+            }
+        }
+    }
+
     // Try to spellcast (this is done first so things like Chainspell spam is prioritised over TP moves etc.
     if (IsSpecialSkillReady(currentDistance) && TrySpecialSkill())
     {
@@ -679,7 +805,7 @@ void CMobController::Move()
     }
     if (PMob->PAI->PathFind->IsFollowingScriptedPath() && PMob->PAI->CanFollowPath())
     {
-        PMob->PAI->PathFind->FollowPath();
+        PMob->PAI->PathFind->FollowPath(m_Tick);
         return;
     }
 
@@ -733,6 +859,7 @@ void CMobController::Move()
             if (currentDistance > drawInRange && currentDistance < maximumReach && battleutils::DrawIn(PTarget, PMob, PMob->GetMeleeRange() - 0.2f, drawInRange, maximumReach, includeParty))
             {
                 FaceTarget();
+                return;
             }
             else
             {
@@ -760,12 +887,23 @@ void CMobController::Move()
             }
             else if (CanMoveForward(currentDistance))
             {
-                if ((!PMob->PAI->PathFind->IsFollowingPath() || distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10) && currentDistance > attack_range)
+                if (!PMob->PAI->PathFind->IsFollowingPath())
                 {
-                    // path to the target if we don't have a path already
+                    // out of melee range, try to path towards
+                    if (currentDistance > PMob->GetMeleeRange())
+                    {
+                        // try to find path towards target
+                        PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
+                    }
+                }
+                else if (distanceSquared(PMob->PAI->PathFind->GetDestination(), PTarget->loc.p) > 10)
+                {
+                    // try to find path towards target
                     PMob->PAI->PathFind->PathInRange(PTarget->loc.p, attack_range - 0.2f, PATHFLAG_WALLHACK | PATHFLAG_RUN);
                 }
-                PMob->PAI->PathFind->FollowPath();
+
+                PMob->PAI->PathFind->FollowPath(m_Tick);
+
                 if (!PMob->PAI->PathFind->IsFollowingPath())
                 {
                     bool needToMove = false;
@@ -887,6 +1025,11 @@ void CMobController::DoRoamTick(time_point tick)
         {
             FollowRoamPath();
         }
+        else if (PMob->PAI->PathFind->IsPatrolling())
+        {
+            PMob->PAI->PathFind->ResumePatrol();
+            FollowRoamPath();
+        }
         else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
         {
             // lets buff up or move around
@@ -912,6 +1055,7 @@ void CMobController::DoRoamTick(time_point tick)
                     PMob->m_HiPartySize = 0;
                     PMob->m_giveExp     = true;
                     PMob->m_ExpPenalty  = 0;
+                    PMob->m_UsedSkillIds.clear();
                 }
             }
 
@@ -1030,7 +1174,7 @@ void CMobController::FollowRoamPath()
     TracyZoneScoped;
     if (PMob->PAI->CanFollowPath())
     {
-        PMob->PAI->PathFind->FollowPath();
+        PMob->PAI->PathFind->FollowPath(m_Tick);
 
         CBattleEntity* PPet = PMob->PPet;
         if (PPet != nullptr && PPet->PAI->IsSpawned() && !PPet->PAI->IsEngaged())

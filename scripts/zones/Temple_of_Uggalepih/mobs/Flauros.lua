@@ -3,7 +3,7 @@
 --   NM: Flauros
 -----------------------------------
 require("scripts/globals/hunts")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
@@ -16,7 +16,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = xi.jsa.MIGHTY_STRIKES, chance = 50},
+            { id = xi.jsa.MIGHTY_STRIKES, chance = 50 },
         },
     })
 end
@@ -25,7 +25,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENTHUNDER)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 384)
 end
 

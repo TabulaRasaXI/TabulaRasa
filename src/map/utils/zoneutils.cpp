@@ -81,15 +81,10 @@ namespace zoneutils
                 if (!PZone.second->m_WeatherVector.empty())
                 {
                     PZone.second->SetWeather((WEATHER)PZone.second->m_WeatherVector.at(0).common);
-
-                    // ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to %u", PZone.second->GetName(),
-                    // PZone.second->m_WeatherVector.at(0).m_common);
                 }
                 else
                 {
                     PZone.second->SetWeather(WEATHER_NONE); // If not weather data found, initialize with WEATHER_NONE
-
-                    // ShowDebug(CL_YELLOW"zonetuils::InitializeWeather: Static weather of %s updated to WEATHER_NONE", PZone.second->GetName());
                 }
             }
         }
@@ -119,8 +114,6 @@ namespace zoneutils
     {
         g_PTrigger->targid = TargID;
         g_PTrigger->id     = ((4096 + ZoneID) << 12) + TargID;
-
-        ShowWarning("Server need NPC <%u>", g_PTrigger->id);
         return g_PTrigger;
     }
 
@@ -548,6 +541,12 @@ namespace zoneutils
                         PMob->setMobMod(MOBMOD_SPAWN_ANIMATIONSUB, PMob->animationsub);
                     }
 
+                    if (PMob->GetMJob() == JOB_PLD && PMob->m_EcoSystem == ECOSYSTEM::BEASTMAN)
+                    {
+                        PMob->setMobMod(MOBMOD_CAN_SHIELD_BLOCK, 1);
+                        PMob->setModifier(Mod::SHIELDBLOCKRATE, 45);
+                    }
+
                     // Setup HP / MP Stat Percentage Boost
                     PMob->HPscale = sql->GetFloatData(64);
                     PMob->MPscale = sql->GetFloatData(65);
@@ -744,6 +743,9 @@ namespace zoneutils
             // cppcheck-suppress stlFindInsert
             g_PZoneList[0] = CreateZone(0);
         }
+
+        // IDs attached to xi.zone[name] need to be populated before NPCs and Mobs are loaded
+        luautils::PopulateIDLookups();
 
         LoadNPCList();
         LoadMOBList();
@@ -1064,6 +1066,40 @@ namespace zoneutils
         return REGION_TYPE::UNKNOWN;
     }
 
+    uint8 GetFameAreaFromZone(uint16 ZoneID)
+    {
+        switch (ZoneID)
+        {
+            case ZONE_SOUTHERN_SANDORIA:
+            case ZONE_NORTHERN_SANDORIA:
+            case ZONE_PORT_SANDORIA:
+            case ZONE_CHATEAU_DORAGUILLE:
+                return 0;
+            case ZONE_PORT_BASTOK:
+            case ZONE_BASTOK_MARKETS:
+            case ZONE_BASTOK_MINES:
+            case ZONE_METALWORKS:
+                return 1;
+            case ZONE_WINDURST_WATERS:
+            case ZONE_WINDURST_WALLS:
+            case ZONE_PORT_WINDURST:
+            case ZONE_WINDURST_WOODS:
+            case ZONE_HEAVENS_TOWER:
+                return 2;
+            case ZONE_RULUDE_GARDENS:
+            case ZONE_UPPER_JEUNO:
+            case ZONE_LOWER_JEUNO:
+            case ZONE_PORT_JEUNO:
+                return 3;
+            case ZONE_RABAO:
+            case ZONE_SELBINA:
+                return 4;
+            case ZONE_NORG:
+                return 5;
+        }
+        return 255;
+    }
+
     CONTINENT_TYPE GetCurrentContinent(uint16 ZoneID)
     {
         return GetCurrentRegion(ZoneID) != REGION_TYPE::UNKNOWN ? CONTINENT_TYPE::THE_MIDDLE_LANDS : CONTINENT_TYPE::OTHER_AREAS;
@@ -1159,6 +1195,24 @@ namespace zoneutils
     bool IsResidentialArea(CCharEntity* PChar)
     {
         return PChar->m_moghouseID != 0;
+    }
+
+    /************************************************************************
+     *                                                                       *
+     *  Checks whether or not the zone is enabled                            *
+     *                                                                       *
+     ************************************************************************/
+
+    bool IsZoneActive(uint16 zoneId)
+    {
+        if (auto* PZone = GetZone(zoneId))
+        {
+            if (PZone->GetIP() == 0 || PZone->GetPort() == 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }; // namespace zoneutils

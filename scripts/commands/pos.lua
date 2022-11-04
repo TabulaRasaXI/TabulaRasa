@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!pos {x} {y} {z} {zone ID} {player}")
+    player:PrintToPlayer("!pos (x) (y) (z) (zone ID) (player)")
 end
 
 function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
@@ -47,11 +47,11 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
     end
 
     -- validate target
-    if (target == nil) then
+    if target == nil then
         targ = player
     else
         targ = GetPlayerByName(target)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format( "Player named '%s' not found!", target ) )
             return
         end

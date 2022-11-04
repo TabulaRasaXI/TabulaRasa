@@ -26,7 +26,7 @@ end
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar("[rage]timer", 3600) -- 60 minutes
-    mob:setHP(mob:getMaxHP()/2)
+    mob:setHP(mob:getMaxHP() / 2)
     mob:setUnkillable(true)
     mob:setMod(xi.mod.REGEN, 50)
 
@@ -115,7 +115,7 @@ end
 entity.onCriticalHit = function(mob)
     local critNum = mob:getLocalVar("crits")
 
-    if ((critNum+1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
+    if ((critNum + 1) > mob:getLocalVar("CritToTheFace")) then  -- Lose a head
         if (mob:getAnimationSub() == 0) then
             mob:setAnimationSub(1)
             mob:setLocalVar("headTimer", os.time() + math.random(60, 190))
@@ -140,7 +140,7 @@ entity.onMobDrawIn = function(mob, target)
     mob:addTP(3000) -- Uses a mobskill upon drawing in a player. Not necessarily on the person drawn in.
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

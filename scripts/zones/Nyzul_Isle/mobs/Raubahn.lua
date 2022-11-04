@@ -43,7 +43,7 @@ entity.onMobSpawn = function(mob)
                     mobTimerArg:updateEnmity(new_target)
                 end
 
-                mobTimerArg:setLocalVar("RERAISES", reraises+1)
+                mobTimerArg:setLocalVar("RERAISES", reraises + 1)
             end)
 
             -- AFAICT we lack the damage tracking for his immunity based on accumulated damage type
@@ -130,9 +130,9 @@ entity.onSpellPrecast = function(mob, spell)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     -- If he's out of reraises, display text
-    if isKiller and mob:getMobMod(xi.mobMod.BEHAVIOR) == 0 then
+    if optParams.isKiller and mob:getMobMod(xi.mobMod.BEHAVIOR) == 0 then
         mob:showText(mob, ID.text.MIRACLE)
     end
 end

@@ -31,7 +31,7 @@ entity.onMobInitialize = function(mob)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.PETRIFY, {chance = 100})
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.PETRIFY, { chance = 100 })
 end
 
 entity.onMobDisengage = function(mob, weather)
@@ -40,7 +40,7 @@ entity.onMobDisengage = function(mob, weather)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.VINEGAR_EVAPORATOR)
 end
 
@@ -57,7 +57,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
         end
 
         -- KV always does an AOE TP move followed by a single target TP move
-        mob:useMobAbility(({353,350,720})[math.random(1,3)])
+        mob:useMobAbility(({ 353,350,720 })[math.random(1,3)])
         mob:setLocalVar("DrawInWait", os.time() + 2)
     end
 end

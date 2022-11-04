@@ -11,9 +11,9 @@ require("scripts/globals/zone")
 require("scripts/globals/roe")
 require("scripts/globals/voidwalker")
 -----------------------------------
-local effect_object = {}
+local effectObject = {}
 
-effect_object.onEffectGain = function(target, effect)
+effectObject.onEffectGain = function(target, effect)
     target:setAnimation(33)
 
     -- Abyssea Lights and time remaining check
@@ -35,7 +35,7 @@ effect_object.onEffectGain = function(target, effect)
         target:messageSpecial(ID.text.ENERGIES_COURSE)
 
         local maxWaitTime = 480  -- Max wait of 8 minutes
-        local secondsPerTick = xi.settings.main.map.HEALING_TICK_DELAY;
+        local secondsPerTick = xi.settings.main.map.HEALING_TICK_DELAY
         local minWaitTime = math.min(3 * secondsPerTick, maxWaitTime)
         local waitTimeInSeconds = math.random(minWaitTime, maxWaitTime)
         target:setLocalVar("GEO_DWL_Resting", os.time() + waitTimeInSeconds)
@@ -55,7 +55,7 @@ effect_object.onEffectGain = function(target, effect)
     end
 end
 
-effect_object.onEffectTick = function(target, effect)
+effectObject.onEffectTick = function(target, effect)
     local healtime = effect:getTickCount()
 
     if healtime > 2 then
@@ -85,12 +85,13 @@ effect_object.onEffectTick = function(target, effect)
             if target:getHPP() < 100 then
                 target:updateEnmityFromCure(target, healHP)
             end
+            target:addHPLeaveSleeping(healHP)
             target:addMP(12 + ((healtime - 2) * (1 + target:getMod(xi.mod.CLEAR_MIND))) + target:getMod(xi.mod.MPHEAL))
         end
     end
 end
 
-effect_object.onEffectLose = function(target, effect)
+effectObject.onEffectLose = function(target, effect)
     target:setAnimation(0)
     target:delStatusEffect(xi.effect.LEAVEGAME)
 
@@ -98,4 +99,4 @@ effect_object.onEffectLose = function(target, effect)
     target:setLocalVar("GEO_DWL_Resting", 0)
 end
 
-return effect_object
+return effectObject

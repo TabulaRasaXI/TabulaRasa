@@ -57,7 +57,7 @@ entity.onTrigger = function(player, npc)
     local hasMembershipCard = player:hasKeyItem(xi.ki.LAMP_LIGHTERS_MEMBERSHIP_CARD) and 1 or 0
 
     local allLampsLit = true
-    for i=0, 11 do
+    for i = 0, 11 do
         local lamp = GetNPCByID(ID.npc.STREETLAMP_OFFSET + i)
         if (lamp:getAnimation() == xi.anim.CLOSE_DOOR) then
             allLampsLit = false
@@ -130,7 +130,7 @@ entity.onEventFinish = function(player, csid, option)
 
     -- COMMUNITY SERVICE
     elseif csid == 117 then
-        local params = {title = xi.title.TORCHBEARER, var = "currCommService"}
+        local params = { title = xi.title.TORCHBEARER, var = "currCommService" }
         if player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.COMMUNITY_SERVICE) ~= QUEST_COMPLETED then
             -- first victory
             params.fame = 30

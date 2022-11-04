@@ -6,14 +6,14 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-ability_object.onPetAbility = function(target, pet, skill)
-    local base = 47 + pet:getMainLvl()*3
+abilityObject.onPetAbility = function(target, pet, skill)
+    local base = 47 + pet:getMainLvl() * 3
     local tp   = pet:getTP()
 
     if tp < 1000 then
@@ -21,7 +21,7 @@ ability_object.onPetAbility = function(target, pet, skill)
     end
     base = base * tp / 1000
 
-    if (target:getHP()+base > target:getMaxHP()) then
+    if (target:getHP() + base > target:getMaxHP()) then
         base = target:getMaxHP() - target:getHP() --cap it
     end
     target:delStatusEffect(xi.effect.BLINDNESS)
@@ -39,4 +39,4 @@ ability_object.onPetAbility = function(target, pet, skill)
     return base
 end
 
-return ability_object
+return abilityObject

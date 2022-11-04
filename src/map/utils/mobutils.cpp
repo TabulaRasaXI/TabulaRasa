@@ -23,6 +23,7 @@
 
 #include <cmath>
 
+#include "../battlefield.h"
 #include "../grades.h"
 #include "../items/item_weapon.h"
 #include "../lua/luautils.h"
@@ -47,14 +48,15 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Расчет базовой величины оружия монстров                              *
+     *  Calculate mob base weapon damage                                     *
      *                                                                       *
      ************************************************************************/
 
     uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
     {
-        uint16 lvl   = PMob->GetMLevel();
-        uint8  bonus = 0;
+        uint16 lvl    = PMob->GetMLevel();
+        int8   bonus  = 0;
+        uint16 damage = 0;
 
         if (slot == SLOT_RANGED)
         {
@@ -62,10 +64,25 @@ namespace mobutils
         }
         else
         {
-            bonus = 2;
+            if (lvl >= 75)
+            {
+                bonus = 3;
+            }
+            else if (lvl >= 60)
+            {
+                bonus = 2;
+            }
+            else if (lvl >= 50)
+            {
+                bonus = 1;
+            }
+            else if (lvl == 1)
+            {
+                bonus = -1;
+            }
         }
 
-        uint16 damage = lvl + bonus;
+        damage = lvl + bonus;
 
         damage = (uint16)(damage * PMob->m_dmgMult / 100.0f);
 
@@ -126,12 +143,11 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Базовое значение для расчера характеристик                           *
-     *  (на название не хватило фантазии)                                    *
+     *  Base value for stat calculations                                     *
      *                                                                       *
      ************************************************************************/
 
-    uint16 GetBaseToRank(CMobEntity* PMob, uint8 rank, uint16 lvl)
+    uint16 GetBaseToRank(uint8 rank, uint16 lvl)
     {
         switch (rank)
         {
@@ -156,8 +172,7 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Базовое значение для расчерта защиты и уклонения                     *
-     *  (на название не хватило фантазии)                                    *
+     *  Base value for defense and evasion calculation                       *
      *                                                                       *
      ************************************************************************/
 
@@ -211,7 +226,7 @@ namespace mobutils
 
     /************************************************************************
      *                                                                       *
-     *  Расчет атрибутов (характеристик) монстра                             *
+     *  Calculate mob stats                                                  *
      *                                                                       *
      ************************************************************************/
 
@@ -228,66 +243,117 @@ namespace mobutils
         uint8     mLvl     = PMob->GetMLevel();
         ZONE_TYPE zoneType = PMob->loc.zone->GetType();
 
+        uint8 grade;
+        uint8 gradesj;
+
         if (recover == true)
         {
             if (PMob->HPmodifier == 0)
             {
-                float hpScale = PMob->HPscale;
+                uint32 mobHP = 1; // Set mob HP
 
-                if (PMob->getMobMod(MOBMOD_HP_SCALE) != 0)
-                {
-                    hpScale = (float)PMob->getMobMod(MOBMOD_HP_SCALE) / 100.0f;
-                }
+                uint32 baseMobHP = 0; // Define base mobs hp
+                uint32 sjHP      = 0; // Define base subjob hp
 
-                float growth    = 1.06f;
-                float petGrowth = 0.75f;
-                float base      = 18.0f;
+                grade   = grade::GetJobGrade(mJob, 0); // main jobs grade
+                gradesj = grade::GetJobGrade(sJob, 0); // subjobs grade
 
-                // give hp boost every 10 levels after 25
-                // special boosts at 25 and 50
-                if (mLvl > 75)
+                uint8 base     = 0; // Column for base hp
+                uint8 jobScale = 1; // Column for job scaling
+                uint8 scaleX   = 2; // Column for modifier scale
+
+                uint8 BaseHP     = grade::GetMobHPScale(grade, base);       // Main job base HP
+                uint8 JobScale   = grade::GetMobHPScale(grade, jobScale);   // Main job scaling
+                uint8 ScaleXHP   = grade::GetMobHPScale(grade, scaleX);     // Main job modifier scale
+                uint8 sjJobScale = grade::GetMobHPScale(gradesj, jobScale); // Sub job scaling
+                uint8 sjScaleXHP = grade::GetMobHPScale(gradesj, scaleX);   // Sub job modifier scale
+
+                uint8 RBIgrade = std::min(mLvl, (uint8)5); // RBI Grade
+                uint8 RBIbase  = 1;                        // Column for RBI base
+
+                uint8 RBI = grade::GetMobRBI(RBIgrade, RBIbase); // RBI
+
+                uint8 mLvlIf    = (PMob->GetMLevel() > 5 ? 1 : 0);
+                uint8 mLvlIf30  = (PMob->GetMLevel() > 30 ? 1 : 0);
+                uint8 raceScale = 6;
+                uint8 mLvlScale = 0;
+
+                if (mLvl > 0)
                 {
-                    growth    = 1.28f;
-                    petGrowth = 1.03f;
-                }
-                else if (mLvl > 65)
-                {
-                    growth    = 1.27f;
-                    petGrowth = 1.02f;
-                }
-                else if (mLvl > 55)
-                {
-                    growth    = 1.25f;
-                    petGrowth = 0.99f;
-                }
-                else if (mLvl > 50)
-                {
-                    growth    = 1.21f;
-                    petGrowth = 0.96f;
-                }
-                else if (mLvl > 45)
-                {
-                    growth    = 1.17f;
-                    petGrowth = 0.95f;
-                }
-                else if (mLvl > 35)
-                {
-                    growth    = 1.14f;
-                    petGrowth = 0.92f;
-                }
-                else if (mLvl > 25)
-                {
-                    growth    = 1.1f;
-                    petGrowth = 0.82f;
+                    baseMobHP = BaseHP + (std::min(mLvl, (uint8)5) - 1) * (JobScale + raceScale - 1) + RBI + mLvlIf * (std::min(mLvl, (uint8)30) - 5) * (2 * (JobScale + raceScale) + std::min(mLvl, (uint8)30) - 6) / 2 + mLvlIf30 * ((mLvl - 30) * (63 + ScaleXHP) + (mLvl - 31) * (JobScale + raceScale));
                 }
 
-                // pets have lower health
+                // 50+ = 1 hp sjstats
+                if (mLvl > 49)
+                {
+                    mLvlScale = std::floor(mLvl);
+                }
+                // 40-49 = 3/4 hp sjstats
+                else if (mLvl > 39)
+                {
+                    mLvlScale = std::floor(mLvl * 0.75);
+                }
+                // 31-39 = 1/2 hp sjstats
+                else if (mLvl > 30)
+                {
+                    mLvlScale = std::floor(mLvl * 0.50);
+                }
+                // 25-30 = 1/4 hp sjstats
+                else if (mLvl > 24)
+                {
+                    mLvlScale = std::floor(mLvl * 0.25);
+                }
+                // 1-24 = no hp sjstats
+                else
+                {
+                    mLvlScale = 0;
+                }
+
+                sjHP = std::ceil((sjJobScale * (std::max((mLvlScale - 1), 0)) + (0.5 + 0.5 * sjScaleXHP) * (std::max(mLvlScale - 10, 0)) + std::max(mLvlScale - 30, 0) + std::max(mLvlScale - 50, 0) + std::max(mLvlScale - 70, 0)) / 2);
+
+                // Orcs 5% more hp
+                if ((PMob->m_Family == 189) || (PMob->m_Family == 190) || (PMob->m_Family == 334) || (PMob->m_Family == 407))
+                {
+                    mobHP = (baseMobHP + sjHP) * 1.05;
+                }
+                // Quadavs 5% less hp
+                else if ((PMob->m_Family == 200) || (PMob->m_Family == 201) || (PMob->m_Family == 202) || (PMob->m_Family == 337) || (PMob->m_Family == 397) || (PMob->m_Family == 408))
+                {
+                    mobHP = (baseMobHP + sjHP) * .95;
+                }
+                else
+                {
+                    mobHP = baseMobHP + sjHP;
+                }
+
+                // Mimic HP boost traits for monks
+                if (PMob->GetMJob() == JOB_MNK)
+                {
+                    if (mLvl >= 70)
+                    {
+                        mobHP += 180;
+                    }
+                    else if (mLvl >= 55)
+                    {
+                        mobHP += 120;
+                    }
+                    else if (mLvl >= 35)
+                    {
+                        mobHP += 60;
+                    }
+                    else if (mLvl >= 15)
+                    {
+                        mobHP += 30;
+                    }
+                }
+
+                // pets have lower health (TODO: Capture pet HP and correct scaling)
                 if (PMob->PMaster != nullptr)
                 {
-                    growth = petGrowth;
+                    mobHP *= 0.30f; // Retail captures have all pets at 30% of the mobs family of the same level
                 }
 
-                PMob->health.maxhp = (int16)(base * pow(mLvl, growth) * hpScale);
+                PMob->health.maxhp = (int16)(mobHP);
             }
             else
             {
@@ -391,29 +457,29 @@ namespace mobutils
             PMob->m_dualWield = true;
         }
 
-        uint16 fSTR = GetBaseToRank(PMob, PMob->strRank, mLvl);
-        uint16 fDEX = GetBaseToRank(PMob, PMob->dexRank, mLvl);
-        uint16 fVIT = GetBaseToRank(PMob, PMob->vitRank, mLvl);
-        uint16 fAGI = GetBaseToRank(PMob, PMob->agiRank, mLvl);
-        uint16 fINT = GetBaseToRank(PMob, PMob->intRank, mLvl);
-        uint16 fMND = GetBaseToRank(PMob, PMob->mndRank, mLvl);
-        uint16 fCHR = GetBaseToRank(PMob, PMob->chrRank, mLvl);
+        uint16 fSTR = GetBaseToRank(PMob->strRank, mLvl);
+        uint16 fDEX = GetBaseToRank(PMob->dexRank, mLvl);
+        uint16 fVIT = GetBaseToRank(PMob->vitRank, mLvl);
+        uint16 fAGI = GetBaseToRank(PMob->agiRank, mLvl);
+        uint16 fINT = GetBaseToRank(PMob->intRank, mLvl);
+        uint16 fMND = GetBaseToRank(PMob->mndRank, mLvl);
+        uint16 fCHR = GetBaseToRank(PMob->chrRank, mLvl);
 
-        uint16 mSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 2), mLvl);
-        uint16 mDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 3), mLvl);
-        uint16 mVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 4), mLvl);
-        uint16 mAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 5), mLvl);
-        uint16 mINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 6), mLvl);
-        uint16 mMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
-        uint16 mCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
+        uint16 mSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 2), mLvl);
+        uint16 mDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 3), mLvl);
+        uint16 mVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 4), mLvl);
+        uint16 mAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 5), mLvl);
+        uint16 mINT = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 6), mLvl);
+        uint16 mMND = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 7), mLvl);
+        uint16 mCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetMJob(), 8), mLvl);
 
-        uint16 sSTR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 2), PMob->GetSLevel());
-        uint16 sDEX = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 3), PMob->GetSLevel());
-        uint16 sVIT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 4), PMob->GetSLevel());
-        uint16 sAGI = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 5), PMob->GetSLevel());
-        uint16 sINT = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 6), PMob->GetSLevel());
-        uint16 sMND = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 7), PMob->GetSLevel());
-        uint16 sCHR = GetBaseToRank(PMob, grade::GetJobGrade(PMob->GetSJob(), 8), PMob->GetSLevel());
+        uint16 sSTR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 2), PMob->GetSLevel());
+        uint16 sDEX = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 3), PMob->GetSLevel());
+        uint16 sVIT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 4), PMob->GetSLevel());
+        uint16 sAGI = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 5), PMob->GetSLevel());
+        uint16 sINT = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 6), PMob->GetSLevel());
+        uint16 sMND = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 7), PMob->GetSLevel());
+        uint16 sCHR = GetBaseToRank(grade::GetJobGrade(PMob->GetSJob(), 8), PMob->GetSLevel());
 
         // As per conversation with Jimmayus, all mobs at any level get bonus stats from subjobs.
         // From lvl 45 onwards, 1/2. Before lvl 30, 1/4. In between, the value gets progresively higher, from 1/4 at 30 to 1/2 at 44.
@@ -542,6 +608,10 @@ namespace mobutils
         {
             SetupDungeonMob(PMob);
         }
+        else if (zoneType == ZONE_TYPE::LIMBUS)
+        {
+            SetupLimbusMob(PMob);
+        }
         else if (zoneType == ZONE_TYPE::BATTLEFIELD || PMob->m_Type & MOBTYPE_BATTLEFIELD)
         {
             SetupBattlefieldMob(PMob);
@@ -549,10 +619,6 @@ namespace mobutils
         else if (zoneType == ZONE_TYPE::DYNAMIS)
         {
             SetupDynamisMob(PMob);
-        }
-        else if (zoneType == ZONE_TYPE::LIMBUS)
-        {
-            SetupLimbusMob(PMob);
         }
 
         if (PMob->m_Type & MOBTYPE_NOTORIOUS)
@@ -740,15 +806,11 @@ namespace mobutils
         uint16 cool     = 20;
         uint16 rate     = 15;
 
-        switch (PMob->m_EcoSystem)
+        if (PMob->m_EcoSystem == ECOSYSTEM::BEASTMAN)
         {
-            case ECOSYSTEM::BEASTMAN:
-                distance = 10;
-                turns    = 3;
-                cool     = 45;
-                break;
-            default:
-                break;
+            distance = 10;
+            turns    = 3;
+            cool     = 45;
         }
 
         // default mob roaming mods
@@ -858,6 +920,13 @@ namespace mobutils
 
         // never despawn
         PMob->SetDespawnTime(0s);
+
+        // Stop early if this is a new battlefield
+        if (PMob->PBattlefield != nullptr && PMob->PBattlefield->isInteraction())
+        {
+            return;
+        }
+
         // do not roam around
         PMob->m_roamFlags |= ROAMFLAG_SCRIPTED;
         PMob->setMobMod(MOBMOD_ROAM_RESET_FACING, 1);

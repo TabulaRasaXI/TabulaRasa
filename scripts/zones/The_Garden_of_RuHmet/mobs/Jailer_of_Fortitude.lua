@@ -3,7 +3,7 @@
 --   NM: Jailer of Fortitude
 -----------------------------------
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 require("scripts/globals/settings")
 require("scripts/globals/limbus")
 require("scripts/globals/status")
@@ -12,6 +12,13 @@ require("scripts/globals/magic")
 local entity = {}
 
 entity.onMobSpawn = function(mob)
+    xi.mix.jobSpecial.config(mob, {
+        specials =
+        {
+            { id = xi.jsa.INVINCIBLE, cooldown = 180, hpp = math.random(90, 95) }, -- "Has access to Invincible, which it may use several times."
+        },
+    })
+
     -- Change animation to humanoid w/ prismatic core
     mob:setAnimationSub(1)
     mob:setModelId(1169)
@@ -45,7 +52,7 @@ entity.onMobFight = function(mob, target)
                 mob:setLocalVar("COPY_SPELL", 0)
                 mob:setLocalVar("delay", 0)
             else
-                mob:setLocalVar("delay", delay+1)
+                mob:setLocalVar("delay", delay + 1)
             end
         end
     end
@@ -82,7 +89,7 @@ entity.onMagicHit = function(caster, target, spell)
     return 1
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     -- Despawn the pets if alive
     DespawnMob(ID.mob.KFGHRAH_WHM)
     DespawnMob(ID.mob.KFGHRAH_BLM)

@@ -17,13 +17,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local typeEffect = xi.effect.POISON
     -- local dINT = caster:getStat(xi.mod.MND) - target:getStat(xi.mod.MND)
     local params = {}
@@ -32,7 +32,7 @@ spell_object.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.BLUE_MAGIC
     params.bonus = 0
     params.effect = typeEffect
-    local resist = applyResistanceEffect(caster, target, spell, params)
+    local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
     local duration = 180 * resist
     local power = 6
 
@@ -49,4 +49,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return typeEffect
 end
 
-return spell_object
+return spellObject

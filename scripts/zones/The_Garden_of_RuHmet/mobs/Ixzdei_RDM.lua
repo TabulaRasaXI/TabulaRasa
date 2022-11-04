@@ -4,7 +4,7 @@
 -- Note: CoP Mission 8-3
 -----------------------------------
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 require("scripts/globals/magic")
 require("scripts/globals/pathfind")
 require("scripts/globals/status")
@@ -31,7 +31,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = xi.jsa.MANAFONT, hpp = math.random(50, 80)},
+            { id = xi.jsa.MANAFONT, hpp = math.random(50, 80) },
         },
     })
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
@@ -165,7 +165,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
         mob:setAnimationSub(0)
         local opticCounter = mob:getLocalVar("opticCounter")
 
-        opticCounter = opticCounter +1
+        opticCounter = opticCounter + 1
         mob:setLocalVar("opticCounter", opticCounter)
 
         if opticCounter > 2 then
@@ -182,7 +182,7 @@ entity.onMobDisengage = function(mob)
     mob:setAnimationSub(0)
 end
 
-entity.onMobDeath = function(mob, isKiller, player)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

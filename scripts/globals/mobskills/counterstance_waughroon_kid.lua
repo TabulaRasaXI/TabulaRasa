@@ -6,19 +6,18 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
-local mobskill_object = {}
+local mobskillObject = {}
 
-mobskill_object.onMobSkillCheck = function(mob, target, skill)
+mobskillObject.onMobSkillCheck = function(mob, target, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(mob, target, skill)
-    local power = 45 + mob:getMod(xi.mod.COUNTERSTANCE_EFFECT)
+mobskillObject.onMobWeaponSkill = function(mob, target, skill)
+    local typeEffect = xi.effect.COUNTERSTANCE
+    local power = 20
 
-    mob:delStatusEffect(xi.effect.COUNTERSTANCE) --if not found this will do nothing
-    mob:addStatusEffect(xi.effect.COUNTERSTANCE, power)
-
-    skill:setMsg(xi.msg.basic.USES)
+    skill:setMsg(xi.mobskills.mobBuffMove(target, typeEffect, power, 3, 420))
+    return typeEffect
 end
 
-return mobskill_object
+return mobskillObject

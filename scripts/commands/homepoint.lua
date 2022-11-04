@@ -11,17 +11,17 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!homepoint {player}")
+    player:PrintToPlayer("!homepoint (player)")
 end
 
 function onTrigger(player, target)
     -- validate target
     local targ
-    if (target == nil) then
+    if target == nil then
         targ = player
     else
         targ = GetPlayerByName( target )
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format( "Player named '%s' not found!", target ) )
             return
         end

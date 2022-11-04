@@ -13,7 +13,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!animatenpc {npcID} <animationID>")
+    player:PrintToPlayer("!animatenpc (npcID) <animationID>")
 end
 
 function onTrigger(player, arg1, arg2)
@@ -31,7 +31,7 @@ function onTrigger(player, arg1, arg2)
     end
 
     -- validate target
-    if (targ == nil) then
+    if targ == nil then
         error(player, "You must either enter a valid npcID or target an NPC.")
         return
     end

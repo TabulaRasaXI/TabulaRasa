@@ -11,7 +11,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!givegil <amount> {player}")
+    player:PrintToPlayer("!givegil <amount> (player)")
 end
 
 function onTrigger(player, amount, target)
@@ -24,11 +24,11 @@ function onTrigger(player, amount, target)
 
     -- validate target
     local targ
-    if (target == nil) then
+    if target == nil then
         targ = player
     else
         targ = GetPlayerByName(target)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format("Player named '%s' not found!", target))
             return
         end

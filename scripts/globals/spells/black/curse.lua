@@ -5,13 +5,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
 
     -- Pull base stats.
     -- local dINT = (caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT))
@@ -26,10 +26,10 @@ spell_object.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.ENFEEBLING_MAGIC
     params.bonus = 0
     params.effect = xi.effect.CURSE_I
-    duration = duration * applyResistanceEffect(caster, target, spell, params)
+    duration = duration * xi.magic.applyResistanceEffect(caster, target, spell, params)
 
     if (duration >= 150) then --Do it!
-        duration = calculateBuildDuration(target, duration, params.effect, caster)
+        duration = xi.magic.calculateBuildDuration(target, duration, params.effect, caster)
 
         if duration == 0 then
             spell:setMsg(xi.msg.basic.NONE)
@@ -45,4 +45,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return xi.effect.CURSE_I
 end
 
-return spell_object
+return spellObject

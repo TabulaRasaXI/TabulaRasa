@@ -3,13 +3,14 @@
 -----------------------------------
 require("scripts/globals/utils")
 -----------------------------------
-local effect_object = {}
+local effectObject = {}
 
-effect_object.onEffectGain = function(target, effect)
+effectObject.onEffectGain = function(target, effect)
 end
 
-effect_object.onEffectTick = function(target, effect)
-    local dmg = utils.stoneskin(target, effect:getPower())
+effectObject.onEffectTick = function(target, effect)
+    local dmg = utils.rampart(target, effect:getPower())
+    dmg = utils.stoneskin(target, dmg)
 
     if (dmg > 0) then
         target:takeDamage(dmg)
@@ -20,7 +21,7 @@ effect_object.onEffectTick = function(target, effect)
     end
 end
 
-effect_object.onEffectLose = function(target, effect)
+effectObject.onEffectLose = function(target, effect)
 end
 
-return effect_object
+return effectObject

@@ -50,7 +50,7 @@ local trustMemory = function(player)
 end
 
 entity.onTrade = function(player, npc, trade)
-    if npcUtil.tradeHas(trade, {{498, 4}}) then -- Yagudo Necklace x4
+    if npcUtil.tradeHas(trade, { { 498, 4 } }) then -- Yagudo Necklace x4
         local mihgosAmigo = player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.MIHGO_S_AMIGO)
 
         if mihgosAmigo == QUEST_ACCEPTED then
@@ -81,14 +81,16 @@ entity.onTrigger = function(player, npc)
         not player:hasSpell(xi.magic.spell.NANAA_MIHGO) and
         player:getLocalVar("TrustDialogue") == 0
     then
-        local trustFlag = (player:getRank(player:getNation()) >=3 and 1 or 0) + (mihgosAmigo == QUEST_COMPLETED and 2 or 0)
+        local trustFlag = (player:getRank(player:getNation()) >= 3 and 1 or 0) + (mihgosAmigo == QUEST_COMPLETED and 2 or 0)
 
         player:setLocalVar("TrustDialogue", 1)
 
         player:startEvent(865, 0, 0, 0, trustMemory(player), 0, 0, 0, trustFlag)
 
     -- ROCK RACKETEER (Mihgo's Amigo follow-up)
-    elseif mihgosAmigo == QUEST_COMPLETED and rockRacketeer == QUEST_AVAILABLE and
+    elseif
+        mihgosAmigo == QUEST_COMPLETED and
+        rockRacketeer == QUEST_AVAILABLE and
         player:getFameLevel(xi.quest.fame_area.WINDURST) >= 3
     then
         if player:needToZone() then

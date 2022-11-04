@@ -13,7 +13,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!delkeyitem <key item ID> {player}")
+    player:PrintToPlayer("!delkeyitem <key item ID> (player)")
 end
 
 function onTrigger(player, keyId, target)
@@ -31,11 +31,11 @@ function onTrigger(player, keyId, target)
 
     -- validate target
     local targ
-    if (target == nil) then
+    if target == nil then
         targ = player
     else
         targ = GetPlayerByName(target)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format("Player named '%s' not found!", target))
             return
         end

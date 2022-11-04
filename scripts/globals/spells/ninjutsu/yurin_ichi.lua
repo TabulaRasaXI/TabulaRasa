@@ -5,13 +5,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local effect = xi.effect.INHIBIT_TP
     -- Base Stats
     -- local dINT = (caster:getStat(xi.mod.INT) - target:getStat(xi.mod.INT))
@@ -22,7 +22,7 @@ spell_object.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.NINJUTSU
     params.bonus = 0
     params.effect = nil
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
     --Base power is 10 and is not affected by resistaces.
     local power = 10
 
@@ -56,4 +56,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return effect
 end
 
-return spell_object
+return spellObject

@@ -6,13 +6,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
 
     if (target:hasStatusEffect(xi.effect.PARALYSIS)) then --effect already on, do nothing
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
@@ -38,12 +38,12 @@ spell_object.onSpellCast = function(caster, target, spell)
         params.skillType = xi.skill.ENFEEBLING_MAGIC
         params.bonus = 0
         params.effect = xi.effect.PARALYSIS
-        local resist = applyResistanceEffect(caster, target, spell, params)
+        local resist = xi.magic.applyResistanceEffect(caster, target, spell, params)
 
         if (resist >= 0.5) then --there are no quarter or less hits, if target resists more than .5 spell is resisted completely
             local resduration = duration * resist
 
-            resduration = calculateBuildDuration(target, duration, params.effect, caster)
+            resduration = xi.magic.calculateBuildDuration(target, duration, params.effect, caster)
 
             if resduration == 0 then
                 spell:setMsg(xi.msg.basic.NONE)
@@ -62,4 +62,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return xi.effect.PARALYSIS
 end
 
-return spell_object
+return spellObject

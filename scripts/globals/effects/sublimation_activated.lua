@@ -4,12 +4,12 @@
 require("scripts/globals/jobpoints")
 require("scripts/globals/status")
 -----------------------------------
-local effect_object = {}
+local effectObject = {}
 
-effect_object.onEffectGain = function(target, effect)
+effectObject.onEffectGain = function(target, effect)
 end
 
-effect_object.onEffectTick = function(target, effect)
+effectObject.onEffectTick = function(target, effect)
     local complete = false
     local level = 0
     if (target:getMainJob() == xi.job.SCH) then
@@ -17,7 +17,7 @@ effect_object.onEffectTick = function(target, effect)
     else
         level = target:getSubLvl()
     end
-    local basemp = math.floor((level - 15)/10)
+    local basemp = math.floor((level - 15) / 10)
     local bonus = target:getMod(xi.mod.SUBLIMATION_BONUS)
 
     local dmg = 2 + bonus
@@ -42,7 +42,7 @@ effect_object.onEffectTick = function(target, effect)
             end
         else
             target:takeDamage(dmg)
-            if (target:getHPP() < 51 ) then
+            if (target:getHPP() < 51) then
                 complete = true
             end
         end
@@ -64,7 +64,7 @@ effect_object.onEffectTick = function(target, effect)
 
 end
 
-effect_object.onEffectLose = function(target, effect)
+effectObject.onEffectLose = function(target, effect)
 end
 
-return effect_object
+return effectObject

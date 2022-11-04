@@ -14,7 +14,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!completequest <logID> <questID> {player}")
+    player:PrintToPlayer("!completequest <logID> <questID> (player)")
 end
 
 function onTrigger(player, logId, questId, target)
@@ -40,11 +40,11 @@ function onTrigger(player, logId, questId, target)
 
     -- validate target
     local targ
-    if (target == nil) then
+    if target == nil then
         targ = player
     else
         targ = GetPlayerByName(target)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format("Player named '%s' not found!", target))
             return
         end

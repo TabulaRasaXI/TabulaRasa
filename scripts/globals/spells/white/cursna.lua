@@ -5,18 +5,18 @@
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local curse = target:getStatusEffect(xi.effect.CURSE_I)
     local curse2 = target:getStatusEffect(xi.effect.CURSE_II)
     local bane = target:getStatusEffect(xi.effect.BANE)
     local bonus = caster:getMod(xi.mod.ENHANCES_CURSNA) + target:getMod(xi.mod.ENHANCES_CURSNA_RCVD)
-    local power = 25*((100+bonus)/100) -- This 25 is temp until the skill calculation is in.
+    local power = 25 * ((100 + bonus) / 100) -- This 25 is temp until the skill calculation is in.
     local final = nil
 
     spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
@@ -58,4 +58,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return final
 end
 
-return spell_object
+return spellObject

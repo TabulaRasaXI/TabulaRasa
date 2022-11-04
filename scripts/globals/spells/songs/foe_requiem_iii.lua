@@ -6,13 +6,13 @@ require("scripts/globals/jobpoints")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local effect = xi.effect.REQUIEM
     local duration = 95
     local power = 3
@@ -26,7 +26,7 @@ spell_object.onSpellCast = function(caster, target, spell)
     params.skillType = xi.skill.SINGING
     params.bonus = 0
     params.effect = nil
-    local resm = applyResistance(caster, target, spell, params)
+    local resm = xi.magic.applyResistance(caster, target, spell, params)
     if resm < 0.5 then
         spell:setMsg(xi.msg.basic.MAGIC_RESIST) -- resist message
         return 1
@@ -45,7 +45,7 @@ spell_object.onSpellCast = function(caster, target, spell)
     end
     caster:delStatusEffect(xi.effect.MARCATO)
 
-    duration = duration * ((iBoost * 0.1) + (caster:getMod(xi.mod.SONG_DURATION_BONUS)/100) + 1)
+    duration = duration * ((iBoost * 0.1) + (caster:getMod(xi.mod.SONG_DURATION_BONUS) / 100) + 1)
 
     if caster:hasStatusEffect(xi.effect.TROUBADOUR) then
         duration = duration * 2
@@ -54,7 +54,7 @@ spell_object.onSpellCast = function(caster, target, spell)
     duration = duration * resm
 
     -- Try to overwrite weaker slow / haste
-    if canOverwrite(target, effect, power) then
+    if xi.magic.canOverwrite(target, effect, power) then
         -- overwrite them
         target:delStatusEffect(effect)
         target:addStatusEffect(effect, power, 3, duration)
@@ -66,4 +66,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return effect
 end
 
-return spell_object
+return spellObject

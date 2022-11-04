@@ -14,7 +14,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addeffect {player} <effect> {power} {duration} {subid} {subPower}")
+    player:PrintToPlayer("!addeffect (player) <effect> (power) (duration) (subid) (subPower)")
 end
 
 function onTrigger(player, arg1, arg2, arg3, arg4, arg5, arg6)
@@ -31,7 +31,7 @@ function onTrigger(player, arg1, arg2, arg3, arg4, arg5, arg6)
         return
     else
         targ = GetPlayerByName(arg1)
-        if (targ == nil) then
+        if targ == nil then
             -- no valid target given. shift arguments by one.
             targ = player
             id = arg1

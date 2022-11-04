@@ -42,7 +42,7 @@ end
 
 entity.onEventFinish = function(player, csid, option)
     if (csid == 541 and option == 0) then
-        if (player:getFreeSlotsCount() == 0) then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 567) -- Well Water
         else
             player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.GRAVE_CONCERNS)
@@ -54,8 +54,8 @@ entity.onEventFinish = function(player, csid, option)
         player:tradeComplete()
         player:setCharVar("OfferingWaterOK", 0)
         player:addTitle(xi.title.ROYAL_GRAVE_KEEPER)
-        player:addGil(xi.settings.main.GIL_RATE*560)
-        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE*560)
+        player:addGil(xi.settings.main.GIL_RATE * 560)
+        player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 560)
         player:addFame(xi.quest.fame_area.SANDORIA, 30)
         player:completeQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.GRAVE_CONCERNS)
     end

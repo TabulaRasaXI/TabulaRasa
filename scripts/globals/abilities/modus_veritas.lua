@@ -11,17 +11,17 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-ability_object.onUseAbility = function(player, target, ability)
+abilityObject.onUseAbility = function(player, target, ability)
     local helix = target:getStatusEffect(xi.effect.HELIX)
     if helix ~= nil then
         local mvPower = helix:getSubPower()
-        local resist = applyResistanceAbility(player, target, xi.magic.ele.NONE, xi.skill.ELEMENTAL_MAGIC, 0)
+        local resist = xi.magic.applyResistanceAbility(player, target, xi.magic.ele.NONE, xi.skill.ELEMENTAL_MAGIC, 0)
         -- Doesn't work against NMs apparently
         if mvPower > 0 or resist < 0.25 or target:isNM() then -- Don't let Modus Veritas stack to prevent abuse
             ability:setMsg(xi.msg.basic.JA_MISS) --Miss
@@ -45,4 +45,4 @@ ability_object.onUseAbility = function(player, target, ability)
     end
 end
 
-return ability_object
+return abilityObject

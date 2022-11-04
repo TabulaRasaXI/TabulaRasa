@@ -17,13 +17,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
     local typeEffectOne = xi.effect.DEFENSE_DOWN
     local typeEffectTwo = xi.effect.MAGIC_DEF_DOWN
     local params = {}
@@ -31,7 +31,7 @@ spell_object.onSpellCast = function(caster, target, spell)
     params.attribute = xi.mod.INT
     params.skillType = xi.skill.BLUE_MAGIC
     params.bonus = 1.0
-    local resist = applyResistance(caster, target, spell, params)
+    local resist = xi.magic.applyResistance(caster, target, spell, params)
     local duration = 30 * resist
     local returnEffect = typeEffectOne
 
@@ -55,4 +55,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return returnEffect
 end
 
-return spell_object
+return spellObject

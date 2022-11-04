@@ -7,13 +7,13 @@ require("scripts/globals/status")
 require("scripts/globals/magic")
 require("scripts/globals/msg")
 -----------------------------------
-local spell_object = {}
+local spellObject = {}
 
-spell_object.onMagicCastingCheck = function(caster, target, spell)
+spellObject.onMagicCastingCheck = function(caster, target, spell)
     return 0
 end
 
-spell_object.onSpellCast = function(caster, target, spell)
+spellObject.onSpellCast = function(caster, target, spell)
 
     if (target:getStatusEffect(xi.effect.CHOKE) ~= nil) then
         spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT) -- no effect
@@ -25,7 +25,7 @@ spell_object.onSpellCast = function(caster, target, spell)
         params.skillType = xi.skill.ELEMENTAL_MAGIC
         params.bonus = 0
         params.effect = nil
-        local resist = applyResistance(caster, target, spell, params)
+        local resist = xi.magic.applyResistance(caster, target, spell, params)
         if (resist <= 0.125) then
             spell:setMsg(xi.msg.basic.MAGIC_RESIST)
         else
@@ -33,7 +33,7 @@ spell_object.onSpellCast = function(caster, target, spell)
                 target:delStatusEffect(xi.effect.SHOCK)
             end
             local sINT = caster:getStat(xi.mod.INT)
-            local DOT = getElementalDebuffDOT(sINT)
+            local DOT = xi.magic.getElementalDebuffDOT(sINT)
             local effect = target:getStatusEffect(xi.effect.RASP)
             local noeffect = false
             if (effect ~= nil) then
@@ -52,7 +52,7 @@ spell_object.onSpellCast = function(caster, target, spell)
                 duration = duration + caster:getMerit(xi.merit.ELEMENTAL_DEBUFF_DURATION)
 
                 local mbonus = caster:getMerit(xi.merit.ELEMENTAL_DEBUFF_EFFECT)
-                DOT = DOT + mbonus/2 -- Damage
+                DOT = DOT + mbonus / 2 -- Damage
 
                 target:addStatusEffect(xi.effect.RASP, DOT, 3, duration)
             end
@@ -61,4 +61,4 @@ spell_object.onSpellCast = function(caster, target, spell)
     return xi.effect.RASP
 end
 
-return spell_object
+return spellObject

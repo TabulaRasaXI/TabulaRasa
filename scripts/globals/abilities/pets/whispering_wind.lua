@@ -6,16 +6,16 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-ability_object.onPetAbility = function(target, pet, skill)
-    local base = 16 + pet:getMainLvl()*2.5
+abilityObject.onPetAbility = function(target, pet, skill)
+    local base = 16 + pet:getMainLvl() * 2.5
 
-    if (target:getHP()+base > target:getMaxHP()) then
+    if (target:getHP() + base > target:getMaxHP()) then
         base = target:getMaxHP() - target:getHP() --cap it
     end
     skill:setMsg(xi.msg.basic.SELF_HEAL)
@@ -23,4 +23,4 @@ ability_object.onPetAbility = function(target, pet, skill)
     return base
 end
 
-return ability_object
+return abilityObject

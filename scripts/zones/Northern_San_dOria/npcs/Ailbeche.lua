@@ -10,14 +10,15 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/npc_util")
 -----------------------------------
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     if (player:getCharVar("aBoysDreamCS") >= 3) then
-        if (trade:hasItemQty(17001, 1) == true and trade:getItemCount() == 1 and player:hasItem(4562) == false) then
+        if npcUtil.tradeHasExactly(trade, xi.items.GIANT_SHELL_BUG) and player:getCharVar("aBoysDreamCS") == 3 then
             player:startEvent(15) -- During Quest "A Boy's Dream" (trading bug) madame ?
-        elseif (trade:hasItemQty(4562, 1) == true and trade:getItemCount() == 1) then
+        elseif npcUtil.tradeHasExactly(trade, xi.items.ODONTOTYRANNUS) and player:getCharVar("aBoysDreamCS") == 4 then
             player:startEvent(47) -- During Quest "A Boy's Dream" (trading odontotyrannus)
         end
     end
@@ -87,7 +88,7 @@ entity.onEventFinish = function(player, csid, option)
     elseif (csid == 45 and option == 0) then
         player:setCharVar("sharpeningTheSwordCS", 1)
     elseif (csid == 44) then
-        if (player:getFreeSlotsCount() == 0) then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 17643)
         else
             player:delKeyItem(xi.ki.ORDELLE_WHETSTONE)

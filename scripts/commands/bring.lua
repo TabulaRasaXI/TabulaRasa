@@ -11,17 +11,17 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!bring <player> {forceZone}")
+    player:PrintToPlayer("!bring <player> (forceZone)")
 end
 
 function onTrigger(player, target, forceZone)
     -- validate target
-    if (target == nil) then
+    if target == nil then
         error(player, "You must enter a target player name.")
         return
     end
     local targ = GetPlayerByName( target )
-    if (targ == nil) then
+    if targ == nil then
         if not player:bringPlayer( target ) then
             error(player, string.format( "Player named '%s' not found!", target ) )
         end

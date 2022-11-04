@@ -18,7 +18,7 @@ cmdprops =
 -----------------------------------
 local zone_list =
 {
-    { 0x14, 0xA9, 1 , 0, -2, 0}, -- Phanauet Channel
+    { 0x14, 0xA9, 1 , 0, -2, 0 }, -- Phanauet Channel
     { 0x14, 0xAA, 2 }, -- Carpenters' Landing
     { 0x14, 0x84, 3 }, -- Manaclipper
     { 0x14, 0x85, 4 }, -- Bibiki Bay
@@ -36,8 +36,8 @@ local zone_list =
     { 0x14, 0x9B, 16 }, -- Promyvion - Holla
     { 0x14, 0x9A, 16 }, -- Promyvion - Holla
     { 0x14, 0x9C, 17 }, -- Spire of Holla
-    { 0x14, 0x9E, 18 , 179, 0, -57}, -- Promyvion - Dem
-    { 0x14, 0x9D, 18 , 179, 0, -57}, -- Promyvion - Dem
+    { 0x14, 0x9E, 18 , 179, 0, -57 }, -- Promyvion - Dem
+    { 0x14, 0x9D, 18 , 179, 0, -57 }, -- Promyvion - Dem
     { 0x14, 0x9F, 19 }, -- Spire of Dem
     { 0x14, 0xA0, 20 }, -- Promyvion - Mea
     { 0x14, 0xA1, 20 }, -- Promyvion - Mea
@@ -83,8 +83,8 @@ local zone_list =
     { 0x14, 0xC1, 55 }, -- Ilrusi Atoll
     { 0x14, 0xC2, 56 }, -- Periqia
     { 0x14, 0xC3, 57 }, -- Talacca Cove
-    { 0x14, 0xC4, 58 , 0, -2, 0}, -- Silver Sea route to Nashmau
-    { 0x14, 0xC5, 59 , 0, -2, 0}, -- Silver Sea route to Al Zahbi
+    { 0x14, 0xC4, 58 , 0, -2, 0 }, -- Silver Sea route to Nashmau
+    { 0x14, 0xC5, 59 , 0, -2, 0 }, -- Silver Sea route to Al Zahbi
     { 0x14, 0xC6, 60 }, -- The Ashu Talif
     { 0x14, 0xC7, 61 }, -- Mount Zhayolm
     { 0x14, 0xC8, 62 }, -- Halvung
@@ -95,7 +95,7 @@ local zone_list =
     { 0x14, 0xCD, 67 }, -- Jade Sepulcher
     { 0x14, 0xCE, 68 }, -- Aydeewa Subterrane
     { 0x14, 0xCF, 69 }, -- Leujaoam Sanctum
-    { 0x27, 0x0F, 70 , -324, 0, -473}, -- Chocobo Circuit
+    { 0x27, 0x0F, 70 , -324, 0, -473 }, -- Chocobo Circuit
     { 0x27, 0x10, 71 }, -- The Colosseum
     { 0x14, 0xDD, 72 }, -- Alzadaal Undersea Ruins
     { 0x14, 0xDE, 73 }, -- Zhayolm Remnants
@@ -284,7 +284,7 @@ function error(player, msg)
 end
 
 local function getBytePos(s, needle)
-    for i=1, string.len(s), 1 do
+    for i = 1, string.len(s), 1 do
         if (string.byte(s, i) == needle) then
             return i
         end
@@ -320,7 +320,7 @@ function onTrigger(player, bytes)
     else
         target = string.sub(bytes, 1, sppos-1)
         targ = GetPlayerByName(target)
-        if (targ == nil) then
+        if targ == nil then
             error(player, string.format( "Player named '%s' not found!", target ))
             return
         end
@@ -346,7 +346,7 @@ function onTrigger(player, bytes)
             return
         end
     else
-        local dest = string.sub(bytes, sppos+1)
+        local dest = string.sub(bytes, sppos + 1)
         if (tonumber(dest) ~= nil) then
             -- destination is a zone ID.
             zone = tonumber(dest)

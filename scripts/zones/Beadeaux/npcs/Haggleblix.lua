@@ -71,9 +71,9 @@ entity.onTrade = function(player, npc, trade)
         else
             local item
             local price
-            for i=1, 13, 2 do
+            for i = 1, 13, 2 do
                 price = shop[i]
-                item = shop[i+1]
+                item = shop[i + 1]
                 if (count == price and trade:hasItemQty(currency[2], price)) then
                     player:setLocalVar("hundoItemBought", item)
                     player:startEvent(137, currency[2], price, item)
@@ -149,7 +149,7 @@ entity.onEventFinish = function(player, csid, option)
 
     -- singles to hundos
     elseif (csid == 135) then
-        if (player:getFreeSlotsCount() == 0) then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, currency[2])
         else
             player:tradeComplete()
@@ -159,7 +159,7 @@ entity.onEventFinish = function(player, csid, option)
 
     -- hundos to 10k pieces
     elseif (csid == 136) then
-        if (player:getFreeSlotsCount() == 0) then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, currency[3])
         else
             player:tradeComplete()
@@ -174,7 +174,7 @@ entity.onEventFinish = function(player, csid, option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, currency[2])
         else
             player:tradeComplete()
-            for i=1, slotsReq do
+            for i = 1, slotsReq do
                 if (i < slotsReq or (xi.settings.main.CURRENCY_EXCHANGE_RATE % 99) == 0) then
                     player:addItem(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
                 else
@@ -187,7 +187,7 @@ entity.onEventFinish = function(player, csid, option)
     -- bought item from shop
     elseif (csid == 137) then
         local item = player:getLocalVar("hundoItemBought")
-        if (player:getFreeSlotsCount() == 0) then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, item)
         else
             player:tradeComplete()

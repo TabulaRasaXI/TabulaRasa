@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Nashmau
 --  NPC: Awaheen
--- Standard Info NPC
 -----------------------------------
 local ID = require("scripts/zones/Nashmau/IDs")
 -----------------------------------
@@ -24,7 +23,7 @@ entity.onTrade = function(player, npc, trade)
         if player:getFreeSlotsCount() >= 1 then
             player:tradeComplete()
             player:addItem(reward, nbr)
-            for boucle=1, nbr, 1 do
+            for boucle = 1, nbr, 1 do
                 player:messageSpecial(ID.text.ITEM_OBTAINED, reward)
             end
         else

@@ -7,13 +7,12 @@ require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
-local offsets = {7, 9, 11, 8, 10, 12}
+local offsets = { 7, 9, 11, 8, 10, 12 }
 
 entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.SLEEPRES, 100)
     mob:addMod(xi.mod.LULLABYRES, 100)
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
-    mob:setMobMod(xi.mobMod.SIGHT_ANGLE, 90)
     mob:setMobMod(xi.mobMod.GA_CHANCE, 75)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
     mob:setMod(xi.mod.DMGMAGIC, -50)
@@ -40,7 +39,7 @@ entity.onMobFight = function(mob, target)
         mob:setLocalVar("spawnTime", spawnTime)
     end
 
-    if fifteenBlock > twohourTime and target:getDistance() < 17 then -- Spams Charm in bv2 version every 5s
+    if fifteenBlock > twohourTime and mob:checkDistance(target) < 17 then -- Spams Charm in bv2 version every 5s
         mob:setLocalVar("twohour_tp", mob:getTP())
         mob:useMobAbility(710)
         mob:setLocalVar("twohourTime", fifteenBlock + math.random(1, 2))
@@ -67,7 +66,7 @@ entity.onMobFight = function(mob, target)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENDARK, {power = math.random(45, 90), chance = 10})
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENDARK, { power = math.random(45, 90), chance = 10 })
 end
 
 entity.onMobWeaponSkill = function(target, mob, skill, action)
@@ -78,7 +77,7 @@ entity.onMobWeaponSkill = function(target, mob, skill, action)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     -- Despawn adds when Vrtra dies
     for i, offset in ipairs(offsets) do
         DespawnMob(mob:getID()+offset)

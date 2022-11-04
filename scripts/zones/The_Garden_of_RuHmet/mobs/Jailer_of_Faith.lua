@@ -3,7 +3,7 @@
 --   NM: Jailer of Faith
 -----------------------------------
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
@@ -71,7 +71,7 @@ entity.onMobSpawn = function(mob)
         },
     })
     -- Change animation to open
-    mob:AnimationSub(2)
+    mob:setAnimationSub(2)
     mob:setMobMod(xi.mobMod.HP_STANDBACK, 0)
     mob:setMod(xi.mod.FASTCAST, 30) -- taken from timing of spells from multiple captures
     mob:setMod(xi.mod.DEF, 450)

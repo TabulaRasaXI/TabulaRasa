@@ -18,9 +18,9 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/weaponskills")
 -----------------------------------
-local weaponskill_object = {}
+local weaponskillObject = {}
 
-weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
+weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.ftp100 = 2 params.ftp200 = 2 params.ftp300 = 2
     params.str_wsc = 0.0 params.dex_wsc = 0.0 params.vit_wsc = 0.0 params.agi_wsc = 0.0 params.int_wsc = 0.0
@@ -37,10 +37,10 @@ weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary
     -- Apply Aftermath
     xi.aftermath.addStatusEffect(player, tp, xi.slot.MAIN, xi.aftermath.type.MYTHIC)
 
-    local damage, criticalHit, tpHits, extraHits = doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doMagicWeaponskill(player, target, wsID, params, tp, action, primary)
     if damage > 0 then
         if not target:hasStatusEffect(xi.effect.DEFENSE_DOWN) then
-            local duration = (30 + tp / 1000 * 30) * applyResistanceAddEffect(player, target, xi.magic.ele.WIND, ((player:getMainLvl() / 7.5) * (tp / 1000)))
+            local duration = (30 + tp / 1000 * 30) * xi.magic.applyResistanceAddEffectWS(player, target, xi.magic.ele.WIND, 0)
             target:addStatusEffect(xi.effect.DEFENSE_DOWN, 12.5, 0, duration)
         end
     end
@@ -48,4 +48,4 @@ weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary
     return tpHits, extraHits, criticalHit, damage
 end
 
-return weaponskill_object
+return weaponskillObject

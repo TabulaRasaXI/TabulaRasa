@@ -15,6 +15,9 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
 end
 
+-- TODO: Reduce complexity
+-- Disable cyclomatic complexity check for this function:
+-- luacheck: ignore 561
 entity.onTrigger = function(player, npc)
     local mLvl          = player:getMainLvl()
     local mJob          = player:getMainJob()
@@ -176,7 +179,7 @@ entity.onEventFinish = function(player, csid, option)
         local firstKI  = player:getLocalVar("firstKI")
         local secondKI = player:getLocalVar("secondKI")
 
-        if (player:getFreeSlotsCount() == 0) then
+        if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, itemid)
 
         else

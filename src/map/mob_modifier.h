@@ -44,9 +44,10 @@ enum MOBMODIFIER : int
     MOBMOD_SEVERE_SPELL_CHANCE = 13, // % chance to use a severe spell like death or impact
     MOBMOD_SKILL_LIST          = 14, // uses given mob skill list
     MOBMOD_MUG_GIL             = 15, // amount gil carried for mugging
-    // 16 Available for use
-    MOBMOD_NO_DESPAWN = 17, // do not despawn when too far from spawn. Gob Diggers have this.
-    MOBMOD_VAR        = 18, // temp var for whatever. Gets cleared on spawn
+    MOBMOD_DETECTION           = 16, // Overrides mob family's detection method. In order to set to override to none an unused bit must be set such as DETECT_NONE1.
+    MOBMOD_NO_DESPAWN          = 17, // do not despawn when too far from spawn. Gob Diggers have this.
+    MOBMOD_VAR                 = 18, // temp var for whatever. Gets cleared on spawn
+    MOBMOD_CAN_SHIELD_BLOCK    = 19, // toggle shield use for mobs without physical shields (trusts)
     // 19 Available for use
     MOBMOD_TP_USE_CHANCE      = 20, // % chance to use tp
     MOBMOD_PET_SPELL_LIST     = 21, // set pet spell list
@@ -108,6 +109,7 @@ enum MOBMODIFIER : int
     MOBMOD_DRAW_IN_MAXIMUM_REACH     = 103, // players further than this range (yalms) will be unaffected by the draw-in. default (0) is whole zone
     MOBMOD_DRAW_IN_IGNORE_STATIONARY = 104, // stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or ToAU Mission Alexander)
     MOBMOD_ATTRACT_FAMILY_NM         = 105, // NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
+    LEDGE_AGGRO                      = 106, // Used to increase vertical aggro range
 };
 
 #endif

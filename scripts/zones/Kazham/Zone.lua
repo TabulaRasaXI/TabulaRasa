@@ -6,17 +6,17 @@ require('scripts/globals/conquest')
 require('scripts/globals/chocobo')
 require('scripts/globals/zone')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     xi.chocobo.initZone(zone)
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
@@ -30,17 +30,26 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zone_object.onTransportEvent = function(player, transport)
+zoneObject.onTransportEvent = function(player, transport)
     player:startEvent(10000)
-end
-
-zone_object.onEventUpdate = function(player, csid, option)
-end
-
-zone_object.onEventFinish = function(player, csid, option)
-    if csid == 10000 then
-        player:setPos(0, 0, 0, 0, 226)
+    if player:getLocalVar('[AIRSHIP]Paid') == 1 then
+        player:startEvent(10000)
+    else
+        player:setPos(-17.8247, -4.0000, -17.6277, 191.000)
+        player:setLocalVar('[AIRSHIP]Paid', 0)
     end
 end
 
-return zone_object
+zoneObject.onEventUpdate = function(player, csid, option)
+end
+
+zoneObject.onEventFinish = function(player, csid, option)
+    if csid == 10000 then
+        player:setPos(0, 0, 0, 0, 226)
+        player:setLocalVar('[AIRSHIP]Paid', 1)
+    elseif csid == 121 and option == 0 then
+        player:setLocalVar('[AIRSHIP]Paid', 0)
+    end
+end
+
+return zoneObject

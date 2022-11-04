@@ -12,7 +12,6 @@ entity.onMobSpawn = function(mob)
     mob:setAnimationSub(0) -- AnimationSub 0 is only used when it spawns until first flight
 
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
-    mob:setMobMod(xi.mobMod.SIGHT_ANGLE, 90)
     mob:setMobMod(xi.mobMod.GA_CHANCE, 70)
     mob:setMobMod(xi.mobMod.BUFF_CHANCE, 30)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
@@ -88,14 +87,8 @@ entity.onMobDisengage = function(mob)
     mob:setLocalVar("changeHP", 0)
 end
 
-entity.onCastStarting = function(mob, spell)
-    if spell:getID() == 176 then -- firaga iii
-        spell:castTime(spell:castTime()/2) -- really fast cast (2x)
-    end
-end
-
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENFIRE, {power = math.random(45, 90), chance = 10})
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENFIRE, { power = math.random(45, 90), chance = 10 })
 end
 
 return entity

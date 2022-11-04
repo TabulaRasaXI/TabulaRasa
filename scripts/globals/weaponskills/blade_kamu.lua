@@ -17,9 +17,9 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/weaponskills")
 -----------------------------------
-local weaponskill_object = {}
+local weaponskillObject = {}
 
-weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
+weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
     params.ftp100 = 1 params.ftp200 = 1 params.ftp300 = 1
@@ -27,7 +27,7 @@ weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary
     params.mnd_wsc = 0.0 params.chr_wsc = 0.0
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
-    params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
+    params.acc100 = 1.0 params.acc200 = 1.0 params.acc300 = 1.0
     params.atk100 = 1.3; params.atk200 = 1.3; params.atk300 = 1.3
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
@@ -42,10 +42,10 @@ weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary
     -- Apply Aftermath
     xi.aftermath.addStatusEffect(player, tp, xi.slot.MAIN, xi.aftermath.type.MYTHIC)
 
-    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
+    local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     if damage > 0 then
         if not target:hasStatusEffect(xi.effect.ACCURACY_DOWN) then
-            local duration = tp / 1000 * 60 * applyResistanceAddEffect(player, target, xi.magic.ele.EARTH, ((player:getMainLvl() / 7.5) * (tp / 1000)))
+            local duration = tp / 1000 * 60 * xi.magic.applyResistanceAddEffectWS(player, target, xi.magic.ele.EARTH, 0)
             target:addStatusEffect(xi.effect.ACCURACY_DOWN, 10, 0, duration)
         end
     end
@@ -53,4 +53,4 @@ weaponskill_object.onUseWeaponSkill = function(player, target, wsID, tp, primary
     return tpHits, extraHits, criticalHit, damage
 end
 
-return weaponskill_object
+return weaponskillObject

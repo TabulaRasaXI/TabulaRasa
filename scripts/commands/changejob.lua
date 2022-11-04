@@ -13,7 +13,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!changejob <jobID> {level}")
+    player:PrintToPlayer("!changejob <jobID> (level)")
 end
 
 function onTrigger(player, jobId, level)
@@ -43,9 +43,9 @@ function onTrigger(player, jobId, level)
     end
 
     -- invert xi.job table
-    local jobNameByNum={}
+    local jobNameByNum = {}
     for k, v in pairs(xi.job) do
-        jobNameByNum[v]=k
+        jobNameByNum[v] = k
     end
 
     -- output new job to player

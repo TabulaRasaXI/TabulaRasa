@@ -13,7 +13,8 @@ require("scripts/globals/utils")
 local entity = {}
 
 local shamiSealItems =
-{-- Trade Item                     Seal ID, Retrieve Option,
+{
+--  Trade Item                     Seal ID, Retrieve Option,
     [xi.items.BEASTMENS_SEAL       ] = { 0, 2 },
     [xi.items.KINDREDS_SEAL        ] = { 1, 1 },
     [xi.items.KINDREDS_CREST       ] = { 2, 3 },
@@ -22,7 +23,8 @@ local shamiSealItems =
 }
 
 local shamiOrbItems =
-{-- Item ID                        CS, PO, SealID, Cost,
+{
+--  Item ID                        CS, PO, SealID, Cost,
     [xi.items.CLOUDY_ORB     ] = {  5,  1,      0,   20, },
     [xi.items.SKY_ORB        ] = {  9,  2,      0,   30, },
     [xi.items.STAR_ORB       ] = {  9,  3,      0,   40, },
@@ -66,7 +68,7 @@ end
 local function getOrbEvent(player, trade)
     for itemID, orbData in pairs(shamiOrbItems) do
         if npcUtil.tradeHasExactly(trade, itemID) then
-            if player:hasWornItem(itemID) then
+            if player:getWornUses(itemID) > 0 then
                 return 22
             else
                 return orbData[1]
@@ -125,8 +127,10 @@ entity.onTrigger = function(player, npc)
         player:startEvent(317)
     elseif beastmensSeal + kindredsSeal + kindredsCrest + highKindredsCrest + sacredKindredsCrest == 0 then
         player:startEvent(23) -- Standard dialog ?
+    elseif xi.settings.main.ENABLE_ABYSSEA == 1 then
+        player:startEvent(322, (kindredsSeal * 65536) + beastmensSeal, (highKindredsCrest * 65536) + kindredsCrest, 0, 0, 1, 0, 0) -- Standard dialog with menu
     else
-        player:startEvent(322, (kindredsSeal * 65536) + beastmensSeal, (highKindredsCrest * 65536) + kindredsCrest, sacredKindredsCrest, 0, 1, 0, 0) -- Standard dialog with menu
+        player:startEvent(322, (kindredsSeal * 65536) + beastmensSeal, 0, 0, 0, 1, 0, 0) -- WoTG Era Dialogue
     end
 end
 
@@ -142,7 +146,7 @@ entity.onEventFinish = function(player, csid, option)
     elseif option >= 508 and option ~= 1073741824 then
         local itemID, sealID, retrievedSealCount = convertSealRetrieveOption(option)
 
-        if npcUtil.giveItem(player, {{itemID, retrievedSealCount}}) then
+        if npcUtil.giveItem(player, { { itemID, retrievedSealCount } }) then
             player:delSeals(retrievedSealCount, sealID)
         end
 
