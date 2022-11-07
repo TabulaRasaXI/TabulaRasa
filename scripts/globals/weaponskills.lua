@@ -303,7 +303,7 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
                 local magicdmg = finaldmg * ftpHybrid
 
                 wsParams.bonus = calcParams.bonusAcc
-                magicdmg = magicdmg * xi.magic.applyResistanceAbility(attacker, target, wsParams.ele, wsParams)
+                magicdmg = magicdmg * xi.magic.applyAbilityResistance(attacker, target, wsParams)
                 magicdmg = target:magicDmgTaken(magicdmg, wsParams.ele)
 
                 if magicdmg > 0 then
@@ -818,7 +818,7 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
 
         -- Calculate magical bonuses and reductions
         dmg = xi.magic.addBonusesAbility(attacker, wsParams.element, target, dmg, wsParams)
-        dmg = dmg * xi.magic.applyResistanceAbility(attacker, target, wsID, wsParams)
+        dmg = dmg * xi.magic.applyAbilityResistance(attacker, target, wsParams)
         dmg = target:magicDmgTaken(dmg, wsParams.element)
 
         if dmg < 0 then
@@ -880,7 +880,6 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
             end
         end
 
-        action:param(defender:getID(), math.abs(finaldmg))
     elseif wsResults.shadowsAbsorbed > 0 then
         action:messageID(defender:getID(), xi.msg.basic.SHADOW_ABSORB)
         action:param(defender:getID(), wsResults.shadowsAbsorbed)
@@ -904,6 +903,7 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
 
     local targetTPMult = wsParams.targetTPMult or 1
     finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
+    action:param(defender:getID(), math.abs(finaldmg))
     local enmityEntity = wsResults.taChar or attacker
 
     if (wsParams.overrideCE and wsParams.overrideVE) then

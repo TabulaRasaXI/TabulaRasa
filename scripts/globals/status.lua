@@ -1806,6 +1806,8 @@ xi.mod =
     DARK_EEM                      = 1165, -- Elemental Evasion Multiplier (Known as SDT in common magic accuracy formulas) (out of 100)
     TAME_SUCCESS_RATE             = 1166, -- Tame Success Rate +
     RAMPART_MAGIC_SHIELD          = 1167, -- Rampart Magic Shield
+    CRITHITRATE_SLOT              = 1168, -- CRITHITRATE for slot
+    ATT_SLOT                      = 1169, -- ATT for slot
 
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
@@ -2585,6 +2587,7 @@ xi.mobMod =
     NO_LINK             = 69, -- If set, mob cannot link until unset.
     NO_REST             = 70, -- Mob cannot regain hp (e.g. re-burrowing antlions during ENM).
     LEADER              = 71, -- Used for mobs that follow a defined "leader", such as Ul'xzomit mobs.
+    MAGIC_RANGE         = 72, -- magic aggro range
 
     -- ASB Mod Start
     DRAW_IN_INCLUDE_PARTY     = 100, -- This will cause the mob's draw-in to also affect all party and alliance members
@@ -2978,7 +2981,7 @@ xi.animation =
 {
     NONE                    = 0,
     ATTACK                  = 1,
-    -- Death 2              = 2,
+    DESPAWN                 = 2,
     DEATH                   = 3,
     CHOCOBO                 = 5,
     FISHING                 = 6,
