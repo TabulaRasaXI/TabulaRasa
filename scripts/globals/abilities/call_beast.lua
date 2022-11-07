@@ -26,6 +26,7 @@ ability_object.onAbilityCheck = function(player, target, ability)
         petLevels[23] = 23 -- CRAB FAMILIAR
         petLevels[24] = 23 -- COURIER CARRIE
         petLevels[25] = 23 -- HOMUNCULUS
+        petLevels[67] = 23 -- SLIPPERY SILAS
         petLevels[26] = 28 -- FLYTRAP FAMILIAR
         petLevels[27] = 28 -- TIGER FAMILIAR
         petLevels[28] = 28 -- FLOWERPOT BILL
