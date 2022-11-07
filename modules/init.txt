@@ -100,6 +100,12 @@ custom/sql/tr_mob_spawn_adjustments.sql
 custom/job_adjustments/
 
 #------------------------------
+#        ASB Mob Spawns
+#------------------------------
+custom/sql/mob_zones/
+
+#------------------------------
 #       Rerun Dynamis SQL
 #------------------------------
 era/sql/era_dyna_sql.sql
+
