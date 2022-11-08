@@ -102,6 +102,7 @@ custom/job_adjustments/
 #------------------------------
 #        ASB Mob Spawns
 #------------------------------
+custom/sql/mob_spawn_points.sql
 custom/sql/mob_zones/
 
 #------------------------------
