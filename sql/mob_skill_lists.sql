@@ -2435,7 +2435,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1533); -- pile_pitch
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1534); -- guided_missile
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1535); -- hyper_pulse
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1536); -- target_analysis
-INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1537); -- discharger
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1538); -- ion_efflux
 INSERT INTO `mob_skill_lists` VALUES ('Proto-Omega',727,1539); -- rear_lasers
 INSERT INTO `mob_skill_lists` VALUES ('Ultima',728,1259);
@@ -3989,6 +3988,14 @@ INSERT INTO `mob_skill_lists` VALUES ('Fantoccini_PUP',4045,1994); -- Wind Maneu
 INSERT INTO `mob_skill_lists` VALUES ('Fantoccini_PUP',4045,1995); -- Earth Maneuver
 INSERT INTO `mob_skill_lists` VALUES ('Fantoccini_PUP',4045,1996); -- Thunder Maneuver
 INSERT INTO `mob_skill_lists` VALUES ('Fantoccini_PUP',4045,1997); -- Water Maneuver
+
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,382);
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,383);
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,384);
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,385);
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,386);
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,387);
+INSERT INTO `mob_skill_lists` VALUES ('Boggelman',4046,822);
 
 INSERT INTO `mob_skill_lists` VALUES ('JailerOfTemperance',4047,1463);
 INSERT INTO `mob_skill_lists` VALUES ('JailerOfTemperance',4047,1465);
