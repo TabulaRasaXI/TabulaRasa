@@ -108,5 +108,5 @@ custom/sql/mob_zones/
 #------------------------------
 #       Rerun Dynamis SQL
 #------------------------------
-era/sql/era_dyna_sql.sql
+era/sql_dynamis/era_dyna_sql.sql
 
