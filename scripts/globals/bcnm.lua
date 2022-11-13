@@ -1342,12 +1342,8 @@ local function checkReqs(player, npc, bfid, registrant)
     }
 
     -- Determine whether player meets battlefield requirements
-<<<<<<< HEAD
-    local req = (registrant == true) and registerReqs[bfid] or enterReqs[bfid]
-=======
     local req = registrant and registerReqs[bfid] or enterReqs[bfid]
 
->>>>>>> ASB/staging
     if not req or req() then
         return true
     else
