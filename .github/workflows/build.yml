@@ -1,4 +1,4 @@
-name: build
+name: "build"
 
 on:
   pull_request:
@@ -11,6 +11,10 @@ on:
       - base
       - everything
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   Sanity_Checks:
     runs-on: ubuntu-22.04
@@ -20,8 +24,16 @@ jobs:
         fetch-depth: 0
     - name: Install Dependencies
       run: |
+        # https://mariadb.com/docs/connect/programming-languages/c/install/#connector-c-install-repo-configure-cs
+        # Ubuntu is using an old libmariadb but python3 pip expects it to be newer. Use the mariadb provided deb packages.
+        wget -P /tmp/ https://downloads.mariadb.com/MariaDB/mariadb_repo_setup
+        # Note: there is a sha256sum command here according to the above link, but I am unsure if this file may change with time
+        chmod +x /tmp/mariadb_repo_setup
+        sudo /tmp/mariadb_repo_setup --mariadb-server-version="mariadb-10.6"
+        # Remove the above when it's no longer necessary
+
         sudo apt-get update
-        sudo apt-get install -y software-properties-common cppcheck luajit-5.1-dev luarocks mariadb-server mariadb-client libmariadb-dev-compat
+        sudo apt-get install -y software-properties-common cppcheck luajit-5.1-dev luarocks mariadb-server mariadb-client libmariadb-dev-compat binutils-dev
         pip install -r tools/requirements.txt
         luarocks install luacheck --local
     - id: changed-files
@@ -39,6 +51,17 @@ jobs:
         for changed_file in ${{ steps.changed-files.outputs.all }}; do
           echo "${changed_file}"
         done
+    # - name: Git Formatting Checks
+      # if: github.event_name == 'pull_request'
+      # run: |
+        # touch git_checks.txt
+        # bash tools/ci/git.sh origin/${{ github.event.pull_request.base.ref }} >> git_checks.txt || true
+        # cat git_checks.txt
+        # if [ -s git_checks.txt ]
+        # then
+          # exit 1
+        # fi
+        # exit 0
     - name: General File Checks
       if: always()
       run: |
@@ -109,6 +132,9 @@ jobs:
             fi
           fi
         done
+
+        python3 tools/ci/check_lua_binding_usage.py >> lua_checks.txt
+
         cat lua_checks.txt
         if [ -s lua_checks.txt ]
         then
@@ -150,6 +176,7 @@ jobs:
         fi
         exit 0
   Linux_Clang14_64bit:
+    needs: Sanity_Checks
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v1
@@ -158,7 +185,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y software-properties-common cmake libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev
+        sudo apt-get install -y software-properties-common cmake libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev binutils-dev
     #- name: Cache 'build' folder
     #  uses: actions/cache@v3
     #  with:
@@ -182,6 +209,7 @@ jobs:
           xi_map
           xi_search
   Linux_GCC11_64bit:
+    needs: Sanity_Checks
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v1
@@ -190,7 +218,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y software-properties-common cmake libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev
+        sudo apt-get install -y software-properties-common cmake libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev binutils-dev
     #- name: Cache 'build' folder
     #  uses: actions/cache@v3
     #  with:
@@ -206,6 +234,7 @@ jobs:
       run: |
         cmake --build build -j4
   Windows_32bit:
+    needs: Sanity_Checks
     runs-on: windows-latest
     env:
       MSBUILD_PATH: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\
@@ -228,6 +257,7 @@ jobs:
         run: |
           cmake --build build -j4
   Windows_64bit_Debug:
+    needs: Sanity_Checks
     runs-on: windows-latest
     env:
       MSBUILD_PATH: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\
@@ -258,6 +288,7 @@ jobs:
             xi_map.exe
             xi_search.exe
   Windows_64bit_Release_Tracy_Modules_World:
+    needs: Sanity_Checks
     runs-on: windows-latest
     env:
       MSBUILD_PATH: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\
@@ -289,6 +320,7 @@ jobs:
         run: |
           cmake --build build -j4
   MacOS_64bit:
+    needs: Sanity_Checks
     # https://github.com/actions/virtual-environments/blob/main/images/macos/macos-11-Readme.md
     runs-on: macos-latest
     steps:
@@ -339,13 +371,17 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y software-properties-common cmake mariadb-server mariadb-client libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev luarocks
+        sudo apt-get install -y software-properties-common cmake mariadb-server mariadb-client libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev luarocks binutils-dev
     - name: Verify MySQL connection from container
       run: |
         mysql -h 127.0.0.1 -uroot -proot -e "SHOW DATABASES"
     - name: Import SQL files
       run: |
         for f in sql/*.sql; do
+          echo -e "Importing $f into the database..."
+          mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/era/sql/*.sql; do
           echo -e "Importing $f into the database..."
           mysql xidb -h 127.0.0.1 -uroot -proot < $f
         done
@@ -358,9 +394,14 @@ jobs:
       run: |
         python3 << EOF
         with open("modules/init.txt", "w") as f:
-            f.write("custom\n")
-            f.write("era\n")
-            f.write("renamer\n")
+          f.write("era/lua\n")
+          f.write("era/cpp\n")
+          f.write("era/lua_dynamis/globals/era_dynamis.lua\n")
+          f.write("era/lua_dynamis/globals/era_dynamis_spawning.lua\n")
+          f.write("era/lua_dynamis/mobskills/era_pet_skills.lua\n")
+          f.write("era/lua_dynamis/mobskills/era_regain_skills.lua\n")
+          f.write("era/lua_dynamis/globals/era_dynamis_zones.lua\n")
+          f.write("renamer\n")
         EOF
     - name: Startup and character login checks
       uses: nick-invision/retry@v2
@@ -461,7 +502,7 @@ jobs:
     - name: Install Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y software-properties-common cmake mariadb-server mariadb-client libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev luarocks
+        sudo apt-get install -y software-properties-common cmake mariadb-server mariadb-client libmariadb-dev-compat libluajit-5.1-dev libzmq3-dev zlib1g-dev libssl-dev luarocks binutils-dev
     - name: Verify MySQL connection from container
       run: |
         mysql -h 127.0.0.1 -uroot -proot -e "SHOW DATABASES"
@@ -540,6 +581,10 @@ jobs:
       shell: bash
       run: |
         for f in sql/*.sql; do
+          echo -e "Importing $f into the database..."
+          mysql xidb -h 127.0.0.1 -uroot -proot < $f
+        done
+        for f in modules/era/sql/*.sql; do
           echo -e "Importing $f into the database..."
           mysql xidb -h 127.0.0.1 -uroot -proot < $f
         done

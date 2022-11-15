@@ -2,7 +2,7 @@
 -- Area: Outer Horutoto Ruins
 --   NM: Queen of Coins
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
@@ -24,7 +24,7 @@ entity.onMobEngaged = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 0)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

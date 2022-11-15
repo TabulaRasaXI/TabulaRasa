@@ -12,24 +12,19 @@ require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/magic")
 -----------------------------------
-local mobskill_object = {}
+local mobskillObject = {}
 
-mobskill_object.onMobSkillCheck = function(target, mob, skill)
+mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
-    if mob:getFamily() == 271 then -- Jailer of Love, uses only animation.
-        skill:setMsg(xi.msg.NONE)
-        return 0
-    end
-
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local currentHP = target:getHP()
     -- remove all by 5%
     local damage = 0
 
     -- if have more hp then 30%, then reduce to 5%
-    if (currentHP / target:getMaxHP() > 0.2) then
+    if currentHP / target:getMaxHP() > 0.2 then
         damage = currentHP * .95
     else
         -- else you die
@@ -42,4 +37,4 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
     return dmg
 end
 
-return mobskill_object
+return mobskillObject

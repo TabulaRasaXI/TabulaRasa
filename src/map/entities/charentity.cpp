@@ -36,6 +36,7 @@
 #include "../packets/event.h"
 #include "../packets/event_string.h"
 #include "../packets/inventory_finish.h"
+#include "../packets/inventory_item.h"
 #include "../packets/key_items.h"
 #include "../packets/lock_on.h"
 #include "../packets/menu_raisetractor.h"
@@ -50,6 +51,7 @@
 #include "../ai/states/ability_state.h"
 #include "../ai/states/attack_state.h"
 #include "../ai/states/death_state.h"
+#include "../ai/states/inactive_state.h"
 #include "../ai/states/item_state.h"
 #include "../ai/states/magic_state.h"
 #include "../ai/states/raise_state.h"
@@ -214,12 +216,8 @@ CCharEntity::CCharEntity()
     PRecastContainer       = std::make_unique<CCharRecastContainer>(this);
     PLatentEffectContainer = new CLatentEffectContainer(this);
 
-    petZoningInfo.respawnPet = false;
-    petZoningInfo.petID      = 0;
-    petZoningInfo.petType    = PET_TYPE::AVATAR; // dummy data, the bool tells us to respawn if required
-    petZoningInfo.petHP      = 0;
-    petZoningInfo.petMP      = 0;
-    petZoningInfo.petTP      = 0;
+    resetPetZoningInfo();
+    petZoningInfo.petID = 0;
 
     m_PlayTime    = 0;
     m_SaveTime    = 0;
@@ -416,38 +414,54 @@ bool CCharEntity::isNewPlayer() const
 
 void CCharEntity::setPetZoningInfo()
 {
-    if (PPet->objtype == TYPE_PET)
+    if (PPet == nullptr || PPet->objtype != TYPE_PET)
     {
-        switch (((CPetEntity*)PPet)->getPetType())
-        {
-            case PET_TYPE::JUG_PET:
-                if (!settings::get<bool>("map.KEEP_JUGPET_THROUGH_ZONING"))
-                {
-                    break;
-                }
-                [[fallthrough]];
-            case PET_TYPE::AVATAR:
-            case PET_TYPE::AUTOMATON:
-            case PET_TYPE::WYVERN:
-                petZoningInfo.petHP   = PPet->health.hp;
-                petZoningInfo.petTP   = PPet->health.tp;
-                petZoningInfo.petMP   = PPet->health.mp;
-                petZoningInfo.petType = ((CPetEntity*)PPet)->getPetType();
-                break;
-            default:
-                break;
-        }
+        return;
     }
+
+    auto PPetEntity = dynamic_cast<CPetEntity*>(PPet);
+    if (PPetEntity == nullptr)
+    {
+        return;
+    }
+
+    switch (PPetEntity->getPetType())
+    {
+        case PET_TYPE::JUG_PET:
+            if (!settings::get<bool>("map.KEEP_JUGPET_THROUGH_ZONING"))
+            {
+                break;
+            }
+            [[fallthrough]];
+        case PET_TYPE::AVATAR:
+        case PET_TYPE::AUTOMATON:
+        case PET_TYPE::WYVERN:
+            petZoningInfo.petLevel     = PPetEntity->getSpawnLevel();
+            petZoningInfo.petHP        = PPet->health.hp;
+            petZoningInfo.petTP        = PPet->health.tp;
+            petZoningInfo.petMP        = PPet->health.mp;
+            petZoningInfo.petType      = PPetEntity->getPetType();
+            petZoningInfo.jugSpawnTime = ((CPetEntity*)PPet)->getJugSpawnTime();
+            petZoningInfo.jugDuration  = ((CPetEntity*)PPet)->getJugDuration();
+            break;
+        default:
+            break;
+    }
+
+    petZoningInfo.respawnPet = true;
 }
 
 void CCharEntity::resetPetZoningInfo()
 {
     // reset the petZoning info
-    petZoningInfo.petHP      = 0;
-    petZoningInfo.petTP      = 0;
-    petZoningInfo.petMP      = 0;
-    petZoningInfo.respawnPet = false;
-    petZoningInfo.petType    = PET_TYPE::AVATAR;
+    petZoningInfo.petLevel     = 0;
+    petZoningInfo.petHP        = 0;
+    petZoningInfo.petTP        = 0;
+    petZoningInfo.petMP        = 0;
+    petZoningInfo.respawnPet   = false;
+    petZoningInfo.petType      = PET_TYPE::AVATAR;
+    petZoningInfo.jugSpawnTime = 0;
+    petZoningInfo.jugDuration  = 0;
 }
 /************************************************************************
  *
@@ -907,6 +921,12 @@ void CCharEntity::OnDisengage(CAttackState& state)
 bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
     TracyZoneScoped;
+
+    if (PTarget->PAI->IsUntargetable())
+    {
+        return false;
+    }
+
     float dist = distance(loc.p, PTarget->loc.p);
 
     if (!IsMobOwner(PTarget))
@@ -941,8 +961,6 @@ bool CCharEntity::OnAttack(CAttackState& state, action_t& action)
     auto* controller{ static_cast<CPlayerController*>(PAI->GetController()) };
     controller->setLastAttackTime(server_clock::now());
     auto ret = CBattleEntity::OnAttack(state, action);
-
-    // auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     return ret;
 }
@@ -1019,14 +1037,14 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
     }
 }
 
-void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg)
+void CCharEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg, bool blockedCast)
 {
     TracyZoneScoped;
-    CBattleEntity::OnCastInterrupted(state, action, msg);
+    CBattleEntity::OnCastInterrupted(state, action, msg, blockedCast);
 
     auto* message = state.GetErrorMsg();
 
-    if (message)
+    if (message && action.actiontype != ACTION_MAGIC_INTERRUPT) // Interrupt is handled elsewhere
     {
         pushPacket(message);
     }
@@ -1064,6 +1082,25 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
         else
         {
             PAI->TargetFind->findSingleTarget(PBattleTarget);
+        }
+
+        // Assumed, it's very difficult to produce this due to WS being nearly instant
+        // TODO: attempt to verify.
+        if (PAI->TargetFind->m_targets.size() == 0)
+        {
+            // No targets, perhaps something like Super Jump or otherwise untargetable
+            action.actiontype         = ACTION_MAGIC_FINISH;
+            action.actionid           = 28787; // Some hardcoded magic for interrupts
+            actionList_t& actionList  = action.getNewActionList();
+            actionList.ActionTargetID = id;
+
+            actionTarget_t& actionTarget = actionList.getNewActionTarget();
+
+            actionTarget.animation = 0x1FC; // Assumed, but not verified.
+            actionTarget.messageID = 0;
+            actionTarget.reaction  = REACTION::ABILITY | REACTION::HIT;
+
+            return;
         }
 
         for (auto&& PTarget : PAI->TargetFind->m_targets)
@@ -1210,7 +1247,17 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         pushPacket(new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_UNABLE_TO_USE_JA2));
         return;
     }
-    auto*                         PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+
+    auto* PTarget = static_cast<CBattleEntity*>(state.GetTarget());
+    PAI->TargetFind->reset();
+    PAI->TargetFind->findSingleTarget(PTarget);
+
+    // Check if target is untargetable
+    if (PAI->TargetFind->m_targets.size() == 0)
+    {
+        return;
+    }
+
     std::unique_ptr<CBasicPacket> errMsg;
     if (IsValidTarget(PTarget->targid, PAbility->getValidTarget(), errMsg))
     {
@@ -1233,6 +1280,12 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 pushPacket(new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_UNABLE_TO_USE_JA));
                 return;
             }
+        }
+
+        if (battleutils::IsParalyzed(this))
+        {
+            setActionInterrupted(action, PTarget, MSGBASIC_IS_PARALYZED, 0);
+            return;
         }
 
         // get any available merit recast reduction
@@ -1262,10 +1315,10 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
         else if (PAbility->getID() == ABILITY_DEACTIVATE && PAutomaton && PAutomaton->health.hp == PAutomaton->GetMaxHP())
         {
-            CAbility* PAbility = ability::GetAbility(ABILITY_ACTIVATE);
-            if (PAbility)
+            CAbility* PActivateAbility = ability::GetAbility(ABILITY_ACTIVATE);
+            if (PActivateAbility)
             {
-                PRecastContainer->Del(RECAST_ABILITY, PAbility->getRecastId());
+                PRecastContainer->Del(RECAST_ABILITY, PActivateAbility->getRecastId());
             }
         }
         else if (PAbility->getRecastId() == 173 || PAbility->getRecastId() == 174) // BP rage, BP ward
@@ -1341,7 +1394,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             CPetEntity* PPetEntity = dynamic_cast<CPetEntity*>(PPet);
             CPetSkill*  PPetSkill  = battleutils::GetPetSkill(PAbility->getID());
 
-            if (PPetEntity && PPetSkill) // is a real pet (not charmed) and has pet ability  - don't display msg and notify pet
+            if (PPetEntity && PPetEntity->getPetType() != PET_TYPE::JUG_PET && PPetSkill) // is a real pet (not charmed or a jugpet which is mob-like) and has pet ability - don't display msg and notify pet
             {
                 actionList_t& actionList     = action.getNewActionList();
                 actionList.ActionTargetID    = PTarget->id;
@@ -1434,34 +1487,40 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
             PAI->TargetFind->findWithinArea(this, AOE_RADIUS::ATTACKER, distance);
 
-            uint16 msg = 0;
-            for (auto&& PTarget : PAI->TargetFind->m_targets)
+            uint16 prevMsg = 0;
+            for (auto&& PTargetFound : PAI->TargetFind->m_targets)
             {
                 actionList_t& actionList     = action.getNewActionList();
-                actionList.ActionTargetID    = PTarget->id;
+                actionList.ActionTargetID    = PTargetFound->id;
                 actionTarget_t& actionTarget = actionList.getNewActionTarget();
                 actionTarget.reaction        = REACTION::NONE;
                 actionTarget.speceffect      = SPECEFFECT::NONE;
                 actionTarget.animation       = PAbility->getAnimationID();
                 actionTarget.messageID       = PAbility->getMessage();
+                actionTarget.param           = 0;
 
-                if (msg == 0)
-                {
-                    msg = PAbility->getMessage();
-                }
-                else
-                {
-                    msg = PAbility->getAoEMsg();
-                }
+                int32 value = luautils::OnUseAbility(this, PTargetFound, PAbility, &action);
 
-                if (actionTarget.param < 0)
+                if (prevMsg == 0) // get default message for the first target
                 {
-                    msg                = ability::GetAbsorbMessage(msg);
-                    actionTarget.param = -actionTarget.param;
+                    actionTarget.messageID = PAbility->getMessage();
+                }
+                else // get AoE message for second, if there's a manual override, otherwise return message from PAbility->getMessage().
+                {
+                    actionTarget.messageID = PAbility->getAoEMsg();
                 }
 
-                actionTarget.messageID = msg;
-                actionTarget.param     = luautils::OnUseAbility(this, PTarget, PAbility, &action);
+                actionTarget.param = value;
+
+                if (value < 0)
+                {
+                    actionTarget.messageID = ability::GetAbsorbMessage(actionTarget.messageID);
+                    actionTarget.param     = -actionTarget.param;
+                }
+
+                prevMsg = actionTarget.messageID;
+
+                state.ApplyEnmity();
             }
         }
         else
@@ -1473,7 +1532,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
             actionTarget.speceffect      = SPECEFFECT::RECOIL;
             actionTarget.animation       = PAbility->getAnimationID();
             actionTarget.param           = 0;
-            auto prevMsg                 = actionTarget.messageID;
+            uint16 prevMsg               = actionTarget.messageID;
 
             // Check for special situations from Steal (The Tenshodo Showdown quest)
             if (PAbility->getID() == ABILITY_STEAL)
@@ -1511,7 +1570,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         }
         else
         {
-            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+            if (this->StatusEffectContainer->HasStatusEffect(EFFECT_SEIGAN) && PAbility->getID() == 62)
+            {
+                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast / 2);
+            }
+            else
+            {
+                PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast);
+            }
         }
 
         uint16 recastID = PAbility->getRecastId();
@@ -1611,7 +1677,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         if (xirand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
         {
             // absorbed by shadow
-            if (battleutils::IsAbsorbByShadow(PTarget))
+            if (battleutils::IsAbsorbByShadow(PTarget, this))
             {
                 shadowsTaken++;
             }
@@ -1763,7 +1829,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         uint16 power = StatusEffectContainer->GetStatusEffect(EFFECT_SANGE)->GetPower();
 
         // remove shadows
-        while (realHits-- && xirand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this))
+        while (realHits-- && xirand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(PTarget, this))
         {
             ;
         }
@@ -1823,12 +1889,12 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
         return false;
     }
 
-    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC)
+    if (PBattleTarget->isInDynamis())
     {
         return true;
     }
 
-    if (PBattleTarget->isInDynamis())
+    if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC)
     {
         return true;
     }
@@ -1937,11 +2003,13 @@ void CCharEntity::OnRaise()
 
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CActionPacket(action));
 
-        uint8 mLevel = this->m_raiseLevel;
+        uint8 mLevel = charutils::GetCharVar(this, "DeathLevel");
 
-        if (mLevel > 0)
+        // Do not return EXP to the player if they do not have a level at death set
+        if (mLevel != 0)
         {
-            uint16 expLost         = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
+            uint16 expLost = mLevel <= 67 ? (charutils::GetExpNEXTLevel(mLevel) * 8) / 100 : 2400;
+
             uint16 xpNeededToLevel = charutils::GetExpNEXTLevel(jobs.job[GetMJob()]) - jobs.exp[GetMJob()];
 
             // Exp is enough to level you and (you're not under a level restriction, or the level restriction is higher than your current main level).
@@ -1952,11 +2020,9 @@ void CCharEntity::OnRaise()
             }
 
             uint16 xpReturned = (uint16)(ceil(expLost * ratioReturned));
+            charutils::AddExperiencePoints(true, this, this, xpReturned);
 
-            if (GetLocalVar("MijinGakure") == 0 && GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
-            {
-                charutils::AddExperiencePoints(true, this, this, xpReturned);
-            }
+            charutils::SetCharVar(this, "DeathLevel", 0);
         }
 
         // If Arise was used then apply a reraise 3 effect on the target
@@ -2038,7 +2104,10 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 
     if ((isParalyzed && scrollProtection && isScroll && itemLoss) || (isParalyzed && !itemLoss)) // Become paralyzed and stop executing.
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+        this->loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+        PItem->setSubType(ITEM_UNLOCKED);
+        this->pushPacket(new CInventoryItemPacket(PItem, PItem->getLocationID(), PItem->getSlotID()));
+        this->pushPacket(new CInventoryFinishPacket());
         return;
     }
 
@@ -2135,7 +2204,14 @@ void CCharEntity::Die()
 
     if (this->PPet)
     {
-        petutils::DespawnPet(this);
+        if (PPet->objtype == TYPE_MOB)
+        {
+            petutils::DetachPet(this);
+        }
+        else
+        {
+            petutils::DespawnPet(this);
+        }
     }
 
     Die(death_duration);
@@ -2146,9 +2222,14 @@ void CCharEntity::Die()
     // influence for conquest system
     conquest::LoseInfluencePoints(this);
 
-    // we lose xp if we didn't use mijin gakure AND (we aren't in a battlefield OR battlefiled rules say we lose xp
-    if (GetLocalVar("MijinGakure") == 0 && (!PBattlefield || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP)))
+    if (GetLocalVar("MijinGakure") == 0 &&
+        (PBattlefield == nullptr || (PBattlefield->GetRuleMask() & RULES_LOSE_EXP) == RULES_LOSE_EXP) &&
+        GetMLevel() >= settings::get<uint8>("map.EXP_LOSS_LEVEL"))
     {
+        // Track what level the player died at to properly give EXP back on raise
+        int32 level = (m_LevelRestriction > 0 && m_LevelRestriction < GetMLevel()) ? m_LevelRestriction : GetMLevel();
+        charutils::SetCharVar(this, "DeathLevel", level);
+
         float retainPercent = std::clamp(settings::get<uint8>("map.EXP_RETAIN") + getMod(Mod::EXPERIENCE_RETAINED) / 100.0f, 0.0f, 1.0f);
         charutils::DelExperiencePoints(this, retainPercent, 0);
 
@@ -2688,14 +2769,9 @@ void CCharEntity::tryStartNextEvent()
     if (PNpc && PNpc->objtype == TYPE_NPC)
     {
         PNpc->SetLocalVar("pauseNPCPathing", 1);
-
-        if (PNpc->PAI->PathFind != nullptr)
-        {
-            PNpc->PAI->PathFind->Clear();
-        }
     }
 
-    // If it's a cutsene, we lock the player immediately
+    // If it's a cutscene, we lock the player immediately
     setLocked(currentEvent->type == CUTSCENE);
 
     if (currentEvent->strings.empty())

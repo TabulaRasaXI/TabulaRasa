@@ -2,7 +2,7 @@
 -- Area: Fei'Yin
 --   NM: Capricious Cassie
 -----------------------------------
-mixins = {require("scripts/mixins/rage")}
+mixins = { require("scripts/mixins/rage") }
 require("scripts/globals/status")
 require("scripts/globals/titles")
 require("scripts/globals/mobs")
@@ -14,7 +14,7 @@ entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.ALWAYS_AGGRO, 1)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.CASSIENOVA)
 end
 

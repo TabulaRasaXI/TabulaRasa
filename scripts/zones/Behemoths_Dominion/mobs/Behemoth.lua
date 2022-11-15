@@ -3,7 +3,7 @@
 --  HNM: Behemoth
 -----------------------------------
 local ID = require("scripts/zones/Behemoths_Dominion/IDs")
-mixins = {require("scripts/mixins/rage")}
+mixins = { require("scripts/mixins/rage") }
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
@@ -36,7 +36,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.BEHEMOTHS_BANE)
 end
 

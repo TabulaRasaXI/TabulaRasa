@@ -14,7 +14,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.DEAL_WITH_TENSHODO) == QUEST_ACCEPTED and
-        trade:hasItemQty(554, 1) == true and
+        trade:hasItemQty(554, 1) and
         trade:getItemCount() == 1
     then
         player:startEvent(166) -- Ending quest
@@ -26,7 +26,7 @@ entity.onTrigger = function(player, npc)
         player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.A_CLOCK_MOST_DELICATE) == QUEST_ACCEPTED and
         player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.DEAL_WITH_TENSHODO) == QUEST_AVAILABLE
     then
-        if player:getFameLevel(xi.quest.fame_area.NORG) >= 2 then
+        if player:getFameLevel(xi.quest.fame_area.NORG) >= 5 then
             player:startEvent(167) -- Start quest
         else
             player:startEvent(168) -- dialog without correct tenshodo/norg fame

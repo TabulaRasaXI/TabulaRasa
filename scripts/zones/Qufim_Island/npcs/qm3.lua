@@ -13,7 +13,7 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     -- Trade Seedspall's Lux, Luna, Astrum
-    if player:getCurrentMission(xi.mission.log_id.ACP) == xi.mission.id.acp.THE_ECHO_AWAKENS and npcUtil.tradeHas(trade, {2740, 2741, 2742}) then
+    if player:getCurrentMission(xi.mission.log_id.ACP) == xi.mission.id.acp.THE_ECHO_AWAKENS and npcUtil.tradeHas(trade, { 2740, 2741, 2742 }) then
         player:startEvent(31)
     end
 end
@@ -33,7 +33,7 @@ entity.onTrigger = function(player, npc)
         elseif missionACP == xi.mission.id.acp.GATHERER_OF_LIGHT_II and player:getCharVar("SEED_MANDY") == 0 then
             -- Spawn Seed mandragora's
             player:setCharVar("SEED_MANDY", 1) -- This will need moved into Seed mandies onDeath script later.
-            player:PrintToPlayer( "Confrontation Battles are not working yet." )
+            player:PrintToPlayer("Confrontation Battles are not working yet.")
             -- xi.effect.CONFRONTATION for 30 min
         elseif missionACP == xi.mission.id.acp.GATHERER_OF_LIGHT_II and player:getCharVar("SEED_MANDY") == 1 then -- change SEED_MANDY var number later when battle actually works (intended purpose is to track number of slain mandies).
             player:setCharVar("SEED_MANDY", 0)

@@ -2,7 +2,7 @@
 -- Area: Attohwa Chasm
 --  Mob: Lioumere
 -----------------------------------
-mixins = {require("scripts/mixins/families/antlion_ambush")}
+mixins = { require("scripts/mixins/families/antlion_ambush") }
 require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 -----------------------------------
@@ -36,7 +36,7 @@ entity.onMobFight = function(mob, player, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

@@ -7,7 +7,7 @@ require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 
-local offsets = {1, 3, 5, 2, 4, 6}
+local offsets = { 1, 3, 5, 2, 4, 6 }
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
@@ -57,11 +57,11 @@ end
 
 entity.onMobDisengage = function(mob, weather)
     for i, offset in ipairs(offsets) do
-        DespawnMob(mob:getID()+offset)
+        DespawnMob(mob:getID() + offset)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.VRTRA_VANQUISHER)
 end
 

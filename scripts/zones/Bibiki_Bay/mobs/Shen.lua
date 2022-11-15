@@ -2,7 +2,7 @@
 -- Area: Bibiki Bay
 --  Mob: Shen
 -----------------------------------
-local ID = require("scripts/zones/Bibiki_Bay/IDs")
+require('scripts/globals/magic')
 -----------------------------------
 local entity = {}
 
@@ -40,7 +40,7 @@ entity.onMobSpawn = function(mob)
     exitShell(mob)
 
     mob:addListener("MAGIC_STATE_EXIT", "SHEN_MAGIC_EXIT", function(shen, spell)
-        if spell:getID() == 214 then
+        if spell:getID() == xi.magic.spell.FLOOD then
             mob:SetMagicCastingEnabled(true)
         end
     end)
@@ -48,8 +48,8 @@ end
 
 entity.onMobFight = function(mob, target)
     local mobId = mob:getID()
-    local petOne = GetMobByID(mobId+1)
-    local petTwo = GetMobByID(mobId+2)
+    local petOne = GetMobByID(mobId + 1)
+    local petTwo = GetMobByID(mobId + 2)
     local petCooldown = mob:getLocalVar("petCooldown")
     local inShell = mob:getLocalVar("inShell")
 
@@ -72,7 +72,7 @@ entity.onMobFight = function(mob, target)
     if os.time() >= petCooldown and (not petOne:isSpawned() or not petTwo:isSpawned()) and mob:actionQueueEmpty() then
         mob:SetMagicCastingEnabled(false)
         mob:addStatusEffect(xi.effect.CHAINSPELL, 1, 0, 2)
-        mob:castSpell(214, target)
+        mob:castSpell(xi.magic.spell.FLOOD, target)
         mob:setLocalVar("petCooldown", os.time() + 20)
     end
 
@@ -91,7 +91,7 @@ entity.onSpellPrecast = function(mob, spell)
 
     if spell:getID() == 214 then
         for i = 1, 2 do
-            local pet = GetMobByID(mob:getID()+i)
+            local pet = GetMobByID(mob:getID() + i)
             if not pet:isSpawned() then
                 SpawnMob(pet:getID()):updateEnmity(target)
                 pet:setPos(pos.x, pos.y, pos.z, pos.rot)
@@ -101,8 +101,8 @@ entity.onSpellPrecast = function(mob, spell)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-    if isKiller then
+entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller then
         local mobId = mob:getID()
         for i = 1, 2 do
             local petID = GetMobByID(mobId+i)

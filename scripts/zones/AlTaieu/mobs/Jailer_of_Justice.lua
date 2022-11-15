@@ -53,9 +53,9 @@ entity.onMobFight = function(mob, target)
                     not GetMobByID(xzomit):isSpawned() and
                     mob:canUseAbilities() == true
                 then
-                    spawnXzomit(mob, xzomit)
                     mob:setLocalVar("lastPetPop", os.time())
                     alreadyPopped = true
+                    spawnXzomit(mob, xzomit)
                 end
             end
         end
@@ -78,7 +78,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     for i = ID.mob.QN_XZOMIT_START, ID.mob.QN_XZOMIT_END do
         if GetMobByID(i):isSpawned() then
             DespawnMob(i)

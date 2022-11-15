@@ -11,12 +11,12 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!injectaction <action ID> <animation ID> {speceffect} {reaction} {message}")
+    player:PrintToPlayer("!injectaction <action ID> <animation ID> (speceffect) (reaction) (message)")
 end
 
 function onTrigger(player, actionId, animationId, speceffect, reaction, message)
     -- validate actionId
-    if (actionId == nil) then
+    if actionId == nil then
         error(player, "You must provide an action ID.")
         return
     end

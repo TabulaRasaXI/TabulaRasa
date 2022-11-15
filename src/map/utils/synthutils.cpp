@@ -1,4 +1,4 @@
-/*
+﻿/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -49,8 +49,6 @@
 #include "itemutils.h"
 #include "synthutils.h"
 #include "zoneutils.h"
-
-//#define _XI_SYNTH_DEBUG_MESSAGES_ // enable debugging messages
 
 namespace synthutils
 {
@@ -347,7 +345,7 @@ namespace synthutils
 
             if (PChar->CraftContainer->getCraftType() == 1) // if it's a desynth raise HQ chance
             {
-                chance *= 0.4 + (hqtier * 0.03);
+                chance = 0.4 + (hqtier * 0.03);
             }
 
             // Using x/512 calculation for HQ success rate modifier
@@ -875,13 +873,20 @@ namespace synthutils
             if (slotid != 0xFF)
             {
                 CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(slotid);
-                PItem->setReserve(PItem->getReserve() + 1);
+                if (PItem != nullptr)
+                {
+                    PItem->setReserve(PItem->getReserve() + 1);
+                }
             }
         }
 
         // remove crystal
         auto* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(PChar->CraftContainer->getInvSlotID(0));
-        PItem->setReserve(PItem->getReserve() - 1);
+        if (PItem != nullptr)
+        {
+            PItem->setReserve(PItem->getReserve() - 1);
+        }
+
         charutils::UpdateItem(PChar, LOC_INVENTORY, PChar->CraftContainer->getInvSlotID(0), -1);
 
         uint8 result = calcSynthResult(PChar);
@@ -896,12 +901,12 @@ namespace synthutils
             {
                 invSlotID = tempSlotID;
 
-                CItem* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
+                CItem* PCraftItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
 
-                if (PItem != nullptr)
+                if (PCraftItem != nullptr)
                 {
-                    PItem->setSubType(ITEM_LOCKED);
-                    PChar->pushPacket(new CInventoryAssignPacket(PItem, INV_NOSELECT));
+                    PCraftItem->setSubType(ITEM_LOCKED);
+                    PChar->pushPacket(new CInventoryAssignPacket(PCraftItem, INV_NOSELECT));
                 }
             }
         }
@@ -988,9 +993,12 @@ namespace synthutils
                     if (invSlotID != 0xFF)
                     {
                         auto* PItem = PChar->getStorage(LOC_INVENTORY)->GetItem(invSlotID);
-                        PItem->setSubType(ITEM_UNLOCKED);
-                        PItem->setReserve(PItem->getReserve() - removeCount);
-                        charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -(int32)removeCount);
+                        if (PItem != nullptr)
+                        {
+                            PItem->setSubType(ITEM_UNLOCKED);
+                            PItem->setReserve(PItem->getReserve() - removeCount);
+                            charutils::UpdateItem(PChar, LOC_INVENTORY, invSlotID, -(int32)removeCount);
+                        }
                     }
                     invSlotID   = nextSlotID;
                     nextSlotID  = 0;

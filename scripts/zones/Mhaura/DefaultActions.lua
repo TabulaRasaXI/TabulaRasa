@@ -8,4 +8,7 @@ return {
     ['Rycharde']      = { event = 69 },
     ['Take']          = { event = 59 },
     ['Tonasav']       = { event = 372 },
+    ['Zexu']          = { event = 121 },
+    ['Blandine']      = { event = 122 },
+    ['Katsunaga']     = { event = 190 },
 }

@@ -6,13 +6,13 @@ require('scripts/globals/conquest')
 require('scripts/globals/settings')
 require('scripts/globals/zone')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
 end
 
-zone_object.onZoneIn = function(player,prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     -- FIRST LOGIN (START CS)
@@ -25,7 +25,11 @@ zone_object.onZoneIn = function(player,prevZone)
         player:setHomePoint()
     end
 
-    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+    if
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
         if prevZone == xi.zone.WINDURST_JEUNO_AIRSHIP then
             cs = 10004
             player:setPos(228.000, -3.000, 76.000, 160)
@@ -38,23 +42,30 @@ zone_object.onZoneIn = function(player,prevZone)
     return cs
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onTransportEvent = function(player, transport)
-    player:startEvent(10002)
+zoneObject.onTransportEvent = function(player, transport)
+    if player:getLocalVar('[AIRSHIP]Paid') == 1 then
+        player:startEvent(10002)
+    else
+        player:setPos(207.0728, -6.5000, 124.9320, 30)
+        player:setLocalVar('[AIRSHIP]Paid', 0)
+    end
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
     if csid == 305 then
         player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
     elseif csid == 10002 then
         player:setPos(0, 0, 0, 0, 225)
+    elseif csid == 182 and option == 0 then
+        player:setLocalVar('[AIRSHIP]Paid', 0)
     end
 end
 
-return zone_object
+return zoneObject

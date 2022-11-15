@@ -3,7 +3,7 @@
 --  Mob: Diabolos
 -----------------------------------
 local ID = require("scripts/zones/The_Shrouded_Maw/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
@@ -28,6 +28,14 @@ entity.onMobSpawn = function(mob)
         mob:addMod(xi.mod.ATTP, -15)
         mob:addMod(xi.mod.DEFP, -15)
         mob:addMod(xi.mod.MDEF, -40)
+    else
+    -- If this is Diabolos Prime, give him Ruinous Omen
+        xi.mix.jobSpecial.config(mob, {
+            specials =
+            {
+                { id = 1911, hpp = math.random(30, 55) }, -- uses Ruinous Omen once while near 50% HPP.
+            },
+        })
     end
 
     -- Tile Drop Trigger:  Max HPP = 76%, Min HPP = 20%, Gap = 56%, Half = 28%
@@ -42,32 +50,25 @@ entity.onMobSpawn = function(mob)
     mob:setLocalVar("Area", area)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
 
-    -- Add the Ruinous Omen special ability
-    xi.mix.jobSpecial.config(mob, {
-        specials =
-        {
-            {id = 1911, hpp = math.random(30,55)}, -- uses Ruinous Omen once while near 50% HPP.
-        },
-    })
 end
 
 entity.onMobFight = function(mob, target)
     local area = mob:getLocalVar("Area") - 1
     local trigger = mob:getLocalVar("TileTriggerHPP")
-    
+
     local tileDrops =
-        {   -- {Animation Area 1, Animation Area 2, Animation Area 3}
-            {"byc8", "bya8", "byb8"},
-            {"byc7", "bya7", "byb7"},
-            {"byc6", "bya6", "byb6"},
-            {"byc5", "bya5", "byb5"},
-            {"byc4", "bya4", "byb4"},
-            {"byc3", "bya3", "byb3"},
-            {"byc2", "bya2", "byb2"},
-            {"byc1", "bya1", "byb1"},
+        {   -- { Animation Area 1, Animation Area 2, Animation Area 3 }
+            { "byc8", "bya8", "byb8" },
+            { "byc7", "bya7", "byb7" },
+            { "byc6", "bya6", "byb6" },
+            { "byc5", "bya5", "byb5" },
+            { "byc4", "bya4", "byb4" },
+            { "byc3", "bya3", "byb3" },
+            { "byc2", "bya2", "byb2" },
+            { "byc1", "bya1", "byb1" },
         }
 
-    local hpp = math.floor(mob:getHP()*100/mob:getMaxHP())
+    local hpp = math.floor(mob:getHP() * 100 / mob:getMaxHP())
     if hpp < trigger then   -- Trigger the tile drop events
         mob:setLocalVar("TileTriggerHPP", -1)            -- Prevent tiles from being dropped twice
         local tileBase = ID.npc.DARKNESS_NAMED_TILE_OFFSET + (area) * 8
@@ -81,15 +82,17 @@ entity.onMobFight = function(mob, target)
                 SendEntityVisualPacket(tileId, animationSet[area + 1], 4)     -- Animation for floor dropping
                 SendEntityVisualPacket(tileId, "s123", 4)          -- Tile dropping sound
 
-                tile:timer(2750, function(tile)                 -- 2.7s second delay (ish)
-                    tile:updateToEntireZone(xi.status.NORMAL, xi.anim.OPEN_DOOR)       -- Floor opens
+                tile:timer(2750, function(t)                 -- 2.7s second delay (ish)
+                    t:updateToEntireZone(xi.status.NORMAL, xi.anim.OPEN_DOOR)       -- Floor opens
                 end)
             end
         end
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
+    -- Win happens on death instead of despawn
+    mob:getBattlefield():win()
 end
 
 return entity

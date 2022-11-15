@@ -3,7 +3,7 @@
 --   NM: Coo Keja the Unseen
 -----------------------------------
 local ID = require("scripts/zones/Meriphataud_Mountains/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
@@ -13,7 +13,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = xi.jsa.MIJIN_GAKURE, hpp = math.random(10, 15)},
+            { id = xi.jsa.MIJIN_GAKURE, hpp = math.random(10, 15) },
         },
     })
 
@@ -50,7 +50,7 @@ entity.onMobRoam = function(mob)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)

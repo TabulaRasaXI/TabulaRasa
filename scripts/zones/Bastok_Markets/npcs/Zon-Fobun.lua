@@ -10,32 +10,16 @@ require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local path =
+local pathNodes =
 {
-    -242.254, -2.000, 61.679,
-    -242.254, -2.000, 61.679,
-    -242.254, -2.000, 61.679,
-    -242.254, -2.000, 61.679,
-    -242.254, -2.000, 61.679,
-    -242.254, -2.000, 61.679,
-    -242.254, -2.000, 61.679,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
-    -240.300, -2.000, 65.194,
+    { x = -242.254, y = -2.000, z = 61.679, wait = 4000 },
+    { x = -240.300, y = -2.000, z = 65.194, wait = 4000 },
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(path))
-end
-
-entity.onPath = function(npc)
-    xi.path.patrol(npc, path)
+    npc:setPos(xi.path.first(pathNodes))
+    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
 end
 
 entity.onTrade = function(player, npc, trade)

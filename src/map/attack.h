@@ -57,6 +57,14 @@ enum class AttackAnimation
     THROW       = 4
 };
 
+enum class ANTICIPATE_RESULT
+{
+    FAIL            = 0,
+    ANTICIPATE      = 1,
+    COUNTER         = 2,
+    CRITICALCOUNTER = 3
+};
+
 class CAttackRound;
 
 /************************************************************************
@@ -91,9 +99,9 @@ public:
     bool                      CheckAnticipated();
     bool                      IsCountered() const;
     bool                      CheckCounter();
-    bool                      IsCovered() const;                              // Returns the covered flag.
-    bool                      CheckCover();                                   // Sets the covered flag and returns it.
-    void                      ProcessDamage(bool isCritical, bool isGuarded); // Processes the damage for this swing.
+    bool                      IsCovered() const;                                           // Returns the covered flag.
+    bool                      CheckCover();                                                // Sets the covered flag and returns it.
+    void                      ProcessDamage(bool isCritical, bool isGuarded, bool isKick); // Processes the damage for this swing.
 
     void SetAttackType(PHYSICAL_ATTACK_TYPE type); // Sets the attack type.
 

@@ -3,7 +3,7 @@
 --  ZNM: Brass Borer
 -- TODO: Halting movement during stance change.
 -----------------------------------
-mixins = {require("scripts/mixins/rage")}
+mixins = { require("scripts/mixins/rage") }
 require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
@@ -49,7 +49,7 @@ entity.onMobFight = function(mob, target)
 
     if mob:getHPP() < mob:getLocalVar("defUp") and mob:getLocalVar("usedMainSpec") <= mob:getLocalVar("DEF") then
         mob:useMobAbility(1815)
-        mob:setLocalVar("usedMainSpec", mob:getLocalVar("usedMainSpec") +1)
+        mob:setLocalVar("usedMainSpec", mob:getLocalVar("usedMainSpec") + 1)
     elseif mob:getLocalVar("usedMainSpec") >= 5 and mob:getLocalVar("Cannonball") == 0 then
         mob:useMobAbility(1818)
         mob:setLocalVar("Cannonball", 1)

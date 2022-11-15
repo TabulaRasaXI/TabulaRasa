@@ -11,13 +11,13 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 require("scripts/globals/mobskills")
 ---------------------------------------------
-local mobskill_object = {}
+local mobskillObject = {}
 
-mobskill_object.onMobSkillCheck = function(target, mob, skill)
+mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local typeEffect = xi.effect.CHARM_I
     local power = 0
 
@@ -26,7 +26,7 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
         return typeEffect
     end
 
-    local msg = xi.mobskills.MobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
+    local msg = xi.mobskills.mobStatusEffectMove(mob, target, typeEffect, power, 3, 60)
     if (msg == xi.msg.basic.SKILL_ENFEEB_IS) then
         mob:charm(target)
         mob:resetEnmity(target)
@@ -37,4 +37,4 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
 
 end
 
-return mobskill_object
+return mobskillObject

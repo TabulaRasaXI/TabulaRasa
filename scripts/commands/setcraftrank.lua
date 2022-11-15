@@ -12,7 +12,7 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setcraftRank <craft skill or ID> <craft rank> {player}")
+    player:PrintToPlayer("!setcraftRank <craft skill or ID> <craft rank> (player)")
 end
 
 function onTrigger(player, craftName, tier, target)
@@ -24,7 +24,7 @@ function onTrigger(player, craftName, tier, target)
     local skillID = tonumber(craftName) or xi.skill[string.upper(craftName)]
     local targ = nil
 
-    if skillID == nil or skillID < 48 or skillID > 57 then
+    if (skillID == nil or skillID < 48 or skillID > 57) and skillID ~= 59 then
         error(player, "You must specify a valid craft skill.")
         return
     end

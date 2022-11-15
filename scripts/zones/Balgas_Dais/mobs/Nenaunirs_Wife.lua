@@ -5,11 +5,11 @@
 -----------------------------------
 local entity = {}
 
-entity.onMobSpawn = function(mob)
-    mob:addMod(xi.mod.LULLABYRES, 100)
+entity.onMobInitialize = function(mob)
+    mob:setMod(xi.mod.LULLABYRES, 100)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

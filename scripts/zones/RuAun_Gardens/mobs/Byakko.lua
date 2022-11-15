@@ -3,14 +3,13 @@
 --   NM: Byakko
 -----------------------------------
 local ID = require("scripts/zones/RuAun_Gardens/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 require("scripts/globals/mobs")
 require("scripts/globals/status")
 -----------------------------------
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    -- Based on tested stats found at https://docs.google.com/spreadsheets/d/1YBoveP-weMdidrirY-vPDzHyxbEI2ryECINlfCnFkLI/edit#gid=1789487472
     mob:setMod(xi.mod.SILENCERES, 90)
     mob:addMod(xi.mod.ATT, 40)
     mob:addMod(xi.mod.DEF, 60)
@@ -37,9 +36,9 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENLIGHT)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
-    if isKiller then
-        mob:messageText(mob, ID.text.SKY_GOD_OFFSET + 12)
+entity.onMobDeath = function(mob, player, optParams)
+    if optParams.isKiller then
+        player:showText(mob, ID.text.SKY_GOD_OFFSET + 12)
         GetNPCByID(ID.npc.PORTAL_TO_BYAKKO):setAnimation(xi.anim.OPEN_DOOR)
     end
 end

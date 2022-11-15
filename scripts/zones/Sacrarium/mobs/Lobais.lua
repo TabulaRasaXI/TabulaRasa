@@ -2,11 +2,11 @@
 -- Area: Sacrarium
 --  Mob: Lobais
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 
-local pets = {288, 289, 290, 291, 291}
+local pets = { 288, 289, 290, 291, 291 }
 
 entity.onMobFight = function(mob, target)
     -- Manually casting pet as mob also casts BLM spells
@@ -17,7 +17,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

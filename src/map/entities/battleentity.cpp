@@ -371,6 +371,12 @@ int16 CBattleEntity::GetRangedWeaponDelay(bool tp)
     {
         delay += PAmmo->getDelay() / 2;
     }
+
+    if (PAmmo != nullptr && PAmmo->isThrowing() && PAmmo->getDamage() != 0)
+    {
+        delay = PAmmo->getDelay() / 2;
+    }
+
     return delay;
 }
 
@@ -394,15 +400,17 @@ uint16 CBattleEntity::GetMainWeaponDmg()
     {
         if ((weapon->getReqLvl() > GetMLevel()) && objtype == TYPE_PC)
         {
+            // TODO: Determine the difference between augments and latents w.r.t. equipment scaling.
+            // MAIN_DMG_RATING already has equipment scaling applied elsewhere.
             uint16 dmg = weapon->getDamage();
             dmg *= GetMLevel() * 3;
             dmg /= 4;
             dmg /= weapon->getReqLvl();
-            return dmg + getMod(Mod::MAIN_DMG_RATING);
+            return dmg + weapon->getModifier(Mod::DMG_RATING) + getMod(Mod::MAIN_DMG_RATING);
         }
         else
         {
-            return weapon->getDamage() + getMod(Mod::MAIN_DMG_RATING);
+            return weapon->getDamage() + weapon->getModifier(Mod::DMG_RATING) + getMod(Mod::MAIN_DMG_RATING);
         }
     }
     return 0;
@@ -419,11 +427,11 @@ uint16 CBattleEntity::GetSubWeaponDmg()
             dmg *= GetMLevel() * 3;
             dmg /= 4;
             dmg /= weapon->getReqLvl();
-            return dmg + getMod(Mod::SUB_DMG_RATING);
+            return dmg + weapon->getModifier(Mod::DMG_RATING) + getMod(Mod::SUB_DMG_RATING);
         }
         else
         {
-            return weapon->getDamage() + getMod(Mod::SUB_DMG_RATING);
+            return weapon->getDamage() + weapon->getModifier(Mod::DMG_RATING) + getMod(Mod::SUB_DMG_RATING);
         }
     }
     return 0;
@@ -448,11 +456,11 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
             scaleddmg *= GetMLevel() * 3;
             scaleddmg /= 4;
             scaleddmg /= weapon->getReqLvl();
-            dmg += scaleddmg;
+            dmg += scaleddmg + weapon->getModifier(Mod::DMG_RATING);
         }
         else
         {
-            dmg += weapon->getDamage();
+            dmg += weapon->getDamage() + weapon->getModifier(Mod::DMG_RATING);
         }
     }
     if (auto* ammo = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_AMMO]))
@@ -463,11 +471,11 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
             scaleddmg *= GetMLevel() * 3;
             scaleddmg /= 4;
             scaleddmg /= ammo->getReqLvl();
-            dmg += scaleddmg;
+            dmg += scaleddmg + ammo->getModifier(Mod::DMG_RATING);
         }
         else
         {
-            dmg += ammo->getDamage();
+            dmg += ammo->getDamage() + ammo->getModifier(Mod::DMG_RATING);
         }
     }
     return dmg + getMod(Mod::RANGED_DMG_RATING);
@@ -475,11 +483,19 @@ uint16 CBattleEntity::GetRangedWeaponDmg()
 
 uint16 CBattleEntity::GetMainWeaponRank()
 {
+    // https://www.bg-wiki.com/ffxi/Weapon_Rank
+    // https://ffxiclopedia.fandom.com/wiki/Category:Hand-to-Hand?oldid=342430
+    uint16 wDamage = 0;
     if (auto* weapon = dynamic_cast<CItemWeapon*>(m_Weapons[SLOT_MAIN]))
     {
-        return (weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK)) / 9;
+        wDamage = weapon->getDamage() + getMod(Mod::MAIN_DMG_RANK);
+
+        if (weapon->getSkillType() == SKILL_HAND_TO_HAND)
+        {
+            wDamage += 3;
+        }
     }
-    return 0;
+    return wDamage / 9;
 }
 
 uint16 CBattleEntity::GetSubWeaponRank()
@@ -601,7 +617,7 @@ int32 CBattleEntity::addMP(int32 mp)
 int32 CBattleEntity::takeDamage(int32 amount, CBattleEntity* attacker /* = nullptr*/, ATTACK_TYPE attackType /* = ATTACK_NONE*/,
                                 DAMAGE_TYPE damageType /* = DAMAGE_NONE*/)
 {
-    if (this->GetLocalVar("DAMAGE_NULL") != 0)
+    if (this->GetLocalVar("DAMAGE_NULL") == 1)
     {
         amount %= 2;
         this->SetLocalVar("DAMAGE_DEALT", amount);
@@ -706,6 +722,11 @@ uint16 CBattleEntity::ATT(uint16 slot)
         {
             ATT += GetSkill(weapon->getSkillType()) + weapon->getILvlSkill();
 
+            if (weapon->getModifier(Mod::ATT_SLOT) > 0)
+            {
+                ATT += weapon->getModifier(Mod::ATT_SLOT);
+            }
+
             // Smite applies when using 2H or H2H weapons
             if (weapon->isTwoHanded() || weapon->isHandToHand())
             {
@@ -717,7 +738,12 @@ uint16 CBattleEntity::ATT(uint16 slot)
     {
         ATT += this->GetSkill(SKILL_AUTOMATON_MELEE);
     }
-    return ATT + (ATT * m_modStat[Mod::ATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_ATTP] / 100), m_modStat[Mod::FOOD_ATT_CAP]);
+    else // Mob attack
+    {
+        ATT = (8 + m_modStat[Mod::ATT] + STR() / 2);
+    }
+
+    return std::clamp(ATT + (ATT * m_modStat[Mod::ATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_ATTP] / 100), m_modStat[Mod::FOOD_ATT_CAP]), 0, 65535);
 }
 
 uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
@@ -732,7 +758,7 @@ uint16 CBattleEntity::RATT(uint8 skill, float distance, uint16 bonusSkill)
     {
         ATT = int32((float)ATT * battleutils::GetRangedDistanceCorrection(this, distance));
     }
-    return ATT + (ATT * m_modStat[Mod::RATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]);
+    return std::clamp(ATT + (ATT * m_modStat[Mod::RATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]), 0, 65535);
 }
 
 uint16 CBattleEntity::GetBaseRATT(uint8 skill, uint16 bonusSkill)
@@ -743,7 +769,7 @@ uint16 CBattleEntity::GetBaseRATT(uint8 skill, uint16 bonusSkill)
         return 0;
     }
     int32 ATT = 8 + GetSkill(skill) + bonusSkill + m_modStat[Mod::RATT] + battleutils::GetRangedAttackBonuses(this) + (STR() * 3) / 4;
-    return ATT + (ATT * m_modStat[Mod::RATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]);
+    return std::clamp(ATT + (ATT * m_modStat[Mod::RATTP] / 100) + std::min<int16>((ATT * m_modStat[Mod::FOOD_RATTP] / 100), m_modStat[Mod::FOOD_RATT_CAP]), 0, 65535);
 }
 
 uint16 CBattleEntity::RACC(uint8 skill, float distance, uint16 bonusSkill)
@@ -770,7 +796,7 @@ uint16 CBattleEntity::RACC(uint8 skill, float distance, uint16 bonusSkill)
             acc = int32((float)acc * battleutils::GetRangedDistanceCorrection(this, distance));
         }
     }
-    return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
+    return std::clamp(acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP)), 0, 65535);
 }
 
 uint16 CBattleEntity::GetBaseRACC(uint8 skill, uint16 bonusSkill)
@@ -790,7 +816,7 @@ uint16 CBattleEntity::GetBaseRACC(uint8 skill, uint16 bonusSkill)
     acc += getMod(Mod::RACC);
     acc += battleutils::GetRangedAccuracyBonuses(this);
     acc += AGI() / 2;
-    return acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP));
+    return std::clamp(acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP)), 0, 65535);
 }
 
 uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
@@ -875,12 +901,24 @@ uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
 uint16 CBattleEntity::DEF()
 {
     int32 DEF = 8 + m_modStat[Mod::DEF] + VIT() / 2;
+
     if (this->StatusEffectContainer->HasStatusEffect(EFFECT_COUNTERSTANCE, 0))
     {
-        return DEF / 2;
+        DEF = 1 + VIT() / 2;
+
+        if (this->StatusEffectContainer->HasStatusEffect(EFFECT_MINNE))
+        {
+            DEF += this->StatusEffectContainer->GetStatusEffect(EFFECT_MINNE)->GetPower();
+        }
+
+        int32 defModApplicatble = 0;
+
+        defModApplicatble += std::clamp((DEF * std::clamp((int)m_modStat[Mod::DEFP], -100, 0) / 100), -999, 0);
+
+        return std::clamp(DEF + defModApplicatble, 0, 65535);
     }
 
-    return DEF + (DEF * m_modStat[Mod::DEFP] / 100) + std::min<int16>((DEF * m_modStat[Mod::FOOD_DEFP] / 100), m_modStat[Mod::FOOD_DEF_CAP]);
+    return std::clamp(DEF + (DEF * m_modStat[Mod::DEFP] / 100) + std::min<int16>((DEF * m_modStat[Mod::FOOD_DEFP] / 100), m_modStat[Mod::FOOD_DEF_CAP]), 0, 65535);
 }
 
 uint16 CBattleEntity::EVA()
@@ -959,6 +997,12 @@ void CBattleEntity::SetSLevel(uint8 slvl)
         // Technically, we shouldn't be assuming mobs even have a ratio they must adhere to.
         // But there is no place in the DB to set subLV right now.
         m_slvl = (slvl > (m_mlvl >> 1) ? (m_mlvl == 1 ? 1 : (m_mlvl >> 1)) : slvl);
+    }
+    else if (this->objtype == TYPE_PET &&
+             (static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AVATAR || static_cast<CPetEntity*>(this)->getPetType() == PET_TYPE::AVATAR) &&
+             static_cast<CPetEntity*>(this)->PMaster != nullptr && static_cast<CPetEntity*>(this)->PMaster->objtype == TYPE_PC)
+    {
+        m_slvl = this->GetMLevel();
     }
     else
     {
@@ -1529,6 +1573,7 @@ void CBattleEntity::Spawn()
     HideName(false);
     CBaseEntity::Spawn();
     m_OwnerID.clean();
+    setBattleID(0);
 }
 
 void CBattleEntity::Die()
@@ -1667,7 +1712,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
         }
 
         // TODO: this is really hacky and should eventually be moved into lua, and spellFlags should probably be in the spells table..
-        if (PSpell->canHitShadow() && aoeType == SPELLAOE_NONE && battleutils::IsAbsorbByShadow(PTarget) && !(PSpell->getFlag() & SPELLFLAG_IGNORE_SHADOWS))
+        if (PSpell->canHitShadow() && aoeType == SPELLAOE_NONE && battleutils::IsAbsorbByShadow(PTarget, this) && !(PSpell->getFlag() & SPELLFLAG_IGNORE_SHADOWS))
         {
             // take shadow
             msg                = MSGBASIC_SHADOW_ABSORB;
@@ -1781,25 +1826,39 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     this->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_MAGIC_END);
 }
 
-void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg)
+void CBattleEntity::OnCastInterrupted(CMagicState& state, action_t& action, MSGBASIC_ID msg, bool blockedCast)
 {
     TracyZoneScoped;
     CSpell* PSpell = state.GetSpell();
     if (PSpell)
     {
         action.id         = id;
-        action.actiontype = ACTION_MAGIC_INTERRUPT;
-        action.actionid   = static_cast<uint16>(PSpell->getID());
         action.spellgroup = PSpell->getSpellGroup();
+        action.recast     = 0;
+        action.actiontype = ACTION_MAGIC_INTERRUPT;
 
         actionList_t& actionList  = action.getNewActionList();
         actionList.ActionTargetID = id;
 
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
         actionTarget.messageID       = 0;
-        actionTarget.animation       = PSpell->getAnimationID();
+        actionTarget.animation       = 0;
+        actionTarget.param           = static_cast<uint16>(PSpell->getID());
 
-        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, state.GetTarget() ? state.GetTarget() : this, 0, 0, msg));
+        this->PAI->EventHandler.triggerListener("MAGIC_INTERRUPTED", CLuaBaseEntity(this));
+
+        if (blockedCast)
+        {
+            // In a cutscene or otherwise, it seems the target "evades" the cast, despite the ID being set to the caster?
+            // No message is sent in this case
+            actionTarget.reaction = REACTION::EVADE;
+        }
+        else
+        {
+            actionTarget.reaction = REACTION::HIT;
+            // For some reason, despite the system supporting interrupted message in the action packet (like auto attacks, JA), an 0x029 message is sent for spells.
+            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, state.GetTarget() ? state.GetTarget() : this, 0, 0, msg));
+        }
     }
 }
 
@@ -1825,6 +1884,11 @@ bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPack
         return false;
     }
 
+    if (PTarget->PAI->IsUntargetable())
+    {
+        return false;
+    }
+
     return !((distance(loc.p, PTarget->loc.p) - PTarget->m_ModelRadius) > GetMeleeRange() || !PAI->GetController()->IsAutoAttackEnabled());
 }
 
@@ -1842,6 +1906,23 @@ void CBattleEntity::OnDisengage(CAttackState& s)
 
 void CBattleEntity::OnChangeTarget(CBattleEntity* PTarget)
 {
+}
+
+void CBattleEntity::setActionInterrupted(action_t& action, CBattleEntity* PTarget, uint16 messageID, uint16 actionID)
+{
+    if (PTarget)
+    {
+        actionList_t& actionList  = action.getNewActionList();
+        actionList.ActionTargetID = PTarget->id;
+        action.id                 = this->id;
+        action.actiontype         = ACTION_MAGIC_FINISH; // all "is paralyzed" messages are cat 4
+        action.actionid           = actionID;
+
+        actionTarget_t& actionTarget = actionList.getNewActionTarget();
+        actionTarget.animation       = 0x1FC; // Seems hardcoded, two bits away from 0x1FF (0x1FC = 1 1111 1100)
+        actionTarget.messageID       = messageID;
+        actionTarget.param           = 0;
+    }
 }
 
 CBattleEntity* CBattleEntity::GetBattleTarget()
@@ -1869,16 +1950,19 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
         PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
     }
 
+    battleutils::ClaimMob(PTarget, this); // Mobs get claimed whether or not your attack actually is intimidated/paralyzed
+    PTarget->LastAttacked = server_clock::now();
+
     if (battleutils::IsParalyzed(this))
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
-        return false;
+        setActionInterrupted(action, PTarget, MSGBASIC_IS_PARALYZED_2, 0);
+        return true;
     }
 
     if (battleutils::IsIntimidated(this, PTarget))
     {
-        loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_INTIMIDATED));
-        return false;
+        setActionInterrupted(action, PTarget, MSGBASIC_IS_INTIMIDATED, 0);
+        return true;
     }
 
     // Create a new attack round.
@@ -1920,7 +2004,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                  !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_ALL_MISS))
         {
             // attack hit, try to be absorbed by shadow unless it is a SATA attack round
-            if (!(attackRound.GetSATAOccured()) && battleutils::IsAbsorbByShadow(PTarget))
+            if (!(attackRound.GetSATAOccured()) && battleutils::IsAbsorbByShadow(PTarget, this))
             {
                 actionTarget.messageID = MSGBASIC_SHADOW_ABSORB;
                 actionTarget.param     = 1;
@@ -1950,7 +2034,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                     actionTarget.param        = 0;
                     actionTarget.messageID    = 0;
                     actionTarget.spikesEffect = SUBEFFECT_COUNTER;
-                    if (battleutils::IsAbsorbByShadow(this))
+                    if (battleutils::IsAbsorbByShadow(this, PTarget))
                     {
                         actionTarget.spikesParam   = 1;
                         actionTarget.spikesMessage = MSGBASIC_COUNTER_ABS_BY_SHADOW;
@@ -2003,7 +2087,8 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             else
             {
                 // Set this attack's critical flag.
-                attack.SetCritical(xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing()), SLOT_MAIN, attack.IsGuarded());
+                SLOTTYPE weaponSlot = (SLOTTYPE)attack.GetWeaponSlot();
+                attack.SetCritical(xirand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, !attack.IsFirstSwing(), weaponSlot), weaponSlot, attack.IsGuarded());
 
                 actionTarget.reaction = REACTION::HIT;
 
@@ -2045,7 +2130,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 }
 
                 // Process damage.
-                attack.ProcessDamage(attack.IsCritical(), attack.IsGuarded());
+                attack.ProcessDamage(attack.IsCritical(), attack.IsGuarded(), attack.GetAttackType() == PHYSICAL_ATTACK_TYPE::KICK);
 
                 // Try shield block
                 if (attack.IsBlocked())
@@ -2054,7 +2139,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 }
 
                 actionTarget.param =
-                    battleutils::TakePhysicalDamage(this, PTarget, attack.GetAttackType(), attack.GetDamage(), attack.IsBlocked(), attack.GetWeaponSlot(), 1,
+                    battleutils::TakePhysicalDamage(this, PTarget, attack.GetAttackType(), attack.GetDamage(), attack.IsBlocked(), weaponSlot, 1,
                                                     attackRound.GetTAEntity(), true, true, attack.IsCountered(), attack.IsCovered(), POriginalTarget);
                 if (actionTarget.param < 0)
                 {
@@ -2093,12 +2178,6 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                 {
                     charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
                 }
-
-                if (PTarget->objtype == TYPE_MOB && this->objtype == TYPE_PC)
-                {
-                    // 1 ce for a missed attack for TH application
-                    ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity(this, 1, 0);
-                }
             }
         }
         else
@@ -2115,6 +2194,12 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             if (PTarget->objtype == TYPE_PC)
             {
                 charutils::TrySkillUP((CCharEntity*)PTarget, SKILL_EVASION, GetMLevel());
+            }
+
+            if (PTarget->objtype == TYPE_MOB && this->objtype == TYPE_PC)
+            {
+                // 1 ce for a missed attack for TH application
+                ((CMobEntity*)PTarget)->PEnmityContainer->UpdateEnmity(this, 1, 0);
             }
         }
 
@@ -2166,10 +2251,9 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
             break;
         }
     }
-    battleutils::ClaimMob(PTarget, this);
+
     PAI->EventHandler.triggerListener("ATTACK", CLuaBaseEntity(this), CLuaBaseEntity(PTarget), &action);
     PTarget->PAI->EventHandler.triggerListener("ATTACKED", CLuaBaseEntity(PTarget), CLuaBaseEntity(this), &action);
-    PTarget->LastAttacked = server_clock::now();
     /////////////////////////////////////////////////////////////////////////////////////////////
     // End of attack loop
     /////////////////////////////////////////////////////////////////////////////////////////////
@@ -2219,6 +2303,16 @@ void CBattleEntity::SetBattleStartTime(time_point time)
 duration CBattleEntity::GetBattleTime()
 {
     return server_clock::now() - m_battleStartTime;
+}
+
+void CBattleEntity::setBattleID(uint16 battleID)
+{
+    m_battleID = battleID;
+}
+
+uint16 CBattleEntity::getBattleID()
+{
+    return m_battleID;
 }
 
 void CBattleEntity::Tick(time_point /*unused*/)

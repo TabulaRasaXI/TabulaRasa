@@ -720,16 +720,19 @@ xi.addType =
     ADDTYPE_AUTOMATON   = 512,
 }
 
-function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shadowbehav) -- seems to only be used for Wyvern breaths
+function AbilityFinalAdjustments(dmg, mob, skill, target, skilltype, skillparam, shadowbehav) -- seems to only be used for Wyvern breaths
     -- physical attack missed, skip rest
     local msg = skill:getMsg()
-    if (msg == 158 or msg == 188 or msg == 31 or msg == 30) then
+    if msg == 158 or msg == 188 or msg == 31 or msg == 30 then
         return 0
     end
 
     --handle pd
-    if ((target:hasStatusEffect(xi.effect.PERFECT_DODGE) or target:hasStatusEffect(xi.effect.ALL_MISS) )
-            and skilltype == xi.attackType.PHYSICAL) then
+    if
+        (target:hasStatusEffect(xi.effect.PERFECT_DODGE) or
+        target:hasStatusEffect(xi.effect.ALL_MISS)) and
+        skilltype == xi.attackType.PHYSICAL
+    then
         skill:setMsg(xi.msg.basic.JA_MISS_2)
         return 0
     end
@@ -745,35 +748,35 @@ function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shado
     skill:setMsg(xi.msg.basic.USES_JA_TAKE_DAMAGE)
 
     --Handle shadows depending on shadow behaviour / skilltype
-    if (shadowbehav ~= xi.mobskills.shadowBehavior.WIPE_SHADOWS and shadowbehav ~= xi.mobskills.shadowBehavior.IGNORE_SHADOWS) then --remove 'shadowbehav' shadows.
+    if shadowbehav ~= xi.mobskills.shadowBehavior.WIPE_SHADOWS and shadowbehav ~= xi.mobskills.shadowBehavior.IGNORE_SHADOWS then --remove 'shadowbehav' shadows.
 
-        dmg = utils.takeShadows(target, dmg, shadowbehav)
+        dmg = utils.takeShadows(target, mob, dmg, shadowbehav)
 
         -- dealt zero damage, so shadows took hit
-        if (dmg == 0) then
+        if dmg == 0 then
             skill:setMsg(xi.msg.basic.SHADOW_ABSORB)
             return shadowbehav
         end
 
-    elseif (shadowbehav == xi.mobskills.shadowBehavior.WIPE_SHADOWS) then --take em all!
+    elseif shadowbehav == xi.mobskills.shadowBehavior.WIPE_SHADOWS then --take em all!
         target:delStatusEffect(xi.effect.COPY_IMAGE)
         target:delStatusEffect(xi.effect.BLINK)
         target:delStatusEffect(xi.effect.THIRD_EYE)
     end
 
     --handle Third Eye using shadowbehav as a guide
-    if (skilltype == xi.attackType.PHYSICAL and utils.thirdeye(target)) then
+    if skilltype == xi.attackType.PHYSICAL and mob:checkThirdEye(target) then
         skill:setMsg(xi.msg.basic.ANTICIPATE)
         return 0
     end
 
-    if (skilltype == xi.attackType.PHYSICAL) then
+    if skilltype == xi.attackType.PHYSICAL then
         dmg = target:physicalDmgTaken(dmg, skillparam)
-    elseif (skilltype == xi.attackType.MAGICAL) then
+    elseif skilltype == xi.attackType.MAGICAL then
         dmg = target:magicDmgTaken(dmg, skillparam)
-    elseif (skilltype == xi.attackType.BREATH) then
+    elseif skilltype == xi.attackType.BREATH then
         dmg = target:breathDmgTaken(dmg)
-    elseif (skilltype == xi.attackType.RANGED) then
+    elseif skilltype == xi.attackType.RANGED then
         dmg = target:rangedDmgTaken(dmg)
     end
 
@@ -788,13 +791,14 @@ function AbilityFinalAdjustments(dmg,mob,skill,target,skilltype,skillparam,shado
 
     if skilltype == xi.attackType.MAGICAL then
         dmg = utils.oneforall(target, dmg)
+        dmg = utils.rampart(target, dmg)
     end
 
     dmg = utils.stoneskin(target, dmg)
 
-    if (dmg > 0) then
+    if dmg > 0 then
         target:wakeUp()
-        target:updateEnmityFromDamage(mob,dmg)
+        target:updateEnmityFromDamage(mob, dmg)
     end
 
     return dmg
@@ -821,7 +825,7 @@ function takeAbilityDamage(defender, attacker, params, primary, finaldmg, attack
     local targetTPMult = params.targetTPMult or 1
     finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attackType, damageType, slot, primary, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, targetTPMult)
     local enmityEntity = taChar or attacker
-    if (params.overrideCE and params.overrideVE) then
+    if params.overrideCE and params.overrideVE then
         defender:addEnmity(enmityEntity, params.overrideCE, params.overrideVE)
     else
         local enmityMult = params.enmityMult or 1

@@ -15,8 +15,8 @@ xi.settings.main =
     SERVER_NAME = "Nameless",
 
     SERVER_MESSAGE =
-        "Please visit https://github.com/LandSandBoat/server for the latest information on the project.\n" ..
-        "Thank you, and we hope you enjoy sailing the sands!",
+        "Please visit https://github.com/AirSkyBoat/AirSkyBoat for the latest information on the project.\n" ..
+        "Thank you, and we hope you enjoy soaring through the skies.",
 
     -- Setting to lock content more accurately to the expansions defined below.
     -- This generally results in a more accurate presentation of your selected expansions,
@@ -183,6 +183,9 @@ xi.settings.main =
     RELIC_3RD_UPGRADE_WAIT_TIME = 3600,     -- Wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
     FREE_COP_DYNAMIS            = 0,        -- Authorize player to entering inside COP Dynamis without completing COP mission (1 = enable 0 = disable)
 
+    -- LIMBUS SETTINGS
+    COSMO_CLEANSE_BASE_COST     = 15000,    -- Base gil cost for a Cosmo Cleanse from Sagheera
+
     -- QUEST/MISSION SPECIFIC SETTINGS
     AF1_QUEST_LEVEL = 40,    -- Minimum level to start AF1 quest
     AF2_QUEST_LEVEL = 50,    -- Minimum level to start AF2 quest
@@ -218,10 +221,12 @@ xi.settings.main =
     -- Chocobo digging
     DIG_RATE                     = 85, -- % chance to receive an item from chocbo digging during favorable weather.  Set between 0 and 100.
     DIG_FATIGUE                  = 100,  -- Set max amount of items a player can dig every 24 hours. Set to 0 to disable.
-    DIG_ZONE_LIMIT               = 120,  -- Set max amount of items that can be dug from a specific zone every Vana'Diel Day. Set to 0 to disable.
+    DIG_ZONE_LIMIT               = 60,  -- Set max amount of items that can be dug from a specific zone every Vana'Diel Day. Set to 0 to disable.
     DIG_GRANT_BURROW             = 0,
     DIG_GRANT_BORE               = 0,
     DIG_DISTANCE_REQ             = 0, -- Sets the distance squared in yalms of how far a player has to move.
+    DIG_FATIGUE_SKILL_UP         = false, -- Allows for skilling up while at fatigue.
+    DIG_ABUNDANCE_BONUS          = 0,     -- Increase chance of digging up an item (450  = item digup chance +45)
 
     -- MISC
     RIVERNE_PORTERS              = 120,  -- Time in seconds that Unstable Displacements in Cape Riverne stay open after trading a scale.
@@ -231,6 +236,7 @@ xi.settings.main =
     BYPASS_EXP_RING_ONE_PER_WEEK = 0,    -- Set to 1 to bypass the limit of one ring per Conquest Tally Week.
     NUMBER_OF_DM_EARRINGS        = 1,    -- Number of earrings players can simultaneously own from Divine Might before scripts start blocking them (Default: 1)
     HOMEPOINT_TELEPORT           = 0,    -- Enables the homepoint teleport system
+    EQUIP_FROM_OTHER_CONTAINERS  = false, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
     ENM_COOLDOWN                 = 120,  -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
     FORCE_SPAWN_QM_RESET_TIME    = 300,  -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
     GOBBIE_BOX_MIN_AGE           = 45,   -- Minimum character age in days before a character can sign up for Gobbie Mystery Box

@@ -10,16 +10,16 @@ require("scripts/globals/status")
 require("scripts/globals/pets")
 require("scripts/globals/msg")
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     if not player:getPet() then
         return xi.msg.basic.REQUIRES_A_PET, 0
     elseif not player:getPetID() or not (player:getPetID() >= 69 and player:getPetID() <= 72) then
         return xi.msg.basic.NO_EFFECT_ON_PET, 0
     else
         local id = player:getEquipID(xi.slot.AMMO)
-        if (id >= 18731 and id <= 18733 or id == 19185) then
+        if id >= 18731 and id <= 18733 or id == 19185 then
             return 0, 0
         else
             return xi.msg.basic.UNABLE_TO_USE_JA, 0
@@ -27,7 +27,7 @@ ability_object.onAbilityCheck = function(player, target, ability)
     end
 end
 
-ability_object.onUseAbility = function(player, target, ability)
+abilityObject.onUseAbility = function(player, target, ability)
     -- 1st need to get the pet food is equipped in the range slot.
     local rangeObj = player:getEquipID(xi.slot.AMMO)
     local totalHealing = 0
@@ -91,17 +91,17 @@ ability_object.onUseAbility = function(player, target, ability)
         toremove = toremove - 1
     end
 
-    local bonus = 1 + player:getMerit(xi.merit.REPAIR_EFFECT)/100
+    local bonus = 1 + player:getMerit(xi.merit.REPAIR_EFFECT) / 100
 
     totalHealing = totalHealing * bonus
 
-    bonus = bonus + player:getMod(xi.mod.REPAIR_POTENCY)/100
+    bonus = bonus + player:getMod(xi.mod.REPAIR_POTENCY) / 100
 
     regenAmount = regenAmount * bonus
 
     local diff = petMaxHP - petCurrentHP
 
-    if (diff < totalHealing) then
+    if diff < totalHealing then
         totalHealing = diff
     end
 
@@ -117,4 +117,4 @@ ability_object.onUseAbility = function(player, target, ability)
     return totalHealing
 end
 
-return ability_object
+return abilityObject

@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
--- func: !checkinteraction {handlerName}
+-- func: !checkinteraction (handlerName)
 -- desc:
 ---------------------------------------------------------------------------------------------------
 
@@ -13,12 +13,12 @@ cmdprops =
 
 function error(player, msg)
     player:PrintToPlayer(msg)
-    player:PrintToPlayer("!checkinteraction {handlerName}")
+    player:PrintToPlayer("!checkinteraction (handlerName)")
 end
 
 local typeToName = {}
 for name, typeVal in pairs(Action.Type) do
-   typeToName[typeVal] = name
+    typeToName[typeVal] = name
 end
 
 local function handlerToString(handler, player, containerVarCache, varCache)
@@ -39,8 +39,8 @@ local function handlerToString(handler, player, containerVarCache, varCache)
             if handler.container.getCheckArgs then
                 checkArgs = handler.container:getCheckArgs(player)
             end
-            checkArgs[#checkArgs+1] = containerVarCache[handler.container]
-            checkArgs[#checkArgs+1] = varCache
+            checkArgs[#checkArgs + 1] = containerVarCache[handler.container]
+            checkArgs[#checkArgs + 1] = varCache
         end
 
         message = message .. " [check: " .. (handler.check(player, unpack(checkArgs)) and "true" or "false") .. "]"
@@ -51,7 +51,7 @@ end
 
 function onTrigger(player, handlerName)
     local function cmdPrint(message, ...)
-        player:PrintToPlayer(string.format(message, unpack({...}) or nil), 17)
+        player:PrintToPlayer(string.format(message, unpack({ ... }) or nil), 17)
     end
 
     if handlerName == nil then

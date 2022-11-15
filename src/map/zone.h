@@ -511,6 +511,8 @@ typedef std::map<uint16, zoneWeather_t> weatherVector_t;
 
 typedef std::map<uint16, CBaseEntity*> EntityList_t;
 
+using QueryByNameResult_t = std::vector<CBaseEntity*>;
+
 int32 zone_update_weather(uint32 tick, CTaskMgr::CTask* PTask);
 
 class CZone
@@ -520,6 +522,7 @@ public:
     ZONE_TYPE      GetType();
     REGION_TYPE    GetRegionID();
     CONTINENT_TYPE GetContinentID();
+    uint8          getLevelRestriction();
     uint32         GetIP() const;
     uint16         GetPort() const;
     uint16         GetTax() const;
@@ -537,6 +540,8 @@ public:
     void SetPartyBattleMusic(uint8 music);
     void SetBackgroundMusicDay(uint8 music);
     void SetBackgroundMusicNight(uint8 music);
+
+    const QueryByNameResult_t& queryEntitiesByName(std::string const& name);
 
     uint32 GetLocalVar(const char* var);
     void   SetLocalVar(const char* var, uint32 val);
@@ -575,8 +580,9 @@ public:
     virtual void DeletePET(CBaseEntity* PPet); // derefs the pet's ID from this zone
     virtual void DeleteTRUST(CBaseEntity* PTrust);
 
-    virtual void FindPartyForMob(CBaseEntity* PEntity);         // ищем группу для монстра
-    virtual void TransportDepart(uint16 boundary, uint16 zone); // транспотр отправляется, необходимо собрать пассажиров
+    virtual void FindPartyForMob(CBaseEntity* PEntity);          // ищем группу для монстра
+    virtual void TransportDepart(uint16 boundary, uint16 zone);  // транспотр отправляется, необходимо собрать пассажиров
+    virtual void updateCharLevelRestriction(CCharEntity* PChar); // Removes the character's level restriction. If the zone has a level restriction it applies the zone's after removing it.
 
     void InsertRegion(CRegion* Region); // добавляем в зону активную область
 
@@ -605,7 +611,7 @@ public:
 
     bool HasReducedVerticalAggro();
 
-    CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID);
+    CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction);
     virtual ~CZone();
 
     CBattlefieldHandler* m_BattlefieldHandler; // BCNM Instances in this zone
@@ -630,10 +636,11 @@ private:
     ZONE_TYPE      m_zoneType;
     REGION_TYPE    m_regionID;    // ID области
     CONTINENT_TYPE m_continentID; // ID континента
-    std::string    m_zoneName;    // имя зоны
-    uint16         m_zonePort;    // порт зоны
-    uint32         m_zoneIP;      // IP зоны
-    bool           m_useNavMesh;  // Use navmesh for roaming, chasing
+    uint8          m_levelRestriction;
+    std::string    m_zoneName;   // имя зоны
+    uint16         m_zonePort;   // порт зоны
+    uint32         m_zoneIP;     // IP зоны
+    bool           m_useNavMesh; // Use navmesh for roaming, chasing
 
     WEATHER m_Weather;
     uint32  m_WeatherChangeTime;
@@ -665,6 +672,8 @@ private:
     uint8  m_ZoneAnimation;     // which zone animation to use (i.e. manaclipper)
     uint32 m_ZoneAnimStartTime; // zone animation start time (i.e. boats)
     uint16 m_ZoneAnimLength;    // zone animation length in seconds
+
+    std::unordered_map<std::string, QueryByNameResult_t> m_queryByNameResults;
 
 protected:
     CTaskMgr::CTask* ZoneTimer; // указатель на созданный таймер - ZoneServer. необходим для возможности его остановки

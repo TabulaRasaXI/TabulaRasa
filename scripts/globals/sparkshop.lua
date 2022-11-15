@@ -619,7 +619,7 @@ function xi.sparkshop.onTrigger(player, npc, event)
     player:startEvent(event, 0, sparks, vouchers, naakual, cipher, remainingLimit)
 end
 
-function xi.sparkshop.onEventUpdate(player,csid,option)
+function xi.sparkshop.onEventUpdate(player, csid, option, npc)
     local sparks = player:getCurrency("spark_of_eminence")
     local weeklySparksSpent = player:getCharVar("weekly_sparks_spent")
     local remainingLimit = xi.settings.main.WEEKLY_EXCHANGE_LIMIT - weeklySparksSpent
@@ -643,7 +643,7 @@ function xi.sparkshop.onEventUpdate(player,csid,option)
         local cost = item.cost * qty
 
         -- makes sure player has room for three stacks of tomes
-        if (qty > 12 and qty < 99) and player:getFreeSlotsCount() < 3 then
+        if qty > 12 and qty < 99 and player:getFreeSlotsCount() < 3 then
             player:messageSpecial(zones[player:getZoneID()].text.ITEM_CANNOT_BE_OBTAINED, item.id)
             player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
             return
@@ -663,7 +663,7 @@ function xi.sparkshop.onEventUpdate(player,csid,option)
         if cost > remainingLimit and xi.settings.main.ENABLE_EXCHANGE_LIMIT == 1 then
             player:messageSpecial(zones[player:getZoneID()].text.MAX_SPARKS_LIMIT_REACHED, xi.settings.main.WEEKLY_EXCHANGE_LIMIT)
         elseif sparks >= cost then
-            if npcUtil.giveItem(player, { {item.id, qty} }) then
+            if npcUtil.giveItem(player, { { item.id, qty } }) then
                 sparks = sparks - cost
                 player:delCurrency("spark_of_eminence", cost)
                 if xi.settings.main.ENABLE_EXCHANGE_LIMIT == 1 then

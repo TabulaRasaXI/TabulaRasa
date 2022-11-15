@@ -10,9 +10,9 @@ require("scripts/globals/treasure")
 require("scripts/globals/status")
 require("scripts/globals/mobs")
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     -- Weight Door System (RegionID, X, Radius, Z)
     zone:registerRegion(1, -15, 5, -60, 0, 0, 0)
     zone:registerRegion(3, 15, 5, -180, 0, 0, 0)
@@ -41,14 +41,18 @@ zone_object.onInitialize = function(zone)
     npcUtil.UpdateNPCSpawnPoint(ID.npc.ANTICAN_TAG_QM, 60, 120, ID.npc.ANTICAN_TAG_POSITIONS, "[POP]Antican_Tag")
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
-    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+    if
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
         player:setPos(-980.193, 14.913, -282.863, 60)
     end
 
@@ -67,11 +71,11 @@ local function getWeight(player)
     end
 end
 
-zone_object.onRegionEnter = function(player, region)
+zoneObject.onRegionEnter = function(player, region)
     local regionID = region:GetRegionID()
 
     -- holes in the sand
-    if (regionID >= 30) then
+    if regionID >= 30 then
         switch (regionID): caseof
         {
             [30] = function (x)
@@ -104,14 +108,14 @@ zone_object.onRegionEnter = function(player, region)
         totalWeight = totalWeight + getWeight(player)
         plate:setLocalVar("weight", totalWeight)
 
-        if (player:hasKeyItem(xi.ki.LOADSTONE) or totalWeight >= 3) then
+        if player:hasKeyItem(xi.ki.LOADSTONE) or totalWeight >= 3 then
             door:openDoor(15) -- open door with a 15 second time delay.
             plate:setAnimation(xi.anim.OPEN_DOOR) -- this is supposed to light up the platform but it's not working. Tried other values too.
         end
     end
 end
 
-zone_object.onRegionLeave = function(player, region)
+zoneObject.onRegionLeave = function(player, region)
     local regionID = region:GetRegionID()
 
     if regionID < 30 then
@@ -122,19 +126,19 @@ zone_object.onRegionLeave = function(player, region)
         totalWeight = totalWeight - getWeight(player)
         plate:setLocalVar("weight", totalWeight)
 
-        if (plate:getAnimation() == xi.anim.OPEN_DOOR and totalWeight < 3) then
+        if plate:getAnimation() == xi.anim.OPEN_DOOR and totalWeight < 3 then
             plate:setAnimation(xi.anim.CLOSE_DOOR)
         end
     end
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
 end
 
-zone_object.onZoneWeatherChange = function(weather)
+zoneObject.onZoneWeatherChange = function(weather)
     local nuss = GetMobByID(ID.mob.NUSSKNACKER)
     if
         not nuss:isSpawned() and os.time() > nuss:getLocalVar("cooldown") and
@@ -144,4 +148,4 @@ zone_object.onZoneWeatherChange = function(weather)
     end
 end
 
-return zone_object
+return zoneObject

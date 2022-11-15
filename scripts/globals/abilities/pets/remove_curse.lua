@@ -5,18 +5,18 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-ability_object.onUseAbility = function(pet, target, skill, action)
+abilityObject.onUseAbility = function(pet, target, skill, action)
     local effect
-    if (target:delStatusEffect(xi.effect.CURSE_I)) then
+    if target:delStatusEffect(xi.effect.CURSE_I) then
         skill:setMsg(xi.msg.basic.JA_REMOVE_EFFECT)
         effect = xi.effect.CURSE_I
-    elseif (target:delStatusEffect(xi.effect.DOOM)) then
+    elseif target:delStatusEffect(xi.effect.DOOM) then
         skill:setMsg(xi.msg.basic.JA_REMOVE_EFFECT)
         effect = xi.effect.DOOM
     else
@@ -26,4 +26,4 @@ ability_object.onUseAbility = function(pet, target, skill, action)
     return effect
 end
 
-return ability_object
+return abilityObject
