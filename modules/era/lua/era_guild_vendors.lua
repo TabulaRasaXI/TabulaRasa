@@ -98,7 +98,7 @@ for _, shop in pairs(lookupTable) do
             m:addOverride(string.format("xi.zones.%s.npcs.%s.onTrigger", shop[2], shop[3]),
             function(player, npc)
                 if (player:hasKeyItem(xi.ki.TENSHODO_MEMBERS_CARD)) then
-                    if (player:sendGuild(shop[4], shop[6], shop[7], shop[8])) then
+                    if (player:sendGuild(shop[4], 0, 25, shop[8])) then
                         player:showText(npc, ID.text[shop[5]])
                     end
                 end
@@ -106,7 +106,7 @@ for _, shop in pairs(lookupTable) do
         else local ID = require(string.format("scripts/zones/%s/IDs", shop[2]))
             m:addOverride(string.format("xi.zones.%s.npcs.%s.onTrigger", shop[2], shop[3]),
             function(player, npc)
-                if (player:sendGuild(shop[4], shop[6], shop[7], shop[8])) then
+                if (player:sendGuild(shop[4], 0, 25, shop[8])) then
                     player:showText(npc, ID.text[shop[5]])
                 end
             end)
