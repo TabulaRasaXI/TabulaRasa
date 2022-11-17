@@ -683,9 +683,6 @@ xi.magic.getMagicHitRate = function(caster, target, skillType, element, effectRe
         skillchainCount = 0
     end
 
-    -- resist everything if real magic shield is active (see effects/magic_shield)
-    if checkMagicShield(target) then return 0 end
-
     if bonusAcc == nil then
         bonusAcc = 0
     end
@@ -801,7 +798,7 @@ xi.magic.getMagicResist = function(magicHitRate, target, element, effectRes, ski
         skillchainCount = 0
     end
 
-    if target ~= nil and element ~= nil and target:getObjType() == xi.objType.MOB then
+    if target ~= nil and element ~= nil and element ~= xi.magic.ele.NONE and target:getObjType() == xi.objType.MOB then
         local eemTier = 1
         eemVal = target:getMod(xi.magic.eleEvaMult[element]) / 100
 
