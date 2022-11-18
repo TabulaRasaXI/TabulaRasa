@@ -42,14 +42,21 @@
 
 CPetEntity::CPetEntity(PET_TYPE petType)
 : CMobEntity()
+, m_PetID(0)
 , m_PetType(petType)
+, m_spawnLevel(0)
+, m_jugSpawnTime(time_point::min())
+, m_jugDuration(duration::min())
 {
-    objtype        = TYPE_PET;
-    m_EcoSystem    = ECOSYSTEM::UNCLASSIFIED;
-    allegiance     = ALLEGIANCE_TYPE::PLAYER;
-    m_MobSkillList = 0;
-    m_PetID        = 0;
-    m_IsClaimable  = false;
+    objtype                 = TYPE_PET;
+    m_EcoSystem             = ECOSYSTEM::UNCLASSIFIED;
+    allegiance              = ALLEGIANCE_TYPE::PLAYER;
+    m_MobSkillList          = 0;
+    m_IsClaimable           = false;
+    m_bReleaseTargIDOnDeath = true;
+    spawnAnimation          = SPAWN_ANIMATION::SPECIAL; // Initial spawn has the special spawn-in animation
+
+    memset(&m_TraitList, 0, sizeof(m_TraitList));
 
     PAI = std::make_unique<CAIContainer>(this, std::make_unique<CPathFind>(this), std::make_unique<CPetController>(this), std::make_unique<CTargetFind>(this));
 }
@@ -61,9 +68,48 @@ PET_TYPE CPetEntity::getPetType()
     return m_PetType;
 }
 
+uint8 CPetEntity::getSpawnLevel()
+{
+    return m_spawnLevel;
+}
+
+void CPetEntity::setSpawnLevel(uint8 level)
+{
+    m_spawnLevel = level;
+}
+
 bool CPetEntity::isBstPet()
 {
     return getPetType() == PET_TYPE::JUG_PET || objtype == TYPE_MOB;
+}
+
+int32 CPetEntity::getJugSpawnTime()
+{
+    XI_DEBUG_BREAK_IF(m_PetType != PET_TYPE::JUG_PET)
+
+    const auto epoch = m_jugSpawnTime.time_since_epoch();
+    return static_cast<int32>(std::chrono::duration_cast<std::chrono::seconds>(epoch).count());
+}
+
+void CPetEntity::setJugSpawnTime(int32 spawnTime)
+{
+    XI_DEBUG_BREAK_IF(m_PetType != PET_TYPE::JUG_PET);
+
+    m_jugSpawnTime = std::chrono::system_clock::time_point(std::chrono::duration<int>(spawnTime));
+}
+
+int32 CPetEntity::getJugDuration()
+{
+    XI_DEBUG_BREAK_IF(m_PetType != PET_TYPE::JUG_PET);
+
+    return static_cast<int32>(std::chrono::duration_cast<std::chrono::seconds>(m_jugDuration).count());
+}
+
+void CPetEntity::setJugDuration(int32 seconds)
+{
+    XI_DEBUG_BREAK_IF(m_PetType != PET_TYPE::JUG_PET);
+
+    m_jugDuration = std::chrono::seconds(seconds);
 }
 
 std::string CPetEntity::GetScriptName()
@@ -161,7 +207,17 @@ void CPetEntity::FadeOut()
 void CPetEntity::Die()
 {
     PAI->ClearStateStack();
-    PAI->Internal_Die(0s);
+
+    // master is zoning, don't go to death state, instead despawn instantly
+    if (health.hp > 0 && PMaster && PMaster->objtype == TYPE_PC && static_cast<CCharEntity*>(PMaster)->petZoningInfo.respawnPet)
+    {
+        PAI->Internal_Despawn(true);
+    }
+    else
+    {
+        PAI->Internal_Die(0s);
+    }
+
     luautils::OnMobDeath(this, nullptr);
 
     // NOTE: This is purposefully calling CBattleEntity's impl.
@@ -183,10 +239,70 @@ void CPetEntity::Spawn()
         mobutils::GetAvailableSpells(this);
     }
 
+    if (m_PetType == PET_TYPE::JUG_PET)
+    {
+        m_jugSpawnTime = server_clock::now();
+    }
+
     // NOTE: This is purposefully calling CBattleEntity's impl.
-    // TODO: Calling a grand-parent's impl. of an overrideden function is bad
+    // TODO: Calling a grand-parent's impl. of an overridden function is bad
     CBattleEntity::Spawn();
     luautils::OnMobSpawn(this);
+}
+
+void CPetEntity::addTrait(CTrait* PTrait)
+{
+    TraitList.push_back(PTrait);
+    addModifier(PTrait->getMod(), PTrait->getValue());
+}
+
+void CPetEntity::delTrait(CTrait* PTrait)
+{
+    TraitList.erase(std::remove(TraitList.begin(), TraitList.end(), PTrait), TraitList.end());
+    delModifier(PTrait->getMod(), PTrait->getValue());
+}
+
+bool CPetEntity::shouldPersistThroughZone()
+{
+    return getPetType() == PET_TYPE::WYVERN ||
+           getPetType() == PET_TYPE::AVATAR ||
+           getPetType() == PET_TYPE::AUTOMATON ||
+           (getPetType() == PET_TYPE::JUG_PET && settings::get<bool>("map.KEEP_JUGPET_THROUGH_ZONING"));
+}
+
+bool CPetEntity::shouldDespawn(time_point tick)
+{
+    // This check was moved from the original call site when this method was added.
+    // It is in theory not needed, but we are not removing it without further testing.
+    // TODO: Consider removing this when possible.
+    if (isCharmed && tick > charmTime)
+    {
+        return true;
+    }
+
+    if (PMaster != nullptr &&
+        PAI->IsSpawned() &&
+        m_PetType == PET_TYPE::JUG_PET &&
+        tick > m_jugSpawnTime + m_jugDuration)
+    {
+        return true;
+    }
+
+    return false;
+}
+
+void CPetEntity::loadPetZoningInfo()
+{
+    XI_DEBUG_BREAK_IF(!PAI->IsSpawned())
+
+    if (auto* master = dynamic_cast<CCharEntity*>(PMaster))
+    {
+        health.tp = static_cast<uint16>(master->petZoningInfo.petTP);
+        health.hp = master->petZoningInfo.petHP;
+        health.mp = master->petZoningInfo.petMP;
+        setJugDuration(master->petZoningInfo.jugDuration);
+        setJugSpawnTime(master->petZoningInfo.jugSpawnTime);
+    }
 }
 
 void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
@@ -201,10 +317,10 @@ void CPetEntity::OnAbility(CAbilityState& state, action_t& action)
         {
             return;
         }
+
         if (battleutils::IsParalyzed(this))
         {
-            // display paralyzed
-            loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
+            setActionInterrupted(action, PTarget, MSGBASIC_IS_PARALYZED_2, 0);
             return;
         }
 
@@ -307,17 +423,34 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
             PAI->TargetFind->findSingleTarget(PTarget, findFlags);
         }
     }
+    else // Out of range
+    {
+        action.actiontype         = ACTION_MOBABILITY_INTERRUPT;
+        actionList_t& actionList  = action.getNewActionList();
+        actionList.ActionTargetID = PTarget->id;
+
+        actionTarget_t& actionTarget = actionList.getNewActionTarget();
+        actionTarget.animation       = 0x1FC; // Hardcoded magic sent from the server
+        actionTarget.messageID       = MSGBASIC_TOO_FAR_AWAY;
+        actionTarget.speceffect      = SPECEFFECT::BLOOD;
+        return;
+    }
 
     uint16 targets = (uint16)PAI->TargetFind->m_targets.size();
 
-    if (targets == 0) // TODO: Is this "too far away?"
+    // No targets, perhaps something like Super Jump or otherwise untargetable
+    if (targets == 0)
     {
         action.actiontype         = ACTION_MOBABILITY_INTERRUPT;
+        action.actionid           = 28787; // Some hardcoded magic for interrupts
         actionList_t& actionList  = action.getNewActionList();
         actionList.ActionTargetID = id;
 
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
-        actionTarget.animation       = PSkill->getID();
+        actionTarget.animation       = 0x1FC;
+        actionTarget.messageID       = 0;
+        actionTarget.reaction        = REACTION::ABILITY | REACTION::HIT;
+
         return;
     }
 
@@ -329,15 +462,15 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
     uint16 defaultMessage = PSkill->getMsg();
 
     bool first{ true };
-    for (auto&& PTarget : PAI->TargetFind->m_targets)
+    for (auto&& PTargetFound : PAI->TargetFind->m_targets)
     {
         actionList_t& list = action.getNewActionList();
 
-        list.ActionTargetID = PTarget->id;
+        list.ActionTargetID = PTargetFound->id;
 
         actionTarget_t& target = list.getNewActionTarget();
 
-        list.ActionTargetID = PTarget->id;
+        list.ActionTargetID = PTargetFound->id;
         target.reaction     = REACTION::HIT;
         target.speceffect   = SPECEFFECT::HIT;
         target.animation    = PSkill->getAnimationID();
@@ -355,7 +488,7 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
         }
         else*/
         {
-            damage = luautils::OnPetAbility(PTarget, this, PSkill, PMaster, &action);
+            damage = luautils::OnPetAbility(PTargetFound, this, PSkill, PMaster, &action);
         }
 
         if (msg == 0)
@@ -377,7 +510,7 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
         if (damage < 0)
         {
             msg          = MSGBASIC_SKILL_RECOVERS_HP; // TODO: verify this message does/does not vary depending on mob/avatar/automaton use
-            target.param = std::clamp(-damage, 0, PTarget->GetMaxHP() - PTarget->health.hp);
+            target.param = std::clamp(-damage, 0, PTargetFound->GetMaxHP() - PTargetFound->health.hp);
         }
         else
         {
@@ -408,11 +541,11 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
             target.knockback  = PSkill->getKnockback();
             if (first && (PSkill->getPrimarySkillchain() != 0))
             {
-                SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PSkill->getPrimarySkillchain(), PSkill->getSecondarySkillchain(),
+                SUBEFFECT effect = battleutils::GetSkillChainEffect(PTargetFound, PSkill->getPrimarySkillchain(), PSkill->getSecondarySkillchain(),
                                                                     PSkill->getTertiarySkillchain());
                 if (effect != SUBEFFECT_NONE)
                 {
-                    int32 skillChainDamage = battleutils::TakeSkillchainDamage(this, PTarget, target.param, nullptr);
+                    int32 skillChainDamage = battleutils::TakeSkillchainDamage(this, PTargetFound, target.param, nullptr);
                     if (skillChainDamage < 0)
                     {
                         target.addEffectParam   = -skillChainDamage;
@@ -429,12 +562,12 @@ void CPetEntity::OnPetSkillFinished(CPetSkillState& state, action_t& action)
                 first = false;
             }
         }
-        PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
-        if (PTarget->isDead())
+        PTargetFound->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+        if (PTargetFound->isDead())
         {
-            battleutils::ClaimMob(PTarget, this);
+            battleutils::ClaimMob(PTargetFound, this);
         }
-        battleutils::DirtyExp(PTarget, this);
+        battleutils::DirtyExp(PTargetFound, this);
     }
 
     PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget()); // TODO: why is this recast here? can state change between now and the original cast?

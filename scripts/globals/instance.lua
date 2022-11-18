@@ -109,7 +109,7 @@ xi.instance.lookup =
 
     [xi.zone.MAMOOL_JA_TRAINING_GROUNDS] =
     {
-        {6600, { 505, 11, -4, 0, 60, 0, 1 }, { 505, 4}, { 511, 0 } }, -- Assault: Imperial Agent Rescue
+        { 6600, { 505, 11, -4, 0, 60, 0, 1 }, { 505, 4 }, { 511, 0 } }, -- Assault: Imperial Agent Rescue
         -- Assault: Preemptive Strike
         -- Assault: Sagelord Elimination
         -- Assault: Breaking Morale
@@ -123,7 +123,7 @@ xi.instance.lookup =
 
     [xi.zone.LEUJAOAM_SANCTUM] =
     {
-        {6900, { 140, 1, -4, 0, 50, 0, 1 }, { 140, 4}, { 147, 0 } }, -- Assault: Leujaoam Cleansing
+        { 6900, { 140, 1, -4, 0, 50, 0, 1 }, { 140, 4 }, { 147, 0 } }, -- Assault: Leujaoam Cleansing
         -- Assault: Orichalcum Survey
         -- Assault: Escort Professor Chanoix
         -- Assault: Shanarha Grass Conservation
@@ -368,7 +368,7 @@ xi.instance.onEventUpdate = function(player, csid, option)
         for _, v in pairs(party) do
             if v:getID() ~= player:getID() then
                 -- Check entry requirements for party
-                if checkEntryReqs(v, instanceId) == false then
+                if not checkEntryReqs(v, instanceId) then
                     player:messageText(npc, ID.text.MEMBER_NO_REQS, false)
                     player:instanceEntry(npc, 1)
                     return false

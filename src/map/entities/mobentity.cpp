@@ -28,6 +28,7 @@
 #include "../ai/states/attack_state.h"
 #include "../ai/states/mobskill_state.h"
 #include "../ai/states/weaponskill_state.h"
+#include "../battlefield.h"
 #include "../conquest_system.h"
 #include "../enmity_container.h"
 #include "../entities/charentity.h"
@@ -47,6 +48,7 @@
 #include "../utils/itemutils.h"
 #include "../utils/mobutils.h"
 #include "../utils/petutils.h"
+#include "../utils/zoneutils.h"
 #include "../weapon_skill.h"
 #include "common/timer.h"
 #include "common/utils.h"
@@ -118,6 +120,7 @@ CMobEntity::CMobEntity()
     m_TrueDetection = false;
     m_Detects       = DETECT_NONE;
     m_Link          = 0;
+    m_isAggroable   = false;
     m_battlefieldID = 0;
     m_bcnmID        = 0;
 
@@ -532,10 +535,23 @@ bool CMobEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
     {
         return false;
     }
+
+    if (targetFlags & TARGET_PLAYER_PARTY)
+    {
+        if (!isDead())
+        {
+            if (allegiance == ALLEGIANCE_TYPE::MOB && PInitiator->allegiance == ALLEGIANCE_TYPE::MOB && allegiance == PInitiator->allegiance)
+            {
+                return true;
+            }
+        }
+    }
+
     if (CBattleEntity::ValidTarget(PInitiator, targetFlags))
     {
         return true;
     }
+
     if (targetFlags & TARGET_PLAYER_DEAD && (m_Behaviour & BEHAVIOUR_RAISABLE) && isDead())
     {
         return true;
@@ -573,16 +589,14 @@ void CMobEntity::Spawn()
 
     PEnmityContainer->Clear();
 
-    uint8 level = m_minLevel;
+    // The underlying function in GetRandomNumber doesn't accept uint8 as <T> so use uint32
+    // https://stackoverflow.com/questions/31460733/why-arent-stduniform-int-distributionuint8-t-and-stduniform-int-distri
+    uint8 level = static_cast<uint8>(xirand::GetRandomNumber<uint32>(m_minLevel, m_maxLevel + 1));
 
-    // Generate a random level between min and max level
-    if (m_maxLevel > m_minLevel)
-    {
-        level += xirand::GetRandomNumber(0, m_maxLevel - m_minLevel + 1);
-    }
-
+    TraitList.clear(); // Clear traits just in case from random levels. Traits are recalculated in mobutils::CalculateMobStat().
+                       // Note: Traits are NOT stored on DB load as of writing, so mobs won't gradually get stronger on respawn from restoreModifiers()
     SetMLevel(level);
-    SetSLevel(level); // calculated in function
+    SetSLevel(level); // subjob calculated in function as appropriate
 
     mobutils::CalculateMobStats(this);
     mobutils::GetAvailableSpells(this);
@@ -610,7 +624,14 @@ void CMobEntity::Spawn()
         }
     }
 
-    m_DespawnTimer = time_point::min();
+    if (getMobMod(MOBMOD_IDLE_DESPAWN))
+    {
+        this->SetDespawnTime(std::chrono::seconds(getMobMod(MOBMOD_IDLE_DESPAWN)));
+    }
+    else
+    {
+        m_DespawnTimer = time_point::min();
+    }
     luautils::OnMobSpawn(this);
 }
 
@@ -659,9 +680,16 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     {
         action.actiontype = ACTION_PET_MOBABILITY_FINISH;
     }
-    else if (PSkill->getID() < 256)
+    // Damaging mob abilities to use proper humanoid animnation IDs
+    else if (PSkill->getID() < 256 || PSkill->getID() == 1431 || PSkill->getID() == 1432 || PSkill->getID() == 1437)
     {
         action.actiontype = ACTION_WEAPONSKILL_FINISH;
+    }
+    // Non-damaging mob abilities to use proper humanoid animation IDs
+    else if (PSkill->getID() == 1428 || PSkill->getID() == 1429 || (PSkill->getID() >= 1433 && PSkill->getID() <= 1436) || PSkill->getID() == 1438 ||
+             (PSkill->getID() >= 1992 && PSkill->getID() >= 1997))
+    {
+        action.actiontype = ACTION_JOBABILITY_FINISH;
     }
     else
     {
@@ -669,7 +697,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     }
     action.actionid = PSkill->getID();
 
-    if (PAI->TargetFind->isWithinRange(&PTarget->loc.p, distance))
+    if (PAI->TargetFind->isWithinRange(&PTarget->loc.p, distance) && !this->StatusEffectContainer->HasStatusEffect(EFFECT_HYSTERIA))
     {
         if (PSkill->isAoE())
         {
@@ -722,17 +750,35 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
             PAI->TargetFind->findSingleTarget(PTarget, findFlags);
         }
     }
+    else // Out of range
+    {
+        action.actiontype         = ACTION_MOBABILITY_INTERRUPT;
+        action.actionid           = 0;
+        actionList_t& actionList  = action.getNewActionList();
+        actionList.ActionTargetID = PTarget->id;
 
-    uint16 targets = (uint16)PAI->TargetFind->m_targets.size();
+        actionTarget_t& actionTarget = actionList.getNewActionTarget();
+        actionTarget.animation       = 0x1FC; // Hardcoded magic sent from the server
+        actionTarget.messageID       = MSGBASIC_TOO_FAR_AWAY;
+        actionTarget.speceffect      = SPECEFFECT::BLOOD;
+        return;
+    }
 
+    uint16 targets = static_cast<uint16>(PAI->TargetFind->m_targets.size());
+
+    // No targets, perhaps something like Super Jump or otherwise untargetable
     if (targets == 0)
     {
         action.actiontype         = ACTION_MOBABILITY_INTERRUPT;
+        action.actionid           = 28787; // Some hardcoded magic for interrupts
         actionList_t& actionList  = action.getNewActionList();
         actionList.ActionTargetID = id;
 
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
-        actionTarget.animation       = PSkill->getID();
+        actionTarget.animation       = 0x1FC; // Hardcoded magic sent from the server
+        actionTarget.messageID       = 0;
+        actionTarget.reaction        = REACTION::ABILITY | REACTION::HIT;
+
         return;
     }
 
@@ -744,15 +790,15 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
     uint16 defaultMessage = PSkill->getMsg();
 
     bool first{ true };
-    for (auto&& PTarget : PAI->TargetFind->m_targets)
+    for (auto&& PTargetFound : PAI->TargetFind->m_targets)
     {
         actionList_t& list = action.getNewActionList();
 
-        list.ActionTargetID = PTarget->id;
+        list.ActionTargetID = PTargetFound->id;
 
         actionTarget_t& target = list.getNewActionTarget();
 
-        list.ActionTargetID = PTarget->id;
+        list.ActionTargetID = PTargetFound->id;
         target.reaction     = REACTION::HIT;
         target.speceffect   = SPECEFFECT::HIT;
         target.animation    = PSkill->getAnimationID();
@@ -772,18 +818,18 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 
             if (petType == PET_TYPE::AUTOMATON)
             {
-                damage = luautils::OnAutomatonAbility(PTarget, this, PSkill, PMaster, &action);
+                damage = luautils::OnAutomatonAbility(PTargetFound, this, PSkill, PMaster, &action);
             }
             else
             {
-                damage = luautils::OnPetAbility(PTarget, this, PSkill, PMaster, &action);
+                damage = luautils::OnPetAbility(PTargetFound, this, PSkill, PMaster, &action);
             }
         }
         else
         {
-            damage = luautils::OnMobWeaponSkill(PTarget, this, PSkill, &action);
-            this->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", CLuaBaseEntity(this), CLuaBaseEntity(PTarget), PSkill->getID(), state.GetSpentTP(), &action);
-            PTarget->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", CLuaBaseEntity(PTarget), CLuaBaseEntity(this), PSkill->getID(), state.GetSpentTP(), &action);
+            damage = luautils::OnMobWeaponSkill(PTargetFound, this, PSkill, &action);
+            this->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", CLuaBaseEntity(this), CLuaBaseEntity(PTargetFound), PSkill->getID(), state.GetSpentTP(), &action);
+            PTarget->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", CLuaBaseEntity(PTargetFound), CLuaBaseEntity(this), PSkill->getID(), state.GetSpentTP(), &action);
         }
 
         if (msg == 0)
@@ -798,7 +844,7 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
         if (damage < 0)
         {
             msg          = MSGBASIC_SKILL_RECOVERS_HP; // TODO: verify this message does/does not vary depending on mob/avatar/automaton use
-            target.param = std::clamp(-damage, 0, PTarget->GetMaxHP() - PTarget->health.hp);
+            target.param = std::clamp(-damage, 0, PTargetFound->GetMaxHP() - PTargetFound->health.hp);
         }
         else
         {
@@ -829,11 +875,11 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
             target.knockback  = PSkill->getKnockback();
             if (first && (PSkill->getPrimarySkillchain() != 0))
             {
-                SUBEFFECT effect = battleutils::GetSkillChainEffect(PTarget, PSkill->getPrimarySkillchain(), PSkill->getSecondarySkillchain(),
+                SUBEFFECT effect = battleutils::GetSkillChainEffect(PTargetFound, PSkill->getPrimarySkillchain(), PSkill->getSecondarySkillchain(),
                                                                     PSkill->getTertiarySkillchain());
                 if (effect != SUBEFFECT_NONE)
                 {
-                    int32 skillChainDamage = battleutils::TakeSkillchainDamage(this, PTarget, target.param, nullptr);
+                    int32 skillChainDamage = battleutils::TakeSkillchainDamage(this, PTargetFound, target.param, nullptr);
                     if (skillChainDamage < 0)
                     {
                         target.addEffectParam   = -skillChainDamage;
@@ -850,12 +896,12 @@ void CMobEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
                 first = false;
             }
         }
-        PTarget->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
-        if (PTarget->isDead())
+        PTargetFound->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
+        if (PTargetFound->isDead())
         {
-            battleutils::ClaimMob(PTarget, this);
+            battleutils::ClaimMob(PTargetFound, this);
         }
-        battleutils::DirtyExp(PTarget, this);
+        battleutils::DirtyExp(PTargetFound, this);
     }
 
     PTarget = dynamic_cast<CBattleEntity*>(state.GetTarget()); // TODO: why is this recast here? can state change between now and the original cast?
@@ -1288,11 +1334,11 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         }
     }
 
-    uint16 Pzone = PChar->getZone();
+    ZONE_TYPE zoneType  = zoneutils::GetZone(PChar->getZone())->GetType();
+    bool      validZone = zoneType != ZONE_TYPE::BATTLEFIELD && zoneType != ZONE_TYPE::DYNAMIS;
 
-    bool validZone = ((Pzone > 0 && Pzone < 39) || (Pzone > 42 && Pzone < 134) || (Pzone > 135 && Pzone < 185) || (Pzone > 188 && Pzone < 255));
-
-    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak)
+    // Check if mob can drop seals -- mobmod to disable drops, zone type isnt battlefield/dynamis, mob is stronger than Too Weak, or mobmod for EXP bonus is -100 or lower (-100% exp)
+    if (!getMobMod(MOBMOD_NO_DROPS) && validZone && charutils::CheckMob(m_HiPCLvl, GetMLevel()) > EMobDifficulty::TooWeak && getMobMod(MOBMOD_EXP_BONUS) > -100)
     {
         // check for seal drops
         /* MobLvl >= 1 = Beastmen Seals ID=1126
@@ -1300,7 +1346,7 @@ void CMobEntity::DropItems(CCharEntity* PChar)
         >= 75 = Kindred Crests ID=2955
         >= 90 = High Kindred Crests ID=2956
         */
-        if (xirand::GetRandomNumber(100) < 20 && PChar->PTreasurePool->CanAddSeal())
+        if (xirand::GetRandomNumber(100) < 40 && PChar->PTreasurePool->CanAddSeal())
         {
             // RULES: Only 1 kind may drop per mob
             if (GetMLevel() >= 75 && luautils::IsContentEnabled("ABYSSEA")) // all 4 types
@@ -1678,6 +1724,12 @@ void CMobEntity::OnDespawn(CDespawnState& /*unused*/)
 void CMobEntity::Die()
 {
     TracyZoneScoped;
+
+    if (PBattlefield != nullptr)
+    {
+        PBattlefield->handleDeath(this);
+    }
+
     m_THLvl = PEnmityContainer->GetHighestTH();
     PEnmityContainer->Clear();
     PAI->ClearStateStack();

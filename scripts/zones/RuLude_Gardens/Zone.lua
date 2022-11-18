@@ -8,17 +8,21 @@ require('scripts/globals/missions')
 require('scripts/globals/npc_util')
 require('scripts/globals/quests')
 -----------------------------------
-local zone_object = {}
+local zoneObject = {}
 
-zone_object.onInitialize = function(zone)
+zoneObject.onInitialize = function(zone)
     zone:registerRegion(1, -16, 2, 32, 16, 4, 86) -- Palace entrance. Ends at back exit. Needs retail confirmaton for the back entrance.
 end
 
-zone_object.onZoneIn = function(player, prevZone)
+zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 
     -- MOG HOUSE EXIT
-    if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+    if
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
         local position = math.random(1, 5) + 45
         player:setPos(position, 10, -73, 192)
     end
@@ -26,11 +30,11 @@ zone_object.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zone_object.onConquestUpdate = function(zone, updatetype)
+zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zone_object.onRegionEnter = function(player, region)
+zoneObject.onRegionEnter = function(player, region)
     local regionID = region:GetRegionID()
 
     if regionID == 1 then
@@ -56,13 +60,13 @@ zone_object.onRegionEnter = function(player, region)
     end
 end
 
-zone_object.onRegionLeave = function(player, region)
+zoneObject.onRegionLeave = function(player, region)
 end
 
-zone_object.onEventUpdate = function(player, csid, option)
+zoneObject.onEventUpdate = function(player, csid, option)
 end
 
-zone_object.onEventFinish = function(player, csid, option)
+zoneObject.onEventFinish = function(player, csid, option)
     if csid == 161 then
         npcUtil.giveKeyItem(player, xi.ki.NOTE_WRITTEN_BY_ESHANTARL)
         player:addQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.SHADOWS_OF_THE_DEPARTED)
@@ -78,4 +82,4 @@ zone_object.onEventFinish = function(player, csid, option)
     end
 end
 
-return zone_object
+return zoneObject

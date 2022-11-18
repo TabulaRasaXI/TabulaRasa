@@ -151,7 +151,7 @@ public:
     void HideHP(bool hide);
     bool IsHPHidden() const;
     void SetUntargetable(bool untargetable);
-    bool GetUntargetable() const;
+    bool GetUntargetable() const override;
 
     void         PostTick() override;
     float        GetRoamDistance();
@@ -224,6 +224,7 @@ public:
     bool      m_TrueDetection; // Has true sight or sound
     uint16    m_Detects;       // mobs detection methods, sight, sound, etc
     uint8     m_Link;          // link with mobs of it's family
+    bool      m_isAggroable;   // Can be aggroed by other monsters when in the player allegiance
     uint16    m_Behaviour;     // mob behaviour
     SPAWNTYPE m_SpawnType;     // condition for mob to spawn
 
@@ -263,15 +264,14 @@ public:
 
     bool m_IsClaimable;
 
-    bool m_bReleaseTargIDOnDeath = false;
-
     static constexpr float sound_range{ 8.f };
     static constexpr float sight_range{ 15.f };
+    static constexpr float magic_range{ 20.f };
 
 protected:
-    void DistributeRewards();
+    void  DistributeRewards();
     float ApplyTH(int16 m_THLvl, int16 rate);
-    void DropItems(CCharEntity* PChar);
+    void  DropItems(CCharEntity* PChar);
 
 private:
     time_point                     m_DespawnTimer{ time_point::min() }; // Despawn Timer to despawn mob after set duration

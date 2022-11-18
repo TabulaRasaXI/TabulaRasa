@@ -8,13 +8,13 @@ function switch(c)
         casevar = c,
         caseof = function(self, code)
             local f
-            if (self.casevar) then
+            if self.casevar then
                 f = code[self.casevar] or code.default
             else
                 f = code.missing or code.default
             end
-            if (f) then
-                if (type(f) == "function") then
+            if f then
+                if type(f) == "function" then
                     return f(self.casevar, self)
                 else
                     error("case "..tostring(self.casevar).." not a function")
@@ -62,7 +62,7 @@ function getVanaMidnight(day)
     if day ~= nil then
         curtime = curtime + 24 * 144 * day
     end
-    local finaltime = curtime + (23-VanadielHour())* 144 + (60-VanadielMinute())*2.4
+    local finaltime = curtime + (23 - VanadielHour()) * 144 + (60 - VanadielMinute()) * 2.4
     return finaltime
 end
 

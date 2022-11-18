@@ -62,6 +62,7 @@ era/lua_dynamis/mobskills/era_buburimu_tp_moves.lua
 era/lua_dynamis/mobskills/era_qufim_tp_moves.lua
 era/lua_dynamis/mobskills/era_xarcabard_tp_moves.lua
 era/lua_dynamis/globals/era_dynamis_zones.lua
+era/sql_dynamis/
 #-----------------------
 #    CoP Zones Access
 #-----------------------
@@ -99,6 +100,13 @@ custom/sql/tr_mob_spawn_adjustments.sql
 custom/job_adjustments/
 
 #------------------------------
+#        ASB Mob Spawns
+#------------------------------
+custom/sql/mob_spawn_points.sql
+custom/sql/mob_zones/
+
+#------------------------------
 #       Rerun Dynamis SQL
 #------------------------------
-era/sql/era_dyna_sql.sql
+era/sql_dynamis/era_dyna_sql.sql
+

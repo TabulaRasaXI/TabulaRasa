@@ -3,13 +3,17 @@
 -- Water Mitts
 --  Enchantment: "Enwater"
 -----------------------------------
-local item_object = {}
+local itemObject = {}
 
-item_object.onItemCheck = function(target)
+itemObject.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.ENWATER)
+    if effect ~= nil and effect:getSubType() == 14992 then
+        target:delStatusEffect(xi.effect.ENWATER)
+    end
     return 0
 end
 
-item_object.onItemUse = function(target)
+itemObject.onItemUse = function(target)
     local effect = xi.effect.ENWATER
     local magicskill = target:getSkillLevel(xi.skill.ENHANCING_MAGIC)
     local potency = 0
@@ -22,7 +26,7 @@ item_object.onItemUse = function(target)
 
     potency = utils.clamp(potency, 3, 25)
 
-    target:addStatusEffect(effect, potency, 0, 180)
+    target:addStatusEffect(effect, potency, 0, 180, 14992)
 end
 
-return item_object
+return itemObject

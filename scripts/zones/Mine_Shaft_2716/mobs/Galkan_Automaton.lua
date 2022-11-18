@@ -6,31 +6,25 @@
 local entity = {}
 
 entity.onMobSpawn = function(mob)
+    mob:setMobMod(xi.mobMod.SUPERLINK, 0)
+    mob:setMobMod(xi.mobMod.NO_LINK, 1)
     mob:setMod(xi.mod.UDMGPHYS, -7500)
     mob:setMod(xi.mod.UDMGMAGIC, 7500)
-    mob:setMobMod(xi.mobMod.SUPERLINK, 0)
 
-    mob:timer(1, function(mobArg)
+    mob:timer(3000, function(mobArg)
         local race = mobArg:getBattlefield():getPlayers()[1]:getRace()
         if race == xi.race.GALKA then
             DespawnMob(mobArg:getID())
-        else
-
-        end
-    end)
-
-    mob:addListener("TAKE_DAMAGE", "AUTOMATON_TAKE_DAMAGE", function(mobArg, amount, attacker)
-        if amount > mobArg:getHP() then
-            if GetMobByID(mobArg:getID()-4):isAlive() then
-                GetMobByID(mobArg:getID()-4):updateEnmity(attacker)
-            else
-                GetMobByID(mobArg:getID()-3):updateEnmity(attacker)
-            end
         end
     end)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
+    if GetMobByID(mob:getID()-4):isAlive() then
+        GetMobByID(mob:getID()-4):updateEnmity(player)
+    else
+        GetMobByID(mob:getID()-3):updateEnmity(player)
+    end
 end
 
 return entity

@@ -1,4 +1,4 @@
-﻿/*
+/*
 ===========================================================================
 
   Copyright (c) 2010-2015 Darkstar Dev Teams
@@ -127,11 +127,12 @@ const uint16 CZone::ReducedVerticalAggroZones[] = {
  *                                                                       *
  ************************************************************************/
 
-CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID)
+CZone::CZone(ZONEID ZoneID, REGION_TYPE RegionID, CONTINENT_TYPE ContinentID, uint8 levelRestriction)
 : m_zoneID(ZoneID)
 , m_zoneType(ZONE_TYPE::NONE)
 , m_regionID(RegionID)
 , m_continentID(ContinentID)
+, m_levelRestriction(levelRestriction)
 {
     TracyZoneScoped;
     m_useNavMesh = false;
@@ -190,6 +191,11 @@ REGION_TYPE CZone::GetRegionID()
 CONTINENT_TYPE CZone::GetContinentID()
 {
     return m_continentID;
+}
+
+uint8 CZone::getLevelRestriction()
+{
+    return m_levelRestriction;
 }
 
 uint32 CZone::GetIP() const
@@ -260,6 +266,42 @@ void CZone::SetBackgroundMusicDay(uint8 music)
 void CZone::SetBackgroundMusicNight(uint8 music)
 {
     m_zoneMusic.m_songNight = music;
+}
+
+const QueryByNameResult_t& CZone::queryEntitiesByName(std::string const& name)
+{
+    TracyZoneScoped;
+
+    // Use memoization since lookups are typically for the same mob names
+    auto result = m_queryByNameResults.find(name);
+    if (result != m_queryByNameResults.end())
+    {
+        return result->second;
+    }
+
+    std::vector<CBaseEntity*> entities;
+
+    // TODO: Make work for instances
+    // clang-format off
+    ForEachNpc([&](CNpcEntity* PNpc)
+    {
+        if (std::string((const char*)PNpc->GetName()) == name)
+        {
+            entities.push_back(PNpc);
+        }
+    });
+
+    ForEachMob([&](CMobEntity* PMob)
+    {
+        if (std::string((const char*)PMob->GetName()) == name)
+        {
+            entities.push_back(PMob);
+        }
+     });
+    // clang-format on
+
+    m_queryByNameResults[name] = std::move(entities);
+    return m_queryByNameResults[name];
 }
 
 uint32 CZone::GetLocalVar(const char* var)
@@ -545,6 +587,26 @@ void CZone::TransportDepart(uint16 boundary, uint16 zone)
     m_zoneEntities->TransportDepart(boundary, zone);
 }
 
+void CZone::updateCharLevelRestriction(CCharEntity* PChar)
+{
+    if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_RESTRICTION))
+    {
+        // If the level restriction is already the same then no need to change it
+        CStatusEffect* statusEffect = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_RESTRICTION);
+        if (statusEffect->GetPower() == m_levelRestriction)
+        {
+            return;
+        }
+
+        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_LEVEL_RESTRICTION);
+    }
+
+    if (m_levelRestriction != 0)
+    {
+        PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, m_levelRestriction, 0, 0));
+    }
+}
+
 void CZone::SetWeather(WEATHER weather)
 {
     TracyZoneScoped;
@@ -630,8 +692,6 @@ void CZone::UpdateWeather()
     SetWeather((WEATHER)Weather);
     luautils::OnZoneWeatherChange(GetID(), Weather);
 
-    // ShowDebug(CL_YELLOW"Zone::zone_update_weather: Weather of %s updated to %u", PZone->GetName(), Weather);
-
     CTaskMgr::getInstance()->AddTask(new CTaskMgr::CTask("zone_update_weather", server_clock::now() + std::chrono::seconds(WeatherNextUpdate), this,
                                                          CTaskMgr::TASK_ONCE, zone_update_weather));
 }
@@ -692,6 +752,8 @@ void CZone::IncreaseZoneCounter(CCharEntity* PChar)
     {
         createZoneTimer();
     }
+
+    PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_ON_ZONE_PATHOS, true);
 
     CharZoneIn(PChar);
 }
@@ -1003,15 +1065,47 @@ void CZone::CharZoneIn(CCharEntity* PChar)
 
     if (m_BattlefieldHandler)
     {
-        if (auto* PBattlefield = m_BattlefieldHandler->GetBattlefield(PChar, true))
+        auto* PBattlefield = m_BattlefieldHandler->GetBattlefield(PChar, true);
+        if (PBattlefield != nullptr && PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_CONFRONTATION))
         {
-            PBattlefield->InsertEntity(PChar, true);
+            bool isEntered = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD)->GetSubPower() == 1;
+            PBattlefield->InsertEntity(PChar, isEntered);
+        }
+        else if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_CONFRONTATION))
+        {
+            // Player is in a zone with a battlefield but they are not part of one.
+            if (PChar->StatusEffectContainer->GetStatusEffect(EFFECT_BATTLEFIELD)->GetSubPower() == 1)
+            {
+                // If inside of the battlefield arena then kick them out
+                // Battlefield and level restriction effects will be removed once fully kicked.
+                m_BattlefieldHandler->addOrphanedPlayer(PChar);
+            }
+            else
+            {
+                // Is not inside of a battlefield arena so remove the battlefield effect
+                PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+                updateCharLevelRestriction(PChar);
+                if (PChar->PPet)
+                {
+                    PChar->PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+                }
+            }
+        }
+    }
+    else if (PChar->StatusEffectContainer->HasStatusEffectByFlag(EFFECTFLAG_CONFRONTATION))
+    {
+        // Player is zoning into a zone that does not have a battlefield but the player has a confrontation effect - remove it
+        PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
+        if (PChar->PPet)
+        {
+            PChar->PPet->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_CONFRONTATION, true);
         }
     }
 
     PChar->PLatentEffectContainer->CheckLatentsZone();
 
     charutils::ReadHistory(PChar);
+    charutils::ReadFishingHistory(PChar);
 
     moduleutils::OnCharZoneIn(PChar);
 }
@@ -1121,6 +1215,7 @@ void CZone::CharZoneOut(CCharEntity* PChar)
     }
 
     charutils::WriteHistory(PChar);
+    charutils::WriteFishingHistory(PChar);
 }
 
 bool CZone::IsZoneActive() const

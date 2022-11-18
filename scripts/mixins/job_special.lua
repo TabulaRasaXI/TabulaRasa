@@ -29,7 +29,7 @@ xi.mix.jobSpecial.config(mob, {
 xi.mix.jobSpecial.config(mob, {
     specials =
     {
-        {id = xi.jsa.MEIKYO_SHISUI, cooldown = 60, hpp = 100},
+        { id = xi.jsa.MEIKYO_SHISUI, cooldown = 60, hpp = 100 },
     },
 })
 
@@ -37,7 +37,7 @@ xi.mix.jobSpecial.config(mob, {
 xi.mix.jobSpecial.config(mob, {
     specials =
     {
-        {id = xi.jsa.MIGHTY_STRIKES, duration = 10, hpp = 100},
+        { id = xi.jsa.MIGHTY_STRIKES, duration = 10, hpp = 100 },
     },
 })
 
@@ -50,8 +50,8 @@ xi.mix.jobSpecial.config(mob, {
     chance = 50,
     specials =
     {
-        {id = xi.jsa.MANAFONT, hpp = 75},
-        {id = xi.jsa.CHAINSPELL, hpp = 25},
+        { id = xi.jsa.MANAFONT, hpp = 75 },
+        { id = xi.jsa.CHAINSPELL, hpp = 25 },
     },
 })
 
@@ -60,9 +60,9 @@ xi.mix.jobSpecial.config(mob, {
     between = 20,
     specials =
     {
-        {id = xi.jsa.MANAFONT, cooldown = 0, hpp = 100},
-        {id = xi.jsa.CHAINSPELL, cooldown = 0, hpp = 100},
-        {id = xi.jsa.BENEDICTION, cooldown = 0, hpp = 100},
+        { id = xi.jsa.MANAFONT, cooldown = 0, hpp = 100 },
+        { id = xi.jsa.CHAINSPELL, cooldown = 0, hpp = 100 },
+        { id = xi.jsa.BENEDICTION, cooldown = 0, hpp = 100 },
     },
 })
 
@@ -316,7 +316,12 @@ g_mixins.job_special = function(jobSpecialMob)
             for _,v in pairs(charmList) do
                 if mob:getName() == v and not mob:hasPet() then
                     ability = 710
+                    break
                 end
+            end
+
+            if (mob:isInDynamis() and mob:getMainJob() == xi.job.BST) and ((mob:getPet():getID() == mob:getID()) or not mob:hasPet()) then
+                ability = 710 -- Charm
             end
 
             mob:useMobAbility(ability)

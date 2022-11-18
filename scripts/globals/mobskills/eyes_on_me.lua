@@ -8,14 +8,18 @@ require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/mobskills")
 -----------------------------------
-local mobskill_object = {}
+local mobskillObject = {}
 
-mobskill_object.onMobSkillCheck = function(target, mob, skill)
+mobskillObject.onMobSkillCheck = function(target, mob, skill)
     return 0
 end
 
-mobskill_object.onMobWeaponSkill = function(target, mob, skill)
-    local dmgmod = mob:getWeaponDmg() * 4
+mobskillObject.onMobWeaponSkill = function(target, mob, skill)
+    local dmgmod = mob:getWeaponDmg() * 5
+
+    if mob:getZoneID() == bit.bor(xi.zone.TEMENOS, xi.zone.APOLLYON) then
+        dmgmod = mob:getWeaponDmg() * 7
+    end
 
     local dmg = xi.mobskills.mobFinalAdjustments(dmgmod, mob, skill, target, xi.attackType.SPECIAL, xi.damageType.DARK, xi.mobskills.shadowBehavior.IGNORE_SHADOWS)
 
@@ -24,4 +28,4 @@ mobskill_object.onMobWeaponSkill = function(target, mob, skill)
     return dmg
 end
 
-return mobskill_object
+return mobskillObject

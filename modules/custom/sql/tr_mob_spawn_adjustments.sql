@@ -1,11 +1,12 @@
-DELETE FROM mob_spawn_points 
-WHERE mobname in 
+UPDATE `mob_groups`
+SET spawntype = 128
+WHERE name in
 (
     'Flume_Toad',
     'Poroggo_Excavator'
 );
 
-UPDATE mobg_groups
+UPDATE `mob_groups`
 SET respawntime = 960
 WHERE name in
 (

@@ -7,24 +7,18 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
-local item_object = {}
+local itemObject = {}
 
-item_object.onItemCheck = function(target)
+itemObject.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.ARCANE_CIRCLE)
+    if effect ~= nil and effect:getSubType() == 17826 then
+        target:delStatusEffect(xi.effect.ARCANE_CIRCLE)
+    end
     return 0
 end
 
-item_object.onItemUse = function(target)
-    if (target:hasStatusEffect(xi.effect.ENCHANTMENT) == false) then
-        target:addStatusEffect(xi.effect.ENCHANTMENT, 0, 0, 600, 17826)
-    end
+itemObject.onItemUse = function(target)
+    target:addStatusEffect(xi.effect.ARCANE_CIRCLE, 20, 0, 600, 17826)
 end
 
-item_object.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.ARCANA_KILLER, 20)
-end
-
-item_object.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.ARCANA_KILLER, 20)
-end
-
-return item_object
+return itemObject

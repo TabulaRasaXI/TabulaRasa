@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Port San d'Oria
 --  NPC: Portaure
--- Standard Info NPC
 -----------------------------------
 require("scripts/quests/flyers_for_regine")
 -----------------------------------
@@ -12,7 +11,6 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    player:startEvent(651)
 end
 
 entity.onEventUpdate = function(player, csid, option)

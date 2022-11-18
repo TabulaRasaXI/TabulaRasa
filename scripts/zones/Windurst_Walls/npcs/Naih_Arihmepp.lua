@@ -10,42 +10,18 @@ require("scripts/globals/pathfind")
 -----------------------------------
 local entity = {}
 
-local path =
+local pathNodes =
 {
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.937, -12.500, 204.913, -- Force turn.
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -63.660, -12.500, 204.874,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.895, -12.344, 192.732, -- Force turn.
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
-    -67.699, -12.350, 192.853, -- Force turn.
-    -67.755, -12.348, 192.724,
-    -67.755, -12.348, 192.724,
+    { x = -63.660, y = -12.500, z = 204.874, wait = 5000 },
+    { rotation = 68, wait = 1000 },
+    { x = -67.755, y = -12.348, z = 192.724, wait = 5000 },
+    { rotation = 196, wait = 1000 },
 }
 
 entity.onSpawn = function(npc)
     npc:initNpcAi()
-    npc:setPos(xi.path.first(path))
-end
-
-entity.onPath = function(npc)
-    xi.path.patrol(npc, path)
+    npc:setPos(xi.path.first(pathNodes))
+    npc:pathThrough(pathNodes, xi.path.flag.PATROL)
 end
 
 entity.onTrade = function(player, npc, trade)
@@ -54,7 +30,7 @@ end
 entity.onTrigger = function(player, npc)
     local wildcatWindurst = player:getCharVar("WildcatWindurst")
 
-    if (player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(wildcatWindurst, 9)) then
+    if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not utils.mask.getBit(wildcatWindurst, 9) then
         player:startEvent(500)
     else
         player:startEvent(326)
@@ -65,7 +41,7 @@ entity.onEventUpdate = function(player, csid, option)
 end
 
 entity.onEventFinish = function(player, csid, option)
-    if (csid == 500) then
+    if csid == 500 then
         player:setCharVar("WildcatWindurst", utils.mask.setBit(player:getCharVar("WildcatWindurst"), 9, true))
     end
 end

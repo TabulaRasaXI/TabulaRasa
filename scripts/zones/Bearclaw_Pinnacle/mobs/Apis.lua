@@ -14,7 +14,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.UDMGRANGE, -10000)
     mob:setMod(xi.mod.UDMGMAGIC, -10000)
     mob:setMod(xi.mod.UDMGPHYS, -10000)
-    mob:setMobMod(xi.mobMod.SIGHT_RANGE, 35)
+    mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
 end
 
 entity.onMobEngaged = function(mob, target)
@@ -23,7 +23,7 @@ entity.onMobEngaged = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
-    local indicies = {1, 2, 3}
+    local indicies = { 1, 2, 3 }
     local currentColor = mob:getLocalVar("currentColor")
     local abilities = { 624, 625, 627 }
 
@@ -43,7 +43,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
         mob:setMod(xi.mod.TRIPLE_ATTACK, 35)
         mob:setMod(xi.mod.ATT, 2000)
         mob:setMod(xi.mod.UDMGRANGE, 0)
-        mob:setMod(xi.mod.UDMGMAGIC, -9800)
+        mob:setMod(xi.mod.UDMGMAGIC, -10000)
         mob:setMod(xi.mod.UDMGPHYS, 0)
         mob:addTP(mob:getLocalVar("twohour_tp"))
         mob:setLocalVar("twohour_tp", 0)
@@ -64,15 +64,15 @@ entity.onMobWeaponSkill = function(target, mob, skill)
         mob:setMod(xi.mod.DOUBLE_ATTACK, 0)
         mob:setMod(xi.mod.TRIPLE_ATTACK, 0)
         mob:setMod(xi.mod.ATT, 500)
-        mob:setMod(xi.mod.UDMGRANGE, -9800)
+        mob:setMod(xi.mod.UDMGRANGE, -10000)
         mob:setMod(xi.mod.UDMGMAGIC, 4000)
-        mob:setMod(xi.mod.UDMGPHYS, -9800)
+        mob:setMod(xi.mod.UDMGPHYS, -10000)
         mob:addTP(mob:getLocalVar("twohour_tp"))
         mob:setLocalVar("twohour_tp", 0)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 return entity

@@ -38,7 +38,8 @@ xi.abyssea.lightType =
 }
 
 local lightData =
-{-- Light Type                         Cap  Maximum Tier
+{
+--  Light Type                         Cap  Maximum Tier
     [xi.abyssea.lightType.PEARL  ] = { 230, 2 },
     [xi.abyssea.lightType.GOLDEN ] = { 200, 2 },
     [xi.abyssea.lightType.SILVERY] = { 200, 2 },
@@ -82,8 +83,9 @@ xi.abyssea.itemType =
 
 local itemType = xi.abyssea.itemType
 
-xi.abyssea.visionsCruorProspectorItems=
-{-- Sel      Item                                       Cost,  Qty
+xi.abyssea.visionsCruorProspectorItems =
+{
+--  Sel      Item                                       Cost,  Qty
     [ 1] = { xi.items.PERLE_SALADE,                     4000 },
     [ 2] = { xi.items.PERLE_HAUBERK,                    5000 },
     [ 3] = { xi.items.PERLE_MOUFLES,                    3000 },
@@ -104,8 +106,9 @@ xi.abyssea.visionsCruorProspectorItems=
     [18] = { xi.items.SHADOW_THRONE,                 2000000 },
 }
 
-xi.abyssea.visionsCruorProspectorTemps=
-{-- Sel      Item                          Cost, Qty
+xi.abyssea.visionsCruorProspectorTemps =
+{
+--  Sel      Item                          Cost, Qty
     [ 1] = { xi.items.LUCID_POTION_I,             80 },
     [ 2] = { xi.items.LUCID_ETHER_I,              80 },
     [ 3] = { xi.items.BOTTLE_OF_CATHOLICON,       80 },
@@ -125,32 +128,82 @@ xi.abyssea.visionsCruorProspectorTemps=
     [17] = { xi.items.PRIMEVAL_BREW,         2000000 },
 }
 
-xi.abyssea.visionsCruorProspectorBuffs=
-{-- Sel          Effect (Abyssea)       Actual Effect          Amt, KeyItem for Bonus,           Bonus Mult      Cost
-    [ 6] = { { { xi.effect.ABYSSEA_HP,  xi.effect.MAX_HP_BOOST, 20, xi.abyssea.abyssiteType.MERIT,       10 }, },  50 },
-    [ 7] = { { { xi.effect.ABYSSEA_MP,  xi.effect.MAX_MP_BOOST, 10, xi.abyssea.abyssiteType.MERIT,        5 }, }, 120 },
-    [ 8] = { { { xi.effect.ABYSSEA_STR, xi.effect.STR_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_DEX, xi.effect.DEX_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 }, }, 120 },
-    [ 9] = { { { xi.effect.ABYSSEA_VIT, xi.effect.VIT_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_AGI, xi.effect.AGI_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 }, }, 100 },
-    [10] = { { { xi.effect.ABYSSEA_INT, xi.effect.INT_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_CHR, xi.effect.CHR_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_MND, xi.effect.MND_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 }, }, 100 },
-    [11] = { { { xi.effect.ABYSSEA_HP,  xi.effect.MAX_HP_BOOST, 20, xi.abyssea.abyssiteType.MERIT,       10 },
-               { xi.effect.ABYSSEA_MP,  xi.effect.MAX_MP_BOOST, 10, xi.abyssea.abyssiteType.MERIT,        5 },
-               { xi.effect.ABYSSEA_STR, xi.effect.STR_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_DEX, xi.effect.DEX_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_VIT, xi.effect.VIT_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_AGI, xi.effect.AGI_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_INT, xi.effect.INT_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_CHR, xi.effect.CHR_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
-               { xi.effect.ABYSSEA_MND, xi.effect.MND_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 }, }, 470 },
+-- Each selection can contain multiple effects in the format of { abysseaEffect, actualEffect, Amt, keyItemRequired, bonusMultiplier }
+-- and after that table, the cruor cost is defined.
+xi.abyssea.visionsCruorProspectorBuffs =
+{
+    [6] =
+    {
+        {
+            { xi.effect.ABYSSEA_HP, xi.effect.MAX_HP_BOOST, 20, xi.abyssea.abyssiteType.MERIT, 10 },
+        },
+
+        50,
+    },
+
+    [7] =
+    {
+        {
+            { xi.effect.ABYSSEA_MP, xi.effect.MAX_MP_BOOST, 10, xi.abyssea.abyssiteType.MERIT, 5 },
+        },
+
+        120,
+    },
+
+    [8] =
+    {
+        {
+            { xi.effect.ABYSSEA_STR, xi.effect.STR_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_DEX, xi.effect.DEX_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+        },
+
+        120,
+    },
+
+    [9] =
+    {
+        {
+            { xi.effect.ABYSSEA_VIT, xi.effect.VIT_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_AGI, xi.effect.AGI_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+        },
+
+        100,
+    },
+
+    [10] =
+    {
+        {
+            { xi.effect.ABYSSEA_INT, xi.effect.INT_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_CHR, xi.effect.CHR_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_MND, xi.effect.MND_BOOST, 10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+        },
+
+        100,
+    },
+
+    [11] =
+    {
+        {
+            { xi.effect.ABYSSEA_HP,  xi.effect.MAX_HP_BOOST, 20, xi.abyssea.abyssiteType.MERIT,       10 },
+            { xi.effect.ABYSSEA_MP,  xi.effect.MAX_MP_BOOST, 10, xi.abyssea.abyssiteType.MERIT,        5 },
+            { xi.effect.ABYSSEA_STR, xi.effect.STR_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_DEX, xi.effect.DEX_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_VIT, xi.effect.VIT_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_AGI, xi.effect.AGI_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_INT, xi.effect.INT_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_CHR, xi.effect.CHR_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+            { xi.effect.ABYSSEA_MND, xi.effect.MND_BOOST,    10, xi.abyssea.abyssiteType.FURTHERANCE, 10 },
+        },
+
+        470,
+    },
 }
 
 -- Sequential Abyssite Key Items.
 -- NOTE: Demilune is not sequential, and handled in a separate table
 local abyssiteKeyItems =
-{--  Type                                      Beginning KI                            Ending KI
+{
+--   Type                                      Beginning KI                            Ending KI
     [xi.abyssea.abyssiteType.SOJOURN     ] = { xi.ki.IVORY_ABYSSITE_OF_SOJOURN,        xi.ki.EMERALD_ABYSSITE_OF_SOJOURN    },
     [xi.abyssea.abyssiteType.CELERITY    ] = { xi.ki.AZURE_ABYSSITE_OF_CELERITY,       xi.ki.IVORY_ABYSSITE_OF_CELERITY     },
     [xi.abyssea.abyssiteType.AVARICE     ] = { xi.ki.VIRIDIAN_ABYSSITE_OF_AVARICE,     xi.ki.VERMILLION_ABYSSITE_OF_AVARICE },
@@ -548,7 +601,7 @@ xi.abyssea.visionsCruorProspectorOnEventFinish = function (player, csid, option,
 
         if
             itemCost <= cruorTotal and
-            npcUtil.giveItem(player, {{ itemData[1], itemQty }})
+            npcUtil.giveItem(player, { { itemData[1], itemQty } })
         then
             player:delCurrency("cruor", itemCost)
         end
@@ -558,7 +611,7 @@ xi.abyssea.visionsCruorProspectorOnEventFinish = function (player, csid, option,
 
         if
             itemCost <= cruorTotal and
-            npcUtil.giveTempItem(player, {{ itemData[1], 1 }})
+            npcUtil.giveTempItem(player, { { itemData[1], 1 } })
         then
             player:delCurrency("cruor", itemCost)
         end
@@ -943,15 +996,15 @@ xi.abyssea.displayAbysseaLights = function(player)
         local lightValues = xi.abyssea.getLightsTable(player)
 
         player:messageName(ID.text.LIGHTS_MESSAGE_1, nil,
-                              lightValues[xi.abyssea.lightType.PEARL],
-                              lightValues[xi.abyssea.lightType.EBON],
-                              lightValues[xi.abyssea.lightType.GOLDEN],
-                              lightValues[xi.abyssea.lightType.SILVERY])
+            lightValues[xi.abyssea.lightType.PEARL],
+            lightValues[xi.abyssea.lightType.EBON],
+            lightValues[xi.abyssea.lightType.GOLDEN],
+            lightValues[xi.abyssea.lightType.SILVERY])
 
         player:messageName(ID.text.LIGHTS_MESSAGE_2, nil,
-                              lightValues[xi.abyssea.lightType.AZURE],
-                              lightValues[xi.abyssea.lightType.RUBY],
-                              lightValues[xi.abyssea.lightType.AMBER])
+            lightValues[xi.abyssea.lightType.AZURE],
+            lightValues[xi.abyssea.lightType.RUBY],
+            lightValues[xi.abyssea.lightType.AMBER])
     end
 end
 
@@ -1104,7 +1157,8 @@ end
 -- Traverser Stone, Abyssea Warp
 -----------------------------------
 local supportNPCData =
-{--                          Traverser,  Warp
+{
+--                           Traverser,  Warp
     [xi.zone.HEAVENS_TOWER]  = {   434,   433 },
     [xi.zone.RULUDE_GARDENS] = { 10186, 10185 },
     [xi.zone.PORT_BASTOK]    = {   405,   404 },

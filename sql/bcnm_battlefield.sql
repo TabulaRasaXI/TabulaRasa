@@ -625,17 +625,17 @@ INSERT INTO `bcnm_battlefield` VALUES (130,1,17444901,3); -- amphibian_assault
 INSERT INTO `bcnm_battlefield` VALUES (130,1,17444902,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,1,17444903,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,1,17444904,3);
-INSERT INTO `bcnm_battlefield` VALUES (130,1,17444906,1);
+INSERT INTO `bcnm_battlefield` VALUES (130,1,17444906,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,2,17444907,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,2,17444908,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,2,17444909,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,2,17444910,3);
-INSERT INTO `bcnm_battlefield` VALUES (130,2,17444912,1);
+INSERT INTO `bcnm_battlefield` VALUES (130,2,17444912,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,3,17444913,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,3,17444914,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,3,17444915,3);
 INSERT INTO `bcnm_battlefield` VALUES (130,3,17444916,3);
-INSERT INTO `bcnm_battlefield` VALUES (130,3,17444918,1);
+INSERT INTO `bcnm_battlefield` VALUES (130,3,17444918,3);
 INSERT INTO `bcnm_battlefield` VALUES (160,1,17453057,3); -- shadow_lord_battle
 INSERT INTO `bcnm_battlefield` VALUES (160,1,17453060,2);
 INSERT INTO `bcnm_battlefield` VALUES (160,2,17453058,3);
@@ -1327,12 +1327,6 @@ INSERT INTO `bcnm_battlefield` VALUES (643,3,16801848,3);
 INSERT INTO `bcnm_battlefield` VALUES (644,1,16801850,3);
 INSERT INTO `bcnm_battlefield` VALUES (644,2,16801852,3);
 INSERT INTO `bcnm_battlefield` VALUES (644,3,16801854,3);
-INSERT INTO `bcnm_battlefield` VALUES (665,1,16904217,3); -- Beloved of the Atlantes
-INSERT INTO `bcnm_battlefield` VALUES (665,1,16904218,2);
-INSERT INTO `bcnm_battlefield` VALUES (665,2,16904220,3);
-INSERT INTO `bcnm_battlefield` VALUES (665,2,16904221,2);
-INSERT INTO `bcnm_battlefield` VALUES (665,3,16904223,3);
-INSERT INTO `bcnm_battlefield` VALUES (665,3,16904224,2);
 INSERT INTO `bcnm_battlefield` VALUES (672,1,16809987,3); -- head_wind
 INSERT INTO `bcnm_battlefield` VALUES (672,1,16809986,3);
 INSERT INTO `bcnm_battlefield` VALUES (672,1,16809985,3);
@@ -1504,6 +1498,24 @@ INSERT INTO `bcnm_battlefield` VALUES (736,3,16830479,3);
 INSERT INTO `bcnm_battlefield` VALUES (738,1,16830501,3); -- Bionic Bug
 INSERT INTO `bcnm_battlefield` VALUES (738,2,16830503,3);
 INSERT INTO `bcnm_battlefield` VALUES (738,3,16830505,3);
+INSERT INTO `bcnm_battlefield` VALUES (739,1,16830507,3); -- Pulling the Strings
+INSERT INTO `bcnm_battlefield` VALUES (739,1,16830509,3);
+INSERT INTO `bcnm_battlefield` VALUES (739,1,16830510,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,1,16830511,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,1,16830512,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,1,16830513,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,2,16830514,3);
+INSERT INTO `bcnm_battlefield` VALUES (739,2,16830516,3);
+INSERT INTO `bcnm_battlefield` VALUES (739,2,16830517,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,2,16830518,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,2,16830519,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,2,16830520,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,3,16830521,3);
+INSERT INTO `bcnm_battlefield` VALUES (739,3,16830523,3);
+INSERT INTO `bcnm_battlefield` VALUES (739,3,16830524,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,3,16830525,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,3,16830526,2);
+INSERT INTO `bcnm_battlefield` VALUES (739,3,16830527,2);
 INSERT INTO `bcnm_battlefield` VALUES (740,1,16830529,3); -- Automaton Assault
 INSERT INTO `bcnm_battlefield` VALUES (740,1,16830530,3);
 INSERT INTO `bcnm_battlefield` VALUES (740,1,16830531,3);
@@ -1673,6 +1685,12 @@ INSERT INTO `bcnm_battlefield` VALUES (963,3,16904209,3);
 INSERT INTO `bcnm_battlefield` VALUES (964,1,16904226,3); -- Bugard in the Clouds
 INSERT INTO `bcnm_battlefield` VALUES (964,2,16904228,3);
 INSERT INTO `bcnm_battlefield` VALUES (964,3,16904230,3);
+INSERT INTO `bcnm_battlefield` VALUES (965,1,16904217,3); -- Beloved of the Atlantes
+INSERT INTO `bcnm_battlefield` VALUES (965,1,16904218,2);
+INSERT INTO `bcnm_battlefield` VALUES (965,2,16904220,3);
+INSERT INTO `bcnm_battlefield` VALUES (965,2,16904221,2);
+INSERT INTO `bcnm_battlefield` VALUES (965,3,16904223,3);
+INSERT INTO `bcnm_battlefield` VALUES (965,3,16904224,2);
 INSERT INTO `bcnm_battlefield` VALUES (966,1,16904232,0); -- uninvited guests
 INSERT INTO `bcnm_battlefield` VALUES (966,1,16904233,3);
 INSERT INTO `bcnm_battlefield` VALUES (966,1,16904234,2);
@@ -1781,9 +1799,10 @@ INSERT INTO `bcnm_battlefield` VALUES (1124,1,17039400,3); -- shield_of_diplomac
 INSERT INTO `bcnm_battlefield` VALUES (1156,1,17051694,3); -- puppet_in_peril
 
 -- //////////////////////////////////////////////////////////////
---               APPOLYON  SE
+--               APOLLYON  SE
 -- //////////////////////////////////////////////////////////////
 -- FIRST FLOOR
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16932990,1);-- 'Armoury_Crate_Recover'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16932993,1);-- 'Metalloid_Amoeba'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16932994,1);-- 'Metalloid_Amoeba'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16932995,1);-- 'Metalloid_Amoeba'
@@ -1794,6 +1813,7 @@ INSERT INTO `bcnm_battlefield` VALUES (1293,3,16932999,1);-- 'Metalloid_Amoeba'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933000,1);-- 'Metalloid_Amoeba'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16932992,1);-- 'Ghost_Clot'
 -- Second Floor
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933004,1);-- 'Armoury_Crate_Recover'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933007,1);-- 'Adamantshell'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933008,1);-- 'Adamantshell'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933009,1);-- 'Adamantshell'
@@ -1804,6 +1824,7 @@ INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933013,1);-- 'Adamantshell'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933014,1);-- 'Adamantshell'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933006,1);-- 'Tieholtsodi'
 -- Third Floor
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933018,1);-- 'Armoury_Crate_Recover'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933021,1);-- 'Inhumer'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933022,1);-- 'Inhumer'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933023,1);-- 'Inhumer'
@@ -1814,19 +1835,19 @@ INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933027,1);-- 'Inhumer'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933028,1);-- 'Inhumer'
 INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933020,1);-- 'Grave_Digger'
 -- Fourth Floor
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933032,2);-- 'Evil_Armory'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933033,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933034,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933035,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933036,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933037,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933038,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933039,3);-- 'Flying_Spear'
-INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933040,3);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933032,3);-- 'Evil_Armory'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933033,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933034,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933035,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933036,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933037,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933038,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933039,1);-- 'Flying_Spear'
+INSERT INTO `bcnm_battlefield` VALUES (1293,3,16933040,1);-- 'Flying_Spear'
 
 -- ----------------------------------------------------------------
 -- //////////////////////////////////////////////////////////////
---               APPOLYON  NE
+--               APOLLYON  NE
 -- //////////////////////////////////////////////////////////////
 INSERT INTO `bcnm_battlefield` VALUES (1292,4,16933044,1);-- 'Goobbue_Harvester'
 INSERT INTO `bcnm_battlefield` VALUES (1292,4,16933045,1);-- 'Barometz'
@@ -1894,7 +1915,7 @@ INSERT INTO `bcnm_battlefield` VALUES (1292,4,16933120,3);-- 'Troglodyte_Dhalmel
 INSERT INTO `bcnm_battlefield` VALUES (1292,4,16933121,3);-- 'Troglodyte_Dhalmel'
 INSERT INTO `bcnm_battlefield` VALUES (1292,4,16933122,3);-- 'Troglodyte_Dhalmel'
 -- //////////////////////////////////////////////////////////////
---               APPOLYON  SW
+--               APOLLYON  SW
 -- //////////////////////////////////////////////////////////////
 INSERT INTO `bcnm_battlefield` VALUES (1291,1,16932868,1);-- 'FirBholg'
 INSERT INTO `bcnm_battlefield` VALUES (1291,1,16932869,1);-- 'FirBholg'
@@ -1953,7 +1974,7 @@ INSERT INTO `bcnm_battlefield` VALUES (1291,1,16932931,1);-- 'Light_Elemental'
 INSERT INTO `bcnm_battlefield` VALUES (1291,1,16932932,1);-- 'Water_Elemental'
 INSERT INTO `bcnm_battlefield` VALUES (1291,1,16932933,1);-- 'Thunder_Elemental'
 -- //////////////////////////////////////////////////////////////
---               APPOLYON NW
+--               APOLLYON NW
 -- //////////////////////////////////////////////////////////////
 INSERT INTO `bcnm_battlefield` VALUES (1290,2,16932937,1);-- 'Pluto'
 INSERT INTO `bcnm_battlefield` VALUES (1290,2,16932938,1);-- 'Bardha'
@@ -1990,7 +2011,7 @@ INSERT INTO `bcnm_battlefield` VALUES (1290,2,16932986,1);-- 'Kronprinz_Behemoth
 INSERT INTO `bcnm_battlefield` VALUES (1290,2,16932987,1);-- 'Kronprinz_Behemoth'
 INSERT INTO `bcnm_battlefield` VALUES (1290,2,16932988,1);-- 'Kronprinz_Behemoth'
 -- //////////////////////////////////////////////////////////////
---               APPOLYON CS
+--               APOLLYON CS
 -- //////////////////////////////////////////////////////////////
 INSERT INTO `bcnm_battlefield` VALUES (1294,6,16933129,3);-- 'Carnagechief_Jackbodokk'
 INSERT INTO `bcnm_battlefield` VALUES (1294,6,16933130,0);-- 'Grognard Mesmerizer'
@@ -2017,7 +2038,7 @@ INSERT INTO `bcnm_battlefield` VALUES (1294,6,16933150,0);-- 'Yagudo Prelatess'
 INSERT INTO `bcnm_battlefield` VALUES (1294,6,16933151,0);-- 'Yagudo Kapellmeister'
 INSERT INTO `bcnm_battlefield` VALUES (1294,6,16933152,0);-- 'Yagudo Eradicator'
 -- //////////////////////////////////////////////////////////////
---               APPOLYON CENTRAL
+--               APOLLYON CENTRAL
 -- //////////////////////////////////////////////////////////////
 INSERT INTO `bcnm_battlefield` VALUES (1296,5,16933124,3);-- 'Proto-Omega'
 INSERT INTO `bcnm_battlefield` VALUES (1296,5,16933125,0);-- 'Gunpod'

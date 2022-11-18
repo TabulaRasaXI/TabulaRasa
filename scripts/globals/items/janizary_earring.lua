@@ -6,26 +6,18 @@
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
-local item_object = {}
+local itemObject = {}
 
-item_object.onItemCheck = function(target)
-    local effect = target:getStatusEffect(xi.effect.ENCHANTMENT)
+itemObject.onItemCheck = function(target)
+    local effect = target:getStatusEffect(xi.effect.DEFENSE_BOOST)
     if effect ~= nil and effect:getSubType() == 14785 then
-        target:delStatusEffect(xi.effect.ENCHANTMENT)
+        target:delStatusEffect(xi.effect.DEFENSE_BOOST)
     end
     return 0
 end
 
-item_object.onItemUse = function(target)
-    target:addStatusEffect(xi.effect.ENCHANTMENT, 0, 0, 180, 14785)
+itemObject.onItemUse = function(target)
+    target:addStatusEffect(xi.effect.DEFENSE_BOOST, 32, 0, 180, 14785)
 end
 
-item_object.onEffectGain = function(target, effect)
-    target:addMod(xi.mod.DEF, 32)
-end
-
-item_object.onEffectLose = function(target, effect)
-    target:delMod(xi.mod.DEF, 32)
-end
-
-return item_object
+return itemObject

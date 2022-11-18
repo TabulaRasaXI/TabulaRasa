@@ -3,13 +3,13 @@
 --   NM: Kirin
 -----------------------------------
 local ID = require("scripts/zones/The_Shrine_of_RuAvitau/IDs")
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 require("scripts/globals/titles")
 require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
-entity.onMobInitialize = function( mob )
+entity.onMobInitialize = function(mob)
     mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 180)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
     mob:addMod(xi.mod.DEF, 120)
@@ -38,13 +38,13 @@ entity.onMobEngaged = function(mob)
     end)
 end
 
-entity.onMobFight = function( mob, target )
+entity.onMobFight = function(mob, target)
     -- spawn gods
     local numAdds = mob:getLocalVar("numAdds")
     if mob:getBattleTime() / 180 == numAdds then
         local godsRemaining = {}
         for i = 1, 4 do
-            if (mob:getLocalVar("add"..i) == 0) then
+            if mob:getLocalVar("add"..i) == 0 then
                 table.insert(godsRemaining, i)
             end
         end
@@ -91,7 +91,7 @@ entity.onAdditionalEffect = function(mob, target, damage)
     return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENSTONE)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle( xi.title.KIRIN_CAPTIVATOR )
     mob:messageText(mob, ID.text.KIRIN_OFFSET + 1)
     for i = ID.mob.KIRIN + 1, ID.mob.KIRIN + 4 do
@@ -99,7 +99,7 @@ entity.onMobDeath = function(mob, player, isKiller)
     end
 end
 
-entity.onMobDespawn = function( mob )
+entity.onMobDespawn = function(mob)
     for i = ID.mob.KIRIN + 1, ID.mob.KIRIN + 4 do
         DespawnMob(i)
     end

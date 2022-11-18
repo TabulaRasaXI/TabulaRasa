@@ -3,7 +3,7 @@
 --  HNM: Aspidochelone
 -----------------------------------
 local ID = require("scripts/zones/Valley_of_Sorrows/IDs")
-mixins = {require("scripts/mixins/rage")}
+mixins = { require("scripts/mixins/rage") }
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
@@ -94,7 +94,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.ASPIDOCHELONE_SINKER)
     mob:removeListener("ASPID_TAKE_DAMAGE")
 end

@@ -55,7 +55,8 @@ mission.sections =
 
                     if
                         not player:hasSpell(972) and
-                        not player:findItem(xi.items.CIPHER_OF_HALVERS_ALTER_EGO)
+                        not player:findItem(xi.items.CIPHER_OF_HALVERS_ALTER_EGO) and
+                        xi.settings.main.ENABLE_ROV == 1
                     then
                         npcUtil.giveItem(player, xi.items.CIPHER_OF_HALVERS_ALTER_EGO)
                     end
@@ -67,7 +68,7 @@ mission.sections =
         {
             ['Warchief_Vatgit'] =
             {
-                onMobDeath = function(mob, player, isKiller, noKiller)
+                onMobDeath = function(mob, player, optParams)
                     if player:getMissionStatus(mission.areaId) == 4 then
                         player:setMissionStatus(mission.areaId, 5)
                     end

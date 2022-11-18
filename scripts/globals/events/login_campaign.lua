@@ -128,7 +128,7 @@ xi.events.loginCampaign.onTrigger = function(player, csid)
     local priceBit4 = bit.bor(priceShift[7], priceShift[8])
 
     -- Turning on bits in hideOptions will make choices disappear
-    for i=1, #priceShift do
+    for i = 1, #priceShift do
         if priceShift[i] == 0 then
             hideOptions = bit.bor(hideOptions, bit.lshift(1, i - 1))
         end
@@ -208,7 +208,7 @@ xi.events.loginCampaign.onEventUpdate = function(player, csid, option)
             price,
             loginPoints)
     else
-        if npcUtil.giveItem(player, { {currentLoginCampaign[showItems - 2]["items"][itemSelected + 1], itemQuantity} }) then
+        if npcUtil.giveItem(player, { { currentLoginCampaign[showItems - 2]["items"][itemSelected + 1], itemQuantity } }) then
             player:delCurrency("login_points", currentLoginCampaign[showItems - 2]["price"] * itemQuantity)
             player:updateEvent(
                 currentLoginCampaign[showItems - 2]["items"][itemSelected + 1],

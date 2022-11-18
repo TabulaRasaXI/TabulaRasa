@@ -12,18 +12,17 @@ local entity = {}
 
 local timeTable =
 {
-    {59, ID.text.BOMB_TIMER_1, 8},
-    {58, ID.text.BOMB_TIMER_2, 7},
-    {57, ID.text.BOMB_TIMER_3, 6},
-    {56, ID.text.BOMB_TIMER_4, 5},
-    {55, ID.text.BOMB_TIMER_5, 4},
-    {50, ID.text.BOMB_TIMER_10, 3},
-    {40, ID.text.BOMB_TIMER_20, 2},
-    {30, ID.text.BOMB_TIMER_30, 1},
+    { 59, ID.text.BOMB_TIMER_1,  8 },
+    { 58, ID.text.BOMB_TIMER_2,  7 },
+    { 57, ID.text.BOMB_TIMER_3,  6 },
+    { 56, ID.text.BOMB_TIMER_4,  5 },
+    { 55, ID.text.BOMB_TIMER_5,  4 },
+    { 50, ID.text.BOMB_TIMER_10, 3 },
+    { 40, ID.text.BOMB_TIMER_20, 2 },
+    { 30, ID.text.BOMB_TIMER_30, 1 },
 }
 
 entity.onMobSpawn = function(mob)
-    mob:setLocalVar("control", 0)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
 end
 
@@ -45,20 +44,16 @@ entity.onMobFight = function(mob, target)
         end
     end
 
-    if os.time() > mob:getLocalVar("selfDestruct") and mob:getLocalVar("control") == 0 then
-        mob:setUnkillable(true)
-        mob:setLocalVar("control", 1)
+    if os.time() > mob:getLocalVar("selfDestruct") and mob:getBattlefield():getLocalVar("control") == 0 then
+        mob:getBattlefield():setLocalVar("control", 1)
         mob:useMobAbility(256)
-        mob:timer(5000, function(mobArg)
-            mobArg:setUnkillable(false)
-            mobArg:setHP(0)
-            mobArg:getBattlefield():lose()
-        end)
     end
 end
 
 entity.onMobDeath = function(mob, player, isKiller)
-    mob:setLocalVar("control", 1)
+    if player:getBattlefield():getLocalVar("control") == 0 then
+        player:getBattlefield():setLocalVar("lootSpawned", 0)
+    end
 end
 
 return entity

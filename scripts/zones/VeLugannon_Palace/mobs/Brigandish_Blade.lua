@@ -17,7 +17,7 @@ entity.onMobSpawn = function(mob)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.TERROR, {chance = 30})
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.TERROR, { chance = 30 })
 end
 
 entity.onMobFight = function(mob, target)
@@ -28,7 +28,7 @@ entity.onMobFight = function(mob, target)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     GetNPCByID(ID.npc.QM3):setLocalVar("PillarCharged", 1)
 end
 

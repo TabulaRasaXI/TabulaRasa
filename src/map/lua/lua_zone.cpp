@@ -232,22 +232,8 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
     // NOTE: Mob allegiance is the default for NPCs
     PEntity->allegiance = static_cast<ALLEGIANCE_TYPE>(table.get_or<uint8>("allegiance", ALLEGIANCE_TYPE::MOB));
 
-    uint16 ZoneID = m_pLuaZone->GetID();
+    m_pLuaZone->GetZoneEntities()->AssignDynamicTargIDandLongID(PEntity);
 
-    // TODO: Wrap this entity in a unique_ptr that will free this dynamic targ ID
-    //       on despawn/destruction
-    // TODO: The tracking of these IDs is pretty bad also, fix that in zone_entities
-    PEntity->targid = m_pLuaZone->GetZoneEntities()->GetNewDynamicTargID();
-    if (PEntity->targid >= 0x900)
-    {
-        ShowError("CLuaZone::insertDynamicEntity : targid is high (03hX), update packets will be ignored", PEntity->targid);
-    }
-
-    m_pLuaZone->GetZoneEntities()->dynamicTargIds.insert(PEntity->targid);
-
-    PEntity->id = 0x1000100 + (ZoneID << 12) + PEntity->targid;
-
-    PEntity->loc.zone       = m_pLuaZone;
     PEntity->loc.p.rotation = table.get_or<uint8>("rotation", 0);
     PEntity->loc.p.x        = table.get_or<float>("x", 0.01);
     PEntity->loc.p.y        = table.get_or<float>("y", 0.01);
@@ -326,6 +312,7 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
         PMob->saveMobModifiers();
 
         PMob->m_bReleaseTargIDOnDeath = table["releaseIdOnDeath"].get_or(false);
+        PMob->m_isAggroable           = table["isAggroable"].get_or(false);
 
         PMob->spawnAnimation = static_cast<SPAWN_ANIMATION>(table["specialSpawnAnimation"].get_or(false) ? 1 : 0);
 
@@ -333,7 +320,9 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
         auto onMobDeath = table["onMobDeath"].get<sol::function>();
         if (!onMobDeath.valid())
         {
-            cacheEntry["onMobDeath"] = []() {}; // Empty func
+            // TODO: Using an empty C++ lambda here wasn't working.
+            // Figure out why and fix.
+            cacheEntry["onMobDeath"] = lua.safe_script("return function() end");
         }
 
         m_pLuaZone->InsertMOB(PMob);
@@ -345,16 +334,11 @@ std::optional<CLuaBaseEntity> CLuaZone::insertDynamicEntity(sol::table table)
     }
     else if (table["look"].get_type() == sol::type::string)
     {
-        auto lookStr = table.get<std::string>("look");
-        if (lookStr.size() >= 4 && ((lookStr[1] == 'x' && lookStr[3] == '1') || lookStr[1] == '1'))
-        {
-            PEntity->look.size = MODEL_EQUIPPED;
-        }
-        auto look = stringToLook(lookStr);
-        std::memcpy(&PEntity->look, &look, sizeof(PEntity->look));
+        auto lookStr  = table.get<std::string>("look");
+        PEntity->look = stringToLook(lookStr);
     }
 
-    PEntity->updatemask |= UPDATE_ALL_MOB;
+    PEntity->updatemask |= UPDATE_ALL_CHAR;
 
     return CLuaBaseEntity(PEntity);
 }
@@ -421,29 +405,13 @@ auto CLuaZone::getBackgroundMusicNight()
 
 sol::table CLuaZone::queryEntitiesByName(std::string const& name)
 {
-    TracyZoneScoped;
+    const QueryByNameResult_t& entities = m_pLuaZone->queryEntitiesByName(name);
 
     auto table = lua.create_table();
-
-    // TODO: Make work for instances
-    // TODO: Replace with a constant-time lookup
-    // clang-format off
-    m_pLuaZone->ForEachNpc([&](CNpcEntity* PNpc)
+    for (CBaseEntity* entity : entities)
     {
-        if (std::string((const char*)PNpc->GetName()) == name)
-        {
-            table.add(CLuaBaseEntity(PNpc));
-        }
-    });
-
-    m_pLuaZone->ForEachMob([&](CMobEntity* PMob)
-    {
-        if (std::string((const char*)PMob->GetName()) == name)
-        {
-            table.add(CLuaBaseEntity(PMob));
-        }
-    });
-    // clang-format on
+        table.add(CLuaBaseEntity(entity));
+    }
 
     if (table.empty())
     {

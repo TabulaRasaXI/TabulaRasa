@@ -45,6 +45,7 @@
 #include "lobby.h"
 #include "login.h"
 #include "login_auth.h"
+#include "login_conf.h"
 #include "message_server.h"
 
 std::thread messageThread;
@@ -53,6 +54,8 @@ std::unique_ptr<SqlConnection> sql; // lgtm [cpp/short-global-name]
 
 uint8 ver_lock   = 0;
 uint8 maint_mode = 0;
+
+bool requestExit = false;
 
 int32 do_init(int32 argc, char** argv)
 {
@@ -64,6 +67,10 @@ int32 do_init(int32 argc, char** argv)
 
     login_lobbyview_fd = makeListenBind_tcp(settings::get<std::string>("network.LOGIN_VIEW_IP").c_str(), settings::get<uint16>("network.LOGIN_VIEW_PORT"), connect_client_lobbyview);
     ShowInfo("The login-server-lobbyview is ready (Server is listening on the port %u).", settings::get<uint16>("network.LOGIN_VIEW_PORT"));
+
+    // NOTE: See login_conf.h for more information about what happens on this port
+    // login_lobbyconf_fd = makeListenBind_tcp(settings::get<std::string>("network.LOGIN_CONF_IP").c_str(), settings::get<uint16>("network.LOGIN_CONF_PORT"), connect_client_lobbyconf);
+    // ShowInfo("The login-server-lobbyconf is ready (Server is listening on the port %u).", settings::get<uint16>("network.LOGIN_CONF_PORT"));
 
     sql = std::make_unique<SqlConnection>();
 
@@ -86,8 +93,7 @@ int32 do_init(int32 argc, char** argv)
         ShowInfo("Character deletion is currently disabled.");
     }
 
-    messageThread = std::thread(message_server_init);
-
+    messageThread = std::thread(message_server_init, std::ref(requestExit));
     // clang-format off
     gConsoleService = std::make_unique<ConsoleService>();
 
@@ -123,6 +129,15 @@ int32 do_init(int32 argc, char** argv)
         maint_mode = (maint_mode + 1) % 2;
         fmt::printf("Maintenance mode changed to %i\n", maint_mode);
     });
+
+    gConsoleService->RegisterCommand("exit", "Terminate the program.",
+    [&](std::vector<std::string> inputs)
+    {
+        fmt::print("> Goodbye!\n");
+        // gConsoleService->stop(); // Kernel calls this, uncomment when decoupled from kernel
+        gRunFlag = false;
+        //do_final(EXIT_SUCCESS); // Kernel calls this, uncomment or replace when decoupled from kernel
+    });
     // clang-format on
 
     ShowInfo("The login-server is ready to work!");
@@ -133,6 +148,7 @@ int32 do_init(int32 argc, char** argv)
 
 void do_final(int code)
 {
+    requestExit = true;
     message_server_close();
     if (messageThread.joinable())
     {
@@ -142,9 +158,13 @@ void do_final(int code)
     timer_final();
     socket_final();
 
+    sql = nullptr;
     logging::ShutDown();
 
-    exit(code);
+    if (code != EXIT_SUCCESS)
+    {
+        exit(code);
+    }
 }
 
 void do_abort()
@@ -224,8 +244,6 @@ int do_sockets(fd_set* rfd, duration next)
                     {
                         continue;
                     }
-
-                    // RFIFOFLUSH(fd);
                 }
                 --ret;
             }

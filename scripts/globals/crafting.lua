@@ -30,15 +30,15 @@ xi.crafting.guild =
 -- Table for Test Item
 -----------------------------------
 
-local testItem_Alchemy =      {  937,  4157,  4163,   947, 16543,  4116, 16479,  4120, 16609, 10792}
-local testItem_Bonecraft =    {13442, 13441, 13323, 13459, 13091, 17299, 16420, 12508, 13987, 11058}
-local testItem_Clothcraft =   {13583, 13584, 13204, 13075, 12723, 13586, 13752, 12612, 14253, 11000}
-local testItem_Cooking =      { 4355,  4416,  4489,  4381,  4413,  4558,  4546,  4440,  4561,  5930}
-local testItem_Fishing =      { 4401,  4379,  4469,  4480,  4462,  4479,  4471,  4478,  4474,  5817}
-local testItem_Goldsmithing = {12496, 12497, 12495, 13082, 13446, 13084, 12545, 13125, 16515, 11060}
-local testItem_Leathercraft = {13594, 16386, 13588, 13195, 12571, 12572, 12980, 12702, 12447, 10577}
-local testItem_Smithing =     {16530, 12299, 16512, 16650, 16651, 16559, 12427, 16577, 12428, 19788}
-local testItem_Woodworking =  {   22,    23, 17354, 17348, 17053, 17156, 17054,    56, 17101, 18884}
+local testItem_Alchemy =      {   937,  4157,  4163,   947, 16543,  4116, 16479,  4120, 16609, 10792 }
+local testItem_Bonecraft =    { 13442, 13441, 13323, 13459, 13091, 17299, 16420, 12508, 13987, 11058 }
+local testItem_Clothcraft =   { 13583, 13584, 13204, 13075, 12723, 13586, 13752, 12612, 14253, 11000 }
+local testItem_Cooking =      {  4355,  4416,  4489,  4381,  4413,  4558,  4546,  4440,  4561,  5930 }
+local testItem_Fishing =      {  4401,  4379,  4469,  4480,  4462,  4479,  4471,  4478,  4474,  5817 }
+local testItem_Goldsmithing = { 12496, 12497, 12495, 13082, 13446, 13084, 12545, 13125, 16515, 11060 }
+local testItem_Leathercraft = { 13594, 16386, 13588, 13195, 12571, 12572, 12980, 12702, 12447, 10577 }
+local testItem_Smithing =     { 16530, 12299, 16512, 16650, 16651, 16559, 12427, 16577, 12428, 19788 }
+local testItem_Woodworking =  {    22,    23, 17354, 17348, 17053, 17156, 17054,    56, 17101, 18884 }
 -- local testItem_Synergy =      {}
 
 local hqCrystals =
@@ -97,9 +97,10 @@ xi.crafting.isGuildMember = function(player, guild)
         local twop = 2^i
 
         if guildOK >= twop then
-            bit[i]=1 guildOK = guildOK - twop
+            bit[i]  = 1
+            guildOK = guildOK - twop
         else
-            bit[i]=0
+            bit[i] = 0
         end
     end
 
@@ -287,12 +288,12 @@ xi.crafting.unionRepresentativeTriggerFinish = function(player, option, target, 
         local ki = keyitems[bit.band(bit.rshift(option, 5), 15) - 1]
 
         if ki and rank >= ki.rank then
-            if (player:getCurrency(currency) >= ki.cost) then
+            if player:getCurrency(currency) >= ki.cost then
                 player:delCurrency(currency, ki.cost)
                 player:addKeyItem(ki.id)
                 player:messageSpecial(text.KEYITEM_OBTAINED, ki.id)
             else
-               player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
+                player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
             end
         end
     elseif category == 2 or category == 1 then -- item
@@ -305,7 +306,7 @@ xi.crafting.unionRepresentativeTriggerFinish = function(player, option, target, 
             if player:getCurrency(currency) >= cost then
                 local delivered = 0
                 for count = 1, quantity do -- addItem does not appear to honor quantity if the item doesn't stack.
-                    if (player:addItem(i.id, true)) then
+                    if player:addItem(i.id, true) then
                         player:delCurrency(currency, i.cost)
                         player:messageSpecial(text.ITEM_OBTAINED, i.id)
                         delivered = delivered + 1
@@ -315,7 +316,7 @@ xi.crafting.unionRepresentativeTriggerFinish = function(player, option, target, 
                     player:messageSpecial(text.ITEM_CANNOT_BE_OBTAINED, i.id)
                 end
             else
-               player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
+                player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
             end
         end
     elseif category == 0 and option ~= 1073741824 then -- HQ crystal
@@ -331,7 +332,7 @@ xi.crafting.unionRepresentativeTriggerFinish = function(player, option, target, 
                     player:messageSpecial(text.ITEM_CANNOT_BE_OBTAINED, i.id)
                 end
             else
-               player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
+                player:messageText(target, text.NOT_HAVE_ENOUGH_GP, false, 6)
             end
         end
     end

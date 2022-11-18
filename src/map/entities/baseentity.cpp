@@ -43,14 +43,14 @@ CBaseEntity::CBaseEntity()
     animation    = 0;
     animationsub = 0;
     speed        = 50 + settings::get<int8>("map.SPEED_MOD"); // It is downright dumb to init every entity at PLAYER speed, but until speed is reworked this hack stays.
-    speedsub     = 50;                                        // Retail does NOT adjust this when speed is adjusted.
+    speedsub     = 40;                                        // Retail does NOT adjust this when speed is adjusted.
     namevis      = 0;
     updatemask   = 0;
     PBattlefield = nullptr;
     PInstance    = nullptr;
-    animStart = false;
-    animPath = 0;
-    animBegin = 0;
+    animStart    = false;
+    animPath     = 0;
+    animBegin    = 0;
     manualConfig = false;
 }
 
@@ -144,14 +144,14 @@ bool CBaseEntity::IsNameHidden() const
     return namevis & FLAG_HIDE_NAME;
 }
 
-bool CBaseEntity::IsTargetable() const
+bool CBaseEntity::GetUntargetable() const
 {
-    return (namevis & FLAG_UNTARGETABLE) == 0;
+    return false;
 }
 
 bool CBaseEntity::isWideScannable()
 {
-    return status != STATUS_TYPE::DISAPPEAR && !IsNameHidden() && IsTargetable();
+    return status != STATUS_TYPE::DISAPPEAR && !IsNameHidden() && !GetUntargetable();
 }
 
 CBaseEntity* CBaseEntity::GetEntity(uint16 targid, uint8 filter) const
@@ -202,5 +202,5 @@ uint16 CBaseEntity::GetModelId() const
 
 bool CBaseEntity::IsDynamicEntity() const
 {
-    return this->targid >= 0x800;
+    return this->targid >= 0x700;
 }

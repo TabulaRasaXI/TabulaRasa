@@ -2,7 +2,7 @@
 -- Area: The Boyahda Tree
 --   NM: Voluptuous Vivian
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
+mixins = { require("scripts/mixins/job_special") }
 require("scripts/globals/status")
 require("scripts/globals/titles")
 -----------------------------------
@@ -14,7 +14,7 @@ entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.SLEEPRES, 500)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     player:addTitle(xi.title.THE_VIVISECTOR)
 end
 

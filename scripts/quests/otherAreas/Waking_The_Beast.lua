@@ -36,10 +36,7 @@ quest.sections =
 
         [xi.zone.LA_THEINE_PLATEAU] =
         {
-            ['qm3'] =
-            {
-                onTrigger = quest:event(207)
-            },
+            ['qm3'] = quest:progressEvent(207),
 
             onEventFinish =
             {
@@ -64,15 +61,15 @@ quest.sections =
             onEventFinish =
             {
                 [208] = function(player, csid, option, npc)
-                    player:setCharVar("WTB_CONQUEST", getConquestTally())
-                    player:delKeyItem(xi.ki.FADED_RUBY)
+                    if quest:complete(player) then
+                        quest:setVar(player, 'Stage', getConquestTally())
+                        player:delKeyItem(xi.ki.FADED_RUBY)
 
-                    quest:complete(player)
-
-                    if player:getCharVar("WTB_TITLE") == 0 then
-                        player:addTitle(xi.title.DISTURBER_OF_SLUMBER)
-                    else
-                        player:addTitle(quest.reward.INTERRUPTOR_OF_DREAMS)
+                        if quest:getVar(player, 'Option') == 0 then
+                            player:addTitle(xi.title.DISTURBER_OF_SLUMBER)
+                        else
+                            player:addTitle(quest.reward.INTERRUPTOR_OF_DREAMS)
+                        end
                     end
                 end,
             },
@@ -82,7 +79,7 @@ quest.sections =
     {
         check = function(player, status, vars)
             return status == QUEST_COMPLETED and
-            player:getCharVar("WTB_CONQUEST") < os.time()
+            quest:getVar(player, 'Option') < getConquestTally()
         end,
 
         [xi.zone.LA_THEINE_PLATEAU] =
@@ -92,7 +89,7 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if player:hasKeyItem(xi.ki.FADED_RUBY) then
                         return quest:progressEvent(208)
-                    elseif player:getCharVar("WTB_CONQUEST") < os.time() then
+                    elseif quest:getVar(player, 'Option') < getConquestTally() then
                         return quest:progressEvent(207)
                     end
                 end,
@@ -102,19 +99,18 @@ quest.sections =
             {
                 [207] = function(player, csid, option, npc)
                     npcUtil.giveKeyItem(player, xi.ki.RAINBOW_RESONATOR)
-                    quest:begin(player)
                 end,
 
                 [208] = function(player, csid, option, npc)
-                    player:setCharVar("WTB_CONQUEST", getConquestTally())
-                    player:delKeyItem(xi.ki.FADED_RUBY)
+                    if quest:complete(player) then
+                        quest:setVar(player, 'Stage', getConquestTally())
+                        player:delKeyItem(xi.ki.FADED_RUBY)
 
-                    quest:complete(player)
-
-                    if player:getCharVar("WTB_TITLE") == 0 then
-                        player:addTitle(xi.title.DISTURBER_OF_SLUMBER)
-                    else
-                        player:addTitle(quest.reward.INTERRUPTOR_OF_DREAMS)
+                        if quest:getVar(player, 'Option') == 0 then
+                            player:addTitle(xi.title.DISTURBER_OF_SLUMBER)
+                        else
+                            player:addTitle(quest.reward.INTERRUPTOR_OF_DREAMS)
+                        end
                     end
                 end,
             },

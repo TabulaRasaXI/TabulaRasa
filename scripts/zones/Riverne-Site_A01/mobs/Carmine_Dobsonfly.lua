@@ -20,7 +20,7 @@ entity.onMobDisengage = function(mob)
     mob:SetMagicCastingEnabled(false)
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
@@ -28,12 +28,12 @@ entity.onMobDespawn = function(mob)
 
     local allFliesDead = true
     for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
-        if (GetMobByID(i):isAlive()) then
+        if GetMobByID(i):isAlive() then
             allFliesDead = false
         end
     end
 
-    if (allFliesDead) then
+    if allFliesDead then
         local respawnTime = math.random(75600, 86400)
         for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
             DisallowRespawn(i, false)

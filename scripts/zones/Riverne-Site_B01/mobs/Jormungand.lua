@@ -12,7 +12,6 @@ entity.onMobSpawn = function(mob)
     mob:setAnimationSub(0) -- subanim 0 is only used when it spawns until first flight.
 
     mob:setMobMod(xi.mobMod.SIGHT_RANGE, 30)
-    mob:setMobMod(xi.mobMod.SIGHT_ANGLE, 90)
     mob:setMobMod(xi.mobMod.GA_CHANCE, 80)
     mob:setMobMod(xi.mobMod.BUFF_CHANCE, 20)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
@@ -87,7 +86,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
 end
 
 entity.onAdditionalEffect = function(mob, target, damage)
-    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENBLIZZARD, {power = math.random(45, 90), chance = 10})
+    return xi.mob.onAddEffect(mob, target, damage, xi.mob.ae.ENBLIZZARD, { power = math.random(45, 90), chance = 10 })
 end
 
 return entity

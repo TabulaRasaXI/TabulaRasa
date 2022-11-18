@@ -6,13 +6,13 @@ require("scripts/globals/status")
 require("scripts/globals/mobskills")
 require("scripts/globals/ability")
 -----------------------------------
-local ability_object = {}
+local abilityObject = {}
 
-ability_object.onAbilityCheck = function(player, target, ability)
+abilityObject.onAbilityCheck = function(player, target, ability)
     return 0, 0
 end
 
-ability_object.onUseAbility = function(pet, target, skill, action)
+abilityObject.onUseAbility = function(pet, target, skill, action)
     local master = pet:getMaster()
     ---------- Deep Breathing ----------
     -- 0 for none
@@ -20,7 +20,7 @@ ability_object.onUseAbility = function(pet, target, skill, action)
     -- 0.25 for each merit after the first
     -- TODO: 0.1 per merit for augmented AF2 (10663 *w/ augment*)
     local deep = 1
-    if (pet:hasStatusEffect(xi.effect.MAGIC_ATK_BOOST) == true) then
+    if pet:hasStatusEffect(xi.effect.MAGIC_ATK_BOOST) then
         deep = deep + 1 + (master:getMerit(xi.merit.DEEP_BREATHING) - 1) * 0.25
         pet:delStatusEffect(xi.effect.MAGIC_ATK_BOOST)
     end
@@ -36,4 +36,4 @@ ability_object.onUseAbility = function(pet, target, skill, action)
     return dmg
 end
 
-return ability_object
+return abilityObject

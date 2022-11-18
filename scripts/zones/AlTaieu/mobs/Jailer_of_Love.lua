@@ -115,7 +115,7 @@ entity.onMobSpawn = function(mob)
     xi.mix.jobSpecial.config(mob, {
         specials =
         {
-            {id = xi.jsa.ASTRAL_FLOW, hpp = math.random(45, 55)},
+            { id = xi.jsa.ASTRAL_FLOW, hpp = math.random(45, 55) },
         },
     })
 end
@@ -123,6 +123,7 @@ end
 entity.onMobEngaged = function(mob, target)
     mob:hideName(false)
     mob:setUntargetable(false)
+    mob:SetMagicCastingEnabled(true)
     mob:setAnimationSub(2)
     mob:setLocalVar("elementAbsorb", os.time() + 120)
     mob:setLocalVar("pop_pets", os.time() + 150) -- wait 2.5 minutes until spawning initial mobs
@@ -132,6 +133,8 @@ entity.onMobEngaged = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
+    mob:setAnimationSub(2)
+
     -- reduce regen after nine Xzomits and Hpemdes (total of both) groups are killed
     if
         mob:getLocalVar("JoL_Regen_Reduction") == 0 and
@@ -148,7 +151,7 @@ entity.onMobFight = function(mob, target)
         local abilities = { 307, 404, 603, 604, 624, 625, 626, 627 }
         local previousAbsorb = mob:getLocalVar("currentAbsorb")
         mob:setLocalVar("currentAbsorb", math.random(459, 466))
-        mob:setLocalVar("elementAbsorb", os.time() + 120)
+        mob:setLocalVar("elementAbsorb", os.time() + 60)
         mob:setLocalVar("twohour_tp", mob:getTP())
         mob:useMobAbility(abilities[math.random(#abilities)])
         mob:setSpellList(spellLists[mob:getLocalVar('currentAbsorb')])
@@ -203,7 +206,7 @@ entity.onMobWeaponSkill = function(target, mob, skill)
     end
 end
 
-entity.onMobDeath = function(mob, player, isKiller)
+entity.onMobDeath = function(mob, player, optParams)
     for i = ID.mob.JAILER_OF_LOVE + 1, ID.mob.JAILER_OF_LOVE + 27 do
         local pet = GetMobByID(i)
         if pet:isSpawned() then
@@ -213,7 +216,7 @@ entity.onMobDeath = function(mob, player, isKiller)
 end
 
 entity.onMobDespawn = function(mob)
-    if math.random(100) <= 25 then -- 25% chance to spawn Absolute Virtue
+    if math.random(1, 100) <= 25 then -- 25% chance to spawn Absolute Virtue
         SpawnMob(ID.mob.ABSOLUTE_VIRTUE)
     end
 end

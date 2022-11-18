@@ -98,7 +98,8 @@ mission.sections =
 
                     if
                         not player:hasSpell(940) and
-                        not player:findItem(xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)
+                        not player:findItem(xi.items.CIPHER_OF_SEMIHS_ALTER_EGO) and
+                        xi.settings.main.ENABLE_ROV == 1
                     then
                         npcUtil.giveItem(player, xi.items.CIPHER_OF_SEMIHS_ALTER_EGO)
                     end
@@ -139,7 +140,7 @@ mission.sections =
             {
                 onTrade = function(player, npc, trade)
                     if
-                        npcUtil.tradeHasExactly(trade, {{ xi.items.PARANA_SHIELD, 2 }}) and
+                        npcUtil.tradeHasExactly(trade, { { xi.items.PARANA_SHIELD, 2 } }) and
                         player:getMissionStatus(mission.areaId) == 6
                     then
                         return mission:progressEvent(457) -- Has delivered shield
