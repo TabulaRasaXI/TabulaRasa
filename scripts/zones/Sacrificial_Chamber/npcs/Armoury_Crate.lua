@@ -21,23 +21,24 @@ local loot =
 
         {
             { itemid =  751, droprate = 500 }, -- Platinum Beastcoin
-            { itemid = 4874, droprate =  48 }, -- Scroll Of Absorb-STR
-            { itemid = 4751, droprate = 143 }, -- Scroll Of Erase
-            { itemid = 4714, droprate = 119 }, -- Scroll Of Phalanx
-            { itemid = 4896, droprate =  48 }, -- Fire Spirit Pact
-            { itemid = 1255, droprate =  48 }, -- Chunk Of Fire Ore
-            { itemid = 1256, droprate =  48 }, -- Chunk Of Ice Ore
-            { itemid = 1257, droprate =  48 }, -- Chunk Of Wind Ore
-            { itemid = 1258, droprate =  48 }, -- Chunk Of Earth Ore
-            { itemid = 1259, droprate =  48 }, -- Chunk Of Lightning Ore
-            { itemid = 1260, droprate =  48 }, -- Chunk Of Water Ore
-            { itemid = 1261, droprate =  48 }, -- Chunk Of Light Ore
-            { itemid = 1262, droprate =  48 }, -- Chunk Of Dark Ore
+            { itemid = 4874, droprate =  84 }, -- Scroll Of Absorb-STR
+            { itemid = 4751, droprate = 177 }, -- Scroll Of Erase
+            { itemid = 4714, droprate = 155 }, -- Scroll Of Phalanx
+            { itemid = 4896, droprate =  84 }, -- Fire Spirit Pact
+        },
+        {
+            { itemid = 1255, droprate =  125 }, -- Chunk Of Fire Ore
+            { itemid = 1256, droprate =  125 }, -- Chunk Of Ice Ore
+            { itemid = 1257, droprate =  125 }, -- Chunk Of Wind Ore
+            { itemid = 1258, droprate =  125 }, -- Chunk Of Earth Ore
+            { itemid = 1259, droprate =  125 }, -- Chunk Of Lightning Ore
+            { itemid = 1260, droprate =  125 }, -- Chunk Of Water Ore
+            { itemid = 1261, droprate =  125 }, -- Chunk Of Light Ore
+            { itemid = 1262, droprate =  125 }, -- Chunk Of Dark Ore
         },
 
         {
-            { itemid =  751, droprate = 833 }, -- Platinum Beastcoin
-            { itemid = 1256, droprate = 167 }, -- Chunk Of Ice Ore
+            { itemid =  751, droprate = 1000 }, -- Platinum Beastcoin
         },
 
         {
