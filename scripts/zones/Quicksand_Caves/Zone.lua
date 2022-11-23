@@ -14,19 +14,19 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     -- Weight Door System (RegionID, X, Radius, Z)
-    zone:registerRegion(1, -15, 5, -60, 0, 0, 0)
-    zone:registerRegion(3, 15, 5, -180, 0, 0, 0)
-    zone:registerRegion(5, -580, 5, -420, 0, 0, 0)
-    zone:registerRegion(7, -700, 5, -420, 0, 0, 0)
-    zone:registerRegion(9, -700, 5, -380, 0, 0, 0)
-    zone:registerRegion(11, -780, 5, -460, 0, 0, 0)
-    zone:registerRegion(13, -820, 5, -380, 0, 0, 0)
-    zone:registerRegion(15, -260, 5, 740, 0, 0, 0)
-    zone:registerRegion(17, -340, 5, 660, 0, 0, 0)
-    zone:registerRegion(19, -420, 5, 740, 0, 0, 0)
-    zone:registerRegion(21, -340, 5, 820, 0, 0, 0)
-    zone:registerRegion(23, -409, 5, 800, 0, 0, 0)
-    zone:registerRegion(25, -400, 5, 670, 0, 0, 0)
+    zone:registerTriggerArea(1, -15, 5, -60, 0, 0, 0)
+    zone:registerTriggerArea(3, 15, 5, -180, 0, 0, 0)
+    zone:registerTriggerArea(5, -580, 5, -420, 0, 0, 0)
+    zone:registerTriggerArea(7, -700, 5, -420, 0, 0, 0)
+    zone:registerTriggerArea(9, -700, 5, -380, 0, 0, 0)
+    zone:registerTriggerArea(11, -780, 5, -460, 0, 0, 0)
+    zone:registerTriggerArea(13, -820, 5, -380, 0, 0, 0)
+    zone:registerTriggerArea(15, -260, 5, 740, 0, 0, 0)
+    zone:registerTriggerArea(17, -340, 5, 660, 0, 0, 0)
+    zone:registerTriggerArea(19, -420, 5, 740, 0, 0, 0)
+    zone:registerTriggerArea(21, -340, 5, 820, 0, 0, 0)
+    zone:registerTriggerArea(23, -409, 5, 800, 0, 0, 0)
+    zone:registerTriggerArea(25, -400, 5, 670, 0, 0, 0)
 
     -- Hole in the Sand
     zone:registerRegion(30, 495, -9, -817, 497, -7, -815) -- E-11 (Map 2)
@@ -71,12 +71,12 @@ local function getWeight(player)
     end
 end
 
-zoneObject.onRegionEnter = function(player, region)
-    local regionID = region:GetRegionID()
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    local triggerAreaID = triggerArea:GetTriggerAreaID()
 
     -- holes in the sand
-    if regionID >= 30 then
-        switch (regionID): caseof
+    if triggerAreaID >= 30 then
+        switch (triggerAreaID): caseof
         {
             [30] = function (x)
                 player:setPos(496, -6, -816)
@@ -101,8 +101,8 @@ zoneObject.onRegionEnter = function(player, region)
 
     -- ornate door pressure plates
     else
-        local door = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + regionID - 1)
-        local plate = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + regionID)
+        local door = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + triggerAreaID - 1)
+        local plate = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + triggerAreaID)
 
         local totalWeight = plate:getLocalVar("weight")
         totalWeight = totalWeight + getWeight(player)
@@ -115,12 +115,12 @@ zoneObject.onRegionEnter = function(player, region)
     end
 end
 
-zoneObject.onRegionLeave = function(player, region)
-    local regionID = region:GetRegionID()
+zoneObject.onTriggerAreaLeave = function(player, triggerArea)
+    local triggerAreaID = triggerArea:GetTriggerAreaID()
 
-    if regionID < 30 then
-        -- local door = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + regionID - 1)
-        local plate = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + regionID)
+    if triggerAreaID < 30 then
+        -- local door = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + triggerAreaID - 1)
+        local plate = GetNPCByID(ID.npc.ORNATE_DOOR_OFFSET + triggerAreaID)
 
         local totalWeight = plate:getLocalVar("weight")
         totalWeight = totalWeight - getWeight(player)

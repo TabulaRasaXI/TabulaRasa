@@ -371,7 +371,7 @@ xi.dynamis.normalDynamicSpawn = function(oMob, oMobIndex, target)
                 onMobSpawn = function(mobArg) xi.dynamis.setMobStats(mobArg) end,
                 onMobEngaged = function(mobArg, target) xi.dynamis.mobOnEngaged(mobArg, target) end,
                 onMobRoam = function(mobArg) end,
-                onMobDeath = function(mob, player, optParams)
+                onMobDeath = function(mobArg, player, optParams)
                     xi.dynamis.mobOnDeath(mobArg)
                 end,
                 releaseIdOnDeath = true,
@@ -1837,9 +1837,9 @@ xi.dynamis.teleport = function(mob, hideDuration)
 
     mob:hideName(true)
     mob:setUntargetable(true)
-    mob:SetAutoAttackEnabled(false)
-    mob:SetMagicCastingEnabled(false)
-    mob:SetMobAbilityEnabled(false)
+    mob:setAutoAttackEnabled(false)
+    mob:setMagicCastingEnabled(false)
+    mob:setMobAbilityEnabled(false)
     mob:entityAnimationPacket("kesu")
 
     hideDuration = hideDuration or 5000
@@ -1851,9 +1851,9 @@ xi.dynamis.teleport = function(mob, hideDuration)
     mob:timer(hideDuration, function(mob)
         mob:hideName(false)
         mob:setUntargetable(false)
-        mob:SetAutoAttackEnabled(true)
-        mob:SetMagicCastingEnabled(true)
-        mob:SetMobAbilityEnabled(true)
+        mob:setAutoAttackEnabled(true)
+        mob:setMagicCastingEnabled(true)
+        mob:setMobAbilityEnabled(true)
 
         if mob:isDead() then
             return
@@ -1938,20 +1938,27 @@ xi.dynamis.statueOnFight = function(mob, target)
             end
             if mob:getLocalVar("reset") ~= 1 then
                 mob:setLocalVar("reset", 1)
-                mob:addStatusEffect(xi.effect.STUN, 1, 0, 5)
+                mob:addStatusEffect(xi.effect.STUN, 1, 0, 10)
                 mob:setUntargetable(true)
-                mob:SetMagicCastingEnabled(false)
-                mob:SetAutoAttackEnabled(false)
-                mob:SetMobAbilityEnabled(false)
+                mob:setMagicCastingEnabled(false)
+                mob:setAutoAttackEnabled(false)
+                mob:setMobAbilityEnabled(false)
 
-                mob:timer(1000, function(mob) -- Allows stun to tick
-                    mob:setTP(0)
-                    mob:SetMobAbilityEnabled(true)
-                    mob:delStatusEffectSilent(xi.effect.STUN) -- Remove stun so we can do skill.
-                    if mob:getAnimationSub() == 2 then
-                        mob:useMobAbility(1124) -- Use Recover HP
-                    elseif mob:getAnimationSub() == 3 then
-                        mob:useMobAbility(1125) -- Use Recover MP
+                mob:timer(1000, function(mobArg) -- Allows stun to tick
+                    mobArg:setTP(0)
+                    mobArg:setMobAbilityEnabled(true)
+                    mobArg:delStatusEffectSilent(xi.effect.STUN) -- Remove stun so we can do skill.
+                    if mobArg:getAnimationSub() == 2 then
+                        mobArg:useMobAbility(1124) -- Use Recover HP
+                    elseif mobArg:getAnimationSub() == 3 then
+                        mobArg:useMobAbility(1125) -- Use Recover MP
+                    end
+                end)
+
+                mob:timer(5000, function(mobArg)
+                    if mobArg:isAlive() then
+                        mobArg:setUnkillable(false)
+                        mobArg:setHP(0)
                     end
                 end)
             end
@@ -1967,18 +1974,18 @@ xi.dynamis.mobOnEngaged = function(mob, target)
         mob:setLocalVar("SpawnedPets", 1)
         if  mob:getMainJob() == xi.job.BST or mob:getMainJob() == xi.job.SMN then
             mob:entityAnimationPacket("casm")
-            mob:SetAutoAttackEnabled(false)
-            mob:SetMagicCastingEnabled(false)
-            mob:SetMobAbilityEnabled(false)
+            mob:setAutoAttackEnabled(false)
+            mob:setMagicCastingEnabled(false)
+            mob:setMobAbilityEnabled(false)
 
             mob:addStatusEffectEx(xi.effect.BIND, xi.effect.BIND, 1, 3, 6, 0, 0, 0, xi.effectFlag.NO_LOSS_MESSAGE)
             mob:timer(3000, function(mobArg)
                 if mob:isAlive() then
                     xi.dynamis.spawnDynamicPet(target, mob, mobArg:getMainJob())
                     mobArg:entityAnimationPacket("shsm")
-                    mobArg:SetAutoAttackEnabled(true)
-                    mobArg:SetMagicCastingEnabled(true)
-                    mobArg:SetMobAbilityEnabled(true)
+                    mobArg:setAutoAttackEnabled(true)
+                    mobArg:setMagicCastingEnabled(true)
+                    mobArg:setMobAbilityEnabled(true)
 
                     if mobArg:hasStatusEffect(xi.effect.BIND) then
                         mobArg:delStatusEffectSilent(xi.effect.BIND)
