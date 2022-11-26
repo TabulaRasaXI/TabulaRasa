@@ -156,6 +156,7 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
 
         chance = xi.additionalEffect.levelCorrection(defender:getMainLvl(), attacker:getMainLvl(), chance)
     end
+
     --------------------------------------
 
     if addType == procType.DAMAGE then
@@ -201,6 +202,10 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 1)
     then
         damage = xi.additionalEffect.calcDamage(attacker, element, defender, damage)
+
+        if defender:isUndead() then
+            return 0
+        end
 
         if damage > defender:getHP() then
             damage = defender:getHP()

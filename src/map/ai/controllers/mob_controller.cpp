@@ -47,7 +47,7 @@ CMobController::CMobController(CMobEntity* PEntity)
 void CMobController::Tick(time_point tick)
 {
     TracyZoneScoped;
-    TracyZoneIString(PMob->GetName());
+    TracyZoneString(PMob->GetName());
 
     m_Tick = tick;
 
@@ -927,6 +927,12 @@ void CMobController::DoRoamTick(time_point tick)
         PMob->m_OwnerID.clean();
     }
 
+    if (m_Tick >= m_ResetTick + 10s && PMob->health.tp > 0)
+    {
+        PMob->health.tp -= 100;
+        m_ResetTick = m_Tick;
+    }
+
     // skip roaming if waiting
     if (m_Tick >= m_WaitTime)
     {
@@ -1232,8 +1238,8 @@ bool CMobController::Engage(uint16 targid)
 bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
 {
     TracyZoneScoped;
-    TracyZoneIString(PMob->GetName());
-    TracyZoneIString(PTarget->GetName());
+    TracyZoneString(PMob->GetName());
+    TracyZoneString(PTarget->GetName());
 
     if (PMob->getBattleID() != PTarget->getBattleID())
     {
