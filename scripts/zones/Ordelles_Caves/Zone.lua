@@ -10,8 +10,8 @@ require("scripts/globals/mobs")
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.MORBOLGER)
-    xi.mob.NMPersistCache(ID.mob.MORBOLGER)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.MORBOLGER)
 
     xi.treasure.initZone(zone)
 end

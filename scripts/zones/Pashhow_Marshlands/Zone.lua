@@ -17,8 +17,8 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.BOWHO_WARMONGER)
-    xi.mob.NMPersistCache(ID.mob.BOWHO_WARMONGER)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.BOWHO_WARMONGER)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)

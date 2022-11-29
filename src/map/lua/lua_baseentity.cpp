@@ -803,6 +803,12 @@ void CLuaBaseEntity::StartEventHelper(int32 EventID, sol::variadic_args va, EVEN
         return;
     }
 
+    if (PChar->currentEvent->eventId == EventID)
+    {
+        ShowError("CLuaBaseEntity::StartEventHelper: Could not start event, Character Entity already triggered.");
+        return;
+    }
+
     PChar->StatusEffectContainer->DelStatusEffect(EFFECT_BOOST);
 
     PChar->queueEvent(ParseEvent(EventID, va, PChar->eventPreparation, eventType));
@@ -4127,6 +4133,10 @@ bool CLuaBaseEntity::canEquipItem(uint16 itemID, sol::object const& chkLevel)
     auto* PChar = static_cast<CBattleEntity*>(m_PBaseEntity);
 
     if (!(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))))
+    {
+        return false;
+    }
+    if ((PItem->getRace() & (1 << (PChar->look.race - 1))) == 0)
     {
         return false;
     }

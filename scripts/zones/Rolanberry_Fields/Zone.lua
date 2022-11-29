@@ -16,8 +16,9 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.SIMURGH)
-    xi.mob.NMPersistCache(ID.mob.SIMURGH)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.SIMURGH)
+
     xi.voidwalker.zoneOnInit(zone)
 end
 
