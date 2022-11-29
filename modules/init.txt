@@ -105,3 +105,6 @@ custom/sql/tr_mob_spawn_adjustments.sql
 #------------------------------
 era/sql_dynamis/era_dyna_sql.sql
 
+#		Custom
+#-----------------------
+#custom/sql/starlight_celebrations.sql
