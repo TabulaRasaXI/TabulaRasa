@@ -50,7 +50,11 @@ entity.onTrade = function(player, npc, trade)
 
     if player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND) then
         -- buy prismatic hourglass
-        if gil == xi.settings.main.PRISMATIC_HOURGLASS_COST and count == 1 and not player:hasKeyItem(xi.ki.PRISMATIC_HOURGLASS) then
+        if
+            gil == xi.settings.main.PRISMATIC_HOURGLASS_COST and
+            count == 1 and
+            not player:hasKeyItem(xi.ki.PRISMATIC_HOURGLASS)
+        then
             player:startEvent(134)
 
         -- return timeless hourglass for refund
@@ -58,9 +62,15 @@ entity.onTrade = function(player, npc, trade)
             player:startEvent(153)
 
         -- currency exchanges
-        elseif count == xi.settings.main.CURRENCY_EXCHANGE_RATE and trade:hasItemQty(currency[1], xi.settings.main.CURRENCY_EXCHANGE_RATE) then
+        elseif
+            count == xi.settings.main.CURRENCY_EXCHANGE_RATE and
+            trade:hasItemQty(currency[1], xi.settings.main.CURRENCY_EXCHANGE_RATE)
+        then
             player:startEvent(135, xi.settings.main.CURRENCY_EXCHANGE_RATE)
-        elseif count == xi.settings.main.CURRENCY_EXCHANGE_RATE and trade:hasItemQty(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE) then
+        elseif
+            count == xi.settings.main.CURRENCY_EXCHANGE_RATE and
+            trade:hasItemQty(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
+        then
             player:startEvent(136, xi.settings.main.CURRENCY_EXCHANGE_RATE)
         elseif count == 1 and trade:hasItemQty(currency[3], 1) then
             player:startEvent(138, currency[3], currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
@@ -124,6 +134,7 @@ entity.onEventUpdate = function(player, csid, option)
                 player:addKeyItem(option)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, option)
             end
+
             player:updateEvent(xi.dynamis.getDynamisMapList(player), player:getGil())
 
         end
@@ -177,6 +188,7 @@ entity.onEventFinish = function(player, csid, option)
                     player:addItem(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE % 99)
                 end
             end
+
             player:messageSpecial(ID.text.ITEMS_OBTAINED, currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
         end
 
@@ -190,6 +202,7 @@ entity.onEventFinish = function(player, csid, option)
             player:addItem(item)
             player:messageSpecial(ID.text.ITEM_OBTAINED, item)
         end
+
         player:setLocalVar("hundoItemBought", 0)
 
     end

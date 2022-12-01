@@ -431,7 +431,7 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
 
     if (m_PBattleEntity->StatusEffectContainer->GetConfrontationEffect() != PTarget->StatusEffectContainer->GetConfrontationEffect() ||
         m_PBattleEntity->PBattlefield != PTarget->PBattlefield || m_PBattleEntity->PInstance != PTarget->PInstance ||
-        m_PBattleEntity->getBattleID() != PTarget->getBattleID())
+        ((m_findFlags & FINDFLAGS_IGNORE_BATTLEID) == FINDFLAGS_NONE && m_PBattleEntity->getBattleID() != PTarget->getBattleID()))
     {
         return false;
     }
@@ -456,6 +456,24 @@ bool CTargetFind::validEntity(CBattleEntity* PTarget)
     if (m_PTarget->allegiance != PTarget->allegiance)
     {
         return false;
+    }
+
+    if (PTarget->objtype == TYPE_MOB)
+    {
+        if (m_PBattleEntity &&
+            m_PBattleEntity->objtype == TYPE_PC &&
+            !static_cast<CCharEntity*>(m_PBattleEntity)->IsMobOwner(PTarget))
+        {
+            return false; // If character isn't allowed to attack don't count it.
+        }
+
+        if (m_PBattleEntity &&
+            m_PBattleEntity->PMaster &&
+            m_PBattleEntity->PMaster->objtype == TYPE_PC &&
+            !static_cast<CCharEntity*>(m_PBattleEntity->PMaster)->IsMobOwner(PTarget))
+        {
+            return false; // If pet's master isn't allowed to attack don't count it.
+        }
     }
 
     // shouldn't add if target is charmed by the enemy
@@ -587,7 +605,9 @@ CBattleEntity* CTargetFind::getValidTarget(uint16 actionTargetID, uint16 validTa
         return m_PBattleEntity->PPet;
     }
 
-    if (m_PBattleEntity->getBattleID() == PTarget->getBattleID() && PTarget->ValidTarget(m_PBattleEntity, validTargetFlags))
+    bool ignoreBattleId  = (validTargetFlags & TARGET_IGNORE_BATTLEID) == TARGET_IGNORE_BATTLEID;
+    bool hasSameBattleId = m_PBattleEntity->getBattleID() == PTarget->getBattleID();
+    if ((ignoreBattleId || hasSameBattleId) && PTarget->ValidTarget(m_PBattleEntity, validTargetFlags))
     {
         return PTarget;
     }

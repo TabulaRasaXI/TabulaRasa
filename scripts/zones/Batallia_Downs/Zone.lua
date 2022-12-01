@@ -20,14 +20,15 @@ local function registerRegionAroundNPC(zone, NPCID, zoneID)
     local z = npc:getZPos()
     local distance = 7
 
-    zone:registerRegion(zoneID,
+    zone:registerTriggerArea(zoneID,
         x - distance, y - distance, z - distance,
         x + distance, y + distance, z + distance)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.AHTU)
-    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800))
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.AHTU)
+    xi.mob.nmTODPersistCache(zone, ID.mob.WEEPING_WILLOW)
 
     -- Prepare everything for Full Speed Ahead!
     local syrillia   = zone:queryEntitiesByName("Syrillia")[1]
@@ -80,9 +81,9 @@ zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE105_ITEMS", 0)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     if player:hasStatusEffect(xi.effect.FULL_SPEED_AHEAD) then
-        xi.fsa.onRegionEnter(player, region:GetRegionID())
+        xi.fsa.onTriggerAreaEnter(player, triggerArea:GetTriggerAreaID())
     end
 end
 

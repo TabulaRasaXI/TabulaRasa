@@ -17,8 +17,8 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.BOWHO_WARMONGER)
-    xi.mob.NMPersistCache(ID.mob.BOWHO_WARMONGER)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.BOWHO_WARMONGER)
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
@@ -61,7 +61,7 @@ zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE109_ITEMS", 0)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

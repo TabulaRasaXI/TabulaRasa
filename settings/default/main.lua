@@ -189,13 +189,14 @@ xi.settings.main =
     COSMO_CLEANSE_BASE_COST     = 15000,    -- Base gil cost for a Cosmo Cleanse from Sagheera
 
     -- QUEST/MISSION SPECIFIC SETTINGS
-    AF1_QUEST_LEVEL = 40,    -- Minimum level to start AF1 quest
-    AF2_QUEST_LEVEL = 50,    -- Minimum level to start AF2 quest
-    AF3_QUEST_LEVEL = 50,    -- Minimum level to start AF3 quest
-    OLDSCHOOL_G1    = true, -- Set to true to require farming Exoray Mold, Bombd Coal, and Ancient Papyrus drops instead of allowing key item method.
-    OLDSCHOOL_G2    = true, -- Set true to require the NMs for "Atop the Highest Mountains" be dead to get KI like before SE changed it.
-    FRIGICITE_TIME  = 30,    -- When OLDSCHOOL_G2 is enabled, this is the time (in seconds) you have from killing Boreal NMs to click the "???" target.
-    ASSAULT_MINIMUM = 3,     -- Minimum amount of people needed to start an assault mission. TOAU era is 3, Default is 1.
+    AF1_QUEST_LEVEL     = 40,               -- Minimum level to start AF1 quest
+    AF2_QUEST_LEVEL     = 50,               -- Minimum level to start AF2 quest
+    AF3_QUEST_LEVEL     = 50,               -- Minimum level to start AF3 quest
+    ERA_CHOCOBOS_WOUNDS = true,             -- Era Chocobos Wounds wait times that requires waiting a full Vana'Diel day, set to false to have it be every Vana'Diel hour.
+    OLDSCHOOL_G1        = true,             -- Set to true to require farming Exoray Mold, Bombd Coal, and Ancient Papyrus drops instead of allowing key item method.
+    OLDSCHOOL_G2        = true,             -- Set true to require the NMs for "Atop the Highest Mountains" be dead to get KI like before SE changed it.
+    FRIGICITE_TIME      = 30,               -- When OLDSCHOOL_G2 is enabled, this is the time (in seconds) you have from killing Boreal NMs to click the "???" target.
+    ASSAULT_MINIMUM     = 3,                -- Minimum amount of people needed to start an assault mission. TOAU era is 3, Default is 1.
 
     -- SPELL SPECIFIC SETTINGS
     DIA_OVERWRITE                   = 1,     -- Set to 1 to allow Bio to overwrite same tier Dia.  Default is 1.
@@ -215,6 +216,8 @@ xi.settings.main =
     EXPLORER_MOOGLE_LV              = 0, -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
     HALLOWEEN_2005                  = 0,  -- Set to 1 to Enable the 2005 version of Harvest Festival, will start on Oct. 20 and end Nov. 1.
     HALLOWEEN_YEAR_ROUND            = 0,  -- Set to 1 to have Harvest Festival initialize outside of normal times.
+    STARLIGHT_2021                  = 0,  -- Set to 1 to enable the 2021 version of the Starlight Celebration. Dec. 16 through Dec. 31.
+    STARLIGHT_YEAR_ROUND            = 0,  -- Set to 1 to have the Starlight Celebration initialize outside of normal times.
 
     -- Login Campaign (Set to 0 if you don't want to run a Login Campaign)
     -- Please visit scripts/globals/events/login_campaign.lua for assigning the correct campaign dates.
@@ -240,7 +243,7 @@ xi.settings.main =
     HOMEPOINT_TELEPORT           = 0,    -- Enables the homepoint teleport system
     EQUIP_FROM_OTHER_CONTAINERS  = false, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
     ENM_COOLDOWN                 = 120,  -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
-    FORCE_SPAWN_QM_RESET_TIME    = 300,  -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
+    FORCE_SPAWN_QM_RESET_TIME    = 900,  -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
     GOBBIE_BOX_MIN_AGE           = 45,   -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
 
     -- Synergy

@@ -14,15 +14,21 @@ local entity = {}
 
 entity.onTrade = function(player, npc, trade)
     -- CHOCOBILIOUS
-    if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CHOCOBILIOUS) == QUEST_ACCEPTED and player:getCharVar("ChocobiliousQuest") == 1 and npcUtil.tradeHas(trade, 938) then
+    if
+        player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CHOCOBILIOUS) == QUEST_ACCEPTED and
+        player:getCharVar("ChocobiliousQuest") == 1 and
+        npcUtil.tradeHas(trade, 938)
+    then
         player:startEvent(229, 0, 938)
 
     -- PAYING LIP SERVICE
     elseif player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.PAYING_LIP_SERVICE) >= QUEST_ACCEPTED then
         if npcUtil.tradeHas(trade, { { 912, 3 } }) then -- beehive_chip
-            player:startEvent(479, 0, 912, 1016, 0, 0)
+            player:setLocalVar("lipService", 1)
+            player:startEvent(479, 0, 912, 1016, 0)
         elseif npcUtil.tradeHas(trade, { { 1016, 2 } }) then -- remi_shell
-            player:startEvent(479, 0, 912, 1016, 0, 1)
+            player:setLocalVar("lipService", 2)
+            player:startEvent(479, 0, 912, 1016, 0)
         end
     end
 end
@@ -73,7 +79,8 @@ entity.onEventFinish = function(player, csid, option)
             player:addFame(xi.quest.fame_area.WINDURST, 8)
         end
 
-        if option == 1 then
+        local reward = player:getLocalVar("lipService")
+        if reward == 1 then
             player:addGil(xi.settings.main.GIL_RATE * 150)
             player:messageSpecial(ID.text.GIL_OBTAINED, xi.settings.main.GIL_RATE * 150)
         else

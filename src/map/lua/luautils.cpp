@@ -37,62 +37,62 @@
 #include "lua_item.h"
 #include "lua_mobskill.h"
 #include "lua_petskill.h"
-#include "lua_region.h"
 #include "lua_spell.h"
 #include "lua_statuseffect.h"
 #include "lua_trade_container.h"
+#include "lua_trigger_area.h"
 #include "lua_zone.h"
 #include "luautils.h"
 
-#include "../ability.h"
-#include "../ai/ai_container.h"
-#include "../ai/states/ability_state.h"
-#include "../ai/states/attack_state.h"
-#include "../ai/states/death_state.h"
-#include "../ai/states/inactive_state.h"
-#include "../ai/states/item_state.h"
-#include "../ai/states/magic_state.h"
-#include "../ai/states/mobskill_state.h"
-#include "../ai/states/raise_state.h"
-#include "../ai/states/range_state.h"
-#include "../ai/states/respawn_state.h"
-#include "../ai/states/weaponskill_state.h"
-#include "../alliance.h"
-#include "../battlefield.h"
-#include "../campaign_system.h"
-#include "../conquest_system.h"
-#include "../daily_system.h"
-#include "../entities/automatonentity.h"
-#include "../entities/baseentity.h"
-#include "../entities/charentity.h"
-#include "../entities/mobentity.h"
-#include "../instance.h"
-#include "../items/item_puppet.h"
-#include "../map.h"
-#include "../message.h"
-#include "../mobskill.h"
-#include "../packets/action.h"
-#include "../packets/char_emotion.h"
-#include "../packets/char_update.h"
-#include "../packets/entity_update.h"
-#include "../packets/entity_visual.h"
-#include "../packets/menu_raisetractor.h"
-#include "../party.h"
-#include "../petskill.h"
-#include "../roe.h"
-#include "../spell.h"
-#include "../status_effect_container.h"
-#include "../timetriggers.h"
-#include "../transport.h"
-#include "../utils/battleutils.h"
-#include "../utils/charutils.h"
-#include "../utils/instanceutils.h"
-#include "../utils/itemutils.h"
-#include "../utils/moduleutils.h"
-#include "../utils/serverutils.h"
-#include "../utils/zoneutils.h"
-#include "../vana_time.h"
-#include "../weapon_skill.h"
+#include "ability.h"
+#include "ai/ai_container.h"
+#include "ai/states/ability_state.h"
+#include "ai/states/attack_state.h"
+#include "ai/states/death_state.h"
+#include "ai/states/inactive_state.h"
+#include "ai/states/item_state.h"
+#include "ai/states/magic_state.h"
+#include "ai/states/mobskill_state.h"
+#include "ai/states/raise_state.h"
+#include "ai/states/range_state.h"
+#include "ai/states/respawn_state.h"
+#include "ai/states/weaponskill_state.h"
+#include "alliance.h"
+#include "battlefield.h"
+#include "campaign_system.h"
+#include "conquest_system.h"
+#include "daily_system.h"
+#include "entities/automatonentity.h"
+#include "entities/baseentity.h"
+#include "entities/charentity.h"
+#include "entities/mobentity.h"
+#include "instance.h"
+#include "items/item_puppet.h"
+#include "map.h"
+#include "message.h"
+#include "mobskill.h"
+#include "packets/action.h"
+#include "packets/char_emotion.h"
+#include "packets/char_update.h"
+#include "packets/entity_update.h"
+#include "packets/entity_visual.h"
+#include "packets/menu_raisetractor.h"
+#include "party.h"
+#include "petskill.h"
+#include "roe.h"
+#include "spell.h"
+#include "status_effect_container.h"
+#include "timetriggers.h"
+#include "transport.h"
+#include "utils/battleutils.h"
+#include "utils/charutils.h"
+#include "utils/instanceutils.h"
+#include "utils/itemutils.h"
+#include "utils/moduleutils.h"
+#include "utils/serverutils.h"
+#include "utils/zoneutils.h"
+#include "vana_time.h"
+#include "weapon_skill.h"
 
 namespace luautils
 {
@@ -186,6 +186,7 @@ namespace luautils
         lua.set_function("GetContainerFilenamesList", &luautils::GetContainerFilenamesList);
         lua.set_function("GetCachedInstanceScript", &luautils::GetCachedInstanceScript);
         lua.set_function("GetItemIDByName", &luautils::GetItemIDByName);
+        lua.set_function("GetItemNameByID", &luautils::GetItemNameByID);
         lua.set_function("SendLuaFuncStringToZone", &luautils::SendLuaFuncStringToZone);
 
         // This binding specifically exists to forcefully crash the server.
@@ -212,7 +213,7 @@ namespace luautils
         CLuaInstance::Register();
         CLuaMobSkill::Register();
         CLuaPetSkill::Register();
-        CLuaRegion::Register();
+        CLuaTriggerArea::Register();
         CLuaSpell::Register();
         CLuaStatusEffect::Register();
         CLuaTradeContainer::Register();
@@ -225,11 +226,11 @@ namespace luautils
         roeutils::init(); // TODO: Get rid of the need to do this
 
         // Then the rest...
-        for (auto entry : std::filesystem::directory_iterator("./scripts/globals"))
+        for (auto const& entry : sorted_directory_iterator<std::filesystem::directory_iterator>("./scripts/globals"))
         {
-            if (entry.path().extension() == ".lua")
+            if (entry.extension() == ".lua")
             {
-                auto relative_path_string = entry.path().relative_path().generic_string();
+                auto relative_path_string = entry.relative_path().generic_string();
 
                 ShowTrace("Loading global script %s", relative_path_string);
 
@@ -249,11 +250,11 @@ namespace luautils
 
         if (gLoadAllLua) // Load all lua files (for sanity testing, no need for during regular use)
         {
-            for (auto entry : std::filesystem::recursive_directory_iterator("./scripts"))
+            for (auto const& entry : sorted_directory_iterator<std::filesystem::recursive_directory_iterator>("./scripts"))
             {
-                if (entry.path().extension() == ".lua")
+                if (entry.extension() == ".lua")
                 {
-                    auto result = lua.safe_script_file(entry.path().relative_path().generic_string());
+                    auto result = lua.safe_script_file(entry.relative_path().generic_string());
                     if (!result.valid())
                     {
                         sol::error err = result;
@@ -354,9 +355,9 @@ namespace luautils
         // "scripts/battlefields/(zone)/(filename).lua"
         auto scrapeSubdir = [&](std::string subFolder) -> void
         {
-            for (auto const& entry : std::filesystem::recursive_directory_iterator(subFolder))
+            for (auto const& entry : sorted_directory_iterator<std::filesystem::recursive_directory_iterator>(subFolder))
             {
-                auto path = entry.path().relative_path();
+                auto path = entry.relative_path();
 
                 // TODO(compiler updates):
                 // entry.depth() is not yet available in all of our compilers
@@ -364,7 +365,7 @@ namespace luautils
 
                 bool isHelpersFile = path.filename() == "helpers.lua";
 
-                if (!entry.is_directory() &&
+                if (!std::filesystem::is_directory(path) &&
                     path.extension() == ".lua" &&
                     depth == 4 &&
                     !isHelpersFile)
@@ -385,12 +386,12 @@ namespace luautils
     {
         TracyZoneScoped;
         TracyZoneString(funcName);
-        TracyZoneIString(PEntity->GetName());
+        TracyZoneString(PEntity->GetName());
 
         if (PEntity->objtype == TYPE_NPC)
         {
-            std::string zone_name = (const char*)PEntity->loc.zone->GetName();
-            std::string npc_name  = (const char*)PEntity->GetName();
+            std::string zone_name = PEntity->loc.zone->GetName();
+            std::string npc_name  = PEntity->GetName();
 
             if (auto cached_func = lua["xi"]["zones"][zone_name]["npcs"][npc_name][funcName]; cached_func.valid())
             {
@@ -399,8 +400,8 @@ namespace luautils
         }
         else if (PEntity->objtype == TYPE_MOB)
         {
-            std::string zone_name = (const char*)PEntity->loc.zone->GetName();
-            std::string mob_name  = (const char*)PEntity->GetName();
+            std::string zone_name = PEntity->loc.zone->GetName();
+            std::string mob_name  = PEntity->GetName();
 
             if (auto cached_func = lua["xi"]["zones"][zone_name]["mobs"][mob_name][funcName]; cached_func.valid())
             {
@@ -418,7 +419,7 @@ namespace luautils
         }
         else if (PEntity->objtype == TYPE_TRUST)
         {
-            std::string mob_name = (const char*)PEntity->GetName();
+            std::string mob_name = PEntity->GetName();
 
             if (auto cached_func = lua["xi"]["globals"]["spells"]["trust"][mob_name][funcName]; cached_func.valid())
             {
@@ -434,9 +435,9 @@ namespace luautils
     {
         TracyZoneScoped;
         TracyZoneString(funcName);
-        TracyZoneIString(PSpell->getName());
+        TracyZoneString(PSpell->getName());
 
-        auto name = (const char*)PSpell->getName();
+        auto name = PSpell->getName();
 
         std::string switchKey = "";
         switch (PSpell->getSpellGroup())
@@ -739,16 +740,14 @@ namespace luautils
         std::string filename;
         if (PEntity->objtype == TYPE_NPC)
         {
-            // TODO: These int8 string need to die.
-            std::string zone_name = (const char*)PEntity->loc.zone->GetName();
-            std::string npc_name  = (const char*)PEntity->GetName();
+            std::string zone_name = PEntity->loc.zone->GetName();
+            std::string npc_name  = PEntity->GetName();
             filename              = fmt::format("./scripts/zones/{}/npcs/{}.lua", zone_name, npc_name);
         }
         else if (PEntity->objtype == TYPE_MOB)
         {
-            // TODO: These int8 string need to die.
-            std::string zone_name = (const char*)PEntity->loc.zone->GetName();
-            std::string mob_name  = (const char*)PEntity->GetName();
+            std::string zone_name = PEntity->loc.zone->GetName();
+            std::string mob_name  = PEntity->GetName();
             filename              = fmt::format("./scripts/zones/{}/mobs/{}.lua", zone_name, mob_name);
         }
         else if (PEntity->objtype == TYPE_PET)
@@ -758,7 +757,7 @@ namespace luautils
         }
         else if (PEntity->objtype == TYPE_TRUST)
         {
-            std::string mob_name = (const char*)PEntity->GetName();
+            std::string mob_name = PEntity->GetName();
             filename             = fmt::format("./scripts/globals/spells/trust/{}.lua", PEntity->GetName());
         }
 
@@ -775,7 +774,7 @@ namespace luautils
         // clang-format off
         auto handleZone = [&](CZone* PZone)
         {
-            auto zoneName = std::string((const char*)PZone->GetName());
+            auto zoneName = PZone->GetName();
             auto result   = lua.safe_script_file(fmt::format("scripts/zones/{}/IDs.lua", zoneName));
             if (result.valid() && zoneName != "Residential_Area")
             {
@@ -1526,7 +1525,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        CCharEntity* PTargetChar = zoneutils::GetCharByName((int8*)name.c_str());
+        CCharEntity* PTargetChar = zoneutils::GetCharByName(name.c_str());
 
         if (PTargetChar != nullptr)
         {
@@ -1627,7 +1626,7 @@ namespace luautils
             {
                 while (sql->NextRow() == SQL_SUCCESS)
                 {
-                    magianColumns.push_back((const char*)sql->GetData(0));
+                    magianColumns.push_back(sql->GetStringData(0));
                 }
             }
             else
@@ -1769,7 +1768,7 @@ namespace luautils
         TracyZoneScoped;
 
         CZone* PZone = zoneutils::GetZone(ZoneID);
-        auto   name  = (const char*)PZone->GetName();
+        auto   name  = PZone->GetName();
 
         auto filename = fmt::format("./scripts/zones/{}/Zone.lua", name);
 
@@ -1802,7 +1801,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PZone->GetName();
+        auto name = PZone->GetName();
 
         auto filename = fmt::format("./scripts/zones/{}/Zone.lua", name);
 
@@ -1858,7 +1857,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name     = PChar->m_moghouseID ? "Residential_Area" : (const char*)zoneutils::GetZone(PChar->loc.destination)->GetName();
+        auto name     = PChar->m_moghouseID ? "Residential_Area" : zoneutils::GetZone(PChar->loc.destination)->GetName();
         auto filename = fmt::format("./scripts/zones/{}/Zone.lua", name);
 
         auto onZoneInFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onZoneIn"];
@@ -1876,8 +1875,9 @@ namespace luautils
         {
             auto resultTable = result.get<sol::table>();
 
-            PChar->currentEvent->eventId   = resultTable.get_or(1, -1);
-            PChar->currentEvent->textTable = resultTable.get_or(2, -1);
+            PChar->currentEvent->eventId    = resultTable.get_or(1, -1);
+            PChar->currentEvent->textTable  = resultTable.get_or(2, -1);
+            PChar->currentEvent->eventFlags = resultTable.get_or(3, 0);
         }
         else if (result.get_type() == sol::type::number)
         {
@@ -1889,7 +1889,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name     = (const char*)PChar->loc.zone->GetName();
+        auto name     = PChar->loc.zone->GetName();
         auto filename = fmt::format("./scripts/zones/{}/Zone.lua", name);
 
         auto afterZoneInFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["afterZoneIn"];
@@ -1907,7 +1907,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name     = (const char*)PChar->loc.zone->GetName();
+        auto name     = PChar->loc.zone->GetName();
         auto filename = fmt::format("./scripts/zones/{}/Zone.lua", name);
 
         auto onZoneOutFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onZoneOut"];
@@ -1924,11 +1924,11 @@ namespace luautils
 
     /************************************************************************
      *                                                                       *
-     *  The character has entered the active region                          *
+     *  The character has entered the active trigger area                    *
      *                                                                       *
      ************************************************************************/
 
-    int32 OnRegionEnter(CCharEntity* PChar, CRegion* PRegion)
+    int32 OnTriggerAreaEnter(CCharEntity* PChar, CTriggerArea* PTriggerArea)
     {
         TracyZoneScoped;
 
@@ -1936,39 +1936,39 @@ namespace luautils
         if (PChar->PInstance)
         {
             filename =
-                std::string("./scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/instances/" + (const char*)PChar->PInstance->GetName() + ".lua";
+                std::string("./scripts/zones/") + PChar->loc.zone->GetName() + "/instances/" + PChar->PInstance->GetName() + ".lua";
         }
         else
         {
-            filename = std::string("./scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/Zone.lua";
+            filename = std::string("./scripts/zones/") + PChar->loc.zone->GetName() + "/Zone.lua";
         }
 
         // player may be entering because of an earlier event (event that changes position)
-        // these should probably not call another event from onRegionEnter (use onEventFinish instead)
+        // these should probably not call another event from onTriggerAreaEnter (use onEventFinish instead)
         if (!PChar->isInEvent())
         {
             PChar->eventPreparation->scriptFile = filename;
         }
 
-        auto name = (const char*)PChar->loc.zone->GetName();
+        auto name = PChar->loc.zone->GetName();
 
-        sol::function onRegionEnter;
+        sol::function onTriggerAreaEnter;
         if (PChar->PInstance)
         {
-            auto instance_name = (const char*)PChar->PInstance->GetName();
-            onRegionEnter      = lua["xi"]["zones"][name]["instance"][instance_name]["onRegionEnter"];
+            auto instance_name = PChar->PInstance->GetName();
+            onTriggerAreaEnter = lua["xi"]["zones"][name]["instance"][instance_name]["onTriggerAreaEnter"];
         }
         else
         {
-            onRegionEnter = lua["xi"]["zones"][name]["Zone"]["onRegionEnter"];
+            onTriggerAreaEnter = lua["xi"]["zones"][name]["Zone"]["onTriggerAreaEnter"];
         }
 
-        auto onRegionEnterFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onRegionEnter"];
-        auto result                 = onRegionEnterFramework(CLuaBaseEntity(PChar), CLuaRegion(PRegion), onRegionEnter);
+        auto onTriggerAreaEnterFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onTriggerAreaEnter"];
+        auto result                      = onTriggerAreaEnterFramework(CLuaBaseEntity(PChar), CLuaTriggerArea(PTriggerArea), onTriggerAreaEnter);
         if (!result.valid())
         {
             sol::error err = result;
-            ShowError("luautils::onRegionEnter: %s", err.what());
+            ShowError("luautils::onTriggerAreaEnter: %s", err.what());
             return -1;
         }
 
@@ -1977,11 +1977,11 @@ namespace luautils
 
     /************************************************************************
      *                                                                       *
-     *  The character has left the active region                             *
+     *  The character has left the active trigger area                       *
      *                                                                       *
      ************************************************************************/
 
-    int32 OnRegionLeave(CCharEntity* PChar, CRegion* PRegion)
+    int32 OnTriggerAreaLeave(CCharEntity* PChar, CTriggerArea* PTriggerArea)
     {
         TracyZoneScoped;
 
@@ -1989,11 +1989,11 @@ namespace luautils
         if (PChar->PInstance)
         {
             filename =
-                std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/instances/" + (const char*)PChar->PInstance->GetName() + ".lua";
+                std::string("scripts/zones/") + PChar->loc.zone->GetName() + "/instances/" + PChar->PInstance->GetName() + ".lua";
         }
         else
         {
-            filename = std::string("scripts/zones/") + (const char*)PChar->loc.zone->GetName() + "/Zone.lua";
+            filename = std::string("scripts/zones/") + PChar->loc.zone->GetName() + "/Zone.lua";
         }
 
         // player may be leaving because of an earlier event (event that changes position)
@@ -2002,26 +2002,26 @@ namespace luautils
             PChar->eventPreparation->scriptFile = filename;
         }
 
-        auto name   = (const char*)PChar->loc.zone->GetName();
-        auto zoneId = (const uint16*)PChar->loc.zone->GetID();
+        auto name   = PChar->loc.zone->GetName();
+        auto zoneId = PChar->loc.zone->GetID();
 
-        sol::function onRegionLeave;
-        if (PChar->PInstance && zoneId == (const uint16*)PChar->PInstance->GetZone()->GetID())
+        sol::function onTriggerAreaLeave;
+        if (PChar->PInstance && zoneId == PChar->PInstance->GetZone()->GetID())
         {
-            auto instance_name = (const char*)PChar->PInstance->GetName();
-            onRegionLeave      = lua["xi"]["zones"][name]["instance"][instance_name]["onRegionLeave"];
+            auto instance_name = PChar->PInstance->GetName();
+            onTriggerAreaLeave = lua["xi"]["zones"][name]["instance"][instance_name]["onTriggerAreaLeave"];
         }
         else
         {
-            onRegionLeave = lua["xi"]["zones"][name]["Zone"]["onRegionLeave"];
+            onTriggerAreaLeave = lua["xi"]["zones"][name]["Zone"]["onTriggerAreaLeave"];
         }
 
-        auto onRegionLeaveFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onRegionLeave"];
-        auto result                 = onRegionLeaveFramework(CLuaBaseEntity(PChar), CLuaRegion(PRegion), onRegionLeave);
+        auto onTriggerAreaLeaveFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onTriggerAreaLeave"];
+        auto result                      = onTriggerAreaLeaveFramework(CLuaBaseEntity(PChar), CLuaTriggerArea(PTriggerArea), onTriggerAreaLeave);
         if (!result.valid())
         {
             sol::error err = result;
-            ShowError("luautils::onRegionLeave: %s", err.what());
+            ShowError("luautils::onTriggerAreaLeave: %s", err.what());
             return -1;
         }
 
@@ -2044,8 +2044,8 @@ namespace luautils
             return 0;
         }
 
-        auto        zone = (const char*)PChar->loc.zone->GetName();
-        auto        name = (const char*)PNpc->GetName();
+        auto        zone = PChar->loc.zone->GetName();
+        auto        name = PNpc->GetName();
         std::string pathFormat;
         switch (PNpc->objtype)
         {
@@ -2241,8 +2241,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone     = (const char*)PChar->loc.zone->GetName();
-        auto name     = (const char*)PNpc->GetName();
+        auto zone     = PChar->loc.zone->GetName();
+        auto name     = PNpc->GetName();
         auto filename = fmt::format("./scripts/zones/{}/npcs/{}.lua", zone, name);
 
         PChar->eventPreparation->targetEntity = PNpc;
@@ -2297,8 +2297,8 @@ namespace luautils
         sol::function onAdditionalEffect;
         if (PAttacker->objtype == TYPE_MOB)
         {
-            auto zone          = (const char*)PAttacker->loc.zone->GetName();
-            auto name          = (const char*)PAttacker->GetName();
+            auto zone          = PAttacker->loc.zone->GetName();
+            auto name          = PAttacker->GetName();
             onAdditionalEffect = lua[sol::create_if_nil]["xi"]["zones"][zone]["mobs"][name]["onAdditionalEffect"];
         }
 
@@ -2327,8 +2327,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PDefender->loc.zone->GetName();
-        auto name = (const char*)PDefender->GetName();
+        auto zone = PDefender->loc.zone->GetName();
+        auto name = PDefender->GetName();
 
         auto onSpikesDamage = lua["xi"]["zones"][zone]["mobs"][name]["onSpikesDamage"];
         if (!onSpikesDamage.valid())
@@ -2481,7 +2481,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)attachment->getName();
+        auto name = attachment->getName();
 
         auto onEquip = lua["xi"]["globals"]["abilities"]["pets"]["attachments"][name]["onEquip"];
         if (!onEquip.valid())
@@ -2504,7 +2504,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)attachment->getName();
+        auto name = attachment->getName();
 
         auto onUnequip = lua["xi"]["globals"]["abilities"]["pets"]["attachments"][name]["onUnequip"];
         if (!onUnequip.valid())
@@ -2527,7 +2527,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)attachment->getName();
+        auto name = attachment->getName();
 
         auto onManeuverGain = lua["xi"]["globals"]["abilities"]["pets"]["attachments"][name]["onManeuverGain"];
         if (!onManeuverGain.valid())
@@ -2550,7 +2550,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)attachment->getName();
+        auto name = attachment->getName();
 
         auto onManeuverLose = lua["xi"]["globals"]["abilities"]["pets"]["attachments"][name]["onManeuverLose"];
         if (!onManeuverLose.valid())
@@ -2573,7 +2573,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)attachment->getName();
+        auto name = attachment->getName();
 
         auto onUpdate = lua["xi"]["globals"]["abilities"]["pets"]["attachments"][name]["onUpdate"];
         if (!onUpdate.valid())
@@ -2953,8 +2953,8 @@ namespace luautils
         lua.set("mixins", sol::lua_nil);
         lua.set("mixinOptions", sol::lua_nil);
 
-        auto zone_name = (const char*)PMob->loc.zone->GetName();
-        auto name      = (const char*)PMob->GetName();
+        auto zone_name = PMob->loc.zone->GetName();
+        auto name      = PMob->GetName();
 
         auto filename = fmt::format("./scripts/zones/{}/mobs/{}.lua", zone_name, name);
 
@@ -3159,7 +3159,7 @@ namespace luautils
             return -1;
         }
 
-        auto zone = (const char*)PBattlefield->GetZone()->GetName();
+        auto zone = PBattlefield->GetZone()->GetName();
         auto name = PBattlefield->GetName();
 
         // TODO: This will happen more often than needed, but not so often that it's a performance concern
@@ -3192,7 +3192,7 @@ namespace luautils
             return -1;
         }
 
-        auto zone    = (const char*)PBattlefield->GetZone()->GetName();
+        auto zone    = PBattlefield->GetZone()->GetName();
         auto name    = PBattlefield->GetName();
         auto seconds = std::chrono::duration_cast<std::chrono::seconds>(PBattlefield->GetTimeInside()).count();
 
@@ -3228,7 +3228,7 @@ namespace luautils
             return -1;
         }
 
-        auto zone = (const char*)PBattlefield->GetZone()->GetName();
+        auto zone = PBattlefield->GetZone()->GetName();
         auto name = PBattlefield->GetName();
 
         auto onBattlefieldStatusChange = lua["xi"]["zones"][zone]["bcnms"][name]["onBattlefieldStatusChange"];
@@ -3443,9 +3443,8 @@ namespace luautils
             return -1;
         }
 
-        // TODO: These int8 string need to die.
-        std::string zone_name = (const char*)PMob->loc.zone->GetName();
-        std::string mob_name  = (const char*)PMob->GetName();
+        std::string zone_name = PMob->loc.zone->GetName();
+        std::string mob_name  = PMob->GetName();
 
         CCharEntity* PChar = dynamic_cast<CCharEntity*>(PKiller);
 
@@ -3648,7 +3647,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PZone->GetName();
+        auto name = PZone->GetName();
 
         auto onGameDay = lua["xi"]["zones"][name]["Zone"]["onGameDay"];
         if (!onGameDay.valid())
@@ -3677,7 +3676,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PZone->GetName();
+        auto name = PZone->GetName();
 
         auto onGameHour = lua["xi"]["zones"][name]["Zone"]["onGameHour"];
         if (!onGameHour.valid())
@@ -3700,7 +3699,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)zoneutils::GetZone(ZoneID)->GetName();
+        auto name = zoneutils::GetZone(ZoneID)->GetName();
 
         auto onZoneWeatherChange = lua["xi"]["zones"][name]["Zone"]["onZoneWeatherChange"];
         if (!onZoneWeatherChange.valid())
@@ -3723,7 +3722,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)zoneutils::GetZone(ZoneID)->GetName();
+        auto name = zoneutils::GetZone(ZoneID)->GetName();
 
         auto onTOTDChange = lua["xi"]["zones"][name]["Zone"]["onTOTDChange"];
         if (!onTOTDChange.valid())
@@ -3747,7 +3746,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)wskill->getName();
+        auto name = wskill->getName();
 
         auto onUseWeaponSkill = lua["xi"]["globals"]["weaponskills"][name]["onUseWeaponSkill"];
         if (!onUseWeaponSkill.valid())
@@ -3820,8 +3819,8 @@ namespace luautils
 
         // Mob Script
         {
-            auto zone = (const char*)PMob->loc.zone->GetName();
-            auto name = (const char*)PMob->GetName();
+            auto zone = PMob->loc.zone->GetName();
+            auto name = PMob->GetName();
 
             auto onMobWeaponSkill = lua["xi"]["zones"][zone]["mobs"][name]["onMobWeaponSkill"];
             if (onMobWeaponSkill.valid())
@@ -3837,7 +3836,7 @@ namespace luautils
         }
 
         // Mob Skill Script
-        auto mobskill_name = (const char*)PMobSkill->getName();
+        auto mobskill_name = PMobSkill->getName();
 
         auto onMobWeaponSkill = lua["xi"]["globals"]["mobskills"][mobskill_name]["onMobWeaponSkill"];
         if (!onMobWeaponSkill.valid())
@@ -3860,7 +3859,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PMobSkill->getName();
+        auto name = PMobSkill->getName();
 
         auto onMobSkillCheck = lua["xi"]["globals"]["mobskills"][name]["onMobSkillCheck"];
         if (!onMobSkillCheck.valid())
@@ -3883,8 +3882,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PMob->loc.zone->GetName();
-        auto name = (const char*)PMob->GetName();
+        auto zone = PMob->loc.zone->GetName();
+        auto name = PMob->GetName();
 
         auto onMobSkillTarget = lua["xi"]["zones"][zone]["mobs"][name]["onMobSkillTarget"];
         if (!onMobSkillTarget.valid())
@@ -3914,7 +3913,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto filename = fmt::format("./scripts/globals/abilities/pets/automaton/{}.lua", (const char*)PMobSkill->getName());
+        auto filename = fmt::format("./scripts/globals/abilities/pets/automaton/{}.lua", PMobSkill->getName());
 
         sol::function onAutomatonAbilityCheck = GetCacheEntryFromFilename(filename)["onAutomatonAbilityCheck"];
         if (!onAutomatonAbilityCheck.valid())
@@ -3935,7 +3934,7 @@ namespace luautils
 
     int32 OnAutomatonAbility(CBaseEntity* PTarget, CBaseEntity* PMob, CMobSkill* PMobSkill, CBaseEntity* PMobMaster, action_t* action)
     {
-        auto filename = fmt::format("./scripts/globals/abilities/pets/automaton/{}.lua", (const char*)PMobSkill->getName());
+        auto filename = fmt::format("./scripts/globals/abilities/pets/automaton/{}.lua", PMobSkill->getName());
 
         sol::function onAutomatonAbility = GetCacheEntryFromFilename(filename)["onAutomatonAbility"];
         if (!onAutomatonAbility.valid())
@@ -4236,7 +4235,7 @@ namespace luautils
 
         CZone* PZone = PInstance->GetZone();
 
-        auto name = (const char*)PZone->GetName();
+        auto name = PZone->GetName();
 
         auto onInstanceZoneIn = lua["xi"]["zones"][name]["Zone"]["onInstanceZoneIn"];
         if (!onInstanceZoneIn.valid())
@@ -4261,8 +4260,8 @@ namespace luautils
 
         TracyZoneScoped;
 
-        auto zone     = (const char*)PChar->loc.zone->GetName();
-        auto instance = (const char*)PChar->PInstance->GetName();
+        auto zone     = PChar->loc.zone->GetName();
+        auto instance = PChar->PInstance->GetName();
 
         auto afterInstanceRegister = lua["xi"]["zones"][zone]["instances"][instance]["afterInstanceRegister"];
         if (!afterInstanceRegister.valid())
@@ -4282,7 +4281,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PZone->GetName();
+        auto name = PZone->GetName();
 
         auto onInstanceLoadFailed = lua["xi"]["zones"][name]["Zone"]["onInstanceLoadFailed"];
         if (!onInstanceLoadFailed.valid())
@@ -4387,8 +4386,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PInstance->GetZone()->GetName();
-        auto name = (const char*)PInstance->GetName();
+        auto zone = PInstance->GetZone()->GetName();
+        auto name = PInstance->GetName();
 
         auto onInstanceCreated = lua["xi"]["zones"][zone]["instances"][name]["onInstanceCreated"];
         if (!onInstanceCreated.valid())
@@ -4411,8 +4410,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PInstance->GetZone()->GetName();
-        auto name = (const char*)PInstance->GetName();
+        auto zone = PInstance->GetZone()->GetName();
+        auto name = PInstance->GetName();
 
         auto onInstanceProgressUpdate = lua["xi"]["zones"][zone]["instances"][name]["onInstanceProgressUpdate"];
         if (!onInstanceProgressUpdate.valid())
@@ -4435,8 +4434,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PInstance->GetZone()->GetName();
-        auto name = (const char*)PInstance->GetName();
+        auto zone = PInstance->GetZone()->GetName();
+        auto name = PInstance->GetName();
 
         auto onInstanceStageChange = lua["xi"]["zones"][zone]["instances"][name]["onInstanceStageChange"];
         if (!onInstanceStageChange.valid())
@@ -4459,8 +4458,8 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PInstance->GetZone()->GetName();
-        auto name = (const char*)PInstance->GetName();
+        auto zone = PInstance->GetZone()->GetName();
+        auto name = PInstance->GetName();
 
         auto onInstanceComplete = lua["xi"]["zones"][zone]["instances"][name]["onInstanceComplete"];
         if (!onInstanceComplete.valid())
@@ -4525,7 +4524,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PChar->loc.zone->GetName();
+        auto name = PChar->loc.zone->GetName();
 
         auto onTransportEvent = lua["xi"]["zones"][name]["Zone"]["onTransportEvent"];
         if (!onTransportEvent.valid())
@@ -4567,7 +4566,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PZone->GetName();
+        auto name = PZone->GetName();
 
         auto onConquestUpdate = lua["xi"]["zones"][name]["Zone"]["onConquestUpdate"];
         if (!onConquestUpdate.valid())
@@ -4623,7 +4622,7 @@ namespace luautils
 
         CZone* PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
-        auto zone = (const char*)PZone->GetName();
+        auto zone = PZone->GetName();
         auto name = PBattlefield->GetName();
 
         auto onBattlefieldEnter = lua["xi"]["zones"][zone]["bcnms"][name]["onBattlefieldEnter"];
@@ -4659,7 +4658,7 @@ namespace luautils
 
         auto filename = fmt::format("./scripts/zones/{}/bcnms/{}.lua", PZone->GetName(), PBattlefield->GetName());
 
-        auto zone = (const char*)PZone->GetName();
+        auto zone = PZone->GetName();
         auto name = PBattlefield->GetName();
 
         auto onBattlefieldLeave = lua["xi"]["zones"][zone]["bcnms"][name]["onBattlefieldLeave"];
@@ -4707,7 +4706,7 @@ namespace luautils
 
         CZone* PZone = PChar->loc.zone == nullptr ? zoneutils::GetZone(PChar->loc.destination) : PChar->loc.zone;
 
-        auto zone = (const char*)PZone->GetName();
+        auto zone = PZone->GetName();
         auto name = PBattlefield->GetName();
 
         auto onBattlefieldRegister = lua["xi"]["zones"][zone]["bcnms"][name]["onBattlefieldRegister"];
@@ -4732,7 +4731,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto zone = (const char*)PBattlefield->GetZone()->GetName();
+        auto zone = PBattlefield->GetZone()->GetName();
         auto name = PBattlefield->GetName();
 
         auto onBattlefieldDestroy = lua["xi"]["zones"][zone]["bcnms"][name]["onBattlefieldDestroy"];
@@ -5063,7 +5062,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PChar->loc.zone->GetName();
+        auto name = PChar->loc.zone->GetName();
 
         auto onChocoboDig = lua["xi"]["zones"][name]["Zone"]["onChocoboDig"];
         if (!onChocoboDig.valid())
@@ -5152,7 +5151,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PItem->getName();
+        auto name = PItem->getName();
 
         auto onFurniturePlaced = lua["xi"]["globals"]["items"][name]["onFurniturePlaced"];
         if (!onFurniturePlaced.valid())
@@ -5173,7 +5172,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        auto name = (const char*)PItem->getName();
+        auto name = PItem->getName();
 
         auto onFurnitureRemoved = lua["xi"]["globals"]["items"][name]["onFurnitureRemoved"];
         if (!onFurnitureRemoved.valid())
@@ -5310,6 +5309,20 @@ namespace luautils
         }
 
         return id;
+    }
+
+    std::string GetItemNameByID(uint16 const& id)
+    {
+        std::string name  = "";
+        const char* Query = "SELECT name FROM item_basic WHERE itemid = %d;";
+        int32       ret   = sql->Query(Query, id);
+
+        if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+        {
+            name = sql->GetStringData(0);
+        }
+
+        return name;
     }
 
 }; // namespace luautils

@@ -10,8 +10,8 @@ require("scripts/globals/mobs")
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.MORBOLGER)
-    xi.mob.NMPersistCache(ID.mob.MORBOLGER)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.MORBOLGER)
 
     xi.treasure.initZone(zone)
 end
@@ -34,7 +34,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

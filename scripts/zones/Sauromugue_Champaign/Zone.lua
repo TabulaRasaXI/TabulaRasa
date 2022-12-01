@@ -16,9 +16,9 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.ROC)
---    GetMobByID(ID.mob.ROC):setRespawnTime(math.random(900, 10800))
-    xi.mob.NMPersistCache(ID.mob.ROC)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.ROC)
+
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
     xi.voidwalker.zoneOnInit(zone)
 end
@@ -45,7 +45,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onGameDay = function(zone)

@@ -10,6 +10,7 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 require("scripts/globals/status")
 require("scripts/globals/titles")
+require("scripts/globals/events/starlight_celebrations")
 -----------------------------------
 local entity = {}
 
@@ -22,12 +23,20 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.npcGiftsNpcOnTrigger(player, 4)
+        return
+    end
+
     local lvl = player:getMainLvl()
     local aSquiresTest = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_SQUIRE_S_TEST)
     local aSquiresTestII = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_SQUIRE_S_TEST_II)
     local aKnightsTest = player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.A_KNIGHT_S_TEST)
 
-    if player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.KNIGHT_STALKER) == QUEST_ACCEPTED and player:getCharVar("KnightStalker_Progress") == 2 then
+    if
+        player:getQuestStatus(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.KNIGHT_STALKER) == QUEST_ACCEPTED and
+        player:getCharVar("KnightStalker_Progress") == 2
+    then
         player:startEvent(63) -- DRG AF3 cutscene, doesn't appear to have a follow up.
     elseif lvl < 7 then
         player:startEvent(668)
@@ -44,7 +53,7 @@ entity.onTrigger = function(player, npc)
     elseif lvl >= 7 and lvl < 15 then
         player:startEvent(671)
     elseif lvl >= 10 and aSquiresTestII ~= QUEST_COMPLETED then
-        local stalactiteDew = player:hasKeyItem(xi.ki.STALACTITE_DEW)
+        local hasStalactiteDew = player:hasKeyItem(xi.ki.STALACTITE_DEW)
 
         if aSquiresTestII == QUEST_AVAILABLE then
             player:startEvent(625)
@@ -137,8 +146,8 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 63 then
         player:setCharVar("KnightStalker_Progress", 3)
     end
-
 end
+
 --    player:startEvent(32690)     -- starlight celebration
 
 return entity

@@ -330,13 +330,20 @@ xi.dynamis.entryNpcOnTrigger = function(player, npc)
     local tavnaziaFirst = false
 
     -- Tavnazia is unique;  plays the first time cs directly on trigger without message or transporting
-    if info.csBit == 10 and info.reqs(player) and not utils.mask.getBit(dynaMask, info.csBit) then
+    if
+        info.csBit == 10 and
+        info.reqs(player) and
+        not utils.mask.getBit(dynaMask, info.csBit)
+    then
         player:startEvent(info.csFirst)
         player:setCharVar("Dynamis_Status", utils.mask.setBit(dynaMask, info.csBit, true))
         -- set to skip menu after getting this CS
         tavnaziaFirst = not tavnaziaFirst
     -- player has access but is on a job below required level
-    elseif player:hasKeyItem(xi.ki.PRISMATIC_HOURGLASS) and player:getMainLvl() < xi.settings.main.DYNA_LEVEL_MIN then
+    elseif
+        player:hasKeyItem(xi.ki.PRISMATIC_HOURGLASS) and
+        player:getMainLvl() < xi.settings.main.DYNA_LEVEL_MIN
+    then
         player:messageSpecial(ID.text.PLAYERS_HAVE_NOT_REACHED_LEVEL)
     -- default message always prints except in cases above and not for shrouded sand or winning cs
     elseif not unlockingDyna and player:getCharVar(info.beatVar) ~= 1 then
@@ -344,10 +351,18 @@ xi.dynamis.entryNpcOnTrigger = function(player, npc)
     end
 
     -- all cutscenes and menus are blocked behind base requirements; 'unlockingDyna' needs to be checked to access shroud cs after zoning into xarcabard
-    if not tavnaziaFirst and player:getMainLvl() >= xi.settings.main.DYNA_LEVEL_MIN and (player:hasKeyItem(xi.ki.PRISMATIC_HOURGLASS) or unlockingDyna) then
+    if
+        not tavnaziaFirst and
+        player:getMainLvl() >= xi.settings.main.DYNA_LEVEL_MIN and
+        (player:hasKeyItem(xi.ki.PRISMATIC_HOURGLASS) or unlockingDyna)
+    then
 
         -- shrouded sand cutscene
-        if unlockingDyna and info.csVial and not player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND) then
+        if
+            unlockingDyna and
+            info.csVial and
+            not player:hasKeyItem(xi.ki.VIAL_OF_SHROUDED_SAND)
+        then
             player:startEvent(info.csVial)
 
         -- victory cutscene
@@ -385,7 +400,11 @@ xi.dynamis.entryNpcOnEventFinish = function(player, csid, option)
         player:setCharVar(info.beatVar, 0)
 
     -- dynamis entry; the check for csFirst is needed, see below
-    elseif csid == info.csMenu and (option == 0 or option == 1) or csid == info.csFirst then
+    elseif
+        csid == info.csMenu and
+        (option == 0 or option == 1) or
+        csid == info.csFirst
+    then
         player:setCharVar("Dynamis_subjob", option)
         player:setCharVar("Dynamis_Entry", 1)
         player:setCharVar("Dynamis_Status", utils.mask.setBit(dynaMask, info.csBit, true))
@@ -453,19 +472,29 @@ xi.dynamis.zoneOnZoneIn = function(player, prevZone)
 
     if player:getCharVar("Dynamis_Entry") == 1 or player:getGMLevel() > 0 then
         if player:getCharVar("Dynamis_subjob") == 1 then
-            player:timer(5000, function(playerArg) playerArg:messageBasic(xi.msg.basic.UNABLE_TO_ACCESS_SJ) end)
+            player:timer(5000, function(playerArg)
+                playerArg:messageBasic(xi.msg.basic.UNABLE_TO_ACCESS_SJ)
+            end)
+
             player:addStatusEffect(xi.effect.SJ_RESTRICTION, 0, 0, 0, 7200)
         end
 
         player:addStatusEffectEx(xi.effect.DYNAMIS, 0, 0, 3, 3600)
-        player:timer(5500, function(playerArg) playerArg:messageSpecial(ID.text.DYNAMIS_TIME_BEGIN, 60, xi.ki.PRISMATIC_HOURGLASS) end)
+        player:timer(5500, function(playerArg)
+            playerArg:messageSpecial(ID.text.DYNAMIS_TIME_BEGIN, 60, xi.ki.PRISMATIC_HOURGLASS)
+        end)
+
         player:setCharVar("Dynamis_Entry", 0)
         player:setCharVar("Dynamis_subjob", 0)
     end
 
     if not player:hasStatusEffect(xi.effect.DYNAMIS) then
         cs = 100 -- eject event (same event in all dynamis zones)
-    elseif player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
+    elseif
+        player:getXPos() == 0 and
+        player:getYPos() == 0 and
+        player:getZPos() == 0
+    then
         player:setPos(unpack(info.entryPos))
     end
 
@@ -568,6 +597,7 @@ xi.dynamis.timeExtensionOnDeath = function(mob, player, optParams)
                     DisallowRespawn(mobId, true)
                     DisallowRespawn(teId, false)
                 end
+
                 GetMobByID(teId):setRespawnTime(85)
             end
         else
@@ -658,6 +688,7 @@ xi.dynamis.refillStatueOnDeath = function(mob, player, optParams)
                         end
                     end
                 end
+
                 mob:setAnimationSub(xi.dynamis.eye.NONE)
 
                 -- spawn a new mob in this group
@@ -666,6 +697,7 @@ xi.dynamis.refillStatueOnDeath = function(mob, player, optParams)
                     DisallowRespawn(mobId, true)
                     DisallowRespawn(nextId, false)
                 end
+
                 GetMobByID(nextId):setRespawnTime(300) -- 5 minutes
             end
         else
@@ -696,7 +728,10 @@ xi.dynamis.qmOnTrade = function(player, npc, trade)
                         mobId = v.mob
                     end
 
-                    if mobId and npcUtil.popFromQM(player, npc, mobId, { hide = 0, radius = 2 }) then
+                    if
+                        mobId and
+                        npcUtil.popFromQM(player, npc, mobId, { hide = 0, radius = 2 })
+                    then
                         player:confirmTrade()
                     end
 
@@ -723,7 +758,13 @@ xi.dynamis.qmOnTrigger = function(player, npc)
         if info then
             if info.param then
                 player:startEvent(102, unpack(info.param))
-            elseif info.trade and #info.trade == 1 and info.trade[1].item and type(info.trade[1].item) == "number" and ID.text.OMINOUS_PRESENCE then
+            elseif
+                info.trade and
+                #info.trade == 1 and
+                info.trade[1].item and
+                type(info.trade[1].item) == "number" and
+                ID.text.OMINOUS_PRESENCE
+            then
                 player:messageSpecial(ID.text.OMINOUS_PRESENCE, info.trade[1].item)
             end
         else

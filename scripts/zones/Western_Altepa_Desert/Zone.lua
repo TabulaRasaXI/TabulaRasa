@@ -18,7 +18,9 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.KING_VINEGARROON)
+
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
 
@@ -56,7 +58,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)
@@ -76,12 +78,12 @@ zoneObject.onZoneWeatherChange = function(weather)
             (weather == xi.weather.DUST_STORM or weather == xi.weather.SAND_STORM)
         then
             DisallowRespawn(dahu:getID(), false)
-            dahu:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after wind weather starts
+            dahu:setRespawnTime(math.random(30, 150)) -- pop 30-150 sec after earth weather starts
         end
     end
 
     local kingV = GetMobByID(ID.mob.KING_VINEGARROON)
-    local kvre = GetServerVariable(string.format("[SPAWN]%s", kingV:getName()))
+    local kvre = GetServerVariable("[SPAWN]17289575")
     if not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.DUST_STORM then
         -- 10% chance for KV pop at start of single earth weather
         local chance = math.random(1, 10)

@@ -26,7 +26,10 @@ reportTimeRemaining = function(player, effect)
     end
 
     for i = 1, #remainingTimeLimits do
-        if lastTimeUpdate > remainingTimeLimits[i] and currentTime <= remainingTimeLimits[i] then
+        if
+            lastTimeUpdate > remainingTimeLimits[i] and
+            currentTime <= remainingTimeLimits[i]
+        then
             messageParam = remainingTimeLimits[i]
             nextTimeReport = remainingTimeLimits[i] ~= 1 and remainingTimeLimits[i + 1] or 0
             player:setLocalVar('lastTimeUpdate', messageParam)
@@ -34,6 +37,7 @@ reportTimeRemaining = function(player, effect)
             if messageParam <= 30 then
                 player:setLocalVar('finalCountdown', 1)
             end
+
             break
         end
     end
@@ -81,8 +85,8 @@ effectObject.onEffectTick = function(target, effect)
         target:delStatusEffect(effect)
     end
 
-    -- Searing Ward Tether is set and reset in zone onRegionLeave and
-    -- onRegionEnter.
+    -- Searing Ward Tether is set and reset in zone onTriggerAreaLeave and
+    -- onTriggerAreaEnter.
     if target:getLocalVar('tetherTimer') == 11 then
         xi.abyssea.searingWardTimer(target)
     end
@@ -99,7 +103,10 @@ effectObject.onEffectLose = function(target, effect)
     local zoneID = target:getZoneID()
     local ID = zones[zoneID]
 
-    if target:getLocalVar('gameLogin') == 0 and xi.abyssea.isInAbysseaZone(target) then
+    if
+        target:getLocalVar('gameLogin') == 0 and
+        xi.abyssea.isInAbysseaZone(target)
+    then
         target:setLocalVar('finalCountdown', 0)
         target:messageSpecial(ID.text.ABYSSEA_TIME_OFFSET + 8)
         target:setPos(unpack(xi.abyssea.exitPositions[zoneID]))

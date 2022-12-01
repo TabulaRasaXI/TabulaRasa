@@ -4015,7 +4015,7 @@ INSERT INTO `mob_droplist` VALUES (442,0,0,1000,701,@VCOMMON);  -- Rosewood Log 
 INSERT INTO `mob_droplist` VALUES (442,0,0,1000,702,@VCOMMON);  -- Ebony Log (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (442,0,0,1000,703,@VCOMMON);  -- Petrified Log (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (442,0,0,1000,17070,@RARE);   -- Living Rod (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (442,0,0,1000,722,@VRARE);    -- Divine Log (Rare, 1%)
+INSERT INTO `mob_droplist` VALUES (442,0,0,1000,722,@RARE);     -- Divine Log (Rare, 5%)
 
 -- ZoneID: 208 - Centurio X-I
 INSERT INTO `mob_droplist` VALUES (443,0,0,1000,1121,@ALWAYS);   -- Antican Robe (Always, 100%)
@@ -7386,16 +7386,16 @@ INSERT INTO `mob_droplist` VALUES (903,0,0,1000,989,@COMMON); -- Four Of Swords 
 -- ZoneID: 104 - Fradubio
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,923,@SRARE);     -- Dryad Root (Super Rare, 0.5%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,15469,@VCOMMON); -- Bellicose Mantle (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (904,0,0,1000,701,@VCOMMON);   -- Rosewood Log (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (904,0,0,1000,701,@COMMON);    -- Rosewood Log (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,701,@UNCOMMON);  -- Rosewood Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (904,0,0,1000,701,@UNCOMMON);  -- Rosewood Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (904,0,0,1000,701,@UNCOMMON);  -- Rosewood Log (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (904,0,0,1000,700,@COMMON);    -- Mahogany Log (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (904,0,0,1000,700,@UNCOMMON);  -- Mahogany Log (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,700,@RARE);      -- Mahogany Log (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (904,0,0,1000,700,@RARE);      -- Mahogany Log (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (904,0,0,1000,700,@RARE);      -- Mahogany Log (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (904,0,0,1000,702,@COMMON);    -- Ebony Log (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (904,0,0,1000,702,@VCOMMON);   -- Ebony Log (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,702,@COMMON);    -- Ebony Log (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,918,@SRARE);     -- Sprig Of Mistletoe (Super Rare, 0.5%)
-INSERT INTO `mob_droplist` VALUES (904,0,0,1000,703,@RARE);      -- Petrified Log (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (904,0,0,1000,703,@UNCOMMON);  -- Petrified Log (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,703,@RARE);      -- Petrified Log (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (904,0,0,1000,4448,@SRARE);    -- Puffball (Super Rare, 0.5%)
 
@@ -7403,16 +7403,16 @@ INSERT INTO `mob_droplist` VALUES (904,0,0,1000,4448,@SRARE);    -- Puffball (Su
 -- ZoneID: 104 - Fraelissa
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,923,@SRARE);     -- Dryad Root (Super Rare, 0.5%)
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,17211,@VCOMMON); -- Almogavar Bow (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (905,0,0,1000,701,@VCOMMON);   -- Rosewood Log (Very Common, 24%)
+INSERT INTO `mob_droplist` VALUES (905,0,0,1000,701,@COMMON);    -- Rosewood Log (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,701,@UNCOMMON);  -- Rosewood Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (905,0,0,1000,701,@UNCOMMON);  -- Rosewood Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (905,0,0,1000,701,@UNCOMMON);  -- Rosewood Log (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (905,0,0,1000,700,@COMMON);    -- Mahogany Log (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (905,0,0,1000,700,@UNCOMMON);  -- Mahogany Log (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,700,@RARE);      -- Mahogany Log (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (905,0,0,1000,700,@RARE);      -- Mahogany Log (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (905,0,0,1000,700,@RARE);      -- Mahogany Log (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (905,0,0,1000,702,@RARE);      -- Ebony Log (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (905,0,0,1000,702,@UNCOMMON);  -- Ebony Log (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,702,@RARE);      -- Ebony Log (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,918,@SRARE);     -- Sprig Of Mistletoe (Super Rare, 0.5%)
-INSERT INTO `mob_droplist` VALUES (905,0,0,1000,703,@RARE);      -- Petrified Log (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (905,0,0,1000,703,@UNCOMMON);  -- Petrified Log (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (905,0,0,1000,703,@RARE);      -- Petrified Log (Rare, 5%)
 
 -- ZoneID:  77 - Shadow Eye
@@ -21993,14 +21993,14 @@ INSERT INTO `mob_droplist` VALUES (2665,0,0,1000,2427,280); -- Wivre Maul (28.0%
 INSERT INTO `mob_droplist` VALUES (2665,0,0,1000,2426,80);  -- Wivre Horn (8.0%)
 
 -- ZoneID: 124 - Woodland Sage
+INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,701,@VCOMMON);    -- Rosewood Log (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,701,@COMMON);     -- Rosewood Log (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,700,@UNCOMMON);   -- Mahogany Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,701,@COMMON);     -- Rosewood Log (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,700,@COMMON);     -- Mahogany Log (Common, 15%)
+INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,702,@COMMON);     -- Ebony Log (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,702,@UNCOMMON);   -- Ebony Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,702,@UNCOMMON);   -- Ebony Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,703,@UNCOMMON);   -- Petrified Log (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,700,@COMMON);     -- Mahogany Log (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,700,@UNCOMMON);   -- Mahogany Log (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,700,@UNCOMMON);   -- Mahogany Log (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,703,@COMMON);     -- Petrified Log (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2666,0,0,1000,17529,@UNCOMMON); -- Sunlight Pole (Uncommon, 10%)
 
 -- ZoneID:  40 - Woodnix Shrillwhistle

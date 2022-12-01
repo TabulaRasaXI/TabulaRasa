@@ -20,10 +20,11 @@ zoneObject.onZoneIn = function(player, prevZone)
     then
         player:setPos(521.600, -3.000, 563.000, 64)
     end
+
     return cs
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

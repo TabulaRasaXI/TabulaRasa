@@ -163,7 +163,7 @@ namespace battleutils
             {
                 CWeaponSkill* PWeaponSkill = new CWeaponSkill(sql->GetIntData(0));
 
-                PWeaponSkill->setName(sql->GetData(1));
+                PWeaponSkill->setName(sql->GetStringData(1));
                 PWeaponSkill->setJob(sql->GetData(2));
                 PWeaponSkill->setType(sql->GetIntData(3));
                 PWeaponSkill->setSkillLevel(sql->GetIntData(4));
@@ -209,7 +209,7 @@ namespace battleutils
             {
                 CMobSkill* PMobSkill = new CMobSkill(sql->GetIntData(0));
                 PMobSkill->setAnimationID(sql->GetIntData(1));
-                PMobSkill->setName(sql->GetData(2));
+                PMobSkill->setName(sql->GetStringData(2));
                 PMobSkill->setAoe(sql->GetIntData(3));
                 PMobSkill->setDistance(sql->GetFloatData(4));
                 PMobSkill->setAnimationTime(sql->GetIntData(5));
@@ -1540,6 +1540,11 @@ namespace battleutils
 
             acc = std::max({ archery_acc, marksmanship_acc, throwing_acc });
         }
+        else
+        {
+            acc = PAttacker->RACC(SKILL_AUTOMATON_RANGED, distance(PAttacker->loc.p, PDefender->loc.p));
+        }
+
         // Check for Yonin evasion bonus while in front of target
         if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_YONIN) && infront(PDefender->loc.p, PAttacker->loc.p, 64))
         {
@@ -1652,29 +1657,26 @@ namespace battleutils
         int16 x = 1;
         if (delay <= 180)
         {
-            x = (int16)(61 + ((delay - 180) * 63.f) / 360);
+            x = (int16)(5.0 + ((delay - 180) * 1.5f) / 180);
         }
-        else if (delay <= 540)
+        else if (delay <= 450)
         {
-            x = (int16)(61 + ((delay - 180) * 88.f) / 360);
+            x = (int16)(5.0 + ((delay - 180) * 6.5f) / 270);
         }
-        else if (delay <= 630)
+        else if (delay <= 480)
         {
-            x = (int16)(149 + ((delay - 540) * 20.f) / 360);
+            x = (int16)(11.5 + ((delay - 450) * 1.5f) / 30);
         }
-        else if (delay <= 720)
+        else if (delay <= 530)
         {
-            x = (int16)(154 + ((delay - 630) * 28.f) / 360);
-        }
-        else if (delay <= 900)
-        {
-            x = (int16)(161 + ((delay - 720) * 24.f) / 360);
+            x = (int16)(13.0 + ((delay - 480) * 1.5f) / 50);
         }
         else
         {
-            x = (int16)(173 + ((delay - 900) * 28.f) / 360);
+            x = (int16)(14.5 + ((delay - 530) * 3.5f) / 470);
         }
-        return x;
+
+        return x * 10;
     }
 
     bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpell* PSpell)
@@ -1941,7 +1943,7 @@ namespace battleutils
             float dex = PAttacker->DEX();
             float agi = PDefender->AGI();
 
-            auto parryRate = std::clamp<uint8>((uint8)(((skill * 0.125f) + ((agi - dex) * 0.125f)) * diffCorrect), 5, 25);
+            auto parryRate = std::clamp<uint8>((uint8)(((skill * 0.125f) + ((agi - dex) * 0.125f)) * diffCorrect), 5, 20);
 
             // Issekigan grants parry rate bonus. From best available data, if you already capped out at 25% parry it grants another 25% bonus for ~50%
             // parry rate
@@ -2961,7 +2963,12 @@ namespace battleutils
             {
                 if (attackerLvl > defenderLvl)
                 {
-                    cRatio = cRatio + correction; // Match other format
+                    cRatio = cRatio + correction; // Sets level correction for all mobs and pets
+
+                    if ((attackerType == TYPE_PET) && (charutils::CheckMob(attackerLvl, defenderLvl) == EMobDifficulty::TooWeak)) // Checks if the mob is too weak and if its a pet
+                    {
+                        cRatio = std::clamp(cRatio, 0.f, 2.f);
+                    }
                 }
             }
         }
@@ -3067,23 +3074,20 @@ namespace battleutils
             {
                 upperLimit = 1 + (10.0f / 9.0f) * (wRatio - 0.5f);
             }
-            else if (wRatio < 0.75f)
+            else if (wRatio <= 0.75f)
             {
                 upperLimit = 1.0f;
             }
-            else if (wRatio < 2.25f)
+            else if (wRatio > 0.75f)
             {
                 upperLimit = 1 + (10.0f / 9.0f) * (wRatio - 0.75f);
-            }
-            else
-            {
                 if (attackerType == TYPE_MOB || attackerType == TYPE_PET)
                 {
-                    upperLimit = std::min(wRatio, 4.0f); // Must cap at 4 before x1.0-x1.05 randomzation is applied
+                    upperLimit = std::clamp(upperLimit, 1.0f, 4.0f); // Must cap at 4 before x1.0-x1.05 randomzation is applied
                 }
                 else
                 {
-                    upperLimit = std::min(wRatio, 3.0f); // Must cap at 3 before x1.0-x1.05 randomzation is applied
+                    upperLimit = std::clamp(upperLimit, 1.0f, 3.0f); // Players must cap at 3 before x1.0-x1.05 randomzation is applied
                 }
             }
 
@@ -3525,23 +3529,6 @@ namespace battleutils
             num += 1;
         }
 
-        // hasso occasionally triggers Zanshin after landing a normal attack, only active while Samurai is set as Main
-        if (PEntity->GetMJob() == JOB_SAM)
-        {
-            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO))
-            {
-                uint16 zanshin = PEntity->getMod(Mod::ZANSHIN);
-                if (PEntity->objtype == TYPE_PC)
-                {
-                    zanshin += ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)PEntity);
-                }
-
-                if (xirand::GetRandomNumber(100) < (zanshin / 4))
-                {
-                    num++;
-                }
-            }
-        }
         return std::min<uint8>(num, 8);
     }
 
@@ -4067,6 +4054,121 @@ namespace battleutils
         return PDefender->getMod(defMod);
     }
 
+    ELEMENT GetSkillChainAppliedElement(SKILLCHAIN_ELEMENT element, CBattleEntity* PDefender)
+    {
+        static const Mod resistances[][4] = {
+            { Mod::NONE, Mod::NONE, Mod::NONE, Mod::NONE },        // SC_NONE
+            { Mod::LIGHT_SDT, Mod::NONE, Mod::NONE, Mod::NONE },   // SC_TRANSFIXION
+            { Mod::DARK_SDT, Mod::NONE, Mod::NONE, Mod::NONE },    // SC_COMPRESSION
+            { Mod::FIRE_SDT, Mod::NONE, Mod::NONE, Mod::NONE },    // SC_LIQUEFACTION
+            { Mod::EARTH_SDT, Mod::NONE, Mod::NONE, Mod::NONE },   // SC_SCISSION
+            { Mod::WATER_SDT, Mod::NONE, Mod::NONE, Mod::NONE },   // SC_REVERBERATION
+            { Mod::WIND_SDT, Mod::NONE, Mod::NONE, Mod::NONE },    // SC_DETONATION
+            { Mod::ICE_SDT, Mod::NONE, Mod::NONE, Mod::NONE },     // SC_INDURATION
+            { Mod::THUNDER_SDT, Mod::NONE, Mod::NONE, Mod::NONE }, // SC_IMPACTION
+
+            { Mod::EARTH_SDT, Mod::DARK_SDT, Mod::NONE, Mod::NONE },   // SC_GRAVITATION
+            { Mod::ICE_SDT, Mod::WATER_SDT, Mod::NONE, Mod::NONE },    // SC_DISTORTION
+            { Mod::FIRE_SDT, Mod::LIGHT_SDT, Mod::NONE, Mod::NONE },   // SC_FUSION
+            { Mod::WIND_SDT, Mod::THUNDER_SDT, Mod::NONE, Mod::NONE }, // SC_FRAGMENTATION
+
+            { Mod::FIRE_SDT, Mod::WIND_SDT, Mod::THUNDER_SDT, Mod::LIGHT_SDT }, // SC_LIGHT
+            { Mod::ICE_SDT, Mod::EARTH_SDT, Mod::WATER_SDT, Mod::DARK_SDT },    // SC_DARKNESS
+            { Mod::FIRE_SDT, Mod::WIND_SDT, Mod::THUNDER_SDT, Mod::LIGHT_SDT }, // SC_LIGHT
+            { Mod::ICE_SDT, Mod::EARTH_SDT, Mod::WATER_SDT, Mod::DARK_SDT },    // SC_DARKNESS_II
+        };
+
+        Mod defMod = Mod::NONE;
+
+        switch (element)
+        {
+            // Level 1 skill chains
+            case SC_LIQUEFACTION:
+            case SC_IMPACTION:
+            case SC_DETONATION:
+            case SC_SCISSION:
+            case SC_REVERBERATION:
+            case SC_INDURATION:
+            case SC_COMPRESSION:
+            case SC_TRANSFIXION:
+                defMod = resistances[element][0];
+                break;
+
+                // Level 2 skill chains
+            case SC_FUSION:
+            case SC_FRAGMENTATION:
+            case SC_GRAVITATION:
+            case SC_DISTORTION:
+                if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
+                {
+                    defMod = resistances[element][0];
+                }
+                else
+                {
+                    defMod = resistances[element][1];
+                }
+                break;
+
+                // Level 3 & 4 skill chains
+            case SC_LIGHT:
+            case SC_LIGHT_II:
+            case SC_DARKNESS:
+            case SC_DARKNESS_II:
+                if (PDefender->getMod(resistances[element][0]) < PDefender->getMod(resistances[element][1]))
+                {
+                    defMod = resistances[element][0];
+                }
+                else
+                {
+                    defMod = resistances[element][1];
+                }
+                if (PDefender->getMod(resistances[element][2]) < PDefender->getMod(defMod))
+                {
+                    defMod = resistances[element][2];
+                }
+                if (PDefender->getMod(resistances[element][3]) < PDefender->getMod(defMod))
+                {
+                    defMod = resistances[element][3];
+                }
+                break;
+
+            default:
+                XI_DEBUG_BREAK_IF(true);
+                break;
+        }
+
+        switch (defMod)
+        {
+            case Mod::FIRE_SDT:
+                return ELEMENT_FIRE;
+                break;
+            case Mod::ICE_SDT:
+                return ELEMENT_ICE;
+                break;
+            case Mod::WIND_SDT:
+                return ELEMENT_WIND;
+                break;
+            case Mod::EARTH_SDT:
+                return ELEMENT_EARTH;
+                break;
+            case Mod::THUNDER_SDT:
+                return ELEMENT_THUNDER;
+                break;
+            case Mod::WATER_SDT:
+                return ELEMENT_WATER;
+                break;
+            case Mod::LIGHT_SDT:
+                return ELEMENT_LIGHT;
+                break;
+            case Mod::DARK_SDT:
+                return ELEMENT_DARK;
+                break;
+            default:
+                return ELEMENT_NONE;
+                break;
+        }
+    };
+
     std::vector<ELEMENT> GetSkillchainMagicElement(SKILLCHAIN_ELEMENT skillchain)
     {
         static const std::unordered_map<SKILLCHAIN_ELEMENT, std::vector<ELEMENT>> resonanceToElement = {
@@ -4114,8 +4216,7 @@ namespace battleutils
         SKILLCHAIN_ELEMENT skillchain = (SKILLCHAIN_ELEMENT)PEffect->GetPower();
         uint16             chainLevel = PEffect->GetTier();
         uint16             chainCount = PEffect->GetSubPower();
-        ELEMENT            appliedEle = ELEMENT_NONE;
-        int16              resistance = GetSkillchainMinimumResistance(skillchain, PDefender, &appliedEle);
+        ELEMENT            appliedEle = GetSkillChainAppliedElement(skillchain, PDefender);
 
         XI_DEBUG_BREAK_IF(chainLevel <= 0 || chainLevel > 4 || chainCount <= 0 || chainCount > 5);
 
@@ -4134,8 +4235,19 @@ namespace battleutils
         {
             damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar) / 100.f));
         }
-        damage = damage * (10000 - resistance) / 10000;
+
+        auto applySkillchainResistance = lua["xi"]["magic"]["applySkillchainResistance"];
+        auto resist                    = applySkillchainResistance(CLuaBaseEntity(PAttacker), CLuaBaseEntity(PDefender), static_cast<uint16>(appliedEle));
+
+        if (!resist.valid())
+        {
+            sol::error err = resist;
+            ShowError("battleutils::TakeSkillchainDamage: %s", err.what());
+        }
+
+        damage = std::floor(damage * (float)resist);
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
+
         if (damage > 0)
         {
             damage = std::max(damage - PDefender->getMod(Mod::PHALANX), 0);
@@ -4143,6 +4255,7 @@ namespace battleutils
             damage = HandleStoneskin(PDefender, damage);
             HandleAfflatusMiseryDamage(PDefender, damage);
         }
+
         damage = std::clamp(damage, -99999, 99999);
 
         // When set mob will only take 0 or 1 damage
@@ -4229,6 +4342,13 @@ namespace battleutils
             {
                 PPlayer->animation = ANIMATION_NONE;
                 PPlayer->updatemask |= UPDATE_HP;
+
+                CPetEntity* PPet = dynamic_cast<CPetEntity*>(PPlayer->PPet);
+                if (PPet && (PPet->getPetType() == PET_TYPE::WYVERN || PPet->getPetType() == PET_TYPE::AUTOMATON))
+                {
+                    PPet->animation = ANIMATION_NONE;
+                    PPet->updatemask |= UPDATE_HP;
+                }
             }
         }
     }
@@ -5062,6 +5182,11 @@ namespace battleutils
             battleutils::RelinquishClaim(static_cast<CCharEntity*>(PVictim));
             PVictim->PMaster = PCharmer;
             PVictim->updatemask |= UPDATE_ALL_CHAR;
+
+            // Prevent auto attacks for a little bit to simulate retail
+            // On retail, you don't engage for a little bit, which we have no mechanism for yet
+            // TODO: implement the delays on engage (also applies to mobs) and verify exact timings for those things.
+            PVictim->PAI->Inactive(5000ms, false);
         }
         PVictim->allegiance = PCharmer->allegiance;
         PVictim->updatemask |= UPDATE_HP;
@@ -5089,133 +5214,20 @@ namespace battleutils
 
     /************************************************************************
      *                                                                       *
-     *   Returns the percentage chance that one entity has to charm another. *
-     *                                                                       *
-     ************************************************************************/
-
-    float GetCharmChance(CBattleEntity* PCharmer, CBattleEntity* PTarget, bool includeCharmAffinityAndChanceMods)
-    {
-        //---------------------------------------------------------
-        // chance of charm is based on:
-        //  CHR - both entities
-        //  Victims M level
-        //  charmers BST level (not main level)
-        //
-        //  75 with a BST SJ Lvl l0 will struggle on EP
-        //  75 with a BST SJ Lvl 75 will not - this player has bst leveled to 75 and is using it as SJ
-        //---------------------------------------------------------
-
-        // Paranoid check
-        if (!PCharmer || !PTarget)
-        {
-            return 0.f;
-        }
-
-        // Can the target even be charmed?
-        CMobEntity* PTargetAsMob = dynamic_cast<CMobEntity*>(PTarget);
-        if (PTargetAsMob)
-        {
-            // Cannot charm pets, or other non-charmable mobs
-            if (!PTargetAsMob->getMobMod(MOBMOD_CHARMABLE) || PTargetAsMob->PMaster)
-            {
-                return 0.f;
-            }
-        }
-
-        uint8  charmerLvl = PCharmer->GetMLevel();
-        uint8  targetLvl  = PTarget->GetMLevel();
-        uint16 charmres   = PTarget->getMod(Mod::CHARMRES) / 100.f;
-
-        EMobDifficulty mobCheck    = charutils::CheckMob(charmerLvl, targetLvl);
-        float          charmChance = 0.f;
-
-        switch (mobCheck)
-        {
-            case EMobDifficulty::TooWeak:
-                charmChance = 90.f;
-                break;
-            case EMobDifficulty::IncrediblyEasyPrey:
-            case EMobDifficulty::EasyPrey:
-                charmChance = 75.f;
-                break;
-            case EMobDifficulty::DecentChallenge:
-                charmChance = 60.f;
-                break;
-            case EMobDifficulty::EvenMatch:
-                charmChance = 40.f;
-                break;
-            case EMobDifficulty::Tough:
-                charmChance = 30.f;
-                break;
-            case EMobDifficulty::VeryTough:
-                charmChance = 20.f;
-                break;
-            case EMobDifficulty::IncrediblyTough:
-                charmChance = 10.f;
-                break;
-            default:
-                // no-op
-                break;
-        }
-
-        uint8 charmerBSTlevel = 0;
-
-        if (CCharEntity* PChar = dynamic_cast<CCharEntity*>(PCharmer))
-        {
-            uint8 charmerBRDlevel = PChar->jobs.job[JOB_BRD];
-            charmerBSTlevel       = PChar->jobs.job[JOB_BST];
-            if (PCharmer->GetMJob() == JOB_BRD && charmerBRDlevel > charmerBSTlevel)
-            {
-                charmerBSTlevel = charmerBRDlevel;
-            }
-
-            charmerBSTlevel = std::min(charmerBSTlevel, charmerLvl);
-        }
-        else if (PCharmer->objtype == TYPE_MOB)
-        {
-            charmerBSTlevel = charmerLvl;
-        }
-
-        // Based on https://www.bluegartr.com/threads/57288-Charm-and-Magic-Accuracy where charm rate hit 50% w/ 11 dStat
-        // Result on EP mob at 75 MJob w/ 67 BST + 11 dCHR should be 50% according to gauge messages.
-        float levelRatio = (charmerBSTlevel - targetLvl) / 100.f;
-        charmChance *= (1.f + levelRatio);
-
-        if (PCharmer->GetMJob() == JOB_BST)
-        {
-            charmChance *= 1.1f;
-        }
-
-        // Clamp so we can't have -charmChance
-        float chrRatio = std::clamp((PCharmer->CHR() - PTarget->CHR()) / 100.f, 0.01f, 0.95f);
-
-        // Multiply by chrRatio to reduce initial base number
-        charmChance *= 1.f * (chrRatio * 5.83);
-        charmChance *= 1 - charmres;
-
-        // Retail doesn't take light/apollo into account for Gauge
-        if (includeCharmAffinityAndChanceMods)
-        {
-            // NQ elemental staves have 2 affinity, HQ have 3 affinity. Boost is 10/15% respectively so multiply by 5.
-            const float charmAffintyMods = PCharmer->getMod(Mod::LIGHT_AFFINITY_ACC) * 5.f;
-            const float charmChanceMods  = (float)PCharmer->getMod(Mod::CHARM_CHANCE);
-
-            charmChance *= (1.f + (charmChanceMods + charmAffintyMods) / 100.0f);
-        }
-
-        // Cap chance at 95%
-        return std::clamp(charmChance, 0.f, 95.f);
-    }
-
-    /************************************************************************
-     *                                                                       *
      *   calculate if charm is successful                                    *
      *                                                                       *
      ************************************************************************/
 
     bool TryCharm(CBattleEntity* PCharmer, CBattleEntity* PVictim)
     {
-        return GetCharmChance(PCharmer, PVictim) > xirand::GetRandomNumber(100.f);
+        auto getCharmChance = lua["xi"]["magic"]["getCharmChance"];
+        auto result         = getCharmChance(CLuaBaseEntity(PCharmer), CLuaBaseEntity(PVictim), true);
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::getCharmChance: %s", err.what());
+        }
+        return (float)result > xirand::GetRandomNumber(100.f);
     }
 
     void ClaimMob(CBattleEntity* PDefender, CBattleEntity* PAttacker, bool passing)

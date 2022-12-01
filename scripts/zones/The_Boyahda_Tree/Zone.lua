@@ -9,6 +9,9 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.treasure.initZone(zone)
+
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.ANCIENT_GOOBBUE)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -29,7 +32,7 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

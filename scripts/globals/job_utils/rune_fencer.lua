@@ -360,7 +360,7 @@ xi.job_utils.rune_fencer.onSwordplayEffectLose = function (target, effect)
 end
 
 xi.job_utils.rune_fencer.useVivaciousPulse = function(player, target, ability, effect)
-    return calculateVivaciousPulseHealing(player, target)
+    return calculateVivaciousPulseHealing(target)
 end
 
 xi.job_utils.rune_fencer.checkHaveRunes = function(player)
@@ -380,11 +380,17 @@ xi.job_utils.rune_fencer.useVallationValiance = function(player, target, ability
 
     if player:getID() ~= target:getID() then -- Only the caster can apply effects, including to the party if valiance.
 
-        if abilityID == xi.jobAbility.VALIANCE and target:hasStatusEffect(xi.effect.VALLATION) or target:hasStatusEffect(xi.effect.LIEMENT) then -- Valiance is being used on them, and they have Vallation already up or they have liement
+        if
+            abilityID == xi.jobAbility.VALIANCE and
+            target:hasStatusEffect(xi.effect.VALLATION) or
+            target:hasStatusEffect(xi.effect.LIEMENT)
+        then
+            -- Valiance is being used on them, and they have Vallation already up or they have liement
             ability:setMsg(xi.msg.basic.NO_EFFECT) -- "No effect on <Target>"
         else
             ability:setMsg(xi.msg.basic.VALIANCE_GAIN_PARTY)
         end
+
         return
     end
 
@@ -411,7 +417,11 @@ xi.job_utils.rune_fencer.useVallationValiance = function(player, target, ability
         local duration = 180 + jobPointBonusDuration
 
         for _, member in pairs(party) do
-            if not member:hasStatusEffect(xi.effect.VALLATION) and not target:hasStatusEffect(xi.effect.LIEMENT) then -- Valiance has no effect if Vallation is up, or no effect if Liement is up
+            if
+                not member:hasStatusEffect(xi.effect.VALLATION) and
+                not target:hasStatusEffect(xi.effect.LIEMENT)
+            then
+                -- Valiance has no effect if Vallation is up, or no effect if Liement is up
                 member:delStatusEffectSilent(xi.effect.VALIANCE) -- Remove Valiance if it's already up. The new one will overwrite.
                 applyVallationValianceSDTMods(member, sdtTypes, sdtPower, xi.effect.VALIANCE, duration)
 
@@ -585,7 +595,13 @@ xi.job_utils.rune_fencer.useSwipeLunge = function(player, target, ability, actio
                 damage = -totalHealedHP                              -- Keep track of damage to determine later if we need to use heal or damage message
             else
                 -- We dealt damage. Check if we are going to kill it, and if we can kill it with less rune strength if rune strength > 1.
-                if numHits > 1 and runesUsed ~= numHits and target:getHP()-damage <= 0 and runeStrength > 1 then -- try less duplicate rune count if not on final duplicate rune
+                if
+                    numHits > 1 and
+                    runesUsed ~= numHits and
+                    target:getHP()-damage <= 0 and
+                    runeStrength > 1
+                then
+                    -- try less duplicate rune count if not on final duplicate rune
                     for x = 1, runeStrength-1, 1 do
                         local lowerRuneStrengthDamage = calculateSwipeLungeDamage(player, target, skillModifier, gearBonus, runeStrength-x, multipliers)
                         if target:getHP()-lowerRuneStrengthDamage <= 0 then

@@ -8,6 +8,9 @@ require('scripts/globals/treasure')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.ZIPACNA)
+
     xi.treasure.initZone(zone)
     SetServerVariable("[POP]SteamCleaner", 0) -- should "reset" on server repop
 end
@@ -30,7 +33,7 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

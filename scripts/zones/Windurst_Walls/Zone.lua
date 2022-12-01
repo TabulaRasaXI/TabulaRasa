@@ -2,6 +2,7 @@
 -- Zone: Windurst_Walls (239)
 -----------------------------------
 local ID = require('scripts/zones/Windurst_Walls/IDs')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/globals/conquest')
 require('scripts/globals/quests')
 require('scripts/globals/zone')
@@ -9,7 +10,10 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    zone:registerRegion(1, -2, -17, 140, 2, -16, 142)
+    if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
+        xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
+    end
+    zone:registerTriggerArea(1, -2, -17, 140, 2, -16, 142)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -32,8 +36,8 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
-    switch (region:GetRegionID()): caseof
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    switch (triggerArea:GetTriggerAreaID()): caseof
     {
         [1] = function (x)  -- Heaven's Tower enter portal
             player:startEvent(86)
@@ -41,7 +45,7 @@ zoneObject.onRegionEnter = function(player, region)
     }
 end
 
-zoneObject.onRegionLeave = function(player, region)
+zoneObject.onTriggerAreaLeave = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

@@ -3,8 +3,10 @@
 -----------------------------------
 local ID = require('scripts/zones/Southern_San_dOria/IDs')
 require('scripts/globals/events/harvest_festivals')
+require('scripts/globals/events/starlight_celebrations')
 require('scripts/quests/flyers_for_regine')
 require('scripts/globals/conquest')
+require('scripts/globals/cutscenes')
 require('scripts/globals/settings')
 require('scripts/globals/chocobo')
 require('scripts/globals/zone')
@@ -12,20 +14,21 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    zone:registerRegion(1, -292, -10, 90 , -258, 10, 105)
-    quests.ffr.initZone(zone) -- register regions 2 through 6
+    zone:registerTriggerArea(1, -292, -10, 90 , -258, 10, 105)
+    quests.ffr.initZone(zone) -- register trigger areas 2 through 6
     applyHalloweenNpcCostumes(zone:getID())
+    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
     xi.conquest.toggleRegionalNPCs(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
-    local cs = -1
+    local cs = { -1 }
 
     -- FIRST LOGIN (START CS)
     if player:getPlaytime(false) == 0 then
         if xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 then
-            cs = 503
+            cs = { 503, -1, xi.cutscenes.params.NO_OTHER_ENTITY } -- (cs, textTable, Flags)
         end
 
         player:setPos(-96, 1, -40, 224)
@@ -48,11 +51,11 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
-    quests.ffr.onRegionEnter(player, region) -- player approaching Flyers for Regine NPCs
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
+    quests.ffr.onTriggerAreaEnter(player, triggerArea) -- player approaching Flyers for Regine NPCs
 end
 
-zoneObject.onRegionLeave = function(player, region)
+zoneObject.onTriggerAreaLeave = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

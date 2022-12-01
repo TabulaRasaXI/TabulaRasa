@@ -9,6 +9,10 @@ require('scripts/globals/status')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    -- NM Persistence
+    for i = ID.mob.CARMINE_DOBSONFLY_OFFSET, ID.mob.CARMINE_DOBSONFLY_OFFSET + 9 do
+        xi.mob.nmTODPersistCache(zone, i)
+    end
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
@@ -32,7 +36,7 @@ end
 zoneObject.afterZoneIn = function(player)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

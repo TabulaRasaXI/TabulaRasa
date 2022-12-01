@@ -146,14 +146,15 @@ local selection =
 
 local travelType = xi.teleport.type.HOMEPOINT
 
-local function getCost (from, to, key)
-
-    if homepointData[from].group == homepointData[to].group and homepointData[to].group ~= 0 then
+local function getCost(from, to, key)
+    if
+        homepointData[from].group == homepointData[to].group and
+        homepointData[to].group ~= 0
+    then
         return 0
     else
         return (500 * homepointData[to].fee) / (key and 5 or 1)
     end
-
 end
 
 local function goToHP(player, choice, index)
@@ -200,7 +201,6 @@ xi.homepoint.onTrigger = function(player, csid, index)
 end
 
 xi.homepoint.onEventUpdate = function(player, csid, option)
-
     local choice = bit.band(option, 0xFF)
     local favs = player:getTeleportMenu(travelType)
 
@@ -222,6 +222,7 @@ xi.homepoint.onEventUpdate = function(player, csid, option)
                         for y = x, 8 do
                             favs[y] = favs[y + 1]
                         end
+
                         favs[9] = -1
                         break
                     end
@@ -260,7 +261,10 @@ xi.homepoint.onEventFinish = function(player, csid, option, event)
             else
                 print(string.format("ERROR: missing ID.text.HOMEPOINT_SET in zone %s.", player:getZoneName()))
             end
-        elseif (choice == selection.TELEPORT or choice == selection.SAME_ZONE) and xi.settings.main.HOMEPOINT_TELEPORT == 1 then
+        elseif
+            xi.settings.main.HOMEPOINT_TELEPORT == 1 and
+            (choice == selection.TELEPORT or choice == selection.SAME_ZONE)
+        then
             goToHP(player, choice, bit.rshift(option, 16))
         end
     end

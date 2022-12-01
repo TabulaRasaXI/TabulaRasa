@@ -7,8 +7,12 @@ require('scripts/globals/conquest')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.DIAMOND_QUADAV)
-    GetMobByID(ID.mob.DIAMOND_QUADAV):setRespawnTime(math.random(900, 10800))
+    -- NM Persistence
+    if GetServerVariable("[PH]Za_Dha_Adamantking") == 1 then
+        xi.mob.nmTODPersistCache(zone, ID.mob.ZADHA_ADAMANTKING)
+    else
+        xi.mob.nmTODPersistCache(zone, ID.mob.DIAMOND_QUADAV)
+    end
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -29,7 +33,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

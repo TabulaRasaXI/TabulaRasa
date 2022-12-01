@@ -30,12 +30,15 @@ entity.onMobDespawn = function(mob)
             [ID.mob.TEMENOS_C_MOB[5] + 19] = function()
                 xi.limbus.extendTimeLimit(battlefield, 5, xi.zone.TEMENOS)
             end,
+
             [ID.mob.TEMENOS_C_MOB[5] + 20] = function()
                 xi.limbus.extendTimeLimit(battlefield, 5, xi.zone.TEMENOS)
             end,
+
             [ID.mob.TEMENOS_C_MOB[5] + 29] = function()
                 xi.limbus.extendTimeLimit(battlefield, 5, xi.zone.TEMENOS)
             end,
+
             [ID.mob.TEMENOS_C_MOB[5] + 30] = function()
                 xi.limbus.extendTimeLimit(battlefield, 5, xi.zone.TEMENOS)
             end,
@@ -62,7 +65,10 @@ entity.onMobDespawn = function(mob)
             end
         end
 
-        if leftAern == 0 and not GetMobByID(ID.mob.TEMENOS_C_MOB[5] + 35):isSpawned() then
+        if
+            leftAern == 0 and
+            not GetMobByID(ID.mob.TEMENOS_C_MOB[5] + 35):isSpawned()
+        then
             local mobX = mob:getXPos()
             local mobY = mob:getYPos()
             local mobZ = mob:getZPos()

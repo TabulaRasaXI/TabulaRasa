@@ -30,6 +30,7 @@ quest.hasKeyItem = function(player)
             return true
         end
     end
+
     return false
 end
 
@@ -140,7 +141,10 @@ quest.sections =
                 onTrigger = function(player, npc)
                     if quest.hasKeyItem(player) then
                         return quest:progressEvent(8)
-                    elseif player:hasItem(xi.items.OLDUUM_RING) or player:hasItem(xi.items.LIGHTNING_BAND) then
+                    elseif
+                        player:hasItem(xi.items.OLDUUM_RING) or
+                        player:hasItem(xi.items.LIGHTNING_BAND)
+                    then
                         return quest:event(7)
                     else
                         local newRingCS = player:getLocalVar("RingCS")
@@ -148,6 +152,7 @@ quest.sections =
                         if newRingCS > 1 then
                             newRingCS = 1
                         end
+
                         return quest:event(7, { [7] = newRingCS + 1 })
                     end
                 end,

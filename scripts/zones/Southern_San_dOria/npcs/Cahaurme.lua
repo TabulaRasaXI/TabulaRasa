@@ -13,10 +13,13 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    if player:hasKeyItem(xi.ki.BOOK_OF_TASKS) and not player:hasKeyItem(xi.ki.BOOK_OF_THE_EAST) then
+    if
+        player:hasKeyItem(xi.ki.BOOK_OF_TASKS) and
+        not player:hasKeyItem(xi.ki.BOOK_OF_THE_EAST)
+    then
         player:startEvent(633)
     else
-        player:showText(npc, 7817) -- nothing to report
+        player:showText(npc, ID.text.NOTHING_TO_REPORT)
 
     end
 end
@@ -30,6 +33,7 @@ entity.onEventFinish = function(player, csid, option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.BOOK_OF_THE_EAST)
     end
 end
+
 --- for future use
     -- player:startEvent(847) --are you the chicks owner
 

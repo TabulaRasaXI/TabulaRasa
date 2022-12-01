@@ -21,7 +21,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "zone_entities.h"
 
-#include "../common/utils.h"
+#include "common/utils.h"
 #include "enmity_container.h"
 #include "latent_effect_container.h"
 #include "mob_modifier.h"
@@ -291,7 +291,7 @@ void CZoneEntities::WeatherChange(WEATHER weather)
 
         PCurrentMob->PAI->EventHandler.triggerListener("WEATHER_CHANGE", CLuaBaseEntity(PCurrentMob), static_cast<int>(weather), element);
         // can't detect by scent in this weather
-        if (PCurrentMob->m_Detects & DETECT_SCENT)
+        if (PCurrentMob->getMobMod(MOBMOD_DETECTION) & DETECT_SCENT)
         {
             PCurrentMob->m_disableScent = (weather == WEATHER_RAIN || weather == WEATHER_SQUALL || weather == WEATHER_BLIZZARDS);
         }
@@ -485,7 +485,7 @@ void CZoneEntities::AssignDynamicTargIDandLongID(CBaseEntity* PEntity)
         id += 0x100;
     }
 
-    m_zone->GetZoneEntities()->dynamicTargIds.insert(targid);
+    dynamicTargIds.insert(targid);
 
     PEntity->targid   = targid;
     PEntity->id       = id;
@@ -1080,7 +1080,7 @@ void CZoneEntities::SavePlayTime()
     }
 }
 
-CCharEntity* CZoneEntities::GetCharByName(int8* name)
+CCharEntity* CZoneEntities::GetCharByName(const std::string& name)
 {
     TracyZoneScoped;
     if (!m_charList.empty())
@@ -1088,7 +1088,8 @@ CCharEntity* CZoneEntities::GetCharByName(int8* name)
         for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
         {
             CCharEntity* PCurrentChar = (CCharEntity*)it->second;
-            if (stricmp((char*)PCurrentChar->GetName(), (const char*)name) == 0)
+
+            if (strcmpi(PCurrentChar->GetName().c_str(), name.c_str()) == 0)
             {
                 return PCurrentChar;
             }
@@ -1316,10 +1317,10 @@ void CZoneEntities::WideScan(CCharEntity* PChar, uint16 radius)
     PChar->pushPacket(new CWideScanPacket(WIDESCAN_END));
 }
 
-void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
+void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
 {
     TracyZoneScoped;
-    TracyZoneIString(m_zone->GetName());
+    TracyZoneString(m_zone->GetName());
 
     luautils::OnZoneTick(this->m_zone);
 
@@ -1354,14 +1355,14 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
 
         if (PMob->status == STATUS_TYPE::DISAPPEAR && PMob->m_bReleaseTargIDOnDeath) // Only Affects Dynamic Mobs
         {
-            if (PEntity->PPet != nullptr) // If I have a pet when I despawn, I need to replace my entity on the pet with the pet's entity. (This pseudo-detaches the pet)
+            if (PEntity->PPet != nullptr)
             {
-                PEntity->PPet->PMaster = PEntity->PPet;
+                PEntity->PPet->PMaster = nullptr;
             }
 
             if (PEntity->PMaster != nullptr)
             {
-                PEntity->PMaster->PPet = PEntity->PMaster;
+                PEntity->PMaster->PPet = nullptr;
             }
 
             for (auto PMobIt : m_mobList)
@@ -1386,7 +1387,7 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
 
             it->second = nullptr;
             m_mobList.erase(it++);
-            dynamicTargIds.erase(PMob->targid);
+            dynamicTargIdsToDelete.push_back(std::make_pair(PMob->targid, server_clock::now()));
             delete PMob;
             continue;
         }
@@ -1450,13 +1451,15 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
                     delete it->second;
                     it->second = nullptr;
                 }
-                dynamicTargIds.erase(it->first);
+                dynamicTargIdsToDelete.push_back(std::make_pair(it->first, server_clock::now()));
+
                 m_petList.erase(it++);
                 continue;
             }
         }
         it++;
     }
+
     it = m_trustList.begin();
     while (it != m_trustList.end())
     {
@@ -1494,7 +1497,8 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
 
                 delete it->second;
                 it->second = nullptr;
-                dynamicTargIds.erase(it->first);
+                dynamicTargIdsToDelete.push_back(std::make_pair(it->first, server_clock::now()));
+
                 m_trustList.erase(it++);
                 continue;
             }
@@ -1517,9 +1521,9 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_regions)
             }
             PChar->PAI->Tick(tick);
             PChar->PTreasurePool->CheckItems(tick);
-            if (check_regions)
+            if (check_trigger_areas)
             {
-                m_zone->CheckRegions(PChar);
+                m_zone->CheckTriggerAreas(PChar);
             }
         }
     }

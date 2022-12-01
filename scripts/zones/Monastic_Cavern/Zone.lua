@@ -8,8 +8,15 @@ require('scripts/globals/treasure')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.ORCISH_OVERLORD)
-    GetMobByID(ID.mob.ORCISH_OVERLORD):setRespawnTime(math.random(900, 10800))
+    -- NM Persistence
+    local timeOfDeath = GetServerVariable("[POP]Overlord_Bakgodek")
+    local kills       = GetServerVariable("[PH]Overlord_Bakgodek")
+    local popNow      = math.random(1, 5) == 3 or kills > 6
+    if os.time() > timeOfDeath and popNow then
+        xi.mob.nmTODPersistCache(zone, ID.mob.ORCISH_OVERLORD + 1)
+    else
+        xi.mob.nmTODPersistCache(zone, ID.mob.ORCISH_OVERLORD)
+    end
 
     xi.treasure.initZone(zone)
 end
@@ -32,7 +39,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

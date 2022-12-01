@@ -156,6 +156,7 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
 
         chance = xi.additionalEffect.levelCorrection(defender:getMainLvl(), attacker:getMainLvl(), chance)
     end
+
     --------------------------------------
 
     if addType == procType.DAMAGE then
@@ -172,14 +173,40 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         if addStatus and addStatus > 0 then
             local tick   = xi.additionalEffect.statusAttack(addStatus, defender)
             local resist = xi.magic.applyResistanceAddEffect(attacker, defender, element, addStatus, 0)
-            msgID        = xi.msg.basic.ADD_EFFECT_STATUS
+            local immunity = 0
+
+            local immunityTable =
+            {
+                { status = xi.effect.SLEEP_I,   immunity = xi.immunity.SLEEP    },
+                { status = xi.effect.WEIGHT,    immunity = xi.immunity.GRAVITY  },
+                { status = xi.effect.BIND,      immunity = xi.immunity.BIND     },
+                { status = xi.effect.STUN,      immunity = xi.immunity.STUN     },
+                { status = xi.effect.SILENCE,   immunity = xi.immunity.SILENCE  },
+                { status = xi.effect.PARALYSIS, immunity = xi.immunity.PARALYZE },
+                { status = xi.effect.BLINDNESS, immunity = xi.immunity.BLIND    },
+                { status = xi.effect.SLOW,      immunity = xi.immunity.SLOW     },
+                { status = xi.effect.POISON,    immunity = xi.immunity.POISON   },
+                { status = xi.effect.ELEGY,     immunity = xi.immunity.ELEGY    },
+                { status = xi.effect.REQUIEM,   immunity = xi.immunity.REQUIEM  },
+                { status = xi.effect.TERROR,    immunity = xi.immunity.TERROR   },
+            }
+
+            for _, statusTable in pairs(immunityTable) do
+                if statusTable.status == addStatus then
+                    immunity = statusTable.immunity
+                    break
+                end
+            end
+
             if
                 resist >= 0.5 and
-                duration * resist > 0
+                duration * resist > 0 and
+                not defender:hasImmunity(immunity)
             then
                 defender:addStatusEffect(addStatus, power, tick, duration * resist)
+                msgID    = xi.msg.basic.ADD_EFFECT_STATUS
+                msgParam = addStatus
             end
-            msgParam = addStatus
         end
 
     elseif addType == procType.HP_HEAL then -- Its not a drain and works vs undead. https://www.bg-wiki.com/bg/Dominion_Mace
@@ -196,8 +223,16 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         attacker:addMP(magicPoints)
         msgParam = magicPoints
 
-    elseif addType == procType.HP_DRAIN or (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 1) then
+    elseif
+        addType == procType.HP_DRAIN or
+        (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 1)
+    then
         damage = xi.additionalEffect.calcDamage(attacker, element, defender, damage)
+
+        -- Upyri: ID 4105
+        if defender:isUndead() or defender:getPool() == 4105 then
+            return 0
+        end
 
         if damage > defender:getHP() then
             damage = defender:getHP()
@@ -208,7 +243,10 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         defender:addHP(-damage)
         attacker:addHP(damage)
 
-    elseif addType == procType.MP_DRAIN or (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 2) then
+    elseif
+        addType == procType.MP_DRAIN or
+        (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 2)
+    then
         damage = xi.additionalEffect.calcDamage(attacker, element, defender, damage)
 
         if damage > defender:getMP() then
@@ -220,7 +258,10 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         defender:addMP(-damage)
         attacker:addMP(damage)
 
-    elseif addType == procType.TP_DRAIN or (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 3) then
+    elseif
+        addType == procType.TP_DRAIN or
+        (addType == procType.HPMPTP_DRAIN and math.random(1, 3) == 3)
+    then
         damage = xi.additionalEffect.calcDamage(attacker, element, defender, damage)
 
         if damage > defender:getTP() then
@@ -237,9 +278,11 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         -- Resistance check should be in dispelStatusEffect() itself
         if dispel == xi.effect.NONE then
             return 0, 0, 0
-        else
+        elseif not defender:hasImmunity(xi.immunity.DISPEL) then
             msgID = xi.msg.basic.ADD_EFFECT_DISPEL
             msgParam = dispel
+        else
+            return 0, 0, 0
         end
 
     elseif addType == procType.ABSORB then
@@ -258,7 +301,10 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
             msgParam = 0
         elseif addStatus == xi.effect.BLINK then -- BLINK http://www.ffxiah.com/item/18830/gusterion
             -- Does not stack with or replace other shadows
-            if attacker:hasStatusEffect(xi.effect.BLINK) or attacker:hasStatusEffect(xi.effect.UTSUSEMI) then
+            if
+                attacker:hasStatusEffect(xi.effect.BLINK) or
+                attacker:hasStatusEffect(xi.effect.UTSUSEMI)
+            then
                 return 0, 0, 0
             else
                 attacker:addStatusEffect(xi.effect.BLINK, power, 0, duration)

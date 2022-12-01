@@ -16,8 +16,9 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.SIMURGH)
-    xi.mob.NMPersistCache(ID.mob.SIMURGH)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.SIMURGH)
+
     xi.voidwalker.zoneOnInit(zone)
 end
 
@@ -43,13 +44,16 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onGameHour = function(zone)
     -- Silk Caterpillar should spawn every 6 hours from 03:00
     -- this is approximately when the Jeuno-Bastok airship is flying overhead towards Jeuno.
-    if VanadielHour() % 6 == 3 and not GetMobByID(ID.mob.SILK_CATERPILLAR):isSpawned() then
+    if
+        VanadielHour() % 6 == 3 and
+        not GetMobByID(ID.mob.SILK_CATERPILLAR):isSpawned()
+    then
         -- Despawn set to 210 seconds (3.5 minutes, approx when the Jeuno-Bastok airship is flying back over to Bastok).
         SpawnMob(ID.mob.SILK_CATERPILLAR, 210)
     end

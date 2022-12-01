@@ -1374,13 +1374,15 @@ xi.mod =
     STEALTH                         = 358,
     RAPID_SHOT                      = 359,
     CHARM_TIME                      = 360,
-    JUMP_TP_BONUS                   = 361,  -- bonus tp player receives when using jump
-    JUMP_SPIRIT_TP_BONUS            = 285,  -- bonus tp player receives when using jump for spirit jump only
-    JUMP_ATT_BONUS                  = 362,  -- ATT% bonus for all jumps
-    JUMP_SOUL_SPIRIT_ATT_BONUS      = 286,  -- ATT% bonus for Soul & Spirit jump only
-    JUMP_ACC_BONUS                  = 936,  -- accuracy bonus for all jumps
-    JUMP_DOUBLE_ATTACK              = 888,  -- DA% bonus for all jumps
-    HIGH_JUMP_ENMITY_REDUCTION      = 363,  -- for gear that reduces more enmity from high jump
+    JUMP_TP_BONUS                   = 361, -- bonus tp player receives when using jump
+    JUMP_SPIRIT_TP_BONUS            = 285, -- bonus tp player receives when using jump for spirit jump only
+    JUMP_ATT_BONUS                  = 362, -- ATT% bonus for all jumps
+    JUMP_SOUL_SPIRIT_ATT_BONUS      = 286, -- ATT% bonus for Soul & Spirit jump only
+    JUMP_ACC_BONUS                  = 936, -- accuracy bonus for all jumps
+    JUMP_DOUBLE_ATTACK              = 888, -- DA% bonus for all jumps
+    HIGH_JUMP_ENMITY_REDUCTION      = 363, -- for gear that reduces more enmity from high jump
+    ENHANCES_STRAFE                 = 282, -- Strafe merit augment, +50 TP gained per merit level on breath use.
+    ENHANCES_SPIRIT_LINK            = 281, -- Adds erase/-na to Spirit Link
     REWARD_HP_BONUS                 = 364,
     SNAP_SHOT                       = 365,
 
@@ -1430,6 +1432,7 @@ xi.mod =
     SUBLIMATION_BONUS               = 401,
     GRIMOIRE_SPELLCASTING           = 489, -- "Grimoire: Reduces spellcasting time" bonus
     WYVERN_BREATH                   = 402,
+    UNCAPPED_WYVERN_BREATH          = 284, -- Uncapped wyvern breath boost. Used on retail for augments, normal gear should use WYVERN_BREATH.
     REGEN_DOWN                      = 404, -- poison
     REFRESH_DOWN                    = 405, -- plague, reduce mp
     REGAIN_DOWN                     = 406, -- plague, reduce tp
@@ -1623,6 +1626,7 @@ xi.mod =
     RAPTURE_AMOUNT                  = 568, -- Bonus amount added to Rapture effect
     EBULLIENCE_AMOUNT               = 569, -- Bonus amount added to Ebullience effect
     WYVERN_EFFECTIVE_BREATH         = 829, -- Increases the threshold for triggering healing breath
+    ENHANCE_DEEP_BREATHING          = 283, -- Add 5/256 to deep breathing bonus per merit level when calculating healing breath
     AQUAVEIL_COUNT                  = 832, -- Modifies the amount of hits that Aquaveil absorbs before being removed
     SONG_RECAST_DELAY               = 833, -- Reduces song recast time in seconds.
     ENH_MAGIC_DURATION              = 890, -- Enhancing Magic Duration increase %
@@ -1787,8 +1791,8 @@ xi.mod =
     TRUE_SHOT_EFFECT        = 1053, -- TODO: True Shot Ranged Damage increase (percent)
     DEAD_AIM_EFFECT         = 1054, -- TODO: Dead Aim Critical Damage increase (percent)
     THIRD_EYE_BONUS         = 1055, -- TODO: Bonus Third Eye Evasions (count)
-    WYVERN_ATTRIBUTE_DA     = 1056, -- TODO: Adds an amount of Double Attack to Dragoon each time Wyverns Attributes Increase (percent)
-    DRAGOON_BREATH_RECAST   = 1057, -- TODO: Restoring/Smithing Breath Recast Reduction (seconds)
+    WYVERN_ATTRIBUTE_DA     = 1056, -- Adds an amount of Double Attack to Dragoon each time Wyverns Attributes Increase (percent)
+    DRAGOON_BREATH_RECAST   = 1057, -- Restoring/Smithing Breath Recast Reduction (seconds)
     BLUE_JOB_TRAIT_BONUS    = 1058, -- TODO: Increases job traits gained from equipped blue magic (percent)
     BLUE_MAGIC_EFFECT       = 1059, -- TODO: Bonus to Attribute Value of spell (percent)
     QUICK_DRAW_RECAST       = 1060, -- TODO: Quick Draw Charge Reduction (seconds)
@@ -1838,23 +1842,23 @@ xi.mod =
 
 xi.immunity =
 {
-    NONE        = 0x00,
-    SLEEP       = 0x01,
-    GRAVITY     = 0x02,
-    BIND        = 0x04,
-    STUN        = 0x08,
-    SILENCE     = 0x10,   -- 16
-    PARALYZE    = 0x20,   -- 32
-    BLIND       = 0x40,   -- 64
-    SLOW        = 0x80,   -- 128
-    POISON      = 0x100,  -- 256
-    ELEGY       = 0x200,  -- 512
-    REQUIEM     = 0x400,  -- 1024
-    LIGHT_SLEEP = 0x800,  -- 2048
-    DARK_SLEEP  = 0x1000, -- 4096
-    ASPIR       = 0x2000, -- 8192
-    TERROR      = 0x4000, -- 16384
-    DISPEL      = 0x8000, -- 32768
+    NONE        = 0,
+    SLEEP       = 1,
+    GRAVITY     = 2,
+    BIND        = 4,
+    STUN        = 8,
+    SILENCE     = 16,
+    PARALYZE    = 32,
+    BLIND       = 64,
+    SLOW        = 128,
+    POISON      = 256,
+    ELEGY       = 512,
+    REQUIEM     = 1024,
+    LIGHT_SLEEP = 2048,
+    DARK_SLEEP  = 4096,
+    ASPIR       = 8192,
+    TERROR      = 16384,
+    DISPEL      = 32768,
 }
 
 xi.latent =
@@ -1920,6 +1924,7 @@ xi.latent =
     VS_ECOSYSTEM             = 59, -- Vs. Specific Ecosystem ID (e.g. Vs. Plantoid: Accuracy+3)
     VS_FAMILY                = 60, -- Vs. Specific Family ID (e.g. Vs. Korrigan: Accuracy+3)
     VS_SUPERFAMILY           = 61, -- Vs. Specific Family ID (e.g. Vs. Mandragora: Accuracy+3)
+    CITIZEN_OF_NATION        = 70, -- Player is a citizen of the provided nation
 }
 
 -----------------------------------
@@ -2152,7 +2157,7 @@ xi.merit =
     ANCIENT_CIRCLE_RECAST       = meritCategory.DRG_1 + 0x00,
     JUMP_RECAST                 = meritCategory.DRG_1 + 0x02,
     HIGH_JUMP_RECAST            = meritCategory.DRG_1 + 0x04,
-    SUPER_JUMP_RECAST           = meritCategory.DRG_1 + 0x05,
+    SUPER_JUMP_RECAST           = meritCategory.DRG_1 + 0x06,
     SPIRIT_LINK_RECAST          = meritCategory.DRG_1 + 0x08,
 
     -- SMN 1
@@ -2616,6 +2621,7 @@ xi.mobMod =
     DRAW_IN_IGNORE_STATIONARY = 104, -- Stationary mobs draw-in the moment they cannot attack you anymore (out of range). put this mobmod on stationary mobs that have draw-in but use ranged attacks instead of melee attacks so that they will ignore this behavior (i.e. KSNM99 Wyrm or ToAU Mission Alexander)
     ATTRACT_FAMILY_NM         = 105, -- NMs within the same family will link onto this mob (used on Sabotenders for Cactrot Rapido)
     LEDGE_AGGRO               = 106, -- Used to increase vertical aggro range
+    DISENGAGE_NO_PATH         = 107, -- Used to force a disengage when there is no vertical path to the target rather than despawn.
 }
 
 -----------------------------------
