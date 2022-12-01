@@ -29,11 +29,11 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(25, -400, 5, 670, 0, 0, 0)
 
     -- Hole in the Sand
-    zone:registerRegion(30, 495, -9, -817, 497, -7, -815) -- E-11 (Map 2)
-    zone:registerRegion(31, 815, -9, -744, 817, -7, -742) -- M-9 (Map 2)
-    zone:registerRegion(32, 215, 6, -17, 217, 8, -15)     -- K-6 (Map 3)
-    zone:registerRegion(33, -297, 6, 415, -295, 8, 417)   -- E-7 (Map 6)
-    zone:registerRegion(34, -137, 6, -177, -135, 8, -175) -- G-7 (Map 8)
+    zone:registerTriggerArea(30, 495, -9, -817, 497, -7, -815) -- E-11 (Map 2)
+    zone:registerTriggerArea(31, 815, -9, -744, 817, -7, -742) -- M-9 (Map 2)
+    zone:registerTriggerArea(32, 215, 6, -17, 217, 8, -15)     -- K-6 (Map 3)
+    zone:registerTriggerArea(33, -297, 6, 415, -295, 8, 417)   -- E-7 (Map 6)
+    zone:registerTriggerArea(34, -137, 6, -177, -135, 8, -175) -- G-7 (Map 8)
     xi.mob.NMPersistCache(ID.mob.ANTICAN_CONSUL)
 
     -- NM Persistence
