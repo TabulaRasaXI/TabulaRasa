@@ -83,11 +83,7 @@ zoneObject.onZoneWeatherChange = function(weather)
     end
 
     local kingV = GetMobByID(ID.mob.KING_VINEGARROON)
-<<<<<<< HEAD
-    local kvre = GetServerVariable(string.format("[SPAWN]%s", kingV:getName()))
-=======
     local kvre = GetServerVariable("[SPAWN]17289575")
->>>>>>> ASB/staging
     if not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.DUST_STORM then
         -- 10% chance for KV pop at start of single earth weather
         local chance = math.random(1, 10)
