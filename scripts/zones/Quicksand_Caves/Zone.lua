@@ -36,6 +36,10 @@ zoneObject.onInitialize = function(zone)
     zone:registerRegion(34, -137, 6, -177, -135, 8, -175) -- G-7 (Map 8)
     xi.mob.NMPersistCache(ID.mob.ANTICAN_CONSUL)
 
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.ANTICAN_CONSUL)
+    xi.mob.nmTODPersistCache(zone, ID.mob.PROCONSUL_XII)
+
     xi.treasure.initZone(zone)
 
     npcUtil.UpdateNPCSpawnPoint(ID.npc.ANTICAN_TAG_QM, 60, 120, ID.npc.ANTICAN_TAG_POSITIONS, "[POP]Antican_Tag")

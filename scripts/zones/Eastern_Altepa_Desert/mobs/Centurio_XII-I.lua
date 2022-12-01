@@ -48,8 +48,7 @@ end
 
 entity.onMobDespawn = function(mob)
     UpdateNMSpawnPoint(mob:getID())
-    local respawn = 75600 + math.random(0, 600) -- 21 to 24 hours
-    xi.mob.NMPersist(mob,respawn)
+    xi.mob.nmTODPersist(mob, math.random(0, 600) + 75600) -- 21 hours, 10 minute window
     DespawnMob(ID.mob.CENTURIO_XII_I + 1)
     DespawnMob(ID.mob.CENTURIO_XII_I + 2)
 end

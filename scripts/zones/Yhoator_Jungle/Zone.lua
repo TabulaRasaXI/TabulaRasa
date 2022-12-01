@@ -19,12 +19,16 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
+<<<<<<< HEAD
     UpdateNMSpawnPoint(ID.mob.WOODLAND_SAGE)
     xi.mob.NMPersistCache(ID.mob.WOODLAND_SAGE)
+=======
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.WOODLAND_SAGE)
+>>>>>>> ASB/staging
 
     if xi.settings.main.ENABLE_WOTG == 1 then
-        UpdateNMSpawnPoint(ID.mob.POWDERER_PENNY)
-        GetMobByID(ID.mob.POWDERER_PENNY):setRespawnTime(math.random(5400, 7200))
+        xi.mob.nmTODPersistCache(zone, ID.mob.POWDERER_PENNY)
     end
 
     UpdateNMSpawnPoint(ID.mob.BISQUE_HEELED_SUNBERRY)

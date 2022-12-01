@@ -28,14 +28,13 @@ zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(21, -190.2, -1, 322, -188, 1, 324.2)
     zone:registerTriggerArea(22, -130.2, -1, 322, -128, 1, 324.2)
 
-    UpdateNMSpawnPoint(ID.mob.OLD_TWO_WINGS)
-    xi.mob.NMPersistCache(ID.mob.OLD_TWO_WINGS)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.OLD_TWO_WINGS)
+    xi.mob.nmTODPersistCache(zone, ID.mob.SKEWER_SAM)
+    xi.mob.nmTODPersistCache(zone, ID.mob.SERKET)
 
     UpdateNMSpawnPoint(ID.mob.SKEWER_SAM)
     xi.mob.NMPersistCache(ID.mob.SKEWER_SAM)
-
-    UpdateNMSpawnPoint(ID.mob.SERKET)
-    xi.mob.NMPersistCache(ID.mob.SERKET)
 
     xi.treasure.initZone(zone)
 end

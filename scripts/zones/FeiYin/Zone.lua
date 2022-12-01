@@ -13,12 +13,13 @@ require("scripts/globals/mobs")
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.CAPRICIOUS_CASSIE)
-    xi.mob.NMPersistCache(ID.mob.CAPRICIOUS_CASSIE)
     xi.mob.lotteryPersistCache(zone, ID.mob.NORTHEN_SHADOW)
     xi.mob.lotteryPersistCache(zone, ID.mob.EASTERN_SHADOW)
     xi.mob.lotteryPersistCache(zone, ID.mob.SOUTHERN_SHADOW)
     xi.mob.lotteryPersistCache(zone, ID.mob.WESTERN_SHADOW)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.CAPRICIOUS_CASSIE)
+
     xi.treasure.initZone(zone)
 end
 

@@ -2963,7 +2963,12 @@ namespace battleutils
             {
                 if (attackerLvl > defenderLvl)
                 {
-                    cRatio = cRatio + correction; // Match other format
+                    cRatio = cRatio + correction; // Sets level correction for all mobs and pets
+
+                    if ((attackerType == TYPE_PET) && (charutils::CheckMob(attackerLvl, defenderLvl) == EMobDifficulty::TooWeak)) // Checks if the mob is too weak and if its a pet
+                    {
+                        cRatio = std::clamp(cRatio, 0.f, 2.f);
+                    }
                 }
             }
         }
@@ -3524,23 +3529,6 @@ namespace battleutils
             num += 1;
         }
 
-        // hasso occasionally triggers Zanshin after landing a normal attack, only active while Samurai is set as Main
-        if (PEntity->GetMJob() == JOB_SAM)
-        {
-            if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_HASSO))
-            {
-                uint16 zanshin = PEntity->getMod(Mod::ZANSHIN);
-                if (PEntity->objtype == TYPE_PC)
-                {
-                    zanshin += ((CCharEntity*)PEntity)->PMeritPoints->GetMeritValue(MERIT_ZASHIN_ATTACK_RATE, (CCharEntity*)PEntity);
-                }
-
-                if (xirand::GetRandomNumber(100) < (zanshin / 4))
-                {
-                    num++;
-                }
-            }
-        }
         return std::min<uint8>(num, 8);
     }
 
