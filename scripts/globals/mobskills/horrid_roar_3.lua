@@ -21,6 +21,7 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     elseif mob:getAnimationSub() == 1 then
         return 1
     end
+
     return 0
 end
 
@@ -34,7 +35,7 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
         skill:setMsg(xi.msg.basic.DISAPPEAR_NUM)
     end
 
-    mob:lowerEnmity(target, 70)
+    mob:resetEnmity(target)
 
     return dispel
 end

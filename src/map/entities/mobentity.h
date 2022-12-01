@@ -222,7 +222,6 @@ public:
     uint8     m_Type; // mob type
     bool      m_Aggro;
     bool      m_TrueDetection; // Has true sight or sound
-    uint16    m_Detects;       // mobs detection methods, sight, sound, etc
     uint8     m_Link;          // link with mobs of it's family
     bool      m_isAggroable;   // Can be aggroed by other monsters when in the player allegiance
     uint16    m_Behaviour;     // mob behaviour
@@ -255,6 +254,10 @@ public:
     uint8 m_unk0; // possibly campaign related (entity 0x24)
     uint8 m_unk1; // (entity_update 0x25)
     uint8 m_unk2; // (entity_update 0x26)
+
+    uint16 m_pathFindDisengage;
+
+    uint16 m_defaultAttack;
 
     bool m_CallForHelpBlocked;
 

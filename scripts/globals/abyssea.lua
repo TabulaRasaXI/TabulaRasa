@@ -582,7 +582,10 @@ xi.abyssea.visionsCruorProspectorOnTrigger = function(player, npc)
     local cruor = player:getCurrency("cruor")
     local demilune = xi.abyssea.getDemiluneAbyssite(player)
 
-    if active == xi.extravaganza.campaign.SUMMER_NY or active == xi.extravaganza.campaign.BOTH then
+    if
+        active == xi.extravaganza.campaign.SUMMER_NY or
+        active == xi.extravaganza.campaign.BOTH
+    then
         cipher = 1
     end
 
@@ -796,6 +799,7 @@ xi.abyssea.procMonster = function(mob, player, triggerType)
             else
                 mob:setLocalVar("[AbysseaRedProc]", 0)
             end
+
             mob:weaknessTrigger(2)
             mob:addStatusEffect(xi.effect.TERROR, 0, 0, 30)
         elseif triggerType == xi.abyssea.triggerType.YELLOW then
@@ -804,6 +808,7 @@ xi.abyssea.procMonster = function(mob, player, triggerType)
             else
                 mob:setLocalVar("[AbysseaYellowProc]", 0)
             end
+
             mob:weaknessTrigger(1)
             mob:addStatusEffect(xi.effect.TERROR, 0, 0, 30)
         elseif triggerType == xi.abyssea.triggerType.BLUE then
@@ -812,6 +817,7 @@ xi.abyssea.procMonster = function(mob, player, triggerType)
             else
                 mob:setLocalVar("[AbysseaBlueProc]", 0)
             end
+
             mob:weaknessTrigger(0)
             mob:addStatusEffect(xi.effect.TERROR, 0, 0, 30)
         end
@@ -857,6 +863,7 @@ local checkMobID = function(zoneId, mobId)
             return true
         end
     end
+
     return false
 end
 
@@ -874,6 +881,7 @@ xi.abyssea.qmOnTrigger = function(player, npc, mobId, kis, tradeReqs)
                     t[i] = 0
                 end
             end
+
             player:startEvent(events[1], t[1], t[2], t[3], t[4], t[5], t[6], t[7], t[8]) -- report required trades
             return true
         end
@@ -898,6 +906,7 @@ xi.abyssea.qmOnTrigger = function(player, npc, mobId, kis, tradeReqs)
         if keyItem ~= 0 and not player:hasKeyItem(keyItem) then
             validKis = false
         end
+
         player:setLocalVar("KI" .. index, keyItem)
         kisExpected[index] = keyItem
     end
@@ -1138,7 +1147,7 @@ xi.abyssea.searingWardTimer = function(player)
     end
 end
 
-xi.abyssea.onWardRegionLeave = function(player)
+xi.abyssea.onWardTriggerAreaLeave = function(player)
     local ID = zones[player:getZoneID()]
     local visitantEffect = player:getStatusEffect(xi.effect.VISITANT)
 
@@ -1148,7 +1157,7 @@ xi.abyssea.onWardRegionLeave = function(player)
     end
 end
 
-xi.abyssea.onWardRegionEnter = function(player)
+xi.abyssea.onWardTriggerAreaEnter = function(player)
     player:setLocalVar('tetherTimer', 0)
 end
 

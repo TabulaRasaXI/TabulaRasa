@@ -170,14 +170,14 @@ public:
 
     auto   getZone(sol::object const& arg0) -> std::optional<CLuaZone>; // Get Entity zone
     uint16 getZoneID();                                                 // Get Entity zone ID
-    auto   getZoneName() -> const char*;                                // Get Entity zone name
+    auto   getZoneName() -> const std::string&;                         // Get Entity zone name
     bool   hasVisitedZone(uint16 zone);                                 // true if player has previously entered zone
     uint16 getPreviousZone();                                           // Get Entity previous zone
     uint8  getCurrentRegion();                                          // Get Entity conquest region
     uint8  getContinentID();                                            // узнаем континент, на котором находится сущность
     bool   isInMogHouse();                                              // Check if entity inside a mog house
 
-    uint32 getPlayerRegionInZone();                                                           // Returns the player's current region in the zone. (regions made with registerRegion)
+    uint32 getPlayerTriggerAreaInZone();                                                      // Returns the player's current trigger area in the zone.
     void   updateToEntireZone(uint8 statusID, uint8 animation, sol::object const& matchTime); // Forces an update packet to update the NPC entity zone-wide
 
     auto  getPos() -> sol::table;      // Get Entity position (x,y,z)
@@ -265,6 +265,7 @@ public:
     bool   checkNameFlags(uint32 flags); // this is check and not get because it tests for a flag, it doesn't return all flags
     uint16 getModelId();
     void   setModelId(uint16 modelId, sol::object const& slotObj);
+    void   updateLook();
     void   restoreNpcLook();
     void   setCostume(uint16 costume);
     uint16 getCostume();
@@ -515,6 +516,8 @@ public:
 
     bool checkKillCredit(CLuaBaseEntity* PLuaBaseEntity, sol::object const& arg1, sol::object const& arg2);
 
+    uint8 checkDifficulty(CLuaBaseEntity* PLuaBaseEntity); // Checks difficulty of the mob
+
     // Instances
     auto getInstance() -> std::optional<CLuaInstance>;
     void setInstance(CLuaInstance* PLuaInstance);
@@ -672,6 +675,7 @@ public:
     uint8  getCRangedHitRate(CLuaBaseEntity* PLuaBaseEntity, int8 accBonus = 0);                                                            // Returns the ranged hit rate for an attack.
     uint8  getShieldAbsorptionRate();                                                                                                       // Returns the shield absorption for an attack.
     uint16 getWeaponDmg();                                                                                                                  // gets the current equipped weapons' DMG rating
+    uint16 getMobWeaponDmg(uint8 slot = 0);                                                                                                 // gets the Mob's current equipped weapons' DMG rating
     uint16 getWeaponDmgRank();                                                                                                              // gets the current equipped weapons' DMG rating for Rank calc
     uint16 getOffhandDmg();                                                                                                                 // gets the current equipped offhand's DMG rating (used in WS calcs)
     uint16 getOffhandDmgRank();                                                                                                             // gets the current equipped offhand's DMG rating for Rank calc
@@ -716,12 +720,11 @@ public:
     uint8  getPetElement();
     void   setPet(sol::object const& petObj);
 
-    auto getPetName() -> const char*;
+    auto getPetName() -> const std::string;
     void setPetName(uint8 pType, uint16 value, sol::object const& arg2);
     void registerChocobo(uint32 value);
 
-    float getCharmChance(CLuaBaseEntity const* target, sol::object const& mods); // Gets the chance the entity has to charm its target.
-    void  charmPet(CLuaBaseEntity const* target);                                // Charms Pet (Beastmaster ability only)
+    void charmPet(CLuaBaseEntity const* target); // Charms Pet (Beastmaster ability only)
 
     void petAttack(CLuaBaseEntity* PEntity); // Despawns Pet
     void petAbility(uint16 abilityID);       // Function exists, but is not implemented.  Warning will be displayed.
@@ -733,7 +736,7 @@ public:
     void delPetMod(uint16 modID, int16 amount);
 
     bool  hasAttachment(uint16 itemID);
-    auto  getAutomatonName() -> const char*;
+    auto  getAutomatonName() -> std::string;
     uint8 getAutomatonFrame();
     uint8 getAutomatonHead();
     bool  unlockAttachment(uint16 itemID);
@@ -776,7 +779,7 @@ public:
 
     void instantiateMob(uint32 groupID);
 
-    bool hasTrait(uint8 traitID);
+    bool hasTrait(uint16 traitID);
     bool hasImmunity(uint32 immunityID); // Check if the mob has immunity for a type of spell (list at mobentity.h)
 
     void setAggressive(bool aggressive);
@@ -792,10 +795,10 @@ public:
     void  setDamage(uint16 damage);           // sets a mobs weapon damage
     bool  hasSpellList();                     // true if a spell list is assigned to the mob
     void  setSpellList(uint16 spellList);     // sets the spell list value
-    void  SetAutoAttackEnabled(bool state);   // halts/resumes auto attack of entity
-    void  SetMagicCastingEnabled(bool state); // halt/resumes casting magic
-    void  SetMobAbilityEnabled(bool state);   // halt/resumes mob skills
-    void  SetMobSkillAttack(int16 listId);    // enable/disable using mobskills as regular attacks
+    void  setAutoAttackEnabled(bool state);   // halts/resumes auto attack of entity
+    void  setMagicCastingEnabled(bool state); // halt/resumes casting magic
+    void  setMobAbilityEnabled(bool state);   // halt/resumes mob skills
+    void  setMobSkillAttack(int16 listId);    // enable/disable using mobskills as regular attacks
     bool  isMagicCastingEnabled();            // return a true/false value if mob is able to auto-cast
     bool  isAutoAttackEnabled();              // returns true if the mob can auto-attack
 

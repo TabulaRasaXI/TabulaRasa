@@ -8,9 +8,10 @@ require('scripts/globals/treasure')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    -- NM Persistence
     if xi.settings.main.ENABLE_WOTG == 1 then
-        UpdateNMSpawnPoint(ID.mob.DYNAST_BEETLE)
-        GetMobByID(ID.mob.DYNAST_BEETLE):setRespawnTime(math.random(5400, 7200))
+        xi.mob.nmTODPersistCache(zone, ID.mob.DYNAST_BEETLE)
+        xi.mob.nmTODPersistCache(zone, ID.mob.AQRABUAMELU)
     end
 
     xi.treasure.initZone(zone)
@@ -34,7 +35,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

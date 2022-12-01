@@ -282,15 +282,18 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spell, spellId, 
         if caster:hasStatusEffect(xi.effect.MANAFONT) then
             baseSpellDamageBonus = baseSpellDamageBonus + caster:getJobPointLevel(xi.jp.MANAFONT_EFFECT) * 3
         end
+
         -- BLM Job Point: With Manawell mDMG +1
         if caster:hasStatusEffect(xi.effect.MANAWELL) then
             baseSpellDamageBonus = baseSpellDamageBonus + caster:getJobPointLevel(xi.jp.MANAWELL_EFFECT)
             caster:delStatusEffectSilent(xi.effect.MANAWELL)
         end
+
         -- BLM Job Point: Magic Damage Bonus
         if caster:getMainJob() == xi.job.BLM then
             baseSpellDamageBonus = baseSpellDamageBonus + caster:getJobPointLevel(xi.jp.MAGIC_DMG_BONUS)
         end
+
         -- NIN Job Point: Elemental Ninjutsu Effect
         if skillType == xi.skill.NINJUTSU then
             baseSpellDamageBonus = baseSpellDamageBonus + caster:getJobPointLevel(xi.jp.ELEM_NINJITSU_EFFECT) * 2
@@ -463,12 +466,18 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
     -- magicAcc from status effects.
     -----------------------------------
     -- Altruism
-    if caster:hasStatusEffect(xi.effect.ALTRUISM) and spellGroup == xi.magic.spellGroup.WHITE then
+    if
+        caster:hasStatusEffect(xi.effect.ALTRUISM) and
+        spellGroup == xi.magic.spellGroup.WHITE
+    then
         magicAcc = magicAcc + caster:getStatusEffect(xi.effect.ALTRUISM):getPower()
     end
 
     -- Focalization
-    if caster:hasStatusEffect(xi.effect.FOCALIZATION) and spellGroup == xi.magic.spellGroup.BLACK then
+    if
+        caster:hasStatusEffect(xi.effect.FOCALIZATION) and
+        spellGroup == xi.magic.spellGroup.BLACK
+    then
         magicAcc = magicAcc + caster:getStatusEffect(xi.effect.FOCALIZATION):getPower()
     end
 
@@ -519,7 +528,10 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
 
         [xi.job.RDM] = function()
             -- RDM Job Point: During saboteur, Enfeebling MACC +2
-            if skillType == xi.skill.ENFEEBLING_MAGIC and caster:hasStatusEffect(xi.effect.SABOTEUR) then
+            if
+                skillType == xi.skill.ENFEEBLING_MAGIC and
+                caster:hasStatusEffect(xi.effect.SABOTEUR)
+            then
                 magicAcc = magicAcc + (caster:getJobPointLevel(xi.jp.SABOTEUR_EFFECT)) * 2
             end
 
@@ -556,7 +568,10 @@ xi.spells.damage.calculateResist = function(caster, target, spell, skillType, sp
 
         [xi.job.RDM] = function()
             -- Category 1
-            if spellElement >= xi.magic.ele.FIRE and spellElement <= xi.magic.ele.WATER then
+            if
+                spellElement >= xi.magic.element.FIRE and
+                spellElement <= xi.magic.element.WATER
+            then
                 magicAcc = magicAcc + caster:getMerit(rdmMerit[spellElement])
             end
 
@@ -710,7 +725,11 @@ xi.spells.damage.calculateIfMagicBurstBonus = function(caster, target, spell, sp
     -- MBB = 1.0 + Gear + Atma/Atmacite + AMII Merits + others -- This Caps at 1.4
     -- MBB = MBB + trait
 
-    if spell and spell:getSpellGroup() == 3 and not caster:hasStatusEffect(xi.effect.BURST_AFFINITY) then
+    if
+        spell and
+        spell:getSpellGroup() == 3 and
+        not caster:hasStatusEffect(xi.effect.BURST_AFFINITY)
+    then
         return magicBurstBonus
     end
 
@@ -749,7 +768,11 @@ xi.spells.damage.calculateDayAndWeather = function(caster, target, spell, spellI
     end
 
     -- Calculate Weather bonus
-    if math.random() < 0.33 or caster:getMod(elementalObi[spellElement]) >= 1 or isHelixSpell then
+    if
+        math.random() < 0.33 or
+        caster:getMod(elementalObi[spellElement]) >= 1 or
+        isHelixSpell
+    then
         if weather == xi.magic.singleWeatherStrong[spellElement] then
             dayAndWeather = dayAndWeather + 0.10
             if caster:getMod(xi.mod.IRIDESCENCE) >= 1 then
@@ -770,11 +793,19 @@ xi.spells.damage.calculateDayAndWeather = function(caster, target, spell, spellI
     -- Calculate day bonus
     if dayElement == spellElement then
         dayAndWeather = dayAndWeather + caster:getMod(xi.mod.DAY_NUKE_BONUS) / 100 -- sorc. tonban(+1)/zodiac ring
-        if math.random() < 0.33 or caster:getMod(elementalObi[spellElement]) >= 1 or isHelixSpell then
+        if
+            math.random() < 0.33 or
+            caster:getMod(elementalObi[spellElement]) >= 1 or
+            isHelixSpell
+        then
             dayAndWeather = dayAndWeather + 0.10
         end
     elseif dayElement == xi.magic.elementDescendant[spellElement] then
-        if math.random() < 0.33 or caster:getMod(elementalObi[spellElement]) >= 1 or isHelixSpell then
+        if
+            math.random() < 0.33 or
+            caster:getMod(elementalObi[spellElement]) >= 1 or
+            isHelixSpell
+        then
             dayAndWeather = dayAndWeather - 0.10
         end
     end
@@ -801,17 +832,35 @@ xi.spells.damage.calculateMagicBonusDiff = function(caster, target, spell, spell
         mab = mab + caster:getMerit(xi.merit.NIN_MAGIC_BONUS)
         -- Ninja Category 1 merits
         -- TODO: merge spellFamily and spell ID tables into one table in spell_data.lua, then use spellFamily here instead of spellID
-        if spellId >= xi.magic.spell.KATON_ICHI and spellId <= xi.magic.spell.KATON_SAN then -- Katon series.
+        if
+            spellId >= xi.magic.spell.KATON_ICHI and
+            spellId <= xi.magic.spell.KATON_SAN
+        then -- Katon series.
             mab = mab + caster:getMerit(xi.merit.KATON_EFFECT)
-        elseif spellId >= xi.magic.spell.HYOTON_ICHI and spellId <= xi.magic.spell.HYOTON_SAN then
+        elseif
+            spellId >= xi.magic.spell.HYOTON_ICHI and
+            spellId <= xi.magic.spell.HYOTON_SAN
+        then
             mab = mab + caster:getMerit(xi.merit.HYOTON_EFFECT)
-        elseif spellId >= xi.magic.spell.HUTON_ICHI and spellId <= xi.magic.spell.HUTON_SAN then
+        elseif
+            spellId >= xi.magic.spell.HUTON_ICHI and
+            spellId <= xi.magic.spell.HUTON_SAN
+        then
             mab = mab + caster:getMerit(xi.merit.HUTON_EFFECT)
-        elseif spellId >= xi.magic.spell.DOTON_ICHI and spellId <= xi.magic.spell.DOTON_SAN then
+        elseif
+            spellId >= xi.magic.spell.DOTON_ICHI and
+            spellId <= xi.magic.spell.DOTON_SAN
+        then
             mab = mab + caster:getMerit(xi.merit.DOTON_EFFECT)
-        elseif spellId >= xi.magic.spell.RAITON_ICHI and spellId <= xi.magic.spell.RAITON_SAN then
+        elseif
+            spellId >= xi.magic.spell.RAITON_ICHI and
+            spellId <= xi.magic.spell.RAITON_SAN
+        then
             mab = mab + caster:getMerit(xi.merit.RAITON_EFFECT)
-        elseif spellId >= xi.magic.spell.SUITON_ICHI and spellId <= xi.magic.spell.SUITON_SAN then
+        elseif
+            spellId >= xi.magic.spell.SUITON_ICHI and
+            spellId <= xi.magic.spell.SUITON_SAN
+        then
             mab = mab + caster:getMerit(xi.merit.SUITON_EFFECT)
         end
     end
@@ -821,7 +870,10 @@ xi.spells.damage.calculateMagicBonusDiff = function(caster, target, spell, spell
     end
 
     -- Bar Spells bonuses
-    if spellElement >= xi.magic.element.FIRE and spellElement <= xi.magic.element.WATER then
+    if
+        spellElement >= xi.magic.element.FIRE and
+        spellElement <= xi.magic.element.WATER
+    then
         mab = mab + caster:getMerit(blmMerit[spellElement])
         if target:hasStatusEffect(xi.magic.barSpell[spellElement]) then -- bar- spell magic defense bonus
             mDefBarBonus = target:getStatusEffect(xi.magic.barSpell[spellElement]):getSubPower()
@@ -922,6 +974,7 @@ xi.spells.damage.calculateNinSkillBonus = function(caster, target, spell, spellI
         else                         -- San nuke spell, also has ids 1 more than their corresponding Ni spell
             ninSkillBonus = 100 + math.floor((caster:getSkillLevel(xi.skill.NINJUTSU) - 275) / 2)
         end
+
         ninSkillBonus = utils.clamp(ninSkillBonus / 100, 1, 2) -- bonus caps at +100%, and does not go negative
     end
 
@@ -931,7 +984,10 @@ end
 xi.spells.damage.calculateNinFutaeBonus = function(caster, target, spell, skillType)
     local ninFutaeBonus = 1
 
-    if skillType == xi.skill.NINJUTSU and caster:hasStatusEffect(xi.effect.FUTAE) then
+    if
+        skillType == xi.skill.NINJUTSU and
+        caster:hasStatusEffect(xi.effect.FUTAE)
+    then
         ninFutaeBonus = (150  + caster:getJobPointLevel(xi.jp.FUTAE_EFFECT) * 5) / 100
         caster:delStatusEffect(xi.effect.FUTAE)
     end
@@ -956,9 +1012,13 @@ xi.spells.damage.calculateNukeAbsorbOrNullify = function(caster, target, spell, 
     if math.random(1, 100) < (target:getMod(xi.magic.absorbMod[spellElement]) + 1) then
         nukeAbsorbOrNullify = -1
     end
+
     -- Calculate chance for spell nullification.
     local nullifyChance = math.random(1, 100)
-    if nullifyChance < (target:getMod(nullMod[spellElement]) + 1) or nullifyChance < target:getMod(xi.mod.MAGIC_NULL) then
+    if
+        nullifyChance < (target:getMod(nullMod[spellElement]) + 1) or
+        nullifyChance < target:getMod(xi.mod.MAGIC_NULL)
+    then
         nukeAbsorbOrNullify = 0
     end
 

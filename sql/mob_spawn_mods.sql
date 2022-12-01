@@ -62,9 +62,6 @@ INSERT INTO `mob_spawn_mods` VALUES (16793860,55,180,1); -- IDLE_DESPAWN: 180
 -- Shen'S Filtrate
 INSERT INTO `mob_spawn_mods` VALUES (16793861,55,180,1); -- IDLE_DESPAWN: 180
 
--- Jormungand
-INSERT INTO `mob_spawn_mods` VALUES (16797969,12,15,1); -- DRAW_IN: 15
-
 -- Geush Urvan
 -- Values taken from wiki (http://ffxiclopedia.wikia.com/wiki/Geush_Urvan)
 INSERT INTO `mob_spawn_mods` VALUES (16798078,1,20000,1);
@@ -85,9 +82,6 @@ INSERT INTO `mob_spawn_mods` VALUES (16806216,26,32,1); -- SUPERLINK: 32
 
 -- Xolotl'S Sacrifice
 INSERT INTO `mob_spawn_mods` VALUES (16806217,26,32,1); -- SUPERLINK: 32
-
--- Tiamat
-INSERT INTO `mob_spawn_mods` VALUES (16806227,12,8,1); -- DRAW_IN: 8
 
 -- Feeler Antlion
 INSERT INTO `mob_spawn_mods` VALUES (16806242,55,120,1); -- IDLE_DESPAWN: 120
@@ -238,9 +232,6 @@ INSERT INTO `mob_spawn_mods` VALUES (16892073,55,180,1); -- IDLE_DESPAWN: 180
 
 -- Indich
 INSERT INTO `mob_spawn_mods` VALUES (16892074,55,180,1); -- IDLE_DESPAWN: 180
-
--- Vrtra
-INSERT INTO `mob_spawn_mods` VALUES (16896161,12,15,1); -- DRAW_IN: 15
 
 -- Ouryu
 INSERT INTO `mob_spawn_mods` VALUES (16900314,12,15,1); -- DRAW_IN: 15
@@ -1448,9 +1439,6 @@ INSERT INTO `mob_spawn_mods` VALUES (17596729,55,300,1); -- IDLE_DESPAWN: 300
 
 -- Altedour I Tavnazia
 INSERT INTO `mob_spawn_mods` VALUES (17612836,55,180,1); -- IDLE_DESPAWN: 180
-
--- Capricious Cassie
-INSERT INTO `mob_spawn_mods` VALUES (17613129,55,300,1); -- IDLE_DESPAWN: 300
 
 -- Mimic
 INSERT INTO `mob_spawn_mods` VALUES (17617157,55,120,1); -- IDLE_DESPAWN: 120

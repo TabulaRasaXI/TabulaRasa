@@ -151,18 +151,6 @@ local battlefields =
     --  { 9, 1307,    0 },   -- Central 4th Floor II
     },
 
-    [xi.zone.APOLLYON] =
-    {
-        { 0, 1291,    0 },   -- SW Apollyon
-        { 1, 1290,    0 },   -- NW Apollyon
-        { 2, 1293,    0 },   -- SE Apollyon
-        { 3, 1292,    0 },   -- NE Apollyon
-    --  { 4, 1296,   -2 },   -- Central Apollyon (multiple items needed: 1909 1910 1987 1988)
-    --  { 5, 1294, 2127 },   -- CS Apollyon
-    --  { 6, 1295,    0 },   -- CS Apollyon II
-    --  { 7, 1297,    0 },   -- Central Apollyon II
-    },
-
     [xi.zone.ARRAPAGO_REEF] =
     {
     --  { 0,    ?,    0 },   -- Lamia Reprisal
@@ -555,7 +543,6 @@ local function checkReqs(player, npc, bfid, registrant)
 
     local nationStatus    = player:getMissionStatus(player:getNation())
     local zilartStatus    = player:getMissionStatus(xi.mission.log_id.ZILART)
-    local promathiaStatus = player:getCharVar("PromathiaStatus")
     local toauStatus      = player:getMissionStatus(xi.mission.log_id.TOAU)
 
     local function getEntranceOffset(offset)
@@ -960,7 +947,8 @@ local function checkReqs(player, npc, bfid, registrant)
         end,
 
         [678] = function() -- Quest: Requiem of Sin
-            return player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_Y)
+            return player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_Y) or
+                player:hasKeyItem(xi.ki.LETTER_FROM_THE_MITHRAN_TRACKERS)
         end,
 
         [704] = function() -- PM3-5: Darkness Named
@@ -979,6 +967,10 @@ local function checkReqs(player, npc, bfid, registrant)
         [736] = function() -- PM5-3 L3: A Century of Hardship
             return promathiaMission == xi.mission.id.cop.THREE_PATHS and
                 player:getMissionStatus(xi.mission.log_id.COP, xi.mission.status.COP.LOUVERANCE) == 8
+        end,
+
+        [737] = function() -- Quest: Return to the Depths
+            return player:getCharVar("Quest[1][78]prog") == 9
         end,
 
         [738] = function() -- ENM: Bionic Bug
@@ -1033,7 +1025,11 @@ local function checkReqs(player, npc, bfid, registrant)
 
         [896] = function() -- Quest: Storms of Fate
             return player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.STORMS_OF_FATE) == QUEST_ACCEPTED and
-                player:getCharVar('StormsOfFate') == 2
+                player:getCharVar("Quest[3][86]Status") >= 2
+        end,
+
+        [897] = function() -- Quest: The Wyrmking Descends
+            return player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)
         end,
 
         [960] = function() -- PM2-5: Ancient Vows
@@ -1064,29 +1060,31 @@ local function checkReqs(player, npc, bfid, registrant)
             return player:hasKeyItem(xi.ki.MONARCH_BEARD)
         end,
 
+        [966] = function() -- Quest: Uninvited Guests
+            return player:hasKeyItem(xi.ki.MONARCH_LINN_PATROL_PERMIT)
+        end,
+
         [992] = function() -- PM6-4: One to be Feared
             return promathiaMission == xi.mission.id.cop.ONE_TO_BE_FEARED and
-                player:getCharVar('Mission[6][638]Status') == 3
+                player:getCharVar('Mission[6][638]Status') >= 2
         end,
 
         [993] = function() -- PM7-5: The Warrior's Path
             return promathiaMission == xi.mission.id.cop.THE_WARRIORS_PATH and
-                player:getCharVar('Mission[6][748]Status') == 1
+                player:getCharVar('Mission[6][748]Status') >= 0
         end,
 
         [1024] = function() -- PM8-3: When Angels Fall
-            return promathiaMission == xi.mission.id.cop.WHEN_ANGELS_FALL and
-                promathiaStatus == 4
+            return player:getCharVar('Mission[6][828]Status') == 4
         end,
 
         [1056] = function() -- PM8-4: Dawn
             return promathiaMission == xi.mission.id.cop.DAWN and
-                promathiaStatus == 2
+                player:getCharVar('Mission[6][840]Status') == 2
         end,
 
         [1057] = function() -- Apocalypse Nigh
-            return player:getQuestStatus(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
-                player:getCharVar('ApocalypseNigh') == 4
+            return player:getCharVar("Quest[3][89]Prog") == 3
         end,
 
         [1090] = function() -- Quest: Puppetmaster Blues
@@ -1308,6 +1306,14 @@ local function checkReqs(player, npc, bfid, registrant)
             return player:hasKeyItem(xi.ki.WHISPER_OF_THE_WYRMKING)
         end,
 
+        [928] = function() -- Quest: Ouryu Cometh
+            return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.ANCIENT_VOWS) or
+                (
+                    promathiaMission == xi.mission.id.cop.ANCIENT_VOWS and
+                    player:getCharVar('Mission[6][248]Status') >= 2
+                )
+        end,
+
         [962] = function() -- ENM: Fire in the Sky
             return player:hasKeyItem(xi.ki.MONARCH_BEARD)
         end,
@@ -1324,12 +1330,12 @@ local function checkReqs(player, npc, bfid, registrant)
             return player:hasKeyItem(xi.ki.MONARCH_BEARD)
         end,
 
-        [928] = function() -- Quest: Ouryu Cometh
-            return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.ANCIENT_VOWS) or
-                (
-                    promathiaMission == xi.mission.id.cop.ANCIENT_VOWS and
-                    player:getCharVar('Mission[6][248]Status') >= 2
-                )
+        [966] = function() -- Quest: Uninvited Guests
+            return player:hasKeyItem(xi.ki.MONARCH_LINN_PATROL_PERMIT)
+        end,
+
+        [992] = function() -- PM6-4: One to be Feared
+            return promathiaMission >= xi.mission.id.cop.ONE_TO_BE_FEARED
         end,
 
         [1057] = function() -- Quest: Apocalypse Nigh
@@ -1448,9 +1454,7 @@ local function checkSkip(player, bfid)
     local bastokMission    = player:getCurrentMission(xi.mission.log_id.BASTOK)
     local windurstMission  = player:getCurrentMission(xi.mission.log_id.WINDURST)
     local promathiaMission = player:getCurrentMission(xi.mission.log_id.COP)
-
-    local nationStatus    = player:getMissionStatus(player:getNation())
-    local promathiaStatus = player:getCharVar("PromathiaStatus")
+    local nationStatus     = player:getMissionStatus(player:getNation())
 
     -- Requirements to skip a battlefield
     local skipReqs =
@@ -1628,6 +1632,15 @@ local function checkSkip(player, bfid)
                 )
         end,
 
+        [677] = function() -- Quest: Tango with a Tracker
+            return player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_X)
+        end,
+
+        [678] = function() -- Quest: Requiem of Sin
+            return player:hasKeyItem(xi.ki.LETTER_FROM_SHIKAREE_Y) or
+                player:hasKeyItem(xi.ki.LETTER_FROM_MITHRAN_TRACKERS)
+        end,
+
         [704] = function() -- PM3-5: Darkness Named
             return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DARKNESS_NAMED) or
                 (
@@ -1678,7 +1691,7 @@ local function checkSkip(player, bfid)
             return stormsOfFateStatus == QUEST_COMPLETED or
                 (
                     stormsOfFateStatus == QUEST_ACCEPTED and
-                    player:getCharVar("StormsOfFate") > 2
+                    player:getCharVar("Quest[3][86]Status") > 2
                 )
         end,
 
@@ -1702,7 +1715,7 @@ local function checkSkip(player, bfid)
             return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.WHEN_ANGELS_FALL) or
                 (
                     promathiaMission == xi.mission.id.cop.WHEN_ANGELS_FALL and
-                    promathiaStatus > 4
+                    player:getCharVar('Mission[6][828]Status') > 4
                 )
         end,
 
@@ -1710,12 +1723,12 @@ local function checkSkip(player, bfid)
             return player:hasCompletedMission(xi.mission.log_id.COP, xi.mission.id.cop.DAWN) or
                 (
                     promathiaMission == xi.mission.id.cop.DAWN and
-                    promathiaStatus > 2
+                    player:getCharVar('Mission[6][840]Status') > 2
                 )
         end,
 
         [1057] = function() -- Apocalypse Nigh
-            return player:hasCompletedQuest(xi.quest.log_id.JEUNO, xi.quest.id.jeuno.APOCALYPSE_NIGH)
+            return player:getCharVar("Quest[3][89]Prog") > 3
         end,
 
         [2721] = function() -- WOTG07: Purple, The New Black
@@ -1747,7 +1760,11 @@ local function findBattlefields(player, npc, itemId)
     end
 
     for k, v in pairs(zbfs) do
-        if v[3] == itemId and checkReqs(player, npc, v[2], true) and not player:battlefieldAtCapacity(v[2]) then
+        if
+            v[3] == itemId and
+            checkReqs(player, npc, v[2], true) and
+            not player:battlefieldAtCapacity(v[2])
+        then
             mask = bit.bor(mask, math.pow(2, v[1]))
         end
     end
@@ -1824,11 +1841,22 @@ xi.bcnm.onTrade = function(player, npc, trade, onUpdate)
         return false
 
     -- Chips for limbus
-    elseif trade:getItemCount() == 3 and trade:hasItemQty(1907, 1) and trade:hasItemQty(1908, 1) and trade:hasItemQty(1986, 1) then
+    elseif
+        trade:getItemCount() == 3 and
+        trade:hasItemQty(1907, 1) and
+        trade:hasItemQty(1908, 1) and
+        trade:hasItemQty(1986, 1)
+    then
         itemId = -1
 
     -- Chips for limbus
-    elseif trade:getItemCount() == 4 and trade:hasItemQty(1909, 1) and trade:hasItemQty(1910, 1) and trade:hasItemQty(1987, 1) and trade:hasItemQty(1988, 1) then
+    elseif
+        trade:getItemCount() == 4 and
+        trade:hasItemQty(1909, 1) and
+        trade:hasItemQty(1910, 1) and
+        trade:hasItemQty(1987, 1) and
+        trade:hasItemQty(1988, 1)
+    then
         itemId = -2
 
     -- Orbs / Testimonies
@@ -1972,42 +2000,6 @@ xi.bcnm.onEventUpdate = function(player, csid, option, extras)
 
         switch (battlefieldId): caseof
         {
-            [1290] = function() -- NW_Apollyon
-                area = 2
-            end,
-
-            [1291] = function() -- SW_Apollyon
-                area = 1
-            end,
-
-            [1292] = function() -- NE_Apollyon
-                area = 4
-            end,
-
-            [1293] = function() -- SE_Apollyon
-                area = 3
-            end,
-
-            [1294] = function() -- CS_Apollyon
-                area = 6
-            end,
-
-            [1296] = function() -- Central_Apollyon
-                area = 5
-            end,
-
-            [1298] = function() -- Temenos_Western_Tower
-                area = 3
-            end,
-
-            [1299] = function() -- Temenos_Northern_Tower
-                area = 1
-            end,
-
-            [1300] = function() -- Temenos_Eastern_Tower
-                area = 2
-            end,
-
             [1301] = function() -- Central_Temenos_Basement
                 area = 8
             end,

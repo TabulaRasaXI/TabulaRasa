@@ -80,7 +80,8 @@ zones[xi.zone.FEIYIN] =
         NORTHEN_SHADOW      = 17613102,
         EASTERN_SHADOW      = 17613109,
         SOUTHERN_SHADOW     = 17613120,
-        WESTERN_SHADOW      = 17613095
+        WESTERN_SHADOW      = 17613095,
+        HUMBABA             = 17232094,
     },
     npc =
     {

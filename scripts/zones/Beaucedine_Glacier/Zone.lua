@@ -9,9 +9,9 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
+    -- NM Persistence
     if xi.settings.main.ENABLE_WOTG == 1 then
-        UpdateNMSpawnPoint(ID.mob.HUMBABA)
-        GetMobByID(ID.mob.HUMBABA):setRespawnTime(math.random(3600, 4200))
+        xi.mob.nmTODPersistCache(zone, ID.mob.HUMBABA)
     end
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
@@ -50,7 +50,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

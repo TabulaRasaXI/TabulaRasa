@@ -136,6 +136,7 @@ local function addLoot(t1, t2)
     for item, weight in pairs(t1) do
         newTable[item] = weight
     end
+
     -- Add in our new item
     newTable[newItem] = t2[newItem]
 
@@ -215,7 +216,10 @@ end
 xi.beastmentreasure.handleNpcOnTrade = function(player, trade, digsiteids)
     local zd = zoneData[player:getZoneID()]
 
-    if player:getCharVar(zd.statusvar) == QUEST_ACCEPTED and npcUtil.tradeHasExactly(trade, zd.fetchitems) then
+    if
+        player:getCharVar(zd.statusvar) == QUEST_ACCEPTED and
+        npcUtil.tradeHasExactly(trade, zd.fetchitems)
+    then
         -- Assign a random dig site to the player
         player:setCharVar(zd.dsvar, math.random(1, 8))
 

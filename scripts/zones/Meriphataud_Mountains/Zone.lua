@@ -16,11 +16,15 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.COO_KEJA_THE_UNSEEN)
+    xi.mob.nmTODPersistCache(zone, ID.mob.WARAXE_BEAK)
+
+    if xi.settings.main.ENABLE_WOTG == 1 then
+        xi.mob.nmTODPersistCache(zone, ID.mob.CHONCHON)
+    end
     UpdateNMSpawnPoint(ID.mob.WARAXE_BEAK)
     GetMobByID(ID.mob.WARAXE_BEAK):setRespawnTime(math.random(900, 10800))
-
-    UpdateNMSpawnPoint(ID.mob.COO_KEJA_THE_UNSEEN)
-    GetMobByID(ID.mob.COO_KEJA_THE_UNSEEN):setRespawnTime(math.random(900, 10800))
 
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.voidwalker.zoneOnInit(zone)
@@ -63,7 +67,7 @@ zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE119_ITEMS", 0)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)

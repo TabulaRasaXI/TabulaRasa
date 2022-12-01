@@ -535,10 +535,17 @@ namespace mobutils
         }
 
         PMob->addModifier(Mod::DEF, GetDefense(PMob, PMob->defRank));
-        PMob->addModifier(Mod::EVA, GetBase(PMob, PMob->evaRank)); // Base Evasion for all mobs
-        PMob->addModifier(Mod::ATT, GetBase(PMob, PMob->attRank)); // Base Attack for all mobs is Rank A+ but pull from DB for specific cases
-        PMob->addModifier(Mod::ACC, GetBase(PMob, PMob->accRank)); // Base Accuracy for all mobs is Rank A+ but pull from DB for specific cases
-        PMob->addModifier(Mod::PARRY, GetBase(PMob, 3));           // Base Parry for all mobs is Rank C
+        PMob->addModifier(Mod::EVA, GetBase(PMob, PMob->evaRank));  // Base Evasion for all mobs
+        PMob->addModifier(Mod::ATT, GetBase(PMob, PMob->attRank));  // Base Attack for all mobs is Rank A+ but pull from DB for specific cases
+        PMob->addModifier(Mod::ACC, GetBase(PMob, PMob->accRank));  // Base Accuracy for all mobs is Rank A+ but pull from DB for specific cases
+        PMob->addModifier(Mod::RATT, GetBase(PMob, PMob->attRank)); // Base Ranged Attack for all mobs is Rank A+ but pull from DB for specific cases
+        PMob->addModifier(Mod::RACC, GetBase(PMob, PMob->accRank)); // Base Ranged Accuracy for all mobs is Rank A+ but pull from DB for specific cases
+
+        // Only mobs in dynamis can parry
+        if (PMob->isInDynamis())
+        {
+            PMob->addModifier(Mod::PARRY, GetBase(PMob, 3)); // Base Parry for all mobs is Rank C
+        }
 
         // natural magic evasion
         PMob->addModifier(Mod::MEVA, GetMagicEvasion(PMob));
@@ -606,7 +613,7 @@ namespace mobutils
             ShowError("Mobutils::CalculateMobStats Mob (%s, %d) with magic but no cool down set!", PMob->GetName(), PMob->id);
         }
 
-        if (PMob->m_Detects == 0)
+        if (PMob->getMobMod(MOBMOD_DETECTION) == 0)
         {
             ShowError("Mobutils::CalculateMobStats Mob (%s, %d, %d) has no detection methods!", PMob->GetName(), PMob->id, PMob->m_Family);
         }
@@ -1410,7 +1417,7 @@ Usage:
                 PMob->m_Aggro         = sql->GetUIntData(66);
                 PMob->m_MobSkillList  = sql->GetUIntData(67);
                 PMob->m_TrueDetection = sql->GetUIntData(68);
-                PMob->m_Detects       = sql->GetUIntData(69);
+                PMob->setMobMod(MOBMOD_DETECTION, sql->GetUIntData(69));
 
                 CZone* newZone = zoneutils::GetZone(zoneID);
 
@@ -1589,7 +1596,7 @@ Usage:
                 PMob->m_Aggro         = sql->GetUIntData(66);
                 PMob->m_MobSkillList  = sql->GetUIntData(67);
                 PMob->m_TrueDetection = sql->GetUIntData(68);
-                PMob->m_Detects       = sql->GetUIntData(69);
+                PMob->setMobMod(MOBMOD_DETECTION, sql->GetUIntData(69));
 
                 PMob->setMobMod(MOBMOD_CHARMABLE, sql->GetUIntData(70));
                 // Overwrite base family charmables depending on mob type. Disallowed mobs which should be charmable

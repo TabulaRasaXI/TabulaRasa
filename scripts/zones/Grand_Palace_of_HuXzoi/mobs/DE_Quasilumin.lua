@@ -199,7 +199,7 @@ entity.onMobInitialize = function(mob)
     -- mob:addStatusEffect(xi.effect.NO_REST, 1, 0, 0)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setMobMod(xi.mobMod.NO_DESPAWN, 1)
-    mob:SetAutoAttackEnabled(false)
+    mob:setAutoAttackEnabled(false)
 end
 
 entity.onMobRoam = function(mob)
@@ -219,6 +219,7 @@ entity.onMobRoam = function(mob)
         if progress ~= escortProgress.COMPLETE then
             mob:showText(mob, ID.text.TIME_EXCEEDED)
         end
+
         mob:setStatus(xi.status.INVISIBLE)
         DespawnMob(mob:getID())
         entity.closeDoor(mob)
@@ -287,6 +288,7 @@ entity.onTrigger = function(player, mob)
                 quasilumin:setStatus(xi.status.INVISIBLE)
                 DespawnMob(quasilumin:getID())
             end)
+
             GetNPCByID(data.complete_door):openDoor(60)
         end
     end

@@ -41,7 +41,10 @@ spellObject.onSpellCast = function(caster, target, spell)
 
     final = final + (final * (target:getMod(xi.mod.CURE_POTENCY_RCVD) / 100))
 
-    if target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == xi.objType.PC or target:getObjType() == xi.objType.MOB) then
+    if
+        target:getAllegiance() == caster:getAllegiance() and
+        (target:getObjType() == xi.objType.PC or target:getObjType() == xi.objType.MOB)
+    then
         --Applying server mods
         final = final * xi.settings.main.CURE_POWER
     end
@@ -50,11 +53,16 @@ spellObject.onSpellCast = function(caster, target, spell)
     if final > diff then
         final = diff
     end
+
     target:addHP(final)
 
-    if target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == xi.objType.PC or target:getObjType() == xi.objType.MOB) then
+    if
+        target:getAllegiance() == caster:getAllegiance() and
+        (target:getObjType() == xi.objType.PC or target:getObjType() == xi.objType.MOB)
+    then
         caster:updateEnmityFromCure(target, final)
     end
+
     spell:setMsg(xi.msg.basic.MAGIC_RECOVERS_HP)
 
     return final

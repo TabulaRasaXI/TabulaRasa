@@ -62,9 +62,15 @@ entity.onTrade = function(player, npc, trade)
             player:startEvent(97)
 
         -- currency exchanges
-        elseif count == xi.settings.main.CURRENCY_EXCHANGE_RATE and trade:hasItemQty(currency[1], xi.settings.main.CURRENCY_EXCHANGE_RATE) then
+        elseif
+            count == xi.settings.main.CURRENCY_EXCHANGE_RATE and
+            trade:hasItemQty(currency[1], xi.settings.main.CURRENCY_EXCHANGE_RATE)
+        then
             player:startEvent(55, xi.settings.main.CURRENCY_EXCHANGE_RATE)
-        elseif count == xi.settings.main.CURRENCY_EXCHANGE_RATE and trade:hasItemQty(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE) then
+        elseif
+            count == xi.settings.main.CURRENCY_EXCHANGE_RATE and
+            trade:hasItemQty(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
+        then
             player:startEvent(56, xi.settings.main.CURRENCY_EXCHANGE_RATE)
         elseif count == 1 and trade:hasItemQty(currency[3], 1) then
             player:startEvent(58, currency[3], currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
@@ -129,6 +135,7 @@ entity.onEventUpdate = function(player, csid, option)
                 player:addKeyItem(option)
                 player:messageSpecial(ID.text.KEYITEM_OBTAINED, option)
             end
+
             player:updateEvent(xi.dynamis.getDynamisMapList(player), player:getGil())
 
         end
@@ -183,6 +190,7 @@ entity.onEventFinish = function(player, csid, option)
                     player:addItem(currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE % 99)
                 end
             end
+
             player:messageSpecial(ID.text.ITEMS_OBTAINED, currency[2], xi.settings.main.CURRENCY_EXCHANGE_RATE)
         end
 
@@ -196,6 +204,7 @@ entity.onEventFinish = function(player, csid, option)
             player:addItem(item)
             player:messageSpecial(ID.text.ITEM_OBTAINED, item)
         end
+
         player:setLocalVar("hundoItemBought", 0)
 
     end

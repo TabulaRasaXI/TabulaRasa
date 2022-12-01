@@ -421,6 +421,7 @@ enum TARGETTYPE
     TARGET_PLAYER_PARTY_PIANISSIMO = 0x80,
     TARGET_PET                     = 0x100,
     TARGET_PLAYER_PARTY_ENTRUST    = 0x200,
+    TARGET_IGNORE_BATTLEID         = 0x400, // Can hit targets that do not have the same battle ID
 };
 
 enum SKILLCHAIN_ELEMENT
@@ -555,7 +556,7 @@ public:
     uint16 MND();
     uint16 CHR();
     uint16 DEF();
-    uint16 ATT(uint16 slot);
+    uint16 ATT(uint16 slot = SLOT_MAIN, bool ignoreWeaponMods = false);
     uint16 ACC(uint8 attackNumber, uint8 offsetAccuracy);
     uint16 EVA();
     uint16 RATT(uint8 skill, float distance, uint16 bonusSkill = 0);

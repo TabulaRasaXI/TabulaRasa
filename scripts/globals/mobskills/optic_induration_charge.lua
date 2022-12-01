@@ -18,13 +18,14 @@ mobskillObject.onMobSkillCheck = function(target, mob, skill)
     if mob:getAnimationSub() >= 2 or utils.chance(75) then
         return 1
     end
+
     return 0
 end
 
 mobskillObject.onMobWeaponSkill = function(target, mob, skill)
     local chargeCount = mob:getLocalVar("chargeCount")
     if chargeCount == 0 then
-        mob:SetAutoAttackEnabled(false)
+        mob:setAutoAttackEnabled(false)
         mob:setLocalVar("chargeCount", 1)
         mob:setLocalVar("chargeTotal", math.random(3, 5))
         mob:timer(4000, function(mobArg)
@@ -37,8 +38,9 @@ mobskillObject.onMobWeaponSkill = function(target, mob, skill)
             mob:timer(4000, function(mobArg)
                 mob:useMobAbility(1465, mob:getTarget())
             end)
+
             mob:timer(4500, function(mobArg)
-                mob:SetAutoAttackEnabled(true)
+                mob:setAutoAttackEnabled(true)
                 mob:setLocalVar("chargeCount", 0)
                 mob:setLocalVar("chargeTotal", 0)
             end)

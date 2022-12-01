@@ -17,7 +17,6 @@ quest.reward =
 {
     fame     = 8,
     fameArea = xi.quest.fame_area.WINDURST,
-    gil      = 250,
 }
 
 quest.sections =
@@ -81,10 +80,11 @@ quest.sections =
                     player:confirmTrade()
 
                     if player:getQuestStatus(quest.areaId, quest.questId) == QUEST_ACCEPTED then
-                        player:addFame(xi.quest.fame_area.BASTOK, 67)
+                        player:addFame(xi.quest.fame_area.WINDURST, 67)
                     end
 
                     if quest:complete(player) then
+                        player:addGil(250) -- CS itself displays gil reward message
                         xi.quest.setMustZone(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.MAKING_THE_GRADE)
                     end
                 end,

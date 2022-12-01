@@ -26,13 +26,24 @@ entity.onTrigger = function(player, npc)
     -- Carbunlce Debacle
     if carbuncleDebacle == QUEST_ACCEPTED and carbuncleDebacleProgress == 2 then
         player:startEvent(10022) -- get the lighning pendulum lets go to Cloister of Storms
-    elseif carbuncleDebacle == QUEST_ACCEPTED and carbuncleDebacleProgress == 3 and not player:hasItem(1172) then
+    elseif
+        carbuncleDebacle == QUEST_ACCEPTED and
+        carbuncleDebacleProgress == 3 and
+        not player:hasItem(1172)
+    then
         player:startEvent(10023, 0, 1172, 0, 0, 0, 0, 0, 0) -- "lost the pendulum?"
     -----------------------------------
     -- Trial by Lightning
-    elseif (trialByLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or (trialByLightning == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByLightning_date")) then
+    elseif
+        (trialByLightning == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or
+        (trialByLightning == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByLightning_date"))
+    then
         player:startEvent(10016, 0, xi.ki.TUNING_FORK_OF_LIGHTNING) -- Start and restart quest "Trial by Lightning"
-    elseif trialByLightning == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING) and not hasWhisperOfStorms then
+    elseif
+        trialByLightning == QUEST_ACCEPTED and
+        not player:hasKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING) and
+        not hasWhisperOfStorms
+    then
         player:startEvent(10024, 0, xi.ki.TUNING_FORK_OF_LIGHTNING) -- Defeat against Ramuh : Need new Fork
     elseif trialByLightning == QUEST_ACCEPTED and not hasWhisperOfStorms then
         player:startEvent(10017, 0, xi.ki.TUNING_FORK_OF_LIGHTNING, 5)
@@ -73,6 +84,7 @@ entity.onEventFinish = function(player, csid, option)
         if player:getQuestStatus(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_BY_LIGHTNING) == QUEST_COMPLETED then
             player:delQuest(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_BY_LIGHTNING)
         end
+
         player:addQuest(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.TRIAL_BY_LIGHTNING)
         player:setCharVar("TrialByLightning_date", 0)
         player:addKeyItem(xi.ki.TUNING_FORK_OF_LIGHTNING)
@@ -105,6 +117,7 @@ entity.onEventFinish = function(player, csid, option)
                 player:addItem(item)
                 player:messageSpecial(ID.text.ITEM_OBTAINED, item) -- Item
             end
+
             player:addTitle(xi.title.HEIR_OF_THE_GREAT_LIGHTNING)
             player:delKeyItem(xi.ki.WHISPER_OF_STORMS) --Whisper of Storms, as a trade for the above rewards
             player:setCharVar("TrialByLightning_date", getMidnight())

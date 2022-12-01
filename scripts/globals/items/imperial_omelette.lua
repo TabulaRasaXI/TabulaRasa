@@ -37,6 +37,7 @@ itemObject.onItemCheck = function(target)
     then
         result = xi.msg.basic.IS_FULL
     end
+
     return result
 end
 
@@ -45,7 +46,10 @@ itemObject.onItemUse = function(target)
 end
 
 itemObject.onEffectGain = function(target, effect)
-    if target:getRace() == xi.race.ELVAAN_M or target:getRace() == xi.race.ELVAAN_F then
+    if
+        target:getRace() == xi.race.ELVAAN_M or
+        target:getRace() == xi.race.ELVAAN_F
+    then
         target:addMod(xi.mod.STR, 5)
         target:addMod(xi.mod.DEX, 2)
         target:addMod(xi.mod.INT, -3)
@@ -70,7 +74,10 @@ itemObject.onEffectGain = function(target, effect)
 end
 
 itemObject.onEffectLose = function(target, effect)
-    if target:getRace() == xi.race.ELVAAN_M or target:getRace() == xi.race.ELVAAN_F then
+    if
+        target:getRace() == xi.race.ELVAAN_M or
+        target:getRace() == xi.race.ELVAAN_F
+    then
         target:delMod(xi.mod.STR, 5)
         target:delMod(xi.mod.DEX, 2)
         target:delMod(xi.mod.INT, -3)

@@ -199,6 +199,7 @@ xi.trust.checkBattlefieldTrustCount = function (caster)
 
         return (numPlayers + numTrusts) < maxParticipants
     end
+
     return true
 end
 
@@ -329,8 +330,10 @@ xi.trust.canCast = function(caster, spell, not_allowed_trust_ids)
                     end
                 end
             end
+
             num_trusts = num_trusts + 1
         end
+
         num_pt = num_pt + 1
     end
 
@@ -342,7 +345,10 @@ xi.trust.canCast = function(caster, spell, not_allowed_trust_ids)
 
     -- Some battlefields allow trusts after you get this ROV Key Item
     local casterBattlefieldID = caster:getBattlefieldID()
-    if rovKIBattlefieldIDs[casterBattlefieldID] and not caster:hasKeyItem(xi.ki.RHAPSODY_IN_UMBER) then
+    if
+        rovKIBattlefieldIDs[casterBattlefieldID] and
+        not caster:hasKeyItem(xi.ki.RHAPSODY_IN_UMBER)
+    then
         return xi.msg.basic.TRUST_NO_CAST_TRUST
     end
 

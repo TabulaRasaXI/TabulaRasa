@@ -28,6 +28,7 @@ abilityObject.onAbilityCheck = function(player, target, ability)
             local newRecast = ability:getRecast() + recastMod
             ability:setRecast(utils.clamp(newRecast, 0, newRecast))
         end
+
         -- Apply "Fan Dance" Waltz recast reduction
         if player:hasStatusEffect(xi.effect.FAN_DANCE) then
             local fanDanceMerits = target:getMerit(xi.merit.FAN_DANCE)
@@ -36,13 +37,17 @@ abilityObject.onAbilityCheck = function(player, target, ability)
                 ability:setRecast(ability:getRecast() * ((fanDanceMerits -5) / 100))
             end
         end
+
         return 0, 0
     end
 end
 
 abilityObject.onUseAbility = function(player, target, ability)
     -- Only remove TP if the player doesn't have Trance, and only deduct once instead of for each target.
-    if player:getID() == target:getID() and not player:hasStatusEffect(xi.effect.TRANCE) then
+    if
+        player:getID() == target:getID() and
+        not player:hasStatusEffect(xi.effect.TRANCE)
+    then
         player:delTP(800)
     end
 

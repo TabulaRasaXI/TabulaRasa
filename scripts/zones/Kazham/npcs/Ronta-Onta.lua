@@ -19,9 +19,16 @@ entity.onTrigger = function(player, npc)
     local trialByFire = player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_BY_FIRE)
     local hasWhisperOfFlames = player:hasKeyItem(xi.ki.WHISPER_OF_FLAMES)
 
-    if (trialByFire == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or (trialByFire == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByFire_date")) then
+    if
+        (trialByFire == QUEST_AVAILABLE and player:getFameLevel(xi.quest.fame_area.WINDURST) >= 6) or
+        (trialByFire == QUEST_COMPLETED and os.time() > player:getCharVar("TrialByFire_date"))
+    then
         player:startEvent(270, 0, xi.ki.TUNING_FORK_OF_FIRE) -- Start and restart quest "Trial by Fire"
-    elseif trialByFire == QUEST_ACCEPTED and not player:hasKeyItem(xi.ki.TUNING_FORK_OF_FIRE) and not hasWhisperOfFlames then
+    elseif
+        trialByFire == QUEST_ACCEPTED and
+        not player:hasKeyItem(xi.ki.TUNING_FORK_OF_FIRE) and
+        not hasWhisperOfFlames
+    then
         player:startEvent(285, 0, xi.ki.TUNING_FORK_OF_FIRE) -- Defeat against Ifrit : Need new Fork
     elseif trialByFire == QUEST_ACCEPTED and not hasWhisperOfFlames then
         player:startEvent(271, 0, xi.ki.TUNING_FORK_OF_FIRE, 0)
@@ -62,6 +69,7 @@ entity.onEventFinish = function(player, csid, option)
         if player:getQuestStatus(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_BY_FIRE) == QUEST_COMPLETED then
             player:delQuest(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_BY_FIRE)
         end
+
         player:addQuest(xi.quest.log_id.OUTLANDS, xi.quest.id.outlands.TRIAL_BY_FIRE)
         player:setCharVar("TrialByFire_date", 0)
         player:addKeyItem(xi.ki.TUNING_FORK_OF_FIRE)
@@ -90,6 +98,7 @@ entity.onEventFinish = function(player, csid, option)
                 player:addItem(item)
                 player:messageSpecial(ID.text.ITEM_OBTAINED, item) -- Item
             end
+
             player:addTitle(xi.title.HEIR_OF_THE_GREAT_FIRE)
             player:delKeyItem(xi.ki.WHISPER_OF_FLAMES)
             player:setCharVar("TrialByFire_date", getMidnight())

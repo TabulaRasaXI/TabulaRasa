@@ -9,8 +9,7 @@ require("scripts/globals/mobs")
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.MYSTICMAKER_PROFBLIX)
-    xi.mob.NMPersistCache(ID.mob.MYSTICMAKER_PROFBLIX)
+    xi.mob.nmTODPersistCache(zone, ID.mob.MYSTICMAKER_PROFBLIX)
 
     xi.treasure.initZone(zone)
 end
@@ -33,7 +32,7 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onRegionEnter = function(player, region)
+zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)
