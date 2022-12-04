@@ -194,7 +194,7 @@ xi.shop =
                  820,    2800,       xi.craftRank.NOVICE,      -- Wool Thread
                 2295,     800,   xi.craftRank.APPRENTICE,      -- Mohbwa Grass
                  816,    1500,   xi.craftRank.APPRENTICE,      -- Silk Thread
-                2315,    1400,   xi.craftRank.JOURNEYMAN,      -- Karakul Wool
+                -- 2315,    1400,   xi.craftRank.JOURNEYMAN,      -- Karakul Wool
                  823,   14500,    xi.craftRank.CRAFTSMAN,      -- Gold Thread
                 -- 8847,     300,      xi.craftRank.AMATEUR,      -- Clothcraft kit 5
                 -- 8848,     400,      xi.craftRank.AMATEUR,      -- Clothcraft Kit 10
@@ -334,7 +334,7 @@ xi.shop =
                  881,    2500,   xi.craftRank.APPRENTICE,      -- Crab Shell [Apprentice]
                  885,    6000,   xi.craftRank.JOURNEYMAN,      -- Turtle Shell [Journeyman]
                  897,    2400,   xi.craftRank.JOURNEYMAN,      -- Scorpion Claw [Journeyman]
-                1622,    4000,   xi.craftRank.JOURNEYMAN,      -- Bugard Tusk [Journeyman]
+                -- 1622,    4000,   xi.craftRank.JOURNEYMAN,      -- Bugard Tusk [Journeyman]
                  896,    3000,    xi.craftRank.CRAFTSMAN,      -- Scorpion Shell [Craftsman]
                 -- 2147,    4500,    xi.craftRank.CRAFTSMAN,      -- Marid Tusk [Craftsman]
                 -- 8875,     300,      xi.craftRank.AMATEUR,      -- Bonecraft Kit 5
@@ -356,15 +356,15 @@ xi.shop =
                  505,     100,      xi.craftRank.AMATEUR,      -- Sheepskin
                  856,      80,      xi.craftRank.AMATEUR,      -- Rabbit Hide
                  852,     600,      xi.craftRank.RECRUIT,      -- Lizard Skin
-                 878,     600,      xi.craftRank.RECRUIT,      -- Karakul Skin
+                -- 878,     600,      xi.craftRank.RECRUIT,      -- Karakul Skin
                  858,     600,      xi.craftRank.RECRUIT,      -- Wolf Hide
                  857,    2400,     xi.craftRank.INITIATE,      -- Dhalmel Hide
-                1640,    2500,     xi.craftRank.INITIATE,      -- Bugard Skin
+                -- 1640,    2500,     xi.craftRank.INITIATE,      -- Bugard Skin
                  859,    1500,       xi.craftRank.NOVICE,      -- Ram Skin
-                1628,   16000,   xi.craftRank.APPRENTICE,      -- Buffalo Hide
+                -- 1628,   16000,   xi.craftRank.APPRENTICE,      -- Buffalo Hide
                  853,    3000,   xi.craftRank.JOURNEYMAN,      -- Raptor Skin
-                2123,    2500,   xi.craftRank.JOURNEYMAN,      -- Catoblepas Hide
-                2518,    3000,    xi.craftRank.CRAFTSMAN,      -- Smilodon Hide
+                -- 2123,    2500,   xi.craftRank.JOURNEYMAN,      -- Catoblepas Hide
+                -- 2518,    3000,    xi.craftRank.CRAFTSMAN,      -- Smilodon Hide
                  854,    3000,    xi.craftRank.CRAFTSMAN,      -- Cockatrice Skin
                 -- 8861,     300,      xi.craftRank.AMATEUR,      -- Leathercraft Kit 5
                 -- 8862,     400,      xi.craftRank.AMATEUR,      -- Leathercraft Kit 10
