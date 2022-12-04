@@ -9315,7 +9315,7 @@ void CLuaBaseEntity::disableLevelSync()
     {
         if (PChar->PParty->GetSyncTarget() == PChar)
         {
-            PChar->PParty->SetSyncTarget(nullptr, 553);
+            PChar->PParty->SetSyncTarget("", 553);
         }
         else
         {

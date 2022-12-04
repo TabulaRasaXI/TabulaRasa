@@ -29,7 +29,8 @@ entity.onTrigger = function(player, npc)
             end
         end
     -- else
-        -- player:messageSpecial(ID.text.A_GATE_OF_STURDY_STEEL)
+
+    --     player:messageSpecial(ID.text.A_GATE_OF_STURDY_STEEL)
     -- end
 end
 
