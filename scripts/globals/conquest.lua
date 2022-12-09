@@ -1447,9 +1447,9 @@ xi.conquest.teleporterOnEventUpdate = function(player, csid, option, teleporterE
 
         local cp = player:getCP()
         -- Always report not enough CP if Abyssea is not enabled
-        if xi.settings.main.ENABLE_ABYSSEA == 0 then
-            cp = 0
-        end
+--        if xi.settings.main.ENABLE_ABYSSEA == 0 then
+--            cp = 0
+--        end
 
         player:updateEvent(player:getGil(), fee, 0, cpFee, cp)
     end

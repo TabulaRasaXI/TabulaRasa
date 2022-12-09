@@ -92,10 +92,6 @@ xi.mob.nmTODPersistCache = function(zone, mobId)
         local respawn = GetServerVariable(string.format("[SPAWN]%s", mobId))
         zone:setLocalVar(string.format("[SPAWN]%s", mobId), respawn)
 
-        if respawn == 0 then
-            return
-        end
-
         if mob:isAlive() then
             DespawnMob(mobId)
         end
