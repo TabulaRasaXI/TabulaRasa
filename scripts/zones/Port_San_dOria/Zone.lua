@@ -18,16 +18,6 @@ end
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = { -1 }
 
-    -- FIRST LOGIN (START CS)
-    if player:getPlaytime(false) == 0 then
-        if xi.settings.main.NEW_CHARACTER_CUTSCENE == 1 then
-            cs = { 500, -1, xi.cutscenes.params.NO_OTHER_ENTITY } -- (cs, textTable, Flags)
-        end
-
-        player:setPos(-104, -8, -128, 227)
-        player:setHomePoint()
-    end
-
     if
         player:getXPos() == 0 and
         player:getYPos() == 0 and
@@ -40,6 +30,9 @@ zoneObject.onZoneIn = function(player, prevZone)
             player:setPos(80, -16, -135, 165)
         end
     end
+
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -66,11 +59,11 @@ zoneObject.onEventUpdate = function(player, csid, option)
 end
 
 zoneObject.onEventFinish = function(player, csid, option)
-    if csid == 500 then
-        player:messageSpecial(ID.text.ITEM_OBTAINED, 536)
-    elseif csid == 700 then
+    if csid == 700 then
         player:setPos(0, 0, 0, 0, 223)
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zoneObject

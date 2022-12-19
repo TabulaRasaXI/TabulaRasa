@@ -20,11 +20,12 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.COUNTER, 10)
     mob:setMod(xi.mod.UFASTCAST, 50)
     mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
-    mob:setMod(xi.mod.DEF, 514)
-    mob:setMod(xi.mod.EVA, 450)
+    mob:setMod(xi.mod.DEF, 459)
+    mob:setMod(xi.mod.EVA, 422)
     mob:setMod(xi.mod.VIT, 19)
     mob:setMod(xi.mod.STR, 3)
     mob:setMod(xi.mod.MATT, 0)
+    mob:setMod(xi.mod.ATT, 436)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
 
     mob:addListener("TAKE_DAMAGE", "TIAMAT_TAKE_DAMAGE", function(defender, amount, attacker, attackType, damageType)
@@ -51,6 +52,17 @@ entity.onMobEngaged = function(mob, target)
 end
 
 entity.onMobFight = function(mob, target)
+    local drawInTableNorth =
+    {
+        condition1 = target:getXPos() < -515 and target:getZPos() > 8,
+        position   = { -530.642, -4.013, 6.262, target:getRotPos() },
+    }
+    local drawInTableEast =
+    {
+        condition1 = target:getXPos() > -480 and target:getZPos() > -50,
+        position   = { -481.179, -4, -41.92, target:getRotPos() },
+    }
+
     -- Gains a large attack boost when health is under 25% which cannot be Dispelled.
     if mob:getHPP() < 25 and mob:getMod(xi.mod.ATT) <= 800 then
         mob:setMod(xi.mod.ATT, 1200)
@@ -91,19 +103,8 @@ entity.onMobFight = function(mob, target)
     end
 
     -- Tiamat draws in from set boundaries leaving her spawn area
-    local drawInWait = mob:getLocalVar("DrawInWait")
-
-    if (target:getXPos() < -515 and target:getZPos() > 8) and os.time() > drawInWait then -- North Draw In
-        local rot = target:getRotPos()
-        target:setPos(-530.642, -4.013, 6.262, rot)
-        mob:messageBasic(232, 0, 0, target)
-        mob:setLocalVar("DrawInWait", os.time() + 2)
-    elseif (target:getXPos() > -480 and target:getZPos() > -50) and os.time() > drawInWait then  -- East Draw In
-        local rot = target:getRotPos()
-        target:setPos(-481.179, -4, -41.92, rot)
-        mob:messageBasic(232, 0, 0, target)
-        mob:setLocalVar("DrawInWait", os.time() + 2)
-    end
+    utils.arenaDrawIn(mob, target, drawInTableNorth)
+    utils.arenaDrawIn(mob, target, drawInTableEast)
 end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)

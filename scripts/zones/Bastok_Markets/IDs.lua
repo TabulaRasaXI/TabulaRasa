@@ -30,6 +30,7 @@ zones[xi.zone.BASTOK_MARKETS] =
         ORIGINAL_MISSION_OFFSET       = 6524,  -- You can consult the Mission section of the main menu to review your objectives. Speed and efficiency are your priorities. Dismissed.
         CONQUEST_BASE                 = 6592,  -- Tallying conquest results...
         MOG_LOCKER_OFFSET             = 6886,  -- Your Mog Locker lease is valid until <timestamp>, kupo.
+        MAP_MARKER_TUTORIAL           = 7084,  -- Selecting Map from the main menu opens the map of the area in which you currently reside. Select Markers and press the right arrow key to see all the markers placed on your map.
         GOLDSMITHING_SUPPORT          = 7091,  -- Your [fishing/woodworking/smithing/goldsmithing/clothcraft/leatherworking/bonecraft/alchemy/cooking] skills went up [a little/ever so slightly/ever so slightly].
         GUILD_TERMINATE_CONTRACT      = 7105,  -- You have terminated your trading contract with the [Fishermen's/Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild and formed a new one with the [Fishermen's/Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild.
         GUILD_NEW_CONTRACT            = 7113,  -- You have formed a new trading contract with the [Fishermen's/Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild.
@@ -84,6 +85,8 @@ zones[xi.zone.BASTOK_MARKETS] =
         MERRYMAKER_GIVE               = 15641, -- Not for us, not for me? I give it back. Now you happy? Happy toy, happy toy, where be me happy toy?
         MERRYMAKER_NO                 = 15642, -- No no no no no! Go away! Nose holes busy sniff for happy toy!
         MERRYMAKER_FRIEND             = 15644, -- You have friend you do? We gobbies have friend too.
+        MERRYMAKER_NPC_RETURNED       = 14002, -- I see you've returned. Mmm...that's good news indeed. Thank you for the kindess you've shown me and my friend.
+        MERRYMAKER_DEFAULT            = 13962, -- ...
     },
     mob =
     {

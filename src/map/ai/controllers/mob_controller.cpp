@@ -109,7 +109,7 @@ bool CMobController::CanPursueTarget(CBattleEntity* PTarget)
         if (!PMob->PAI->PathFind->InWater() && !PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_DEODORIZE))
         {
             // certain weather / deodorize will turn on time deaggro
-            return PMob->m_disableScent;
+            return !PMob->m_disableScent;
         }
     }
     return false;
@@ -120,7 +120,7 @@ bool CMobController::CheckHide(CBattleEntity* PTarget)
     TracyZoneScoped;
     if (PTarget->GetMJob() == JOB_THF && PTarget->StatusEffectContainer->HasStatusEffect(EFFECT_HIDE))
     {
-        return !CanPursueTarget(PTarget) && !PMob->m_TrueDetection;
+        return !CanPursueTarget(PTarget) && !PMob->m_TrueDetection && !(PMob->getMobMod(MOBMOD_DETECTION) & DETECT_HEARING);
     }
     return false;
 }
@@ -163,7 +163,7 @@ bool CMobController::CheckDetection(CBattleEntity* PTarget)
         TapDeaggroTime();
     }
 
-    auto additionalDeaggroTime = std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
+    auto additionalDeaggroTime = PMob->getMobMod(MOBMOD_NO_MOVE) || PMob->m_roamFlags & ROAMFLAG_WORM ? std::chrono::seconds(0) : std::chrono::seconds(settings::get<uint32>("map.MOB_ADDITIONAL_TIME_TO_DEAGGRO"));
     return PMob->CanDeaggro() && (m_Tick >= m_DeaggroTime + 25s + additionalDeaggroTime);
 }
 
@@ -558,6 +558,17 @@ bool CMobController::CanCastSpells()
         }
     }
 
+    // Charmed BST pets don't passively cast spells
+    if (PMob->isCharmed && PMob->PMaster != nullptr && PMob->PMaster->objtype == TYPE_PC)
+    {
+        // Can cast spells if BST uses Sic while mob has less than 1000TP
+        if (PMob->GetLocalVar("Sic") != 1)
+        {
+            return false;
+        }
+        PMob->SetLocalVar("Sic", 0);
+    }
+
     return IsMagicCastingEnabled();
 }
 
@@ -928,9 +939,31 @@ void CMobController::DoRoamTick(time_point tick)
         PMob->m_OwnerID.clean();
     }
 
-    if (m_Tick >= m_ResetTick + 10s && PMob->health.tp > 0)
+    if (m_Tick >= m_ResetTick + 10s && (PMob->health.tp > 0 || PMob->CanRest()))
     {
-        PMob->health.tp -= 100;
+        if (PMob->health.tp > 0)
+        {
+            PMob->health.tp -= 100;
+        }
+        // can't rest with poison or disease
+        if (PMob->getMobMod(MOBMOD_NO_REST) == 0)
+        {
+            // recover 10% health
+            if (PMob->Rest(0.1f))
+            {
+                // health updated
+                PMob->updatemask |= UPDATE_HP;
+            }
+            if (PMob->GetHPP() == 100)
+            {
+                // at max health undirty exp
+                PMob->m_HiPCLvl     = 0;
+                PMob->m_HiPartySize = 0;
+                PMob->m_giveExp     = true;
+                PMob->m_ExpPenalty  = 0;
+                PMob->m_UsedSkillIds.clear();
+            }
+        }
         m_ResetTick = m_Tick;
     }
 
@@ -951,33 +984,6 @@ void CMobController::DoRoamTick(time_point tick)
         }
         else if (m_Tick >= m_LastActionTime + std::chrono::milliseconds(PMob->getBigMobMod(MOBMOD_ROAM_COOL)))
         {
-            // lets buff up or move around
-            if (PMob->GetCallForHelpFlag())
-            {
-                PMob->SetCallForHelpFlag(false);
-            }
-
-            // can't rest with poison or disease
-            if (PMob->CanRest() && PMob->getMobMod(MOBMOD_NO_REST) == 0)
-            {
-                // recover 10% health
-                if (PMob->Rest(0.1f))
-                {
-                    // health updated
-                    PMob->updatemask |= UPDATE_HP;
-                }
-
-                if (PMob->GetHPP() == 100)
-                {
-                    // at max health undirty exp
-                    PMob->m_HiPCLvl     = 0;
-                    PMob->m_HiPartySize = 0;
-                    PMob->m_giveExp     = true;
-                    PMob->m_ExpPenalty  = 0;
-                    PMob->m_UsedSkillIds.clear();
-                }
-            }
-
             // if I just disengaged check if I should despawn
             if (!PMob->getMobMod(MOBMOD_DONT_ROAM_HOME) && PMob->IsFarFromHome())
             {
@@ -1254,6 +1260,15 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
         return false;
     }
 
+    // Don't aggro, I'm a normal CoP Fomor and you have low hate
+    if (PMob->m_Family == 115 && !(PMob->m_Type & MOBTYPE_NOTORIOUS) && (PMob->getZone() >= 24 && PMob->getZone() <= 28) && PTarget->objtype == TYPE_PC)
+    {
+        if (((CCharEntity*)PTarget)->getCharVar("FOMOR_HATE") < 8)
+        {
+            return false;
+        }
+    }
+
     // Don't aggro I'm an underground worm
     if ((PMob->m_roamFlags & ROAMFLAG_WORM) && PMob->animationsub == 1)
     {
@@ -1261,6 +1276,11 @@ bool CMobController::CanAggroTarget(CBattleEntity* PTarget)
     }
 
     if (PTarget->isDead() || PTarget->isMounted())
+    {
+        return false;
+    }
+
+    if (PTarget->GetMLevel() > 70 && PMob->m_maxLevel < 61)
     {
         return false;
     }

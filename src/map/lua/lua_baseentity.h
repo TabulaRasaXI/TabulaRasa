@@ -89,6 +89,7 @@ public:
     void       startEventString(int32 EventID, sol::variadic_args va);      // Begins Event with string param (0x33 packet)
     void       startCutscene(int32 EventID, sol::variadic_args va);         // Begins cutscene which locks the character
     void       startOptionalCutscene(int32 EventID, sol::variadic_args va); // Begins an event that can turn into a cutscene
+    void       startMenuEvent(int32 EventID, sol::variadic_args va);        // Begins an event that can be interrupted.
 
     void updateEvent(sol::variadic_args va);       // Updates event
     void updateEventString(sol::variadic_args va); // (string, string, string, string, uint32, ...)
@@ -199,6 +200,7 @@ public:
     void   setTeleportMenu(uint16 type, sol::object const& teleportObj); // Set favorites or menu layout preferences for homepoints or survival guides
     auto   getTeleportMenu(uint8 type) -> sol::table;                    // Get favorites and menu layout preferences
     void   setHomePoint();                                               // Sets character's homepoint
+    bool   isCurrentHomepoint();                                         // Checks to a character's homepoint vs their current position.
 
     void resetPlayer(const char* charName); // if player is stuck, GM command @resetPlayer name
 
@@ -231,7 +233,7 @@ public:
     void  changeContainerSize(uint8 locationID, int8 newSize); // Increase/Decreases container size
     uint8 getFreeSlotsCount(sol::object const& locID);         // Gets value of free slots in Entity inventory
     void  confirmTrade();                                      // Complete trade with an npc, only removing confirmed items
-    void  tradeComplete();                                     // Complete trade with an npc
+    void  tradeComplete(sol::object const& shouldTakeItems);   // Complete trade with an npc
     auto  getTrade() -> std::optional<CLuaTradeContainer>;
 
     // Equipping
@@ -536,6 +538,8 @@ public:
     bool  enterBattlefield(sol::object const& area);                                                                               // enter a battlefield entity is registered with
     bool  leaveBattlefield(uint8 leavecode);                                                                                       // leave battlefield if inside one
     bool  isInDynamis();                                                                                                           // If player is in Dynamis return true else false
+    void  setEnteredBattlefield(bool entered);                                                                                     // Sets if the player has entered into a battlefield or not
+    bool  hasEnteredBattlefield();                                                                                                 // If the player has entered into a battlefield return true else false
 
     // Battle Utilities
     bool isAlive();
@@ -641,8 +645,9 @@ public:
     bool   addBardSong(CLuaBaseEntity* PEntity, uint16 effectID, uint16 power, uint16 tick,
                        uint16 duration, uint16 subID, uint16 subPower, uint16 tier); // Adds bard song effect
 
-    void charm(CLuaBaseEntity const* target); // applies charm on target
-    void uncharm();                           // removes charm on target
+    void charm(CLuaBaseEntity const* target);                          // applies charm on target
+    void charmDuration(CLuaBaseEntity const* target, uint32 duration); // applies charm on target for duration
+    void uncharm();                                                    // removes charm on target
 
     uint8 addBurden(uint8 element, uint8 burden);
     uint8 getOverloadChance(uint8 element);
@@ -692,7 +697,7 @@ public:
     auto   getWSSkillchainProp() -> std::tuple<uint8, uint8, uint8>; // returns weapon skill's skillchain properties (up to 3)
 
     int32 takeWeaponskillDamage(CLuaBaseEntity* attacker, int32 damage, uint8 atkType, uint8 dmgType, uint8 slot, bool primary,
-                                float tpMultiplier, uint16 bonusTP, float targetTPMultiplier);
+                                float tpMultiplier, uint16 bonusTP, float targetTPMultiplier, bool isMagicWS = false);
 
     int32 takeSpellDamage(CLuaBaseEntity* caster, CLuaSpell* spell, int32 damage, uint8 atkType, uint8 dmgType);
     int32 takeSwipeLungeDamage(CLuaBaseEntity* caster, int32 damage, uint8 atkType, uint8 dmgType);
@@ -710,7 +715,7 @@ public:
     void   removeAllSimpleGambits();
     void   setTrustTPSkillSettings(uint16 trigger, uint16 select, sol::object const& value);
 
-    bool isJugPet(); // If the entity has a pet, test if it is a jug pet.
+    bool hasJugPet(); // If the entity has a pet, test if it is a jug pet.
     bool hasValidJugPetItem();
 
     bool   hasPet();                                  // returns true if the player has a pet
@@ -874,6 +879,7 @@ public:
 
     uint8 getMannequinPose(uint16 itemID);
     void  setMannequinPose(uint16 itemID, uint8 race, uint8 pose);
+    void  setWallhackAllowed(bool allowed); // Sets whether an entity should ignore wallhack flags in pathfind.
 
     static void Register();
 };

@@ -43,22 +43,22 @@ entity.onTrigger = function(player, npc)
                 player:showText(npc, ID.text.STARLIGHT_FAME_DIALOG, 0, 2)
             elseif fame == 4 then
                 player:setLocalVar("famebefore", player:getFame(xi.quest.fame_area.HOLIDAY))
-                player:startEvent(32741, 0240, 0003, 0600, 0000, 7800, 0000, 0000, 0000)
+                player:startEvent(32741, 0280, 0003, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 5 then
                 player:setLocalVar("famebefore", player:getFame(xi.quest.fame_area.HOLIDAY))
-                player:startEvent(32741, 0240, 0004, 0600, 0000, 7800, 0000, 0000, 0000)
+                player:startEvent(32741, 0280, 0004, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 6 then
                 player:setLocalVar("famebefore", player:getFame(xi.quest.fame_area.HOLIDAY))
-                player:startEvent(32741, 0240, 0004, 0600, 0000, 7800, 0000, 0000, 0000)
+                player:startEvent(32741, 0280, 0004, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 7 then
                 player:setLocalVar("famebefore", player:getFame(xi.quest.fame_area.HOLIDAY))
-                player:startEvent(32741, 0240, 0005, 0600, 0000, 7800, 0000, 0000, 0000)
+                player:startEvent(32741, 0280, 0005, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 8 then
                 player:setLocalVar("famebefore", player:getFame(xi.quest.fame_area.HOLIDAY))
-                player:startEvent(32741, 0240, 0005, 0600, 0000, 7800, 0000, 0000, 0000)
+                player:startEvent(32741, 0280, 0005, 0600, 0000, 7800, 0000, 0000, 0000)
             elseif fame == 9 then
                 player:setLocalVar("famebefore", player:getFame(xi.quest.fame_area.HOLIDAY))
-                player:startEvent(32741, 0240, 0006, 0600, 0000, 7800, 0000, 0000, 0000)
+                player:startEvent(32741, 0280, 0006, 0600, 0000, 7800, 0000, 0000, 0000)
             end
         else
             player:startEvent(32742)
@@ -88,7 +88,7 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 892 then
         if player:getFreeSlotsCount() >= 1 then
             player:addItem(1742, 1)
-            player:messageSpecial(ID.text.ITEM_OBTAINED, 1742)
+            player:messageSpecial(ID.text.ITEM_OBTAINED, xi.items.PRESENT_FOR_THE_KIDDIES)
             player:setCharVar("smilebringersconvo", 1)
             player:setCharVar("previousDay", VanadielDayOfTheWeek())
             if player:getCharVar("SmilebringersFameReset") ~= 1 then
@@ -96,7 +96,7 @@ entity.onEventFinish = function(player, csid, option)
                 player:setCharVar("SmilebringersFameReset", 1)
             end
         else
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED)
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, xi.items.PRESENT_FOR_THE_KIDDIES)
         end
     end
 end

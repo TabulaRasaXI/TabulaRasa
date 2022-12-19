@@ -164,6 +164,7 @@ namespace luautils
 
     uint32 JstMidnight();
     uint32 JstWeekday();
+    uint64 ServerEpochTimeMS();
     uint32 VanadielTime();          // Gets the current Vanadiel Time in timestamp format (SE epoch in earth seconds)
     uint8  VanadielTOTD();          // текущее игровое время суток
     uint32 VanadielHour();          // текущие Vanadiel часы
@@ -263,6 +264,8 @@ namespace luautils
     int32 OnMobDeath(CBaseEntity* PMob, CBaseEntity* PKiller); // triggers on mob death
     int32 OnMobDespawn(CBaseEntity* PMob);                     // triggers on mob despawn (death not assured)
 
+    int32 OnPetLevelRestriction(CBaseEntity* PMob); // Triggers onPetLevelRestriction in global pet script
+
     int32 OnPath(CBaseEntity* PEntity);         // triggers when an entity is on a pathfind point
     int32 OnPathPoint(CBaseEntity* PEntity);    // triggers when an entity stops on a path point and has finished waiting at it
     int32 OnPathComplete(CBaseEntity* PEntity); // triggers when an entity finishes its pathing
@@ -311,6 +314,7 @@ namespace luautils
     uint32 GetMobRespawnTime(uint32 mobid);                        // get the respawn time of a mob
     void   DisallowRespawn(uint32 mobid, bool allowRespawn);       // Allow or prevent a mob from spawning
     void   UpdateNMSpawnPoint(uint32 mobid);                       // Update the spawn point of an NM
+    bool   CheckNMSpawnPoint(uint32 mobid);                        // Check to see if NM has extra spawn points
     void   SetDropRate(uint16 dropid, uint16 itemid, uint16 rate); // Set drop rate of a mob SetDropRate(dropid,itemid,newrate)
     int32  UpdateServerMessage();                                  // update server message, first modify in conf and update
 

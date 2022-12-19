@@ -637,7 +637,9 @@ xi.conquest.toggleRegionalNPCs = function(zone)
             { GetNationRank(xi.nation.WINDURST), xi.zone.WINDURST_WOODS },
         }
 
-        table.sort(rankings, function (a, b) return a[1] < b[1] end)
+        table.sort(rankings, function(a, b)
+            return a[1] < b[1]
+        end)
 
         local firstPlaceZone = rankings[1][2]
         local secondPlaceZone = rankings[2][2]
@@ -736,11 +738,6 @@ local overseerInvCommon =
     [32934] = { cp =  1000, lvl =  1, item = 15762 },             -- empress_band
     [32935] = { cp =  2000, lvl =  1, item = 15763 },             -- emperor_band
     [32936] = { cp =  5000, lvl =  1, item = 28540 },             -- warp_ring
-    -- [32937] = { cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_TENZENS_ALTER_EGO },
-    -- [32938] = { cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_RAHALS_ALTER_EGO },
-    -- [32939] = { cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_KUKKIS_ALTER_EGO },
-    -- [32941] = { cp = 20000, lvl =  1, item = xi.items.REFINED_CHAIR_SET, rank = 10 },
-    -- [32942] = { cp =  1000, lvl =  1, item = xi.items.CIPHER_OF_MAKKIS_ALTER_EGO },
 }
 
 local overseerInvNation =
@@ -1116,11 +1113,13 @@ xi.conquest.overseerOnTrade = function(player, npc, trade, guardNation, guardTyp
                     player:setCharVar("CONQUEST_RING_RECHARGE", getConquestTally())
                     player:showText(npc, mOffset + 58, item, ring.cp, ring.charges) -- "Your ring is now fully recharged."
                 else
+                    player:tradeComplete(false)
                     player:showText(npc, mOffset + 55, item, ring.cp) -- "You do not have the required conquest points to recharge."
                 end
             else
                 -- TODO: Verify that message is retail correct.
                 -- This gives feedback on a failure at least, and is grouped with the recharge messages.  Confident enough for a commit.
+                player:tradeComplete(false)
                 player:showText(npc, mOffset + 56, item) -- "Please be aware that you can only purchase or recharge <item> once during the period between each conquest results tally.
             end
         end
@@ -1154,7 +1153,7 @@ xi.conquest.overseerOnTrigger = function(player, npc, guardNation, guardType, gu
         local a6 = getArg6(player)
         local a7 = player:getCP()
 
-        player:startEvent(guardEvent, a1, 0, a3, 0, 0, a6, a7, 0)
+        player:startMenuEvent(guardEvent, a1, 0, a3, 0, 0, a6, a7, 0)
 
     -- CITY AND FOREIGN OVERSEERS
     elseif guardType <= xi.conquest.guard.FOREIGN then
@@ -1167,15 +1166,15 @@ xi.conquest.overseerOnTrigger = function(player, npc, guardNation, guardType, gu
         local a7 = player:getCP()
         local a8 = getExForceReward(player, guardNation)
 
-        player:startEvent(guardEvent, a1, a2, a3, a4, a5, a6, a7, a8)
+        player:startMenuEvent(guardEvent, a1, a2, a3, a4, a5, a6, a7, a8)
 
     -- OUTPOST AND BORDER OVERSEERS
     elseif guardType >= xi.conquest.guard.OUTPOST then
         local a1 = getArg1(player, guardNation, guardType)
         if a1 == 1808 then -- non-allied nation
-            player:startEvent(guardEvent, a1, 0, 0, 0, 0, player:getRank(player:getNation()), 0, 0)
+            player:startMenuEvent(guardEvent, a1, 0, 0, 0, 0, player:getRank(player:getNation()), 0, 0)
         else
-            player:startEvent(guardEvent, a1, 0, 0x3F0000, 0, 0, getArg6(player), 0, 0)
+            player:startMenuEvent(guardEvent, a1, 0, 0x3F0000, 0, 0, getArg6(player), 0, 0)
         end
     end
 end
@@ -1402,7 +1401,7 @@ xi.conquest.vendorOnTrigger = function(player, vendorRegion, vendorEvent)
     end
 
     local fee = xi.conquest.outpostFee(player, vendorRegion)
-    player:startEvent(vendorEvent, nation, fee, 0, fee, player:getCP(), 0, 0, 0)
+    player:startMenuEvent(vendorEvent, nation, fee, 0, fee, player:getCP(), 0, 0, 0)
 end
 
 xi.conquest.vendorOnEventUpdate = function(player, vendorRegion)

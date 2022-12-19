@@ -42,6 +42,8 @@ zoneObject.onZoneIn = function(player, prevZone)
         end
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -52,19 +54,19 @@ end
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     switch (triggerArea:GetTriggerAreaID()): caseof
     {
-        [1] = function (x)  -- Cutscene for Got It All quest.
+        [1] = function()  -- Cutscene for Got It All quest.
             if player:getCharVar("gotitallCS") == 5 then
                 player:startEvent(526)
             end
         end,
 
-        [2] = function (x) -- CS for Vanishing Act Quest
+        [2] = function() -- CS for Vanishing Act Quest
             if player:getCharVar("vanishingactCS") == 3 then
                 player:startEvent(44)
             end
         end,
 
-        [5] = function (x) -- AH mission
+        [5] = function() -- AH mission
             if
                 player:getQuestStatus(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.NAVIGATING_THE_UNFRIENDLY_SEAS) == QUEST_COMPLETED and
                 player:getQuestStatus(xi.quest.log_id.AHT_URHGAN, xi.quest.id.ahtUrhgan.AGAINST_ALL_ODDS) == QUEST_AVAILABLE and
@@ -113,6 +115,8 @@ zoneObject.onEventFinish = function(player, csid, option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, xi.ki.LIFE_FLOAT)
         player:setCharVar("AgainstAllOddsTimer", getMidnight())
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zoneObject

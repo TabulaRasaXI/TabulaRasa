@@ -134,7 +134,6 @@ quest.sections =
                 end,
 
                 onTrigger = function(player, npc)
-                    print(quest:getVar(player, "waterRepeat"))
                     if
                         not player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.CURSES_FOILED_A_GOLEM) ~= QUEST_ACCEPTED and
                         quest:getVar(player, "waterRepeat") == 0
@@ -149,10 +148,10 @@ quest.sections =
                         then
                             return quest:progressEvent(354)
                         else
-                            return quest:progressEvent(353)
+                            return quest:event(353)
                         end
                     else
-                        return quest:progressEvent(356, 0, xi.items.CANTEEN_OF_GIDDEUS_WATER)
+                        return quest:event(356, 0, xi.items.CANTEEN_OF_GIDDEUS_WATER)
                     end
                 end,
             },

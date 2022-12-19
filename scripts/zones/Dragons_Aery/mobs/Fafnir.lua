@@ -14,9 +14,26 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 20)
     mob:setMobMod(xi.mobMod.DRAW_IN_FRONT, 1)
+    mob:setMod(xi.mod.ATT, 489)
 
     -- Despawn the ???
     GetNPCByID(ID.npc.FAFNIR_QM):setStatus(xi.status.DISAPPEAR)
+end
+
+entity.onMobFight = function(mob, target)
+    local drawInTableNortheast =
+    {
+        condition1 = target:getXPos() > 95 and target:getZPos() > 56,
+        position   = { 94.2809, 6.6438, 54.0863, target:getRotPos() },
+    }
+    local drawInTableWest =
+    {
+        condition1 = target:getXPos() < 60 and target:getZPos() < 23,
+        position   = { 65.5966, 7.7105, 26.2332, target:getRotPos() },
+    }
+
+    utils.arenaDrawIn(mob, target, drawInTableNortheast)
+    utils.arenaDrawIn(mob, target, drawInTableWest)
 end
 
 entity.onMobDeath = function(mob, player, optParams)
