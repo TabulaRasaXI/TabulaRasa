@@ -18,32 +18,33 @@ local wyvernCapabilities =
 
 local wyvernTypes =
 {
-    [xi.job.WAR] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.MNK] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.WHM] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.BLM] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.RDM] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.THF] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.PLD] = wyvernCapabilities.MULTI,
-    [xi.job.DRK] = wyvernCapabilities.MULTI,
-    [xi.job.BST] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.BRD] = wyvernCapabilities.MULTI,
-    [xi.job.RNG] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.SAM] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.NIN] = wyvernCapabilities.MULTI,
-    [xi.job.DRG] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.SMN] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.BLU] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.COR] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.PUP] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.DNC] = wyvernCapabilities.OFFENSIVE,
-    [xi.job.SCH] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.GEO] = wyvernCapabilities.DEFENSIVE,
-    [xi.job.RUN] = wyvernCapabilities.MULTI,
+    [xi.job.NONE] = wyvernCapabilities.OFFENSIVE,
+    [xi.job.WAR]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.MNK]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.WHM]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.BLM]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.RDM]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.THF]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.PLD]  = wyvernCapabilities.MULTI,
+    [xi.job.DRK]  = wyvernCapabilities.MULTI,
+    [xi.job.BST]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.BRD]  = wyvernCapabilities.MULTI,
+    [xi.job.RNG]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.SAM]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.NIN]  = wyvernCapabilities.MULTI,
+    [xi.job.DRG]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.SMN]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.BLU]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.COR]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.PUP]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.DNC]  = wyvernCapabilities.OFFENSIVE,
+    [xi.job.SCH]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.GEO]  = wyvernCapabilities.DEFENSIVE,
+    [xi.job.RUN]  = wyvernCapabilities.MULTI,
 }
 
 local function doHealingBreath(player, threshold)
-    local breath_heal_range = 14
+    local breathHealRange = 14
 
     local healingbreath = xi.jobAbility.HEALING_BREATH
 
@@ -57,7 +58,7 @@ local function doHealingBreath(player, threshold)
 
     -- zone ID check? is this some strange master zoning but pet hasn't despawned in the other zone check?
     local function inBreathRange(target)
-        return player:getPet():getZoneID() == target:getZoneID() and player:getPet():checkDistance(target) <= breath_heal_range
+        return player:getPet():getZoneID() == target:getZoneID() and player:getPet():checkDistance(target) <= breathHealRange
     end
 
     if
@@ -109,11 +110,6 @@ end
 
 entity.onMobSpawn = function(mob)
     local master = mob:getMaster()
-
-    -- https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)#Combat_Stats
-    -- innate -40% DT, which does not contribute to the -50% cap (this is a unique attribute to pets having a "higher" DT cap)
-    -- TODO: need "UDMG" modifier or equivalent
-    mob:addMod(xi.mod.DMG, -4000)
 
     -- innate +40 subtle blow
     mob:addMod(xi.mod.SUBTLE_BLOW, 40)
@@ -190,6 +186,12 @@ entity.onMobDeath = function(mob, player)
     master:removeListener("PET_WYVERN_ENGAGE")
     master:removeListener("PET_WYVERN_DISENGAGE")
     master:removeListener("PET_WYVERN_EXP")
+end
+
+entity.onPetLevelRestriction = function(pet)
+    removeWyvernLevels(pet)
+    pet:setLocalVar("wyvern_exp", 0)
+    pet:setLocalVar("level_Ups", 0)
 end
 
 return entity

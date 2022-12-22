@@ -1,4 +1,4 @@
--- --------------------------------------------------------------------
+-- --------------------------------------------------------------------1,1,100
 --                        Dynamis Era Module                        --
 -- --------------------------------------------------------------------
 LOCK TABLES `mob_droplist`       WRITE,
@@ -27,20 +27,20 @@ DELETE FROM `mob_droplist` WHERE dropid = "20"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,749,50); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,748,50); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,1474,100); -- Infinity Core
-REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,1456,50); -- Hundred Byne Bill
+REPLACE INTO `mob_droplist` VALUES (20,0,0,1000,1456,100); -- Hundred Byne Bill
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "2907"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15133,91); -- MNK Feet
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15120,91); -- BLM Legs
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15106,91); -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15092,90); -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15078,91); -- PLD Head
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15139,91); -- DRK Feet
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15095,91); -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15111,91); -- BRD Hands
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15113,91); -- SAM Hands
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15130,91); -- DRG Legs
-REPLACE INTO `mob_droplist` VALUES (2907,1,1,100,15116,91); -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15133,91); -- MNK Feet
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15120,91); -- BLM Legs
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15106,91); -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15092,90); -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15078,91); -- PLD Head
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15139,91); -- DRK Feet
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15095,91); -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15111,91); -- BRD Hands
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15113,91); -- SAM Hands
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15130,91); -- DRG Legs
+REPLACE INTO `mob_droplist` VALUES (2907,1,1,200,15116,91); -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2907,1,2,50,16346,500); -- BLU Legs (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2907,1,2,50,11385,500); -- COR Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2907,1,3,50,16362,500); -- SCH Legs (Comment in for WoTG)
@@ -52,20 +52,20 @@ REPLACE INTO `mob_droplist` VALUES (2907,0,0,1000,1455,240); -- Byne Bill 1
 REPLACE INTO `mob_droplist` VALUES (2907,0,0,1000,1455,150); -- Byne Bill 2
 REPLACE INTO `mob_droplist` VALUES (2907,0,0,1000,1455,100); -- Byne Bill 3
 REPLACE INTO `mob_droplist` VALUES (2907,2,0,1000,1455,0); -- Byne Bill (Steal)
-REPLACE INTO `mob_droplist` VALUES (2907,0,0,1000,1456,50); -- 1 Hbyne
+REPLACE INTO `mob_droplist` VALUES (2907,0,0,1000,1456,100); -- 1 Hbyne
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2558"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15133,91); -- MNK Feet
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15120,91); -- BLM Legs
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15106,91); -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15092,90); -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15078,91); -- PLD Head
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15139,91); -- DRK Feet
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15095,91); -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15111,91); -- BRD Hands
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15113,91); -- SAM Hands
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15130,91); -- DRG Legs
-REPLACE INTO `mob_droplist` VALUES (2558,1,1,50,15116,91); -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15133,91); -- MNK Feet
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15120,91); -- BLM Legs
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15106,91); -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15092,90); -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15078,91); -- PLD Head
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15139,91); -- DRK Feet
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15095,91); -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15111,91); -- BRD Hands
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15113,91); -- SAM Hands
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15130,91); -- DRG Legs
+REPLACE INTO `mob_droplist` VALUES (2558,1,1,200,15116,91); -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2558,1,2,50,16346,500); -- BLU Legs (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2558,1,2,50,11385,500); -- COR Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2558,1,4,50,16362,500); -- SCH Legs (Comment in for WoTG)
@@ -99,26 +99,26 @@ REPLACE INTO `mob_droplist` VALUES (1967,0,0,1000,748,100); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (1967,0,0,1000,1474,150); -- Infinity Core
 REPLACE INTO `mob_droplist` VALUES (1967,0,0,1000,1452,150); -- Bronzepiece 1
 REPLACE INTO `mob_droplist` VALUES (1967,0,0,1000,1452,150); -- Bronzepiece 2
-REPLACE INTO `mob_droplist` VALUES (1967,0,0,1000,1453,150); -- Montiont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (1967,0,0,1000,1453,300); -- Montiont Silverpiece
 --            Statues            --
 DELETE FROM `mob_droplist` WHERE dropid = "2201"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (2201,0,0,1000,749,50); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (2201,0,0,1000,748,50); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (2201,0,0,1000,1474,100); -- Infinity Core
-REPLACE INTO `mob_droplist` VALUES (2201,0,0,1000,1453,50); -- Montiont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (2201,0,0,1000,1453,100); -- Montiont Silverpiece
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "3111"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15132,90); -- WAR Feet
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15118,91); -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15074,91); -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15136,91); -- RDM Feet
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15108,91); -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15125,91); -- BST Legs
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15081,91); -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15127,91); -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15129,91); -- NIN Legs
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15145,91); -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (3111,1,1,100,15146,91); -- SMN Feet
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15132,90); -- WAR Feet
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15118,91); -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15074,91); -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15136,91); -- RDM Feet
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15108,91); -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15125,91); -- BST Legs
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15081,91); -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15127,91); -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15129,91); -- NIN Legs
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15145,91); -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (3111,1,1,200,15146,91); -- SMN Feet
 -- REPLACE INTO `mob_droplist` VALUES (3111,1,2,50,15025,500); -- BLU Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3111,1,2,50,16349,500); -- COR Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3111,1,3,50,11388,500); -- PUP Feet  (Comment in for WoTG)
@@ -131,20 +131,20 @@ REPLACE INTO `mob_droplist` VALUES (3111,0,0,1000,1452,240); -- Bronzepiece 1
 REPLACE INTO `mob_droplist` VALUES (3111,0,0,1000,1452,150); -- Bronzepiece 2
 REPLACE INTO `mob_droplist` VALUES (3111,0,0,1000,1452,100); -- Bronzepiece 3
 REPLACE INTO `mob_droplist` VALUES (3111,2,0,1000,1452,0); -- Bronzepiece (Steal)
-REPLACE INTO `mob_droplist` VALUES (3111,0,0,1000,1453,50); -- Montiont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (3111,0,0,1000,1453,100); -- Montiont Silverpiece
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2548"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15132,90); -- WAR Feet
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15118,91); -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15074,91); -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15136,91); -- RDM Feet
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15108,91); -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15125,91); -- BST Legs
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15081,91); -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15127,91); -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15129,91); -- NIN Legs
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15145,91); -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2548,1,1,50,15146,91); -- SMN Feet
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15132,90); -- WAR Feet
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15118,91); -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15074,91); -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15136,91); -- RDM Feet
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15108,91); -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15125,91); -- BST Legs
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15081,91); -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15127,91); -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15129,91); -- NIN Legs
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15145,91); -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2548,1,1,200,15146,91); -- SMN Feet
 -- REPLACE INTO `mob_droplist` VALUES (2548,1,2,50,15025,500); -- BLU Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2548,1,2,50,16349,500); -- COR Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2548,1,4,50,11388,500); -- PUP Feet  (Comment in for WoTG)
@@ -180,26 +180,26 @@ REPLACE INTO `mob_droplist` VALUES (2510,0,0,1000,748,100); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (2510,0,0,1000,1474,150); -- Infinity Core
 REPLACE INTO `mob_droplist` VALUES (2510,0,0,1000,1449,150); -- Whiteshell 1
 REPLACE INTO `mob_droplist` VALUES (2510,0,0,1000,1449,150); -- Whiteshell 2
-REPLACE INTO `mob_droplist` VALUES (2510,0,0,1000,1450,150); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (2510,0,0,1000,1450,300); -- Jadeshell
 --            Statues            --
 DELETE FROM `mob_droplist` WHERE dropid = "195"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,749,50); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,748,50); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,1474,100); -- Infinity Core
-REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,1450,50); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,11450,100); -- Jadeshell
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "1560"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15072,90); -- WAR Head
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15134,91); -- WHM Feet
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15105,91); -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15077,91); -- THF Head
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15138,91); -- PLD Feet
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15109,91); -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15080,91); -- BST Head
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15112,91); -- RNG Hands
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15128,91); -- Sam Legs
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15084,91); -- NIN Head
-REPLACE INTO `mob_droplist` VALUES (1560,1,1,100,15131,91); -- SMN Legs
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15072,90); -- WAR Head
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15134,91); -- WHM Feet
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15105,91); -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15077,91); -- THF Head
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15138,91); -- PLD Feet
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15109,91); -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15080,91); -- BST Head
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15112,91); -- RNG Hands
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15128,91); -- Sam Legs
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15084,91); -- NIN Head
+REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15131,91); -- SMN Legs
 -- REPLACE INTO `mob_droplist` VALUES (1560,1,2,50,11382,500); -- BLU Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1560,1,2,50,15031,500); -- PUP Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1560,1,3,50,11398,500); -- SCH Feet  (Comment in for WoTG)
@@ -212,20 +212,20 @@ REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1449,240); -- Whiteshell 1
 REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1449,150); -- Whiteshell 2
 REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1449,100); -- Whiteshell 3
 REPLACE INTO `mob_droplist` VALUES (1560,2,0,1000,1449,0); -- Whiteshell (Steal)
-REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1450,50); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,11450,100); -- Jadeshell
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2553"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15072,90); -- WAR Head
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15134,91); -- WHM Feet
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15105,91); -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15077,91); -- THF Head
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15138,91); -- PLD Feet
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15109,91); -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15080,91); -- BST Head
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15112,91); -- RNG Hands
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15128,91); -- Sam Legs
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15084,91); -- NIN Head
-REPLACE INTO `mob_droplist` VALUES (2553,1,1,50,15131,91); -- SMN Legs
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15072,90); -- WAR Head
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15134,91); -- WHM Feet
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15105,91); -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15077,91); -- THF Head
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15138,91); -- PLD Feet
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15109,91); -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15080,91); -- BST Head
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15112,91); -- RNG Hands
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15128,91); -- Sam Legs
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15084,91); -- NIN Head
+REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15131,91); -- SMN Legs
 -- REPLACE INTO `mob_droplist` VALUES (2553,1,2,50,11382,500); -- BLU Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2553,1,2,50,15031,500); -- PUP Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2553,1,4,50,11398,500); -- SCH Feet  (Comment in for WoTG)
@@ -263,32 +263,32 @@ REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1470,50); -- Sparkling Stone
 REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1455,150); -- Bronzepiece
-REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1456,100); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1450,100); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1453,100); -- Montiont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1456,200); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1450,200); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (1085,0,0,1000,1453,200); -- Montiont Silverpiece
 --            Statues            --
 DELETE FROM `mob_droplist` WHERE dropid = "1144"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (1144,0,0,1000,749,50); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (1144,0,0,1000,748,50); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (1144,0,0,1000,1474,100); -- Infinity Core
 REPLACE INTO `mob_droplist` VALUES (1144,0,0,1000,1470,50); -- Sparkling Stone
-REPLACE INTO `mob_droplist` VALUES (1144,1,1,50,1456,333); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (1144,1,1,50,1450,333); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (1144,1,1,50,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (1144,1,1,200,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (1144,1,1,200,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (1144,1,1,200,1453,334); -- Montinont Silverpiece
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "143"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15102,90); -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15103,91); -- MNK Hands
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15119,91); -- WHM Legs
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15135,91); -- BLM Feet
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15121,91); -- RDM Legs
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15137,91); -- THF Feet
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15124,91); -- DRK Legs
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15141,91); -- BRD Feet
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15082,91); -- RNG Head
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15143,91); -- SAM Feet
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15144,91); -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (143,1,1,100,15115,91); -- DRG Hands
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15102,90); -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15103,91); -- MNK Hands
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15119,91); -- WHM Legs
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15135,91); -- BLM Feet
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15121,91); -- RDM Legs
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15137,91); -- THF Feet
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15124,91); -- DRK Legs
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15141,91); -- BRD Feet
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15082,91); -- RNG Head
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15143,91); -- SAM Feet
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15144,91); -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (143,1,1,200,15115,91); -- DRG Hands
 -- REPLACE INTO `mob_droplist` VALUES (143,1,2,50,15028,500); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (143,1,2,50,16352,500); -- PUP Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (143,1,4,10,16352,1000); -- DNC Feet (Comment in for WoTG)
@@ -301,23 +301,23 @@ REPLACE INTO `mob_droplist` VALUES (143,0,0,1000,1455,100); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (143,0,0,1000,1449,100); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (143,0,0,1000,1452,100); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (143,2,0,1000,1449,150); -- Whiteshell (Steal)
-REPLACE INTO `mob_droplist` VALUES (143,1,3,50,1456,333); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (143,1,3,50,1450,333); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (143,1,3,50,1453,334); -- Montiont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (143,1,3,100,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (143,1,3,100,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (143,1,3,100,1453,334); -- Montiont Silverpiece
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2543"; -- Delete
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15102,90); -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15103,91); -- MNK Hands
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15119,91); -- WHM Legs
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15135,91); -- BLM Feet
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15121,91); -- RDM Legs
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15137,91); -- THF Feet
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15124,91); -- DRK Legs
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15141,91); -- BRD Feet
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15082,91); -- RNG Head
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15143,91); -- SAM Feet
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15144,91); -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2543,1,1,50,15115,91); -- DRG Hands
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15102,90); -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15103,91); -- MNK Hands
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15119,91); -- WHM Legs
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15135,91); -- BLM Feet
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15121,91); -- RDM Legs
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15137,91); -- THF Feet
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15124,91); -- DRK Legs
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15141,91); -- BRD Feet
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15082,91); -- RNG Head
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15143,91); -- SAM Feet
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15144,91); -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2543,1,1,200,15115,91); -- DRG Hands
 -- REPLACE INTO `mob_droplist` VALUES (2543,1,2,10,15028,500); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2543,1,2,10,16352,500); -- PUP Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2543,1,4,5,16352,1000); -- DNC Feet  (Comment in for WoTG)
@@ -347,44 +347,44 @@ REPLACE INTO `mob_droplist` VALUES (2543,1,3,50,15066,250); -- Relic Shield
 -- Use Drop ID 0
 --             Eyes              --
 DELETE FROM `mob_droplist` WHERE dropid = "3207"; -- Angra Mainyu
-REPLACE INTO `mob_droplist` VALUES (3207,1,1,50,1456,333); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (3207,1,1,50,1450,333); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (3207,1,1,50,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (3207,1,1,200,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (3207,1,1,200,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (3207,1,1,200,1453,334); -- Montinont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "2561"; -- Eyes
-REPLACE INTO `mob_droplist` VALUES (2561,1,1,50,1456,333); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (2561,1,1,50,1450,333); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (2561,1,1,50,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (2561,1,1,200,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (2561,1,1,200,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (2561,1,1,200,1453,334); -- Montinont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "6000"; -- Eyes
-REPLACE INTO `mob_droplist` VALUES (6000,1,1,50,1456,333); -- Hundred Byne
-REPLACE INTO `mob_droplist` VALUES (6000,1,1,50,1450,333); -- Jadeshell
-REPLACE INTO `mob_droplist` VALUES (6000,1,1,50,1453,334); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (6000,1,1,200,1456,333); -- Hundred Byne
+REPLACE INTO `mob_droplist` VALUES (6000,1,1,200,1450,333); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (6000,1,1,200,1453,334); -- Montinont Silverpiece
 REPLACE INTO `mob_droplist` VALUES (6000,0,0,1000,4248,100); -- Ginurva's Battle Theory
 DELETE FROM `mob_droplist` WHERE dropid = "6001"; -- Orc Statues
-REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,1453,50); -- Montinont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,1453,100); -- Montinont Silverpiece
 REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,4248,100); -- Ginurva's Battle Theory
 DELETE FROM `mob_droplist` WHERE dropid = "6002"; -- Quadav Statues
 REPLACE INTO `mob_droplist` VALUES (6003,0,0,1000,1456,50); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (6003,0,0,1000,4248,100); -- Ginurva's Battle Theory
 DELETE FROM `mob_droplist` WHERE dropid = "6003"; -- Yagudo Statues
-REPLACE INTO `mob_droplist` VALUES (6004,0,0,1000,1450,50); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (6004,0,0,1000,11450,100); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (6004,0,0,1000,4248,100); -- Ginurva's Battle Theory
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "176"; -- Goblin NM
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (176,1,1,100,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (176,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (176,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (176,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (176,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -401,21 +401,21 @@ REPLACE INTO `mob_droplist` VALUES (176,1,3,50,1456,333); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (176,1,3,50,1450,333); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (176,1,3,50,1453,334); -- Montiont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "493"; -- Orc NM
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (493,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (493,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (493,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (493,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -424,23 +424,23 @@ REPLACE INTO `mob_droplist` VALUES (493,1,1,100,15101,67); -- SMN Body
 REPLACE INTO `mob_droplist` VALUES (493,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (493,0,0,1000,1452,100); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (493,2,0,1000,1452,150); -- Bronzepiece (Steal)
-REPLACE INTO `mob_droplist` VALUES (493,0,0,1000,1453,50); -- Montiont Silverpiece
+REPLACE INTO `mob_droplist` VALUES (493,0,0,1000,1453,100); -- Montiont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "261"; -- Quadav NM
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (261,1,1,100,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (261,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (261,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (261,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (261,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -451,21 +451,21 @@ REPLACE INTO `mob_droplist` VALUES (261,0,0,1000,1455,100); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (261,2,0,1000,1455,150); -- Byne Bill (Steal)
 REPLACE INTO `mob_droplist` VALUES (261,0,0,1000,1456,50); -- Hundred Byne
 DELETE FROM `mob_droplist` WHERE dropid = "265"; -- Yagudo NM
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (265,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (265,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (265,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -474,7 +474,7 @@ REPLACE INTO `mob_droplist` VALUES (265,1,1,100,15101,67); -- SMN Body
 REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,1449,100); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (265,2,0,1000,1449,150); -- Whiteshell (Steal)
-REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,1450,50); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,11450,100); -- Jadeshell
 DELETE FROM `mob_droplist` WHERE dropid = "559"; -- Dagourmarche
 REPLACE INTO `mob_droplist` VALUES (559,1,1,300,1560,333); -- Attestation of Bravery
 REPLACE INTO `mob_droplist` VALUES (559,1,1,300,1563,333); -- Attestation of Fortitude
@@ -518,21 +518,21 @@ REPLACE INTO `mob_droplist` VALUES (2574,1,3,50,1453,334); -- Montiont Silverpie
 REPLACE INTO `mob_droplist` VALUES (2574,0,0,1000,4249,500); -- Schultz's Strategems
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2542"; -- Goblin
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (2542,1,1,50,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (2542,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (2542,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2542,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2542,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -548,21 +548,21 @@ REPLACE INTO `mob_droplist` VALUES (2542,0,0,1000,1449,100); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2542,0,0,1000,1452,100); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2542,2,0,1000,1449,150); -- Whiteshell (Steal)
 DELETE FROM `mob_droplist` WHERE dropid = "2547"; -- Orc
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (2547,1,1,50,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (2547,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (2547,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2547,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2547,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -576,21 +576,21 @@ REPLACE INTO `mob_droplist` VALUES (2547,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2547,0,0,1000,1452,100); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2547,2,0,1000,1452,150); -- Bronzepiece (Steal)
 DELETE FROM `mob_droplist` WHERE dropid = "2557"; -- Quadav
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (2557,1,1,50,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (2557,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (2557,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2557,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2557,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -603,21 +603,21 @@ REPLACE INTO `mob_droplist` VALUES (2557,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (2557,0,0,1000,1455,100); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (2557,2,0,1000,1455,150); -- Byne Bill (Steal)
 DELETE FROM `mob_droplist` WHERE dropid = "2552"; -- Yagudo
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (2552,1,1,50,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (2552,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (2552,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2552,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2552,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -631,21 +631,21 @@ REPLACE INTO `mob_droplist` VALUES (2552,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2552,0,0,1000,1449,100); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2552,2,0,1000,1449,150); -- Whiteshell (Steal)
 DELETE FROM `mob_droplist` WHERE dropid = "3220"; -- Hydra
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15117,66); -- WAR Legs
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15088,66); -- MNK Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15089,66); -- WHM Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15090,66); -- BLM Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15091,66); -- RDM Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15122,67); -- THF Legs
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15123,67); -- PLD Legs
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15094,67); -- DRK Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15140,67); -- BST Feet
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15096,67); -- BRD Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15142,67); -- RNG Feet
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15098,67); -- SAM Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15099,67); -- NIN Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15100,67); -- DRG Body
-REPLACE INTO `mob_droplist` VALUES (3220,1,1,50,15101,67); -- SMN Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15117,66); -- WAR Legs
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15088,66); -- MNK Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15089,66); -- WHM Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15090,66); -- BLM Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15091,66); -- RDM Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15122,67); -- THF Legs
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15123,67); -- PLD Legs
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15094,67); -- DRK Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15140,67); -- BST Feet
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15096,67); -- BRD Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15142,67); -- RNG Feet
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15098,67); -- SAM Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15099,67); -- NIN Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15100,67); -- DRG Body
+REPLACE INTO `mob_droplist` VALUES (3220,1,1,200,15101,67); -- SMN Body
 -- REPLACE INTO `mob_droplist` VALUES (3220,1,2,50,11295,333); -- COR Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3220,1,2,50,11292,333); -- BLU Body (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3220,1,2,50,11298,334); -- PUP Body (Comment in for ToAU)
@@ -850,21 +850,21 @@ DELETE FROM `mob_droplist` WHERE dropid = "106"; -- Animated Shield
 REPLACE INTO `mob_droplist` VALUES (106,0,0,1000,1822,1000); -- Supernal Fragment
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "1442"; -- Kindred
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15087,66); -- WAR Body
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15073,66); -- MNK Head
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15104,66); -- WHM Hands
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15075,66); -- BLM Head
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15076,66); -- RDM Head
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15107,67); -- THF Hands
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15093,67); -- PLD Body
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15079,67); -- DRK Head
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15110,67); -- BST Hands
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15126,67); -- BRD Legs
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15097,67); -- RNG Body
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15083,67); -- SAM Head
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15114,67); -- NIN Hands
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15085,67); -- DRG Head
-REPLACE INTO `mob_droplist` VALUES (1442,1,1,50,15086,67); -- SMN Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15087,66); -- WAR Body
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15073,66); -- MNK Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15104,66); -- WHM Hands
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15075,66); -- BLM Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15076,66); -- RDM Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15107,67); -- THF Hands
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15093,67); -- PLD Body
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15079,67); -- DRK Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15110,67); -- BST Hands
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15126,67); -- BRD Legs
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15097,67); -- RNG Body
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15083,67); -- SAM Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15114,67); -- NIN Hands
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15085,67); -- DRG Head
+REPLACE INTO `mob_droplist` VALUES (1442,1,1,200,15086,67); -- SMN Head
 -- REPLACE INTO `mob_droplist` VALUES (1442,1,2,50,11468,333); -- COR Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1442,1,2,50,11465,333); -- BLU Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1442,1,2,50,11471,334); -- PUP Head (Comment in for ToAU)
@@ -901,21 +901,21 @@ REPLACE INTO `mob_droplist` VALUES (472,0,0,1000,1450,19); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (472,0,0,1000,1453,19); -- Montiont Silverpiece
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "2910"; -- NMs
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2033,66);  -- WAR -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2038,66);  -- MNK -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2043,66);  -- WHM -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2048,66);  -- BLM -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2053,66);  -- RDM -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2058,67);  -- THF -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2063,67);  -- PLD -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2068,67);  -- DRK -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2073,67);  -- BST -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2078,67);  -- BRD -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2083,67);  -- RNG -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2088,67);  -- SAM -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2093,67);  -- NIN -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2098,67);  -- DRG -1 Head
-REPLACE INTO `mob_droplist` VALUES (2910,1,1,100,2103,67);  -- SMN -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2033,66);  -- WAR -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2038,66);  -- MNK -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2043,66);  -- WHM -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2048,66);  -- BLM -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2053,66);  -- RDM -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2058,67);  -- THF -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2063,67);  -- PLD -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2068,67);  -- DRK -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2073,67);  -- BST -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2078,67);  -- BRD -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2083,67);  -- RNG -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2088,67);  -- SAM -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2093,67);  -- NIN -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2098,67);  -- DRG -1 Head
+REPLACE INTO `mob_droplist` VALUES (2910,1,1,200,2103,67);  -- SMN -1 Head
 -- REPLACE INTO `mob_droplist` VALUES (2910,1,2,100,2662,333); -- BLU -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2910,1,2,100,2667,333); -- COR -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2910,1,2,100,2672,334); -- PUP -1 Head (Comment in for ToAU)
@@ -929,21 +929,21 @@ REPLACE INTO `mob_droplist` VALUES (2910,1,3,50,1450,334); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (2910,1,3,50,1453,333); -- Montiont Silverpiece
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2539"; -- Goblin
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15132,66);  -- WAR Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15133,66);  -- MNK Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15134,66);  -- WHM Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15135,66);  -- BLM Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15136,66);  -- RDM Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15077,67);  -- THF Head
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15138,67);  -- PLD Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15139,67);  -- DRK Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15080,67);  -- BST Head
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15141,67);  -- BRD Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15112,67);  -- RNG Hands
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15143,67);  -- SAM Feet
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15129,67);  -- NIN Legs
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15130,67);  -- DRG Legs
-REPLACE INTO `mob_droplist` VALUES (2539,1,1,50,15131,67);  -- SMN Legs
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15132,66);  -- WAR Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15133,66);  -- MNK Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15134,66);  -- WHM Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15135,66);  -- BLM Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15136,66);  -- RDM Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15077,67);  -- THF Head
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15138,67);  -- PLD Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15139,67);  -- DRK Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15080,67);  -- BST Head
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15141,67);  -- BRD Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15112,67);  -- RNG Hands
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15143,67);  -- SAM Feet
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15129,67);  -- NIN Legs
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15130,67);  -- DRG Legs
+REPLACE INTO `mob_droplist` VALUES (2539,1,1,200,15131,67);  -- SMN Legs
 -- REPLACE INTO `mob_droplist` VALUES (2539,1,2,50,11382,333); -- BLU Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2539,1,2,50,16349,333); -- COR Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2539,1,2,50,16352,334); -- PUP Legs  (Comment in for ToAU)
@@ -954,21 +954,21 @@ REPLACE INTO `mob_droplist` VALUES (2539,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2539,2,0,1000,1449,0); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2539,0,0,1000,1452,150); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "2544"; -- Orc
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15132,66);  -- WAR Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15133,66);  -- MNK Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15134,66);  -- WHM Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15135,66);  -- BLM Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15136,66);  -- RDM Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15077,67);  -- THF Head
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15138,67);  -- PLD Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15139,67);  -- DRK Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15080,67);  -- BST Head
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15141,67);  -- BRD Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15112,67);  -- RNG Hands
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15143,67);  -- SAM Feet
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15129,67);  -- NIN Legs
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15130,67);  -- DRG Legs
-REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15131,67);  -- SMN Legs
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15132,66);  -- WAR Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15133,66);  -- MNK Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15134,66);  -- WHM Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15135,66);  -- BLM Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15136,66);  -- RDM Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15077,67);  -- THF Head
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15138,67);  -- PLD Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15139,67);  -- DRK Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15080,67);  -- BST Head
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15141,67);  -- BRD Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15112,67);  -- RNG Hands
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15143,67);  -- SAM Feet
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15129,67);  -- NIN Legs
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15130,67);  -- DRG Legs
+REPLACE INTO `mob_droplist` VALUES (2544,1,1,200,15131,67);  -- SMN Legs
 -- REPLACE INTO `mob_droplist` VALUES (2544,1,2,50,11382,333); -- BLU Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2544,1,2,50,16349,333); -- COR Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2544,1,2,50,16352,334); -- PUP Legs  (Comment in for ToAU)
@@ -977,21 +977,21 @@ REPLACE INTO `mob_droplist` VALUES (2544,1,1,50,15131,67);  -- SMN Legs
 REPLACE INTO `mob_droplist` VALUES (2544,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2544,2,0,1000,1452,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "3131"; -- Quadav
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15132,66);  -- WAR Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15133,66);  -- MNK Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15134,66);  -- WHM Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15135,66);  -- BLM Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15136,66);  -- RDM Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15077,67);  -- THF Head
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15138,67);  -- PLD Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15139,67);  -- DRK Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15080,67);  -- BST Head
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15141,67);  -- BRD Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15112,67);  -- RNG Hands
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15143,67);  -- SAM Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15129,67);  -- NIN Legs
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15130,67);  -- DRG Legs
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15131,67);  -- SMN Legs
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15132,66);  -- WAR Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15133,66);  -- MNK Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15134,66);  -- WHM Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15135,66);  -- BLM Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15136,66);  -- RDM Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15077,67);  -- THF Head
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15138,67);  -- PLD Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15139,67);  -- DRK Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15080,67);  -- BST Head
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15141,67);  -- BRD Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15112,67);  -- RNG Hands
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15143,67);  -- SAM Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15129,67);  -- NIN Legs
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15130,67);  -- DRG Legs
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,15131,67);  -- SMN Legs
 -- REPLACE INTO `mob_droplist` VALUES (3131,1,2,50,11382,333); -- BLU Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3131,1,2,50,16349,333); -- COR Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3131,1,2,50,16352,334); -- PUP Legs  (Comment in for ToAU)
@@ -1000,21 +1000,21 @@ REPLACE INTO `mob_droplist` VALUES (3131,1,1,50,15131,67);  -- SMN Legs
 REPLACE INTO `mob_droplist` VALUES (3131,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (3131,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "2549"; -- Yagudo
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15132,66);  -- WAR Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15133,66);  -- MNK Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15134,66);  -- WHM Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15135,66);  -- BLM Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15136,66);  -- RDM Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15077,67);  -- THF Head
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15138,67);  -- PLD Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15139,67);  -- DRK Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15080,67);  -- BST Head
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15141,67);  -- BRD Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15112,67);  -- RNG Hands
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15143,67);  -- SAM Feet
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15129,67);  -- NIN Legs
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15130,67);  -- DRG Legs
-REPLACE INTO `mob_droplist` VALUES (2549,1,1,50,15131,67);  -- SMN Legs
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15132,66);  -- WAR Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15133,66);  -- MNK Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15134,66);  -- WHM Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15135,66);  -- BLM Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15136,66);  -- RDM Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15077,67);  -- THF Head
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15138,67);  -- PLD Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15139,67);  -- DRK Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15080,67);  -- BST Head
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15141,67);  -- BRD Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15112,67);  -- RNG Hands
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15143,67);  -- SAM Feet
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15129,67);  -- NIN Legs
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15130,67);  -- DRG Legs
+REPLACE INTO `mob_droplist` VALUES (2549,1,1,200,15131,67);  -- SMN Legs
 -- REPLACE INTO `mob_droplist` VALUES (2549,1,2,50,11382,333); -- BLU Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2549,1,2,50,16349,333); -- COR Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2549,1,2,50,16352,334); -- PUP Legs  (Comment in for ToAU)
@@ -1024,21 +1024,21 @@ REPLACE INTO `mob_droplist` VALUES (2549,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2549,2,0,1000,1449,0); -- Whiteshell
 --           Nightmare           --
 DELETE FROM `mob_droplist` WHERE dropid = "1792"; -- Hippogryph / Sabotender
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2033,66);  -- WAR -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2038,66);  -- MNK -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2043,66);  -- WHM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2048,66);  -- BLM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2053,66);  -- RDM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2058,67);  -- THF -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2063,67);  -- PLD -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2068,67);  -- DRK -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2073,67);  -- BST -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2078,67);  -- BRD -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2083,67);  -- RNG -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2088,67);  -- SAM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2093,67);  -- NIN -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2098,67);  -- DRG -1 Head
-REPLACE INTO `mob_droplist` VALUES (1792,1,1,50,2103,67);  -- SMN -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2033,66);  -- WAR -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2038,66);  -- MNK -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2043,66);  -- WHM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2048,66);  -- BLM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2053,66);  -- RDM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2058,67);  -- THF -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2063,67);  -- PLD -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2068,67);  -- DRK -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2073,67);  -- BST -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2078,67);  -- BRD -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2083,67);  -- RNG -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2088,67);  -- SAM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2093,67);  -- NIN -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2098,67);  -- DRG -1 Head
+REPLACE INTO `mob_droplist` VALUES (1792,1,1,200,2103,67);  -- SMN -1 Head
 -- REPLACE INTO `mob_droplist` VALUES (1792,1,2,50,2662,333); -- BLU -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1792,1,2,50,2667,333); -- COR -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1792,1,2,50,2672,334); -- PUP -1 Head (Comment in for ToAU)
@@ -1054,21 +1054,21 @@ REPLACE INTO `mob_droplist` VALUES (1792,1,3,50,15871,200); -- WAR Waist
 REPLACE INTO `mob_droplist` VALUES (1792,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1792,2,0,1000,1452,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "1794"; -- Sheep / Fly
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2033,66);  -- WAR -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2038,66);  -- MNK -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2043,66);  -- WHM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2048,66);  -- BLM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2053,66);  -- RDM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2058,67);  -- THF -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2063,67);  -- PLD -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2068,67);  -- DRK -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2073,67);  -- BST -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2078,67);  -- BRD -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2083,67);  -- RNG -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2088,67);  -- SAM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2093,67);  -- NIN -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2098,67);  -- DRG -1 Head
-REPLACE INTO `mob_droplist` VALUES (1794,1,1,50,2103,67);  -- SMN -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2033,66);  -- WAR -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2038,66);  -- MNK -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2043,66);  -- WHM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2048,66);  -- BLM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2053,66);  -- RDM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2058,67);  -- THF -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2063,67);  -- PLD -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2068,67);  -- DRK -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2073,67);  -- BST -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2078,67);  -- BRD -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2083,67);  -- RNG -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2088,67);  -- SAM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2093,67);  -- NIN -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2098,67);  -- DRG -1 Head
+REPLACE INTO `mob_droplist` VALUES (1794,1,1,200,2103,67);  -- SMN -1 Head
 -- REPLACE INTO `mob_droplist` VALUES (1794,1,2,50,2662,333); -- BLU -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1794,1,2,50,2667,333); -- COR -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1794,1,2,50,2672,334); -- PUP -1 Head (Comment in for ToAU)
@@ -1085,21 +1085,21 @@ REPLACE INTO `mob_droplist` VALUES (1794,1,3,50,15875,125); -- BST Waist
 REPLACE INTO `mob_droplist` VALUES (1794,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (1794,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "1799"; -- Manticore
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2033,66);  -- WAR -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2038,66);  -- MNK -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2043,66);  -- WHM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2048,66);  -- BLM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2053,66);  -- RDM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2058,67);  -- THF -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2063,67);  -- PLD -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2068,67);  -- DRK -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2073,67);  -- BST -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2078,67);  -- BRD -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2083,67);  -- RNG -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2088,67);  -- SAM -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2093,67);  -- NIN -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2098,67);  -- DRG -1 Head
-REPLACE INTO `mob_droplist` VALUES (1799,1,1,50,2103,67);  -- SMN -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2033,66);  -- WAR -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2038,66);  -- MNK -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2043,66);  -- WHM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2048,66);  -- BLM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2053,66);  -- RDM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2058,67);  -- THF -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2063,67);  -- PLD -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2068,67);  -- DRK -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2073,67);  -- BST -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2078,67);  -- BRD -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2083,67);  -- RNG -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2088,67);  -- SAM -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2093,67);  -- NIN -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2098,67);  -- DRG -1 Head
+REPLACE INTO `mob_droplist` VALUES (1799,1,1,200,2103,67);  -- SMN -1 Head
 -- REPLACE INTO `mob_droplist` VALUES (1799,1,2,50,2662,333); -- BLU -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1799,1,2,50,2667,333); -- COR -1 Head (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1799,1,2,50,2672,334); -- PUP -1 Head (Comment in for ToAU)
@@ -1144,21 +1144,21 @@ REPLACE INTO `mob_droplist` VALUES (146,0,0,1000,1450,19); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (146,0,0,1000,1453,19); -- Montiont Silverpiece
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "230"; -- NMs
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (230,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (230,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (230,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (230,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (230,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1171,21 +1171,21 @@ REPLACE INTO `mob_droplist` VALUES (230,1,3,50,1456,333); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (230,1,3,50,1450,334); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (230,1,3,50,1453,333); -- Montiont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "2667"; -- Goblin NM
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2667,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2667,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2667,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2667,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2667,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1199,21 +1199,21 @@ REPLACE INTO `mob_droplist` VALUES (2667,1,3,50,1456,333); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (2667,1,3,50,1450,334); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (2667,1,3,50,1453,333); -- Montiont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "760"; -- Orc NM
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (760,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (760,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (760,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (760,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (760,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1223,21 +1223,21 @@ REPLACE INTO `mob_droplist` VALUES (760,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (760,2,0,1000,1452,0); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (760,0,0,50,1453,18); -- Montiont Silverpiece
 DELETE FROM `mob_droplist` WHERE dropid = "2901"; -- Quadav NM
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2901,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2901,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2901,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2901,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2901,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1247,21 +1247,21 @@ REPLACE INTO `mob_droplist` VALUES (2901,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (2901,2,0,1000,1455,0); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (2901,0,0,50,1456,18); -- Hundred Byne
 DELETE FROM `mob_droplist` WHERE dropid = "2085"; -- Yagudo NM
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2085,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2085,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2085,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2085,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2085,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1272,21 +1272,21 @@ REPLACE INTO `mob_droplist` VALUES (2085,2,0,1000,1449,0); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2085,0,0,50,1450,18); -- Jadeshell
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2540"; -- Goblin
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2540,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2540,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2540,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2540,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2540,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1297,21 +1297,21 @@ REPLACE INTO `mob_droplist` VALUES (2540,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2540,2,0,1000,1449,0); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2540,0,0,1000,1452,150); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "2545"; -- Orc
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2545,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2545,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2545,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2545,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1320,21 +1320,21 @@ REPLACE INTO `mob_droplist` VALUES (2545,1,1,100,15116,67);  -- SMN Hands
 REPLACE INTO `mob_droplist` VALUES (2545,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2545,2,0,1000,1452,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "2555"; -- Quadav
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2555,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2555,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2555,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2555,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1343,21 +1343,21 @@ REPLACE INTO `mob_droplist` VALUES (2555,1,1,100,15116,67);  -- SMN Hands
 REPLACE INTO `mob_droplist` VALUES (2555,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (2555,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "2550"; -- Yagudo
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15102,66);  -- WAR Hands
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15118,66);  -- MNK Legs
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15074,66);  -- WHM Head
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15105,66);  -- BLM Hands
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15106,66);  -- RDM Hands
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15092,67);  -- THF Body
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15108,67);  -- PLD Hands
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15109,67);  -- DRK Hands
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15095,67);  -- BST Body
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15081,67);  -- BRD Head
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15127,67);  -- RNG Legs
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15128,67);  -- SAM Legs
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15144,67);  -- NIN Feet
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15145,67);  -- DRG Feet
-REPLACE INTO `mob_droplist` VALUES (2550,1,1,100,15116,67);  -- SMN Hands
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15102,66);  -- WAR Hands
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15118,66);  -- MNK Legs
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15074,66);  -- WHM Head
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15105,66);  -- BLM Hands
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15106,66);  -- RDM Hands
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15092,67);  -- THF Body
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15108,67);  -- PLD Hands
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15109,67);  -- DRK Hands
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15095,67);  -- BST Body
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15081,67);  -- BRD Head
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15127,67);  -- RNG Legs
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15128,67);  -- SAM Legs
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15144,67);  -- NIN Feet
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15145,67);  -- DRG Feet
+REPLACE INTO `mob_droplist` VALUES (2550,1,1,200,15116,67);  -- SMN Hands
 -- REPLACE INTO `mob_droplist` VALUES (2550,1,2,100,16346,200); -- BLU Legs  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2550,1,2,100,15028,200); -- COR Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2550,1,2,100,11388,200); -- PUP Feet  (Comment in for ToAU)
@@ -1367,21 +1367,21 @@ REPLACE INTO `mob_droplist` VALUES (2550,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2550,2,0,1000,1449,0); -- Whiteshell
 --           Nightmare           --
 DELETE FROM `mob_droplist` WHERE dropid = "1789"; -- Bunny/Mandragora
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1789,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1789,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1789,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1789,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1789,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1393,21 +1393,21 @@ REPLACE INTO `mob_droplist` VALUES (1789,1,3,50,15482,500); -- BRD Back
 REPLACE INTO `mob_droplist` VALUES (1789,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1789,2,0,1000,1452,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "1805"; -- Cockatrice
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1805,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1805,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1805,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1805,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1805,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1421,21 +1421,21 @@ REPLACE INTO `mob_droplist` VALUES (1805,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1805,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1805,2,0,1000,1452,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "1791"; -- Crab
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1791,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1791,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1791,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1791,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1791,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1447,21 +1447,21 @@ REPLACE INTO `mob_droplist` VALUES (1791,1,3,50,15878,334); -- DRG Waist
 REPLACE INTO `mob_droplist` VALUES (1791,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1791,2,0,1000,1449,0); -- Whiteshell
 DELETE FROM `mob_droplist` WHERE dropid = "1798"; -- Crawler
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1798,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1798,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1798,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1798,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1798,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1474,21 +1474,21 @@ REPLACE INTO `mob_droplist` VALUES (1798,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1798,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1798,2,0,1000,1449,0); -- Whiteshell
 DELETE FROM `mob_droplist` WHERE dropid = "2796"; -- Dhalmel
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2796,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2796,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (2796,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2796,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2796,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1500,21 +1500,21 @@ REPLACE INTO `mob_droplist` VALUES (2796,1,3,50,15871,500); -- WAR Waist
 REPLACE INTO `mob_droplist` VALUES (2796,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2796,2,0,1000,1449,0); -- Whiteshell
 DELETE FROM `mob_droplist` WHERE dropid = "2795"; -- Eft
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (2795,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (2795,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (2795,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2795,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2795,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1525,21 +1525,21 @@ REPLACE INTO `mob_droplist` VALUES (2795,1,3,50,15481,500); -- PLD Back
 REPLACE INTO `mob_droplist` VALUES (2795,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2795,2,0,1000,1452,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "1788"; -- Raven
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1788,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1788,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1788,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1788,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1788,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1551,21 +1551,21 @@ REPLACE INTO `mob_droplist` VALUES (1788,1,3,50,15876,500); -- RNG Waist
 REPLACE INTO `mob_droplist` VALUES (1788,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (1788,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "1787"; -- Scorpion
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1787,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1787,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1787,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1787,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1787,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1576,21 +1576,21 @@ REPLACE INTO `mob_droplist` VALUES (1787,1,3,50,15876,500); -- RNG Waist
 REPLACE INTO `mob_droplist` VALUES (1787,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1787,2,0,1000,1449,0); -- Whiteshell
 DELETE FROM `mob_droplist` WHERE dropid = "1785"; -- Uragnite
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2035,66);  -- WAR -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2040,66);  -- MNK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2045,66);  -- WHM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2050,66);  -- BLM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2055,66);  -- RDM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2060,67);  -- THF -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2065,67);  -- PLD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2070,67);  -- DRK -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2075,67);  -- BST -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2080,67);  -- BRD -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2085,67);  -- RNG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2090,67);  -- SAM -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2095,67);  -- NIN -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2100,67);  -- DRG -1 Hands
-REPLACE INTO `mob_droplist` VALUES (1785,1,1,100,2105,67);  -- SMN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2035,66);  -- WAR -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2040,66);  -- MNK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2045,66);  -- WHM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2050,66);  -- BLM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2055,66);  -- RDM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2060,67);  -- THF -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2065,67);  -- PLD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2070,67);  -- DRK -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2075,67);  -- BST -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2080,67);  -- BRD -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2085,67);  -- RNG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2090,67);  -- SAM -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2095,67);  -- NIN -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2100,67);  -- DRG -1 Hands
+REPLACE INTO `mob_droplist` VALUES (1785,1,1,200,2105,67);  -- SMN -1 Hands
 -- REPLACE INTO `mob_droplist` VALUES (1785,1,2,100,2664,333); -- BLU -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1785,1,2,100,2669,333); -- COR -1 Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1785,1,2,100,2674,334); -- PUP -1 Hands (Comment in for ToAU)
@@ -1630,21 +1630,21 @@ REPLACE INTO `mob_droplist` VALUES (112,0,0,1000,1450,19); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (112,0,0,1000,1453,19); -- Montiont Silverpiece
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "3131"; -- NMs
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2037,66);  -- WAR -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2042,66);  -- MNK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2047,66);  -- WHM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2052,66);  -- BLM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2057,66);  -- RDM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2062,67);  -- THF -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2067,67);  -- PLD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2072,67);  -- DRK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2077,67);  -- BST -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2082,67);  -- BRD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2087,67);  -- RNG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2092,67);  -- SAM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2097,67);  -- NIN -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2102,67);  -- DRG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (3131,1,1,100,2107,67);  -- SMN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2037,66);  -- WAR -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2042,66);  -- MNK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2047,66);  -- WHM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2052,66);  -- BLM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2057,66);  -- RDM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2062,67);  -- THF -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2067,67);  -- PLD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2072,67);  -- DRK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2077,67);  -- BST -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2082,67);  -- BRD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2087,67);  -- RNG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2092,67);  -- SAM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2097,67);  -- NIN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2102,67);  -- DRG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (3131,1,1,200,2107,67);  -- SMN -1 Feet
 -- REPLACE INTO `mob_droplist` VALUES (3131,1,2,100,2666,333); -- BLU -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3131,1,2,100,2671,333); -- COR -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (3131,1,2,100,2676,334); -- PUP -1 Feet (Comment in for ToAU)
@@ -1658,21 +1658,21 @@ REPLACE INTO `mob_droplist` VALUES (3131,1,3,50,1450,334); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (3131,1,3,50,1453,333); -- Montiont Silverpiece
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2541"; -- Goblin
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15072,66);  -- WAR Head
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15103,66);  -- MNK Hands
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15119,66);  -- WHM Legs
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15120,66);  -- BLM Legs
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15121,66);  -- RDM Legs
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15137,67);  -- THF Feet
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15078,67);  -- PLD Head
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15124,67);  -- DRK Legs
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15125,67);  -- BST Legs
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15111,67);  -- BRD Hands
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15082,67);  -- RNG Head
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15113,67);  -- SAM Hands
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15084,67);  -- NIN Head
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15115,67);  -- DRG Hands
-REPLACE INTO `mob_droplist` VALUES (2541,1,1,100,15146,67);  -- SMN Feet
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15072,66);  -- WAR Head
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15103,66);  -- MNK Hands
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15119,66);  -- WHM Legs
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15120,66);  -- BLM Legs
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15121,66);  -- RDM Legs
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15137,67);  -- THF Feet
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15078,67);  -- PLD Head
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15124,67);  -- DRK Legs
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15125,67);  -- BST Legs
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15111,67);  -- BRD Hands
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15082,67);  -- RNG Head
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15113,67);  -- SAM Hands
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15084,67);  -- NIN Head
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15115,67);  -- DRG Hands
+REPLACE INTO `mob_droplist` VALUES (2541,1,1,200,15146,67);  -- SMN Feet
 -- REPLACE INTO `mob_droplist` VALUES (2541,1,2,100,15025,333); -- BLU Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2541,1,2,100,11385,333); -- COR Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2541,1,2,100,15031,334); -- PUP Hands (Comment in for ToAU)
@@ -1683,21 +1683,21 @@ REPLACE INTO `mob_droplist` VALUES (2541,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2541,2,0,1000,1449,0); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2541,0,0,1000,1452,150); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "2546"; -- Orc
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15072,66);  -- WAR Head
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15103,66);  -- MNK Hands
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15119,66);  -- WHM Legs
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15120,66);  -- BLM Legs
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15121,66);  -- RDM Legs
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15137,67);  -- THF Feet
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15078,67);  -- PLD Head
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15124,67);  -- DRK Legs
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15125,67);  -- BST Legs
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15111,67);  -- BRD Hands
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15082,67);  -- RNG Head
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15113,67);  -- SAM Hands
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15084,67);  -- NIN Head
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15115,67);  -- DRG Hands
-REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15146,67);  -- SMN Feet
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15072,66);  -- WAR Head
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15103,66);  -- MNK Hands
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15119,66);  -- WHM Legs
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15120,66);  -- BLM Legs
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15121,66);  -- RDM Legs
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15137,67);  -- THF Feet
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15078,67);  -- PLD Head
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15124,67);  -- DRK Legs
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15125,67);  -- BST Legs
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15111,67);  -- BRD Hands
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15082,67);  -- RNG Head
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15113,67);  -- SAM Hands
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15084,67);  -- NIN Head
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15115,67);  -- DRG Hands
+REPLACE INTO `mob_droplist` VALUES (2546,1,1,200,15146,67);  -- SMN Feet
 -- REPLACE INTO `mob_droplist` VALUES (2546,1,2,100,15025,333); -- BLU Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2546,1,2,100,11385,333); -- COR Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2546,1,2,100,15031,334); -- PUP Hands (Comment in for ToAU)
@@ -1706,21 +1706,21 @@ REPLACE INTO `mob_droplist` VALUES (2546,1,1,100,15146,67);  -- SMN Feet
 REPLACE INTO `mob_droplist` VALUES (2546,0,0,1000,1449,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (2546,2,0,1000,1449,0); -- Bronzepiece
 DELETE FROM `mob_droplist` WHERE dropid = "2556"; -- Quadav
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15072,66);  -- WAR Head
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15103,66);  -- MNK Hands
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15119,66);  -- WHM Legs
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15120,66);  -- BLM Legs
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15121,66);  -- RDM Legs
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15137,67);  -- THF Feet
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15078,67);  -- PLD Head
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15124,67);  -- DRK Legs
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15125,67);  -- BST Legs
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15111,67);  -- BRD Hands
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15082,67);  -- RNG Head
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15113,67);  -- SAM Hands
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15084,67);  -- NIN Head
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15115,67);  -- DRG Hands
-REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15146,67);  -- SMN Feet
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15072,66);  -- WAR Head
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15103,66);  -- MNK Hands
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15119,66);  -- WHM Legs
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15120,66);  -- BLM Legs
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15121,66);  -- RDM Legs
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15137,67);  -- THF Feet
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15078,67);  -- PLD Head
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15124,67);  -- DRK Legs
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15125,67);  -- BST Legs
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15111,67);  -- BRD Hands
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15082,67);  -- RNG Head
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15113,67);  -- SAM Hands
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15084,67);  -- NIN Head
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15115,67);  -- DRG Hands
+REPLACE INTO `mob_droplist` VALUES (2556,1,1,200,15146,67);  -- SMN Feet
 -- REPLACE INTO `mob_droplist` VALUES (2556,1,2,100,15025,333); -- BLU Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2556,1,2,100,11385,333); -- COR Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2556,1,2,100,15031,334); -- PUP Hands (Comment in for ToAU)
@@ -1729,21 +1729,21 @@ REPLACE INTO `mob_droplist` VALUES (2556,1,1,100,15146,67);  -- SMN Feet
 REPLACE INTO `mob_droplist` VALUES (2556,0,0,1000,1455,150); -- Byne Bill
 REPLACE INTO `mob_droplist` VALUES (2556,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "2551"; -- Yagudo
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15072,66);  -- WAR Head
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15103,66);  -- MNK Hands
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15119,66);  -- WHM Legs
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15120,66);  -- BLM Legs
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15121,66);  -- RDM Legs
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15137,67);  -- THF Feet
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15078,67);  -- PLD Head
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15124,67);  -- DRK Legs
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15125,67);  -- BST Legs
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15111,67);  -- BRD Hands
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15082,67);  -- RNG Head
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15113,67);  -- SAM Hands
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15084,67);  -- NIN Head
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15115,67);  -- DRG Hands
-REPLACE INTO `mob_droplist` VALUES (2551,1,1,100,15146,67);  -- SMN Feet
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15072,66);  -- WAR Head
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15103,66);  -- MNK Hands
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15119,66);  -- WHM Legs
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15120,66);  -- BLM Legs
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15121,66);  -- RDM Legs
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15137,67);  -- THF Feet
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15078,67);  -- PLD Head
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15124,67);  -- DRK Legs
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15125,67);  -- BST Legs
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15111,67);  -- BRD Hands
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15082,67);  -- RNG Head
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15113,67);  -- SAM Hands
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15084,67);  -- NIN Head
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15115,67);  -- DRG Hands
+REPLACE INTO `mob_droplist` VALUES (2551,1,1,200,15146,67);  -- SMN Feet
 -- REPLACE INTO `mob_droplist` VALUES (2551,1,2,100,15025,333); -- BLU Hands (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2551,1,2,100,11385,333); -- COR Feet  (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (2551,1,2,100,15031,334); -- PUP Hands (Comment in for ToAU)
@@ -1753,21 +1753,21 @@ REPLACE INTO `mob_droplist` VALUES (2551,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (2551,2,0,1000,1449,0); -- Whiteshell
 --           Nightmare           --
 DELETE FROM `mob_droplist` WHERE dropid = "1793"; -- Gaylas/Kraken/Raptor/Roc
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2037,66);  -- WAR -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2042,66);  -- MNK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2047,66);  -- WHM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2052,66);  -- BLM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2057,66);  -- RDM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2062,67);  -- THF -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2067,67);  -- PLD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2072,67);  -- DRK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2077,67);  -- BST -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2082,67);  -- BRD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2087,67);  -- RNG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2092,67);  -- SAM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2097,67);  -- NIN -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2102,67);  -- DRG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1793,1,1,100,2107,67);  -- SMN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2037,66);  -- WAR -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2042,66);  -- MNK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2047,66);  -- WHM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2052,66);  -- BLM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2057,66);  -- RDM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2062,67);  -- THF -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2067,67);  -- PLD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2072,67);  -- DRK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2077,67);  -- BST -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2082,67);  -- BRD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2087,67);  -- RNG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2092,67);  -- SAM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2097,67);  -- NIN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2102,67);  -- DRG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1793,1,1,200,2107,67);  -- SMN -1 Feet
 -- REPLACE INTO `mob_droplist` VALUES (1793,1,2,100,2666,333); -- BLU -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1793,1,2,100,2671,333); -- COR -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1793,1,2,100,2676,334); -- PUP -1 Feet (Comment in for ToAU)
@@ -1785,21 +1785,21 @@ REPLACE INTO `mob_droplist` VALUES (1793,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1793,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1793,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "1803"; -- Snoll
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2037,66);  -- WAR -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2042,66);  -- MNK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2047,66);  -- WHM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2052,66);  -- BLM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2057,66);  -- RDM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2062,67);  -- THF -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2067,67);  -- PLD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2072,67);  -- DRK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2077,67);  -- BST -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2082,67);  -- BRD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2087,67);  -- RNG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2092,67);  -- SAM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2097,67);  -- NIN -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2102,67);  -- DRG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1803,1,1,100,2107,67);  -- SMN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2037,66);  -- WAR -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2042,66);  -- MNK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2047,66);  -- WHM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2052,66);  -- BLM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2057,66);  -- RDM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2062,67);  -- THF -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2067,67);  -- PLD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2072,67);  -- DRK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2077,67);  -- BST -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2082,67);  -- BRD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2087,67);  -- RNG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2092,67);  -- SAM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2097,67);  -- NIN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2102,67);  -- DRG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1803,1,1,200,2107,67);  -- SMN -1 Feet
 -- REPLACE INTO `mob_droplist` VALUES (1803,1,2,100,2666,333); -- BLU -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1803,1,2,100,2671,333); -- COR -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1803,1,2,100,2676,334); -- PUP -1 Feet (Comment in for ToAU)
@@ -1817,21 +1817,21 @@ REPLACE INTO `mob_droplist` VALUES (1803,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1803,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1803,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "1790"; -- Diremite
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2037,66);  -- WAR -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2042,66);  -- MNK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2047,66);  -- WHM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2052,66);  -- BLM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2057,66);  -- RDM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2062,67);  -- THF -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2067,67);  -- PLD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2072,67);  -- DRK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2077,67);  -- BST -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2082,67);  -- BRD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2087,67);  -- RNG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2092,67);  -- SAM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2097,67);  -- NIN -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2102,67);  -- DRG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1790,1,1,100,2107,67);  -- SMN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2037,66);  -- WAR -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2042,66);  -- MNK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2047,66);  -- WHM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2052,66);  -- BLM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2057,66);  -- RDM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2062,67);  -- THF -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2067,67);  -- PLD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2072,67);  -- DRK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2077,67);  -- BST -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2082,67);  -- BRD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2087,67);  -- RNG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2092,67);  -- SAM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2097,67);  -- NIN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2102,67);  -- DRG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1790,1,1,200,2107,67);  -- SMN -1 Feet
 -- REPLACE INTO `mob_droplist` VALUES (1790,1,2,100,2666,333); -- BLU -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1790,1,2,100,2671,333); -- COR -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1790,1,2,100,2676,334); -- PUP -1 Feet (Comment in for ToAU)
@@ -1848,21 +1848,21 @@ REPLACE INTO `mob_droplist` VALUES (1790,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (1790,0,0,1000,1452,150); -- Bronzepiece
 REPLACE INTO `mob_droplist` VALUES (1790,2,0,1000,1455,0); -- Byne Bill
 DELETE FROM `mob_droplist` WHERE dropid = "1804"; -- Stirge/Tiger/Weapon
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2037,66);  -- WAR -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2042,66);  -- MNK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2047,66);  -- WHM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2052,66);  -- BLM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2057,66);  -- RDM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2062,67);  -- THF -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2067,67);  -- PLD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2072,67);  -- DRK -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2077,67);  -- BST -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2082,67);  -- BRD -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2087,67);  -- RNG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2092,67);  -- SAM -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2097,67);  -- NIN -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2102,67);  -- DRG -1 Feet
-REPLACE INTO `mob_droplist` VALUES (1804,1,1,100,2107,67);  -- SMN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2037,66);  -- WAR -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2042,66);  -- MNK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2047,66);  -- WHM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2052,66);  -- BLM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2057,66);  -- RDM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2062,67);  -- THF -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2067,67);  -- PLD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2072,67);  -- DRK -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2077,67);  -- BST -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2082,67);  -- BRD -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2087,67);  -- RNG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2092,67);  -- SAM -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2097,67);  -- NIN -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2102,67);  -- DRG -1 Feet
+REPLACE INTO `mob_droplist` VALUES (1804,1,1,200,2107,67);  -- SMN -1 Feet
 -- REPLACE INTO `mob_droplist` VALUES (1804,1,2,100,2666,333); -- BLU -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1804,1,2,100,2671,333); -- COR -1 Feet (Comment in for ToAU)
 -- REPLACE INTO `mob_droplist` VALUES (1804,1,2,100,2676,334); -- PUP -1 Feet (Comment in for ToAU)
@@ -2236,7 +2236,7 @@ REPLACE INTO mob_skills VALUES (1607,63,'fragrant_breath',4,15.0,2000,1500,4,0,0
 DELETE FROM mob_skills WHERE mob_skill_id = "1609"; -- Putrid Breath
 REPLACE INTO mob_skills VALUES (1609,63,'putrid_breath',4,15.0,2000,1500,4,0,0,0,0,0,0);
 DELETE FROM mob_skills WHERE mob_skill_id = "1610"; -- Extremely Bad Breath
-REPLACE INTO mob_skills VALUES (1610,63,'extremely_bad_breath',4,15.0,2000,1500,4,0,0,0,0,0,0);
+REPLACE INTO mob_skills VALUES (1610,63,'extremely_bad_breath',1,15.0,2000,1500,4,0,0,0,0,0,0);
 DELETE FROM mob_skills WHERE mob_skill_id = "1611"; -- Vampiric Lash
 REPLACE INTO mob_skills VALUES (1611,61,'vampiric_lash',1,15.0,2000,1500,4,0,0,0,0,0,0);
 DELETE FROM mob_skills WHERE mob_skill_id = "1617"; -- Blow

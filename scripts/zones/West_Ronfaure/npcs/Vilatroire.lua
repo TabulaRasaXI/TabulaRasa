@@ -77,7 +77,7 @@ entity.onEventUpdate = function(player, csid, option)
 
         -- newer versions of these quests only require a party of 2.
         -- older versions require all 6
-        local partySizeRequirement = 6
+        local partySizeRequirement = 2
 
         local party = player:getParty()
         local pRace = player:getRace()
@@ -204,4 +204,5 @@ entity.onEventFinish = function(player, csid, option)
         player:addQuest(xi.quest.log_id.SANDORIA, xi.quest.id.sandoria.INTRODUCTION_TO_TEAMWORK)
     end
 end
+
 return entity

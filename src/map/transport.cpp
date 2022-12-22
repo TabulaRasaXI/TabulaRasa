@@ -128,7 +128,7 @@ void CTransportHandler::InitializeTransport()
                             boundary, zone, anim_arrive, anim_depart, time_offset, time_interval, \
                             time_waiting, time_anim_arrive, time_anim_depart, anim_path FROM transport LEFT JOIN \
                             zone_settings ON ((transport >> 12) & 0xFFF) = zoneid WHERE \
-                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
+                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) and zoneid not in (2);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);
@@ -439,6 +439,31 @@ void CTransportHandler::TransportTimer()
                         case 12:
                             zoneIterator->voyageZone->SetZoneAnimation(8);
                             zoneIterator->voyageZone->SetZoneAnimLength(590);
+                            break;
+                    }
+                }
+                else if (zoneId == ZONE_PHANAUET_CHANNEL)
+                {
+                    uint32 hour = CVanaTime::getInstance()->getHour();
+                    switch (hour)
+                    {
+                        case 5:
+                            [[fallthrough]];
+                        case 20:
+                            zoneIterator->voyageZone->SetZoneAnimation(0);
+                            zoneIterator->voyageZone->SetZoneAnimLength(540);
+                            break;
+                        case 10:
+                            zoneIterator->voyageZone->SetZoneAnimation(16);
+                            zoneIterator->voyageZone->SetZoneAnimLength(840);
+                            break;
+                        case 17:
+                            zoneIterator->voyageZone->SetZoneAnimation(24);
+                            zoneIterator->voyageZone->SetZoneAnimLength(270);
+                            break;
+                        case 0:
+                            zoneIterator->voyageZone->SetZoneAnimation(8);
+                            zoneIterator->voyageZone->SetZoneAnimLength(540);
                             break;
                     }
                 }

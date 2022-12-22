@@ -220,7 +220,7 @@ xi.job_utils.dragoon.useSpiritSurge = function(player, target, ability)
 
     -- Spirit Surge increases dragoon's MAX HP increases by 25% of wyvern MaxHP
     -- bg wiki says 25% ffxiclopedia says 15%, going with 25 for now
-    local mhp_boost = target:getPet():getMaxHP() * 0.25
+    local maxHPBoost = target:getPet():getMaxHP() * 0.25
 
     -- Dragoon gets all of wyverns TP when using Spirit Surge
     target:addTP(petTP)
@@ -236,7 +236,7 @@ xi.job_utils.dragoon.useSpiritSurge = function(player, target, ability)
     target:resetRecast(xi.recast.ABILITY, 159) -- High Jump
     target:resetRecast(xi.recast.ABILITY, 160) -- Super Jump
 
-    target:addStatusEffect(xi.effect.SPIRIT_SURGE, mhp_boost, 0, duration, 0, strBoost)
+    target:addStatusEffect(xi.effect.SPIRIT_SURGE, maxHPBoost, 0, duration, 0, strBoost)
 end
 
 xi.job_utils.dragoon.useCallWyvern = function(player, target, ability)
@@ -348,8 +348,6 @@ end
 xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
     local wyvern = player:getPet()
     local playerHP = player:getHP()
-    local petTP = wyvern:getTP()
-    local regenAmount = player:getMainLvl() / 3 -- level/3 tic regen
 
     checkForRemovableEffectsOnSpiritLink(player, wyvern)
 
@@ -393,13 +391,6 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
         end
     end
 
-    if xi.settings.main.ENABLE_ABYSSEA == 1 then
-        player:addTP(petTP / 2) -- add half wyvern tp to you
-    end
-
-    wyvern:addStatusEffect(xi.effect.REGEN, regenAmount, 3, 90, 0, 0, 0) -- 90 seconds of regen
-    wyvern:delTP(petTP / 2) -- remove half tp from wyvern
-
     local drainamount = (math.random(25, 35) / 100) * playerHP
     local jpValue = player:getJobPointLevel(xi.jp.SPIRIT_LINK_EFFECT)
 
@@ -419,7 +410,6 @@ xi.job_utils.dragoon.useSpiritLink = function(player, target, ability)
                 local effect = player:getStatusEffect(xi.effect.STONESKIN)
                 effect:setPower(effect:getPower() - drainamount) -- fixes the status effect so when it ends it uses the new power instead of old
                 player:delMod(xi.mod.STONESKIN, drainamount) -- removes the amount from the mod
-
             end
         else
             player:delStatusEffect(xi.effect.STONESKIN)
@@ -593,10 +583,10 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
     local healingBreathTable =
     {
         --                                   { base, multiplier }
-        [xi.jobAbility.HEALING_BREATH]     = {  8, 35 },
-        [xi.jobAbility.HEALING_BREATH_II]  = { 24, 48 },
-        [xi.jobAbility.HEALING_BREATH_III] = { 42, 55 },
-        [xi.jobAbility.HEALING_BREATH_IV]  = { 60, 63 },
+        [xi.jobAbility.HEALING_BREATH]     = {  8, 25 },
+        [xi.jobAbility.HEALING_BREATH_II]  = { 24, 38 },
+        [xi.jobAbility.HEALING_BREATH_III] = { 42, 45 },
+        [xi.jobAbility.HEALING_BREATH_IV]  = { 60, 53 },
     }
 
     local master = wyvern:getMaster()
@@ -620,7 +610,7 @@ xi.job_utils.dragoon.useHealingBreath = function(wyvern, target, skill, action)
     local baseMultiplier = healingBreathTable[skill:getID()][2]
 
     -- gear cap of 64/256 in multiplier
-    local multiplier = (baseMultiplier + math.min(gear, 64) + math.floor(deepMult)) / 256
+    local multiplier = (baseMultiplier + math.min(gear, 64) + math.floor(deepMult) + (math.floor(wyvern:getTP() / 200) / 1.165)) / 256
     local curePower = math.floor(wyvern:getMaxHP() * multiplier) + base + jobPointBonus * breathAugmentsBonus
     local totalHPRestored = target:addHP(curePower)
 
@@ -746,15 +736,24 @@ xi.job_utils.dragoon.pickAndUseDamageBreath = function(player, target)
     }
 
     local lowest = resistances[1]
-    local breath = breathList[1]
+    local breath = breathList[math.random(#breathList)]
+    local head = player:getEquippedItem(xi.slot.HEAD)
 
-    -- https://www.bg-wiki.com/ffxi/Wyvern_(Dragoon_Pet)#Elemental_Breath
-    -- The wyvern simply picks the lowest resistance breath and no longer relies on Drachen Armet et al
-    -- if all resistances are equal, Flame Breath is picked first.
-    for i, v in ipairs(breathList) do
-        if resistances[i] < lowest then
-            lowest = resistances[i]
-            breath = v
+    -- https://ffxiclopedia.fandom.com/wiki/Drachen_Armet?oldid=965925
+    -- https://ffxiclopedia.fandom.com/wiki/Elemental_Breath?oldid=738854
+    -- The wyvern picks breath based on the lowest resistance if the player has Drachen Armet equipped.
+    -- If all resistances are equal, a random breath is used.
+    -- However there innately exists a chance where wyvern use breath based on weakness.
+    if
+        head == xi.items.DRACHEN_ARMET or
+        head == xi.items.DRACHEN_ARMET_P1 or
+        math.random() < 0.5
+    then
+        for i, v in ipairs(breathList) do
+            if resistances[i] < lowest then
+                lowest = resistances[i]
+                breath = v
+            end
         end
     end
 
@@ -765,7 +764,7 @@ xi.job_utils.dragoon.useRestoringBreath = function(player, ability, action)
     local wyvern = player:getPet()
 
     local healingbreath = xi.jobAbility.HEALING_BREATH
-    local breath_heal_range = 14
+    local breathHealRange = 14
 
     if player:getMainLvl() >= 80 then
         healingbreath = xi.jobAbility.HEALING_BREATH_IV
@@ -776,7 +775,7 @@ xi.job_utils.dragoon.useRestoringBreath = function(player, ability, action)
     end
 
     local function inBreathRange(target)
-        return wyvern:checkDistance(target) <= breath_heal_range
+        return wyvern:checkDistance(target) <= breathHealRange
     end
 
     local highestHPDiff = -1

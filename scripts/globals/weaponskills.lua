@@ -1,3 +1,4 @@
+-----------------------------------
 -- Contains all common weaponskill calculations including but not limited to:
 -- fSTR
 -- Alpha
@@ -8,6 +9,7 @@
 -- applications of accuracy mods ('Accuracy varies with TP.')
 -- applications of damage mods ('Damage varies with TP.')
 -- performance of the actual WS (rand numbers, etc)
+-----------------------------------
 require("scripts/globals/magicburst")
 require("scripts/globals/magiantrials")
 require("scripts/globals/ability")
@@ -17,6 +19,7 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
 require("scripts/globals/damage")
+-----------------------------------
 
 xi = xi or { }
 xi.weaponskills = xi.weaponskills or { }
@@ -236,7 +239,11 @@ xi.weaponskills.getRangedHitRate = function(attacker, target, capHitRate, bonus,
         bonus = 0
     end
 
-    if wsParams and wsParams.acc100 ~= 0 then
+    local acc100 = (wsParams and wsParams.acc100) or 0
+    local acc200 = (wsParams and wsParams.acc200) or 0
+    local acc300 = (wsParams and wsParams.acc300) or 0
+
+    if acc100 ~= 0 and acc200 ~= 0 and acc300 ~= 0 then
         if calcParams.tp >= 3000 then
             accVarryTP = (wsParams.acc300 - 1) * 100
         elseif calcParams.tp >= 2000 then
@@ -333,7 +340,6 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
                 end
 
                 finaldmg = finaldmg + magicdmg
-
             end
 
             calcParams.hitsLanded = calcParams.hitsLanded + 1
@@ -732,7 +738,8 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
         ['type'] = xi.attackType.RANGED,
         ['slot'] = xi.slot.RANGED,
         ['weaponType'] = attacker:getWeaponSkillType(xi.slot.RANGED),
-        ['damageType'] = attacker:getWeaponDamageType(xi.slot.RANGED)
+        ['damageType'] = attacker:getWeaponDamageType(xi.slot.RANGED),
+        ['attackType'] = xi.attackType.RANGED,
     }
 
     local calcParams =
@@ -792,7 +799,8 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
         ['type'] = xi.attackType.MAGICAL,
         ['slot'] = xi.slot.MAIN,
         ['weaponType'] = attacker:getWeaponSkillType(xi.slot.MAIN),
-        ['damageType'] = xi.damageType.ELEMENTAL + wsParams.element
+        ['damageType'] = xi.damageType.ELEMENTAL + wsParams.element,
+        ['attackType'] = xi.attackType.MAGICAL,
     }
 
     local calcParams =
@@ -945,7 +953,7 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         wsResults.extraHitsLanded = 0
     end
 
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult)
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, attack.type, attack.damageType, attack.slot, primaryMsg, wsResults.tpHitsLanded * attackerTPMult, (wsResults.extraHitsLanded * 10) + wsResults.bonusTP, targetTPMult, attack.damageType == xi.attackType.MAGICAL)
     if wsResults.tpHitsLanded + wsResults.extraHitsLanded > 0 then
         if finaldmg >= 0 then
             action:param(defender:getID(), math.abs(finaldmg))
@@ -1002,7 +1010,11 @@ xi.weaponskills.getHitRate = function(attacker, target, capHitRate, bonus, isSub
     local flourisheffect = attacker:getStatusEffect(xi.effect.BUILDING_FLOURISH)
     local accVarryTP = 0
 
-    if wsParams and wsParams.acc100 ~= 0 then
+    local acc100 = (wsParams and wsParams.acc100) or 0
+    local acc200 = (wsParams and wsParams.acc200) or 0
+    local acc300 = (wsParams and wsParams.acc300) or 0
+
+    if acc100 ~= 0 and acc200 ~= 0 and acc300 ~= 0 then
         if calcParams.tp >= 3000 then
             accVarryTP = wsParams.acc300 - 1
         elseif calcParams.tp >= 2000 then
@@ -1079,7 +1091,7 @@ xi.weaponskills.cMeleeRatio = function(attacker, defender, params, ignoredDef, t
     local atkmulti = 0
 
     if params.atk150 ~= nil then -- Use mob fTP
-        atkmulti = 1 -- Temp fix in prep for re-write. Always set multi to 1.
+        atkmulti = xi.weaponskills.fTP(tp, params.atk000, params.atk150, params.atk300) -- Calculates attack modifier for mobs
     else -- Use player fTP to scale the attack modifier
         atkmulti = xi.weaponskills.fTP(tp, params.atk100, params.atk200, params.atk300)
     end
@@ -1158,37 +1170,47 @@ local function calculateRawfSTR(dSTR, divisor)
 end
 
 -- Given the attacker's str and the mob's vit, fSTR is calculated (for melee WS)
-xi.weaponskills.fSTR = function(atk_str, def_vit, weapon_rank)
+xi.weaponskills.fSTR = function(atk_str, def_vit, weaponRank)
     local dSTR = atk_str - def_vit
     local fSTR = calculateRawfSTR(dSTR, 4)
 
     -- Apply fSTR caps.
-    local lower_cap = weapon_rank * -1
-    if weapon_rank == 0 then
-        lower_cap = -1
+    local lowerCap = weaponRank * -1
+    if weaponRank == 0 then
+        lowerCap = -1
     end
 
-    fSTR = utils.clamp(fSTR, lower_cap, weapon_rank + 8)
+    fSTR = utils.clamp(fSTR, lowerCap, weaponRank + 8)
 
     return fSTR
 end
 
 -- Given the attacker's str and the mob's vit, fSTR2 is calculated (for ranged WS)
-xi.weaponskills.fSTR2 = function(atk_str, def_vit, weapon_rank)
+xi.weaponskills.fSTR2 = function(atk_str, def_vit, weaponRank)
     local dSTR = atk_str - def_vit
     local fSTR2 = calculateRawfSTR(dSTR, 2)
 
     -- Apply fSTR2 caps.
-    local lower_cap = weapon_rank * -2
-    if weapon_rank == 0 then
-        lower_cap = -2
-    elseif weapon_rank == 1 then
-        lower_cap = -3
+    local lowerCap = weaponRank * -2
+    if weaponRank == 0 then
+        lowerCap = -2
+    elseif weaponRank == 1 then
+        lowerCap = -3
     end
 
-    fSTR2 = utils.clamp(fSTR2, lower_cap, (weapon_rank + 8) * 2)
+    fSTR2 = utils.clamp(fSTR2, lowerCap, (weaponRank + 8) * 2)
 
     return fSTR2
+end
+
+xi.weaponskills.generatePdif = function(cratiomin, cratiomax, melee)
+    local pdif = math.random(cratiomin * 1000, cratiomax * 1000) / 1000
+
+    if melee then
+        pdif = pdif * (math.random(100, 105) / 100)
+    end
+
+    return pdif
 end
 
 xi.weaponskills.getStepAnimation = function(skill)

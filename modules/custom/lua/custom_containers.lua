@@ -29,10 +29,8 @@ m:addOverride("xi.player.onGameIn", function(player, firstLogin, zoning)
     player:changeContainerSize(xi.inv.MOGSACK, - sack)
     player:changeContainerSize(xi.inv.MOGCASE, - case)
     player:changeContainerSize(xi.inv.MOGSAFE2, 80)
-    if player:getRank(player:getNation()) >= 8 then
-        player:changeContainerSize(xi.inv.WARDROBE2, 80)
-    end
-    player:changeContainerSize(xi.inv.WARDROBE3, - wardrobe3)
+    player:changeContainerSize(xi.inv.WARDROBE2, 80)
+    player:changeContainerSize(xi.inv.WARDROBE3, 80)
     player:changeContainerSize(xi.inv.WARDROBE4, - wardrobe4)
     player:changeContainerSize(xi.inv.WARDROBE5, - wardrobe5)
     player:changeContainerSize(xi.inv.WARDROBE6, - wardrobe6)

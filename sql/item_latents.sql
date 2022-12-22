@@ -308,7 +308,7 @@ INSERT INTO `item_latents` VALUES (13143,368,25,13,193);
 -- -------------------------------------------------------
 -- Uggalepih Pendant
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13145,28,8,4,51);     -- "Magic Atk. Bonus" while MP <51%
+INSERT INTO `item_latents` VALUES (13145,28,8,45,51);     -- "Magic Atk. Bonus" while MP <51%
 
 -- Brisingamen+1 stats need to be found on retail so they can be corrected
 INSERT INTO `item_latents` VALUES (13162,2,10,26,0);     -- Daytime: HP +10 (needs HQ stats)
@@ -395,7 +395,7 @@ INSERT INTO `item_latents` VALUES (13288,374,10,2,75);   -- "Cure" potency +10% 
 -- -------------------------------------------------------
 -- Sorcerer's Ring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13289,28,10,2,76);    -- "Magic Atk. Bonus"+10 while HP <76% and TP <100%
+INSERT INTO `item_latents` VALUES (13289,28,10,44,76);    -- "Magic Atk. Bonus"+10 while HP <76% and TP <100%
 
 -- -------------------------------------------------------
 -- Fencer's Ring
@@ -439,7 +439,7 @@ INSERT INTO `item_latents` VALUES (13294,238,3,2,75);    -- Enhances "Luminion K
 -- -------------------------------------------------------
 -- Minstrel's Ring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13295,455,-25,2,75);  -- "Shield Bash"+10 while HP <=75% and TP <=100%
+INSERT INTO `item_latents` VALUES (13295,455,25,2,75);  -- Song Spellcast -25% while HP <=75% and TP <=100%
 
 -- -------------------------------------------------------
 -- Tracker's Ring
@@ -464,7 +464,7 @@ INSERT INTO `item_latents` VALUES (13299,361,10,2,75);   -- Enhances "Jump" effe
 -- -------------------------------------------------------
 -- Conjurer's Ring
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (13300,346,1,2,75);    -- Avatar perpetuation cost -1 while HP <=75% and TP <=100%
+INSERT INTO `item_latents` VALUES (13300,346,1,44,75);    -- Avatar perpetuation cost -1 while HP <=75% and TP <=100%
 
 -- -------------------------------------------------------
 -- Fenrir's Earring
@@ -1625,7 +1625,7 @@ INSERT INTO `item_latents` VALUES (15504,25,3,53,0);     -- ACC +3 in areas insi
 -- -------------------------------------------------------
 -- Parade Gorget
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (15506,369,1,1,85);    -- Refresh when HP >=85%
+INSERT INTO `item_latents` VALUES (15506,369,1,46,85);    -- Refresh when HP >=85%
 
 -- -------------------------------------------------------
 -- Diabolos's Torque
