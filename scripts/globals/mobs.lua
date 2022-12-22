@@ -82,6 +82,7 @@ xi.mob.nmTODPersist = function(mob, cooldown)
     end
 
     UpdateNMSpawnPoint(mob:getID())
+
     mob:setRespawnTime(cooldown)
 end
 
@@ -92,16 +93,18 @@ xi.mob.nmTODPersistCache = function(zone, mobId)
         local respawn = GetServerVariable(string.format("[SPAWN]%s", mobId))
         zone:setLocalVar(string.format("[SPAWN]%s", mobId), respawn)
 
-        if mob:isAlive() then
+        if mob then
             DespawnMob(mobId)
-        end
 
-        UpdateNMSpawnPoint(mobId)
+            if CheckNMSpawnPoint(mobId) then
+                UpdateNMSpawnPoint(mobId)
+            end
 
-        if respawn <= os.time() then
-            mob:setRespawnTime(10)
-        else
-            mob:setRespawnTime(respawn - os.time())
+            if respawn <= os.time() then
+                mob:setRespawnTime(10)
+            else
+                mob:setRespawnTime(respawn - os.time())
+            end
         end
     end
 end
@@ -362,7 +365,9 @@ local additionalEffects =
         msg                = xi.msg.basic.ADD_EFFECT_HP_DRAIN,
         mod                = xi.mod.INT,
         bonusAbilityParams = { bonusmab = 0, includemab = false },
-        code               = function(mob, target, power) mob:addHP(power) end,
+        code               = function(mob, target, power)
+            mob:addHP(power)
+        end,
     },
 
     [xi.mob.ae.MP_DRAIN] =
@@ -373,7 +378,11 @@ local additionalEffects =
         msg                = xi.msg.basic.ADD_EFFECT_MP_DRAIN,
         mod                = xi.mod.INT,
         bonusAbilityParams = { bonusmab = 0, includemab = false },
-        code               = function(mob, target, power) local mp = math.min(power, target:getMP()) target:delMP(mp) mob:addMP(mp) end,
+        code               = function(mob, target, power)
+            local mp = math.min(power, target:getMP())
+            target:delMP(mp)
+            mob:addMP(mp)
+        end,
     },
 
     [xi.mob.ae.PARALYZE] =
@@ -480,7 +489,9 @@ local additionalEffects =
         applyEffect = true,
         eff         = xi.effect.TERROR,
         duration    = 5,
-        code        = function(mob, target, power) mob:resetEnmity(target) end,
+        code        = function(mob, target, power)
+            mob:resetEnmity(target)
+        end,
     },
 
     [xi.mob.ae.TP_DRAIN] =
@@ -491,7 +502,11 @@ local additionalEffects =
         msg                = xi.msg.basic.ADD_EFFECT_TP_DRAIN,
         mod                = xi.mod.INT,
         bonusAbilityParams = { bonusmab = 0, includemab = false },
-        code               = function(mob, target, power) local tp = math.min(power, target:getTP()) target:delTP(tp) mob:addTP(tp) end,
+        code               = function(mob, target, power)
+            local tp = math.min(power, target:getTP())
+            target:delTP(tp)
+            mob:addTP(tp)
+        end,
     },
 
     [xi.mob.ae.WEIGHT] =
@@ -543,7 +558,9 @@ local additionalEffects =
     params will override effect's default settings
 --]]
 xi.mob.onAddEffect = function(mob, target, damage, effect, params)
-    if type(params) ~= "table" then params = {} end
+    if type(params) ~= "table" then
+        params = {}
+    end
 
     local ae = additionalEffects[effect]
 
@@ -642,3 +659,21 @@ xi.mob.onAddEffect = function(mob, target, damage, effect, params)
 
     return 0, 0, 0
 end
+
+-----------------------------------
+-- mob difficulty enums for checkDifficulty()
+-----------------------------------
+
+xi.mob.difficulty =
+{
+    TOO_WEAK             = 0,
+    INCREDIBLY_EASY_PREY = 1,
+    EASY_PREY            = 2,
+    DECENT_CHALLENGE     = 3,
+    EVEN_MATCH           = 4,
+    TOUGH                = 5,
+    VERY_TOUGH           = 6,
+    INCREDIBLY_TOUGH     = 7,
+    MAX                  = 8,
+}
+xi.mob.diff = xi.mob.difficulty

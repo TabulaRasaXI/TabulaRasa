@@ -23,7 +23,6 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-
     --calculate raw damage
     --Byrthnoth @ Random Facts Thread: Magic @ BG:
     --Spell Base Damage = MAB/MDB*floor(Int + Elemental Magic Skill/6)*3.5
@@ -32,8 +31,10 @@ spellObject.onSpellCast = function(caster, target, spell)
     local dmg = 0
     if caster:isPC() then
         dmg = ((100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF))) * (caster:getStat(xi.mod.INT) + caster:getSkillLevel(xi.skill.ELEMENTAL_MAGIC) / 6) * 3.5
-    elseif caster:isMob() and caster:getName() == "Promathia" then
-        dmg = ((100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF))) * (caster:getStat(xi.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), xi.job.BLM, xi.skill.ELEMENTAL_MAGIC)) / 6) * 6
+    elseif caster:isMob() and caster:getName() == "Promathia_2" then
+        dmg = ((100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF))) * (caster:getStat(xi.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), xi.job.BLM, xi.skill.ELEMENTAL_MAGIC)) / 6) * 5
+    elseif caster:isMob() and caster:getName() == "King_Behemoth" then
+        dmg = 14 + caster:getMainLvl() * 30
     else
         dmg = ((100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF))) * (caster:getStat(xi.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), xi.job.BLM, xi.skill.ELEMENTAL_MAGIC)) / 6) * 9.4
     end
@@ -43,7 +44,6 @@ spellObject.onSpellCast = function(caster, target, spell)
     --add in final adjustments
     dmg = xi.magic.finalMagicAdjustments(caster, target, spell, dmg)
     return dmg
-
 end
 
 return spellObject

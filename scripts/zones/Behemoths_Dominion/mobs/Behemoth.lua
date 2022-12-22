@@ -14,26 +14,27 @@ entity.onMobSpawn = function(mob)
     mob:addMod(xi.mod.SLEEPRES, 90)
     mob:setMod(xi.mod.TRIPLE_ATTACK, 5)
     mob:setMod(xi.mod.MDEF, 20)
-    mob:addMod(xi.mod.EVA, 50)
+    mob:setMod(xi.mod.EVA, 315)
+    mob:setMod(xi.mod.ATT, 256)
 
     -- Despawn the ???
     GetNPCByID(ID.npc.BEHEMOTH_QM):setStatus(xi.status.DISAPPEAR)
 end
 
 entity.onMobFight = function(mob, target)
-    local drawInWait = mob:getLocalVar("DrawInWait")
+    local drawInTableNorth =
+    {
+        condition1 = target:getXPos() > -180 and target:getZPos() > 53,
+        position   = { -182.19, -19.83, 58.34, target:getRotPos() },
+    }
+    local drawInTableSouth =
+    {
+        condition1 = target:getXPos() > -230 and target:getZPos() < 5,
+        position   = { -235.35, -20.01, -4.47, target:getRotPos() },
+    }
 
-    if (target:getXPos() > -180 and target:getZPos() > 53) and os.time() > drawInWait then -- North Tunnel Draw In
-        local rot = target:getRotPos()
-        target:setPos(-182.19,-19.83,58.34,rot)
-        mob:messageBasic(232, 0, 0, target)
-        mob:setLocalVar("DrawInWait", os.time() + 2)
-    elseif (target:getXPos() > -230 and target:getZPos() < 5) and os.time() > drawInWait then  -- South Tunnel Draw In
-        local rot = target:getRotPos()
-        target:setPos(-235.35,-20.01,-4.47,rot)
-        mob:messageBasic(232, 0, 0, target)
-        mob:setLocalVar("DrawInWait", os.time() + 2)
-    end
+    utils.arenaDrawIn(mob, target, drawInTableNorth)
+    utils.arenaDrawIn(mob, target, drawInTableSouth)
 end
 
 entity.onMobDeath = function(mob, player, optParams)

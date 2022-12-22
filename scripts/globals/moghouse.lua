@@ -57,6 +57,42 @@ xi.moghouse.moghouseZones =
     xi.zone.EASTERN_ADOULIN,      -- 257
 }
 
+xi.moghouse.rentARoomTable =
+{
+    [xi.zone.NORTHERN_SAN_DORIA]   = { nation = xi.nation.SANDORIA, csbase = 594, moveroom = 595, repeatcs = 596, hasrent  = 597, needrent = 598 },
+    [xi.zone.SOUTHERN_SAN_DORIA]   = { nation = xi.nation.SANDORIA, csbase = 585, moveroom = 586, repeatcs = 587, hasrent  = 588, needrent = 589 },
+    [xi.zone.PORT_SAN_DORIA]       = { nation = xi.nation.SANDORIA, csbase = 574, moveroom = 575, repeatcs = 576, hasrent  = 577, needrent = 578 },
+    [xi.zone.WINDURST_WOODS]       = { nation = xi.nation.WINDURST, csbase = 362, repeatcs = 363, moveroom = 364, needrent = 365, hasrent  = 366 },
+    [xi.zone.WINDURST_WATERS]      = { nation = xi.nation.WINDURST, csbase = 526, repeatcs = 527, moveroom = 528, needrent = 529, hasrent  = 530 },
+    [xi.zone.WINDURST_WALLS]       = { nation = xi.nation.WINDURST, csbase = 276, repeatcs = 277, moveroom = 278, needrent = 279, hasrent  = 280 },
+    [xi.zone.PORT_WINDURST]        = { nation = xi.nation.WINDURST, csbase = 299, repeatcs = 300, moveroom = 301, needrent = 302, hasrent  = 303 },
+    [xi.zone.BASTOK_MINES]         = { nation = xi.nation.BASTOK,   csbase = 70                                                                  },
+    [xi.zone.BASTOK_MARKETS]       = { nation = xi.nation.BASTOK,   csbase = 2                                                                   },
+    [xi.zone.PORT_BASTOK]          = { nation = xi.nation.BASTOK,   csbase = 95                                                                  },
+    [xi.zone.PORT_JEUNO]           = { nation = xi.nation.OTHER,    csbase = 21                                                                  },
+    [xi.zone.LOWER_JEUNO]          = { nation = xi.nation.OTHER,    csbase = 97                                                                  },
+    [xi.zone.UPPER_JEUNO]          = { nation = xi.nation.OTHER,    csbase = 87                                                                  },
+    [xi.zone.RULUDE_GARDENS]       = { nation = xi.nation.OTHER,    csbase = 76                                                                  },
+    [xi.zone.AL_ZAHBI]             = { nation = xi.nation.OTHER,    csbase = 0                                                                   },
+    [xi.zone.AHT_URHGAN_WHITEGATE] = { nation = xi.nation.OTHER,    csbase = 500                                                                 },
+}
+
+xi.moghouse.rentregionBits =
+{
+    [xi.region.SANDORIA]        = 0,
+    [xi.region.BASTOK]          = 1,
+    [xi.region.WINDURST]        = 2,
+    [xi.region.JEUNO]           = 3,
+    [xi.region.WEST_AHT_URHGAN] = 7,
+}
+
+xi.moghouse.nationRegionBits =
+{
+    [xi.nation.SANDORIA] = xi.region.SANDORIA,
+    [xi.nation.BASTOK]   = xi.region.BASTOK,
+    [xi.nation.WINDURST] = xi.region.WINDURST,
+}
+
 xi.moghouse.isInMogHouseInHomeNation = function(player)
     if not player:isInMogHouse() then
         return false
@@ -114,27 +150,29 @@ xi.moghouse.moogleTrigger = function(player, npc)
                 local treePlaced = player:getCharVar("[StarlightMisc]TreePlaced")
                 local placedDay = player:getCharVar("[StarlightMisc]TreeTimePlaced")
                 local earnedReward = player:getCharVar("[StarlightMisc]DreamHatHQ")
+                local hasItem = player:hasItem(xi.items.DREAM_HAT_P1)
+                local hasPresent = player:hasItem(xi.items.SPECIAL_PRESENT)
                 local currentDay = VanadielUniqueDay()
-                local currentTime = os.time()
-                local currentMidnight = getVanaMidnight(placedDay)
 
-                if (treePlaced ~= 0 and earnedReward ~= 1) then
-                    local sandOrianTree = player:getCharVar("[StarlightMisc]SandOrianTree")
-                    local bastokanTree = player:getCharVar("[StarlightMisc]BastokanTree")
-                    local windurstianTree = player:getCharVar("[StarlightMisc]WindurstianTree")
-                    local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
-                    local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
+                if treePlaced ~= 0 then
+                    if (earnedReward ~= 1) or (not hasItem and not hasPresent) then
+                        local sandOrianTree = player:getCharVar("[StarlightMisc]SandOrianTree")
+                        local bastokanTree = player:getCharVar("[StarlightMisc]BastokanTree")
+                        local windurstianTree = player:getCharVar("[StarlightMisc]WindurstianTree")
+                        local jeunoanTree = player:getCharVar("[StarlightMisc]JeunoanTree")
+                        local holidayFame = player:getFameLevel(xi.quest.fame_area.HOLIDAY)
 
-                    if (placedDay < currentDay and currentTime > currentMidnight) then
-                        if holidayFame == 9 then
-                            if sandOrianTree == 1 then
-                                player:startEvent(30017, 0, 0, 0, 86)
-                            elseif bastokanTree == 1 then
-                                player:startEvent(30017, 0, 0, 0, 115)
-                            elseif windurstianTree == 1 then
-                                player:startEvent(30017, 0, 0, 0, 116)
-                            elseif jeunoanTree == 1 then
-                                player:startEvent(30017, 0, 0, 0, 138)
+                        if (placedDay < currentDay) then
+                            if holidayFame == 9 then
+                                if sandOrianTree == 1 then
+                                    player:startEvent(30017, 0, 0, 0, 86)
+                                elseif bastokanTree == 1 then
+                                    player:startEvent(30017, 0, 0, 0, 115)
+                                elseif windurstianTree == 1 then
+                                    player:startEvent(30017, 0, 0, 0, 116)
+                                elseif jeunoanTree == 1 then
+                                    player:startEvent(30017, 0, 0, 0, 138)
+                                end
                             end
                         end
                     end
@@ -161,8 +199,13 @@ end
 
 xi.moghouse.moogleEventFinish = function(player, csid, option)
     if csid == 30017 and option == 0 then
+        local invAvailable = player:getFreeSlotsCount()
+
+        if invAvailable ~= 0 then
+            player:setCharVar("[StarlightMisc]DreamHatHQ", 1)
+        end
+
         npcUtil.giveItem(player, 5269)
-        player:setCharVar("[StarlightMisc]DreamHatHQ", 1)
     end
 end
 
@@ -240,4 +283,99 @@ xi.moghouse.addMogLockerExpiryTime = function(player, numBronze)
     player:changeContainerSize(xi.inv.MOGLOCKER, 0)
 
     return true
+end
+
+xi.moghouse.exitJobChange = function(player, prevZone)
+    if player:getCharVar('[Moghouse]Exit_Pending') == 1 and prevZone == player:getZoneID() then
+        player:setVolatileCharVar('[Moghouse]Exit_Pending', 0)
+        if xi.settings.map.MH_EXIT_HOMEPOINT then
+            if player:getCharVar('[Moghouse]Exit_Job_Change') == 1 and not player:isCurrentHomepoint() then
+                player:timer(100, function(playerArg)
+                    playerArg:startEvent(30004, 1)
+                end)
+            end
+        end
+    else
+        player:setVolatileCharVar('[Moghouse]Exit_Job_Change', 0)
+    end
+end
+
+xi.moghouse.exitJobChangeFinish = function(player, csid, option)
+    if xi.settings.map.MH_EXIT_HOMEPOINT then
+        if csid == 30004 and option == 0 then
+            player:setHomePoint()
+        elseif csid == 30004 then
+            player:setVolatileCharVar('[Moghouse]Exit_Job_Change', 0)
+        end
+    end
+end
+
+xi.moghouse.nationrRentARoom = function(player, npc, zonetable, regionid)
+    local rentregion = player:getCharVar("[Moghouse]Rent-A-Room")
+    if player:getNation() == zonetable.nation then
+        if player:getCharVar("[Moghouse]GuardSpeech") == 0 then -- First time talking to guard.
+            player:setCharVar("[Moghouse]GuardSpeech", 1)
+            player:startEvent(zonetable.csbase)
+        elseif rentregion ~= regionid and xi.settings.map.ERA_RENT_A_ROOM then -- Needs to move room.
+            player:startEvent(zonetable.moveroom, xi.moghouse.rentregionBits[rentregion])
+        else
+            player:startEvent(zonetable.repeatcs) -- Second time talking to guard with room in city.
+        end
+    else
+        if rentregion ~= regionid then
+            player:startEvent(zonetable.needrent) -- Needs Registration
+        else
+            player:startEvent(zonetable.hasrent) -- Already Registered
+        end
+    end
+end
+
+xi.moghouse.onTriggerRentARoom = function(player, npc)
+    local zonetable = xi.moghouse.rentARoomTable[player:getZoneID()]
+    local regionid  = player:getZone():getRegionID()
+    local rentregion = player:getCharVar("[Moghouse]Rent-A-Room")
+
+    if regionid == xi.region.BASTOK then
+        player:startEvent(zonetable.csbase, player:getNation(), xi.moghouse.rentregionBits[rentregion])
+    elseif regionid == xi.region.SANDORIA or regionid == xi.region.WINDURST then
+        xi.moghouse.nationrRentARoom(player, npc, zonetable, regionid)
+    else
+        player:startEvent(zonetable.csbase, xi.moghouse.rentregionBits[rentregion])
+    end
+end
+
+xi.moghouse.onEventFinishRentARoom = function(player, csid, option)
+    local regionid  = player:getZone():getRegionID()
+    local zonetable = xi.moghouse.rentARoomTable[player:getZoneID()]
+
+    if regionid == xi.region.BASTOK and csid == zonetable.csbase and option == 2 then
+        player:setCharVar("[Moghouse]Rent-a-room", player:getZone():getRegionID())
+    elseif regionid == xi.region.SANDORIA or regionid == xi.region.WINDURST then
+        if (csid == zonetable.moveroom or csid == zonetable.needrent) and option == 0 then -- Is a Visitor or Citizen Who Moved Rooms
+            player:setCharVar("[Moghouse]Rent-a-room", player:getZone():getRegionID())
+        end
+    else
+        if option == 0 then
+            player:setCharVar("[Moghouse]Rent-a-room", player:getZone():getRegionID())
+        end
+    end
+end
+
+xi.moghouse.isRented = function(player)
+    local playerzone = player:getZoneID()
+    local isrentexempt = (playerzone >= xi.zone.SOUTHERN_SAN_DORIA_S and playerzone <= xi.zone.WINDURST_WATERS_S) or (playerzone >= xi.zone.WESTERN_ADOULIN and playerzone <= xi.zone.EASTERN_ADOULIN)
+
+    if isrentexempt or not xi.settings.map.RENT_A_ROOM then
+        return true
+    end
+
+    local playerregion = player:getZone():getRegionID()
+    local ishomenation = playerregion == xi.moghouse.nationRegionBits[player:getNation()]
+    local isrentedcity = playerregion == player:getCharVar("[Moghouse]Rent-a-room")
+
+    if xi.settings.map.RENT_A_ROOM and utils.ternary(xi.settings.map.ERA_RENT_A_ROOM, isrentedcity, ishomenation or isrentedcity) then
+        return true
+    end
+
+    return false
 end

@@ -145,6 +145,7 @@ namespace luautils
         lua.set_function("GetMagianTrialsWithParent", &luautils::GetMagianTrialsWithParent);
         lua.set_function("JstMidnight", &luautils::JstMidnight);
         lua.set_function("JstWeekday", &luautils::JstWeekday);
+        lua.set_function("ServerEpochTimeMS", &luautils::ServerEpochTimeMS);
         lua.set_function("VanadielTime", &luautils::VanadielTime);
         lua.set_function("VanadielTOTD", &luautils::VanadielTOTD);
         lua.set_function("VanadielHour", &luautils::VanadielHour);
@@ -175,6 +176,7 @@ namespace luautils
         lua.set_function("GetMobRespawnTime", &luautils::GetMobRespawnTime);
         lua.set_function("DisallowRespawn", &luautils::DisallowRespawn);
         lua.set_function("UpdateNMSpawnPoint", &luautils::UpdateNMSpawnPoint);
+        lua.set_function("CheckNMSpawnPoint", &luautils::CheckNMSpawnPoint);
         lua.set_function("SetDropRate", &luautils::SetDropRate);
         lua.set_function("NearLocation", &luautils::NearLocation);
         lua.set_function("GetFurthestValidPosition", &luautils::GetFurthestValidPosition);
@@ -1109,6 +1111,12 @@ namespace luautils
     void SendLuaFuncStringToZone(uint16 zoneId, std::string const& str)
     {
         message::send(zoneId, str);
+    }
+
+    uint64 ServerEpochTimeMS()
+    {
+        using namespace std::chrono;
+        return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
     }
 
     /************************************************************************
@@ -3638,6 +3646,38 @@ namespace luautils
     }
 
     /************************************************************************
+     *                                                                       *
+     *  Сalled when a pet's level restriction status changes                 *
+     *                                                                       *
+     ************************************************************************/
+
+    int32 OnPetLevelRestriction(CBaseEntity* PMob)
+    {
+        TracyZoneScoped;
+
+        if (PMob == nullptr || PMob->objtype != TYPE_PET)
+        {
+            return -1;
+        }
+
+        sol::function onPetLevelRestriction = getEntityCachedFunction(PMob, "onPetLevelRestriction");
+        if (!onPetLevelRestriction.valid())
+        {
+            return -1;
+        }
+
+        auto result = onPetLevelRestriction(CLuaBaseEntity(PMob));
+        if (!result.valid())
+        {
+            sol::error err = result;
+            ShowError("luautils::onPetLevelRestriction: %s", err.what());
+            return -1;
+        }
+
+        return 0;
+    }
+
+    /************************************************************************
      *   OnGameDayAutomatisation()                                           *
      *   used for creating action of npc every game day                      *
      *                                                                       *
@@ -4811,6 +4851,36 @@ namespace luautils
         else
         {
             ShowDebug("UpdateNMSpawnPoint: mob <%u> not found", mobid);
+        }
+    }
+
+    /************************************************************************
+     *                                                                       *
+     * Update the NM spawn point to a new point, retrieved from the database *
+     *                                                                       *
+     ************************************************************************/
+
+    bool CheckNMSpawnPoint(uint32 mobid)
+    {
+        TracyZoneScoped;
+
+        CMobEntity* PMob = (CMobEntity*)zoneutils::GetEntity(mobid, TYPE_MOB);
+        if (PMob != nullptr)
+        {
+            int32 ret = sql->Query("SELECT count(mobid) FROM `nm_spawn_points` where mobid=%u", mobid);
+            if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS && sql->GetUIntData(0) > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        else
+        {
+            ShowDebug("UpdateNMSpawnPoint: mob <%u> not found", mobid);
+            return false;
         }
     }
 

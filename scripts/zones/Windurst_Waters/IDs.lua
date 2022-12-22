@@ -27,6 +27,7 @@ zones[xi.zone.WINDURST_WATERS] =
         YOU_ACCEPT_THE_MISSION        = 6742,  -- You have accepted the mission.
         MOG_LOCKER_OFFSET             = 6823,  -- Your Mog Locker lease is valid until <timestamp>, kupo.
         FISHING_MESSAGE_OFFSET        = 7062,  -- You can't fish here.
+        MAP_MARKER_TUTORIAL           = 7057,  -- The map will open when you select Map from the main menu. Choose Markers and scroll to the right to check the location.
         COOKING_SUPPORT               = 7166,  -- Your [fishing/woodworking/smithing/goldsmithing/clothcraft/leatherworking/bonecraft/alchemy/cooking] skills went up [a little/ever so slightly/ever so slightly].
         GUILD_TERMINATE_CONTRACT      = 7180,  -- You have terminated your trading contract with the [Fishermen's/Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild and formed a new one with the [Fishermen's/Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild.
         GUILD_NEW_CONTRACT            = 7188,  -- You have formed a new trading contract with the [Fishermen's/Carpenters'/Blacksmiths'/Goldsmiths'/Weavers'/Tanners'/Boneworkers'/Alchemists'/Culinarians'] Guild.
@@ -91,6 +92,8 @@ zones[xi.zone.WINDURST_WATERS] =
         MERRYMAKER_GIVE            = 15641, -- Not for us, not for me? I give it back. Now you happy? Happy toy, happy toy, where be me happy toy?
         MERRYMAKER_NO              = 15642, -- No no no no no! Go away! Nose holes busy sniff for happy toy!
         MERRYMAKER_FRIEND          = 15644, -- You have friend you do? We gobbies have friend too.
+        MERRYMAKER_NPC_RETURNED    = 15683, -- I see you've returned. Mmm...that's good news indeed. Thank you for the kindess you've shown me and my friend.
+        MERRYMAKER_DEFAULT         = 15643, -- ...
     },
 
     mob =
@@ -130,6 +133,7 @@ zones[xi.zone.WINDURST_WATERS] =
             [17752548] = 17752548,  -- Starlight Celebration Tree
             [17752549] = 17752549,  -- Starlight Celebration Tree
             [17752529] = 17752529,  -- Atagei-Portagei
+            [17752336] = 17752336,  -- Kayeel-Payeel (WOTG NPC, but is an NPC used in event)
             [17752550] = 17752550,  -- Token Moogle
             [17752551] = 17752551,  -- Event Moogle
             [17752552] = 17752552,  -- Event Moogle

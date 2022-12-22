@@ -160,9 +160,9 @@ CCharEntity::CCharEntity()
         m_missionLog[i].current = 0xFFFF;
     }
 
-    m_missionLog[4].current = 0;   // MISSION_TOAU
-    m_missionLog[5].current = 0;   // MISSION_WOTG
-    m_missionLog[6].current = 101; // MISSION_COP
+    m_missionLog[4].current = 0; // MISSION_TOAU
+    m_missionLog[5].current = 0; // MISSION_WOTG
+    m_missionLog[6].current = 0; // MISSION_COP
     for (auto& i : m_missionLog)
     {
         i.statusUpper = 0;
@@ -252,6 +252,8 @@ CCharEntity::CCharEntity()
     m_mentorUnlocked   = false;
     m_jobMasterDisplay = false;
     m_EffectsChanged   = false;
+
+    m_nextDataSave = std::chrono::system_clock::now() + std::chrono::seconds(settings::get<uint16>("main.PLAYER_DATA_SAVE") > 0 ? settings::get<uint16>("main.PLAYER_DATA_SAVE") : 120);
 }
 
 CCharEntity::~CCharEntity()
@@ -653,6 +655,23 @@ CItemEquipment* CCharEntity::getEquip(SLOTTYPE slot)
     return item;
 }
 
+std::vector<CItemEquipment*> CCharEntity::getVisibleEquip()
+{
+    std::vector<CItemEquipment*> visibleItems;
+    CItemEquipment*              item = nullptr;
+
+    for (SLOTTYPE slot : { SLOT_HEAD, SLOT_BODY, SLOT_HANDS, SLOT_LEGS, SLOT_FEET })
+    {
+        item = getEquip(slot);
+        if (item != nullptr)
+        {
+            visibleItems.push_back(item);
+        }
+    }
+
+    return visibleItems;
+}
+
 void CCharEntity::ReloadPartyInc()
 {
     m_reloadParty = true;
@@ -743,7 +762,7 @@ bool CCharEntity::PersistData()
 
     if (dataToPersist & CHAR_PERSIST::EFFECTS)
     {
-        StatusEffectContainer->SaveStatusEffects(true);
+        StatusEffectContainer->SaveStatusEffects(true, false);
     }
 
     /* TODO
@@ -1518,6 +1537,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                 }
                 PPet->PAI->MobSkill(PPetTarget, PAbility->getMobSkillID());
             }
+            state.ApplyEnmity();
         }
         // #TODO: make this generic enough to not require an if
         else if ((PAbility->isAoE() || (PAbility->getID() == ABILITY_LIEMENT && getMod(Mod::LIEMENT_EXTENDS_TO_AREA) > 0)) && this->PParty != nullptr)

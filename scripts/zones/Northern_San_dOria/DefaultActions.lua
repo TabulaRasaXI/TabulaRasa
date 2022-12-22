@@ -11,8 +11,8 @@ return {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 local npcID = npc:getID()
-                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
-                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+                local sender = player:getCharVar("[MerryMakers]Sender")
+                local confirmed = player:getCharVar("[MerryMakers]Confirmed")
 
                 if npcID == sender or npcID == confirmed then
                     xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)
@@ -24,7 +24,6 @@ return {
     },
     ['Guilerme']   = { text = ID.text.GUILERME_DIALOG },
     ['Helaku']     = { event = 541 },
-    ['Hinaree']    = { event = 580 },
     ['Kasaroro']   = { event = 548 },
     ['Maurinne']   = { text = ID.text.MAURINNE_DIALOG },
     ['Miageau']    = { event = 517 },
@@ -35,8 +34,8 @@ return {
         onTrigger = function(player, npc)
             if xi.events.starlightCelebration.isStarlightEnabled() ~= 0 then
                 local npcID = npc:getID()
-                local sender = player:getLocalVar("[StarlightMerryMakers]Sender")
-                local confirmed = player:getLocalVar("[StarlightMerryMakers]Confirmed")
+                local sender = player:getCharVar("[MerryMakers]Sender")
+                local confirmed = player:getCharVar("[MerryMakers]Confirmed")
 
                 if npcID == sender or npcID == confirmed then
                     xi.events.starlightCelebration.merryMakersNPCDeliverOnTrigger(player, npc, ID)

@@ -34,7 +34,8 @@ npcUtil = {}
         how long to hide the QM for after mobs die
     message (number)
         if set a message will play if a entity spawns
-
+    enmityPlayerList (list of players, default empty)
+        for each mob add base enmity to a list of players
 --]]
 function npcUtil.popFromQM(player, qm, mobId, params)
     local qmId = qm:getID()
@@ -50,6 +51,10 @@ function npcUtil.popFromQM(player, qm, mobId, params)
 
     if params.hide == nil or type(params.hide) ~= "number" then
         params.hide = xi.settings.main.FORCE_SPAWN_QM_RESET_TIME
+    end
+
+    if params.enmityPlayerList == nil or type(params.enmityPlayerList) ~= "table" then
+        params.enmityPlayerList = false
     end
 
     -- get list of mobs to pop
@@ -96,6 +101,15 @@ function npcUtil.popFromQM(player, qm, mobId, params)
         -- claim
         if params.claim then
             mob:updateClaim(player)
+        end
+
+        --add base enmity to an entire list of players (like a party)
+        if params.enmityPlayerList then
+            for _,member in pairs(params.enmityPlayerList) do
+                mob:updateEnmity(member)
+            end
+            --add a bit more (1 CE) to player that pops mob so mob goes for them first
+            mob:addEnmity(player,1,0)
         end
 
         -- look
@@ -374,26 +388,26 @@ function npcUtil.giveCurrency(player, currency, amount)
 
     currency = string.lower(currency)
 
-    local currency_types =
+    local currencyTypes =
     {
         ["gil"]   = { "GIL_OBTAINED", xi.settings.main.GIL_RATE },
         ["bayld"] = { "BAYLD_OBTAINED", xi.settings.main.BAYLD_RATE }
     }
 
-    local currency_type = currency_types[currency]
+    local currencyType = currencyTypes[currency]
 
-    if not currency_type then
+    if not currencyType then
         print(string.format("ERROR: invalid currency '%s' given to npcUtil.giveCurrency in zone %s.", currency, player:getZoneName()))
         return false
     end
 
-    local message_id = ID.text[currency_type[1]]
-    if not message_id then
+    local messageId = ID.text[currencyType[1]]
+    if not messageId then
         print(string.format("ERROR: no message ID defined for currency '%s' given to npcUtil.giveCurrency in zone %s.", currency, player:getZoneName()))
         return false
     end
 
-    amount = amount * currency_type[2]
+    amount = amount * currencyType[2]
 
     if currency == "gil" then
         player:addGil(amount)
@@ -401,7 +415,7 @@ function npcUtil.giveCurrency(player, currency, amount)
         player:addCurrency(currency, amount)
     end
 
-    player:messageSpecial(message_id, amount)
+    player:messageSpecial(messageId, amount)
 
     return true
 end
@@ -740,7 +754,9 @@ end
         { 640, { "gil", 200 } } -- copper ore x1, gil x200
 --]]
 function npcUtil.tradeHas(trade, items, exact)
-    if type(exact) ~= "boolean" then exact = false end
+    if type(exact) ~= "boolean" then
+        exact = false
+    end
 
     -- create table of traded items, with key/val of itemId/itemQty
     local tradedItems = {}

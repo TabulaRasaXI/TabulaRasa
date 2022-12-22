@@ -5,9 +5,8 @@
 -- Recast Time: 2 minutes
 -- Duration: N/A
 -----------------------------------
-require("scripts/globals/settings")
-require("scripts/globals/status")
 require("scripts/globals/msg")
+require("scripts/globals/status")
 -----------------------------------
 local abilityObject = {}
 
@@ -32,11 +31,11 @@ abilityObject.onUseAbility = function(player, target, ability)
         if mob:getTP() >= 1000 then
             mob:useMobAbility()
         elseif mob:hasSpellList() then
+            mob:setLocalVar("Sic", 1)
             mob:castSpell()
         else
             mob:queue(0, doSic)
         end
-
     end
 
     player:getPet():queue(0, doSic)

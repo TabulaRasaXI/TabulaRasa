@@ -63,9 +63,9 @@ namespace mobutils
         {
             bonus = 5;
         }
-        else if (lvl == 1)
+        if (lvl == 1)
         {
-            bonus = -1;
+            bonus = 0;
         }
 
         damage = lvl + bonus;
@@ -124,15 +124,15 @@ namespace mobutils
             switch (rank)
             {
                 case 1: // A
-                    return (uint16)(153 + (lvl - 50) * 5.0f);
+                    return (uint16)std::floor(153 + (lvl - 50) * 5.0f);
                 case 2: // B
-                    return (uint16)(147 + (lvl - 50) * 4.9f);
+                    return (uint16)std::floor(147 + (lvl - 50) * 4.9f);
                 case 3: // C
-                    return (uint16)(142 + (lvl - 50) * 4.8f);
+                    return (uint16)std::floor(142 + (lvl - 50) * 4.8f);
                 case 4: // D
-                    return (uint16)(136 + (lvl - 50) * 4.7f);
+                    return (uint16)std::floor(136 + (lvl - 50) * 4.7f);
                 case 5: // E
-                    return (uint16)(126 + (lvl - 50) * 4.5f);
+                    return (uint16)std::floor(126 + (lvl - 50) * 4.5f);
             }
         }
         else
@@ -140,15 +140,15 @@ namespace mobutils
             switch (rank)
             {
                 case 1: // A
-                    return (uint16)(6 + (lvl - 1) * 3.0f);
+                    return (uint16)std::floor(6 + (lvl - 1) * 3.0f);
                 case 2: // B
-                    return (uint16)(5 + (lvl - 1) * 2.9f);
+                    return (uint16)std::floor(5 + (lvl - 1) * 2.9f);
                 case 3: // C
-                    return (uint16)(5 + (lvl - 1) * 2.8f);
+                    return (uint16)std::floor(5 + (lvl - 1) * 2.8f);
                 case 4: // D
-                    return (uint16)(4 + (lvl - 1) * 2.7f);
+                    return (uint16)std::floor(4 + (lvl - 1) * 2.7f);
                 case 5: // E
-                    return (uint16)(4 + (lvl - 1) * 2.5f);
+                    return (uint16)std::floor(4 + (lvl - 1) * 2.5f);
             }
         }
 
@@ -286,27 +286,6 @@ namespace mobutils
                     mobHP = baseMobHP + sjHP;
                 }
 
-                // Mimic HP boost traits for monks
-                if (PMob->GetMJob() == JOB_MNK)
-                {
-                    if (mLvl >= 70)
-                    {
-                        mobHP += 180;
-                    }
-                    else if (mLvl >= 55)
-                    {
-                        mobHP += 120;
-                    }
-                    else if (mLvl >= 35)
-                    {
-                        mobHP += 60;
-                    }
-                    else if (mLvl >= 15)
-                    {
-                        mobHP += 30;
-                    }
-                }
-
                 if (PMob->PMaster != nullptr)
                 {
                     mobHP *= 0.30f; // Retail captures have all pets at 30% of the mobs family of the same level
@@ -394,11 +373,6 @@ namespace mobutils
                     PMob->health.maxmp = (int32)(PMob->health.maxmp * settings::get<float>("map.MOB_MP_MULTIPLIER"));
                 }
             }
-
-            PMob->UpdateHealth();
-            PMob->health.tp = 0;
-            PMob->health.hp = PMob->GetMaxHP();
-            PMob->health.mp = PMob->GetMaxMP();
         }
 
         ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetWeaponDamage(PMob, SLOT_MAIN));
@@ -554,6 +528,12 @@ namespace mobutils
         battleutils::AddTraits(PMob, traits::GetTraits(mJob), mLvl);
         battleutils::AddTraits(PMob, traits::GetTraits(PMob->GetSJob()), PMob->GetSLevel());
 
+        // Max [HP/MP] Boost traits
+        PMob->UpdateHealth();
+        PMob->health.tp = 0;
+        PMob->health.hp = PMob->GetMaxHP();
+        PMob->health.mp = PMob->GetMaxMP();
+
         SetupJob(PMob);
         SetupRoaming(PMob);
 
@@ -573,10 +553,6 @@ namespace mobutils
         if (zoneType == ZONE_TYPE::DUNGEON)
         {
             SetupDungeonMob(PMob);
-        }
-        else if (zoneType == ZONE_TYPE::LIMBUS)
-        {
-            SetupLimbusMob(PMob);
         }
         else if (zoneType == ZONE_TYPE::BATTLEFIELD || PMob->m_Type & MOBTYPE_BATTLEFIELD)
         {
@@ -859,20 +835,6 @@ namespace mobutils
                 PMob->addModifier(type, PTrait->getValue() * 3);
             }
         }
-    }
-
-    void SetupLimbusMob(CMobEntity* PMob)
-    {
-        PMob->setMobMod(MOBMOD_NO_DESPAWN, 1);
-
-        // Battlefield mobs don't drop gil
-        PMob->setMobMod(MOBMOD_GIL_MAX, -1);
-        PMob->setMobMod(MOBMOD_MUG_GIL, -1);
-        PMob->setMobMod(MOBMOD_EXP_BONUS, -100);
-
-        // never despawn
-        PMob->SetDespawnTime(0s);
-        PMob->setMobMod(MOBMOD_ALLI_HATE, 200);
     }
 
     void SetupBattlefieldMob(CMobEntity* PMob)
@@ -1611,6 +1573,11 @@ Usage:
                 mobutils::InitializeMob(PMob, zoneutils::GetZone(targetZoneId));
             }
         }
+        else
+        {
+            ShowError("Unable to find entity with groupId: %d, zoneId: %d. Check that mob_pools.ele_eva_id, group and zoneid match.", groupid, groupZoneId);
+        }
+
         return PMob;
     }
 

@@ -13,7 +13,10 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.MAGIC_COOL, 60) -- cherukiki casts magic aproximately every 25 seconds
     mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
     mob:setMobMod(xi.mobMod.NO_LINK, 1)
-    mob:setMod(xi.mod.DMG, -10000)
+    mob:setMod(xi.mod.UDMGPHYS,   -10000)
+    mob:setMod(xi.mod.UDMGMAGIC,  -10000)
+    mob:setMod(xi.mod.UDMGRANGE,  -10000)
+    mob:setMod(xi.mod.UDMGBREATH, -10000)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
     mob:setLocalVar("cheru", 1)
     mob:setMagicCastingEnabled(false)
@@ -41,13 +44,13 @@ entity.onMobFight = function(mob, target)
         end
     end
 
-    local tenzen_id = GetMobByID(ID.aWarriorsPath.TENZEN_ID + (bfID - 1))
+    local tenzenId = GetMobByID(ID.aWarriorsPath.TENZEN_ID + (bfID - 1))
     if
-        tenzen_id:getHPP() <= 70 and
+        tenzenId:getHPP() <= 70 and
         battlefield:getLocalVar("fireworks") == 0
     then
         if mob:getLocalVar("cooldown") == 0 then
-            mob:castSpell(4, tenzen_id)
+            mob:castSpell(4, tenzenId)
             mob:setLocalVar("cooldown", 70) -- every 30 seconds Cherukiki will cast Cure IV on tenzen
         end
     else

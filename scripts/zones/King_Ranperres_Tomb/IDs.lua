@@ -51,7 +51,7 @@ zones[xi.zone.KING_RANPERRES_TOMB] =
             17555772,
         },
         BARBASTELLE           = 17555721,
-        CHERRY_SAPLING_OFFSET = 17555748,
+        CHERRY_SAPLING_OFFSET = 17555753,
         VRTRA                 = 17555763,
         ANKOU                 = 17555709,
         CORRUPTED_YORGOS      = 17555770,

@@ -139,14 +139,17 @@ xi.player.charCreate = function(player)
         player:setGil(xi.settings.main.START_GIL)
     end
 
-    player:addItem(536) -- adventurer coupon
+    if xi.settings.main.NEW_CHARACTER_CUTSCENE == 0 then -- Add coupon that would normally be added in cutscene.
+        player:addItem(xi.items.ADVENTURERS_COUPON)
+    end
+
     player:addTitle(xi.title.NEW_ADVENTURER)
     player:setCharVar("HQuest[moghouseExpo]notSeen", 1) -- needs Moghouse intro
-    player:setCharVar("spokeKindlix", 1) -- Kindlix introduction
-    player:setCharVar("spokePyropox", 1) -- Pyropox introduction
-    player:setCharVar("TutorialProgress", 1) -- Has not started tutorial
-    player:setCharVar("EinherjarIntro", 1) -- Has not seen Einherjar intro
-    player:setNewPlayer(true) -- apply new player flag
+    player:setCharVar("spokeKindlix", 1)                -- Kindlix introduction
+    player:setCharVar("spokePyropox", 1)                -- Pyropox introduction
+    player:setCharVar("TutorialProgress", 1)            -- Has not started tutorial
+    player:setCharVar("EinherjarIntro", 1)              -- Has not seen Einherjar intro
+    player:setNewPlayer(true)                           -- apply new player flag
 end
 
 -- called by core after a player logs into the server or zones
@@ -155,6 +158,10 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         -- things checked ONLY during logon go here
         if firstLogin then
             xi.player.charCreate(player)
+        end
+
+        if player:getCharVar("[Moghouse]Rent-a-room") == 0 then
+            player:setCharVar("[Moghouse]Rent-a-room", xi.moghouse.nationRegionBits[player:getNation()])
         end
     else
         -- things checked ONLY during zone in go here
@@ -184,7 +191,8 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
     -- This is for migration safety only, and should be removed at a later date
     if
         player:hasCompletedQuest(xi.quest.log_id.ABYSSEA, xi.quest.id.abyssea.A_JOURNEY_BEGINS) and
-        player:getTraverserEpoch() == 0
+        player:getTraverserEpoch() == 0 and
+        xi.settings.main.ENABLE_ABYSSEA == 1
     then
         player:setTraverserEpoch()
     end

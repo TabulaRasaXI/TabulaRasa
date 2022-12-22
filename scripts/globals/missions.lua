@@ -704,9 +704,9 @@ xi.mission.getMissionRankPoints = function(player, missionID)
         crystals = 0
     end
 
-    local points_needed = 1024 * (crystals - 0.25) / (3 * rankPointMath(player:getRank(player:getNation())))
+    local pointsNeeded = 1024 * (crystals - 0.25) / (3 * rankPointMath(player:getRank(player:getNation())))
 
-    if player:getRankPoints() >= points_needed then
+    if player:getRankPoints() >= pointsNeeded then
         return true
     end
 
@@ -757,6 +757,25 @@ xi.mission.getMissionMask = function(player)
 
         -- All repeatable missions are skippable as well, so track the required
         -- missions, and only add to mask if rank and required are met
+
+        -- Special exceptions:
+        -- 1-2 is repeatable for some nations, but never skippable
+        if
+            missionId == 2 and
+            not player:hasCompletedMission(nation, 1)
+        then
+            break
+        end
+
+        -- San d'Oria 3-1 is repeatable, but not skippable
+        if
+            nation == 0 and
+            missionId > 10 and
+            not player:hasCompletedMission(0, 10)
+        then
+            break
+        end
+
         if
             missionId >= lastRequiredMission and
             (

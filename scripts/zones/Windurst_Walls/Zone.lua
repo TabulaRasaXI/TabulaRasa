@@ -29,6 +29,8 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(-257.5, -5.05, position, 0)
     end
 
+    xi.moghouse.exitJobChange(player, prevZone)
+
     return cs
 end
 
@@ -39,7 +41,7 @@ end
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
     switch (triggerArea:GetTriggerAreaID()): caseof
     {
-        [1] = function (x)  -- Heaven's Tower enter portal
+        [1] = function()  -- Heaven's Tower enter portal
             player:startEvent(86)
         end,
     }
@@ -55,6 +57,8 @@ zoneObject.onEventFinish = function(player, csid, option)
     if csid == 86 then
         player:setPos(0, 0, -22.40, 192, 242)
     end
+
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zoneObject

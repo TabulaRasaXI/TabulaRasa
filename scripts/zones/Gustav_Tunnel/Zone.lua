@@ -8,8 +8,8 @@ require("scripts/globals/mobs")
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    UpdateNMSpawnPoint(ID.mob.BUNE)
-    xi.mob.NMPersistCache(ID.mob.BUNE)
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.BUNE)
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

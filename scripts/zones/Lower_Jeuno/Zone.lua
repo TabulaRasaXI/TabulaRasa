@@ -16,7 +16,6 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     zone:registerTriggerArea(1, 23, 0, -43, 44, 7, -39) -- Inside Tenshodo HQ. TODO: Find out if this is used other than in ZM 17 (not anymore). Remove if not.
-    xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     xi.chocobo.initZone(zone)
 end
 
@@ -44,6 +43,8 @@ zoneObject.onZoneIn = function(player, prevZone)
     then
         player:setPos(41.2, -5, 84, 85)
     end
+
+    xi.moghouse.exitJobChange(player, prevZone)
 
     return cs
 end
@@ -91,13 +92,14 @@ zoneObject.onGameHour = function(zone)
     elseif vanadielHour == 1 then
         if playerOnQuestId == 0 then
             local npc = GetNPCByID(ID.npc.VHANA_EHGAKLYWHA)
+            local startPath = lowerJeunoGlobal.lampPath[1]
             npc:clearPath()
             npc:setStatus(0)
+            npc:setLocalVar("path", 1)
             npc:initNpcAi()
-            npc:setPos(xi.path.first(lowerJeunoGlobal.lampPath))
-            npc:pathThrough(lowerJeunoGlobal.lampPath, bit.bor(xi.path.flag.PATROL, xi.path.flag.WALLHACK))
+            npc:setPos(xi.path.first(startPath))
+            npc:pathThrough(startPath, bit.bor(xi.path.flag.COORDS, xi.path.flag.WALLHACK))
         end
-
     end
 end
 
@@ -105,6 +107,7 @@ zoneObject.onEventUpdate = function(player, csid, option)
 end
 
 zoneObject.onEventFinish = function(player, csid, option)
+    xi.moghouse.exitJobChangeFinish(player, csid, option)
 end
 
 return zoneObject

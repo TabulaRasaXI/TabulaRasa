@@ -126,6 +126,7 @@ zones[xi.zone.NORTHERN_SAN_DORIA] =
         FRAGMENTS_MELD                = 18100, -- The tiny fragments of Lilisette's memory meld together to form <keyitem>!
         RETRIEVE_DIALOG_ID            = 18135, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL         = 18481, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
+        MAP_MARKER_TUTORIAL           = 18603, -- Selecting Map from the main menu opens the map of the area in which you currently reside. Select Markers and press the right arrow key to see all the markers placed on your map.
         -- Starlight Celebration Dialog --
         GIFT_THANK_YOU           = 13400, -- Thank you! Thank you! Thank you!
         GIFT_THANK_YOU_2         = 13401, -- Whoa! Thanks (Player Gender)>[sir, lady]
@@ -156,6 +157,8 @@ zones[xi.zone.NORTHERN_SAN_DORIA] =
         MERRYMAKER_GIVE          = 17650, -- Not for us, not for me? I give it back. Now you happy? Happy toy, happy toy, where be me happy toy?
         MERRYMAKER_NO            = 17651, -- No no no no no! Go away! Nose holes busy sniff for happy toy!
         MERRYMAKER_FRIEND        = 17653, -- You have friend you do? We gobbies have friend too.
+        MERRYMAKER_NPC_RETURNED  = 17692, -- I see you've returned. Mmm...that's good news indeed. Thank you for the kindess you've shown me and my friend.
+        MERRYMAKER_DEFAULT       = 17652, -- ...
     },
     mob =
     {

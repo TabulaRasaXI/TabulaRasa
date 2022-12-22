@@ -404,12 +404,12 @@ function utils.takeShadows(target, mob, dmg, shadowbehav)
     return dmg
 end
 
-function utils.conalDamageAdjustment(attacker, target, skill, max_damage, minimum_percentage)
-    local final_damage = 1
+function utils.conalDamageAdjustment(attacker, target, skill, maxDamage, minimumPercentage)
+    local finalDamage = 1
     -- #TODO: Currently all cone attacks use static 45 degree (360 scale) angles in core, when cone attacks
     -- have different angles and there's a method to fetch the angle, use a line like the below
-    -- local cone_angle = skill:getConalAngle()
-    local cone_angle = 32 -- 256-degree based, equivalent to "45 degrees" on 360 degree scale
+    -- local coneAngle = skill:getConalAngle()
+    local coneAngle = 32 -- 256-degree based, equivalent to "45 degrees" on 360 degree scale
 
     -- #TODO: Conal attacks hit targets in a cone with a center line of the "primary" target (the mob's
     -- highest enmity target). These primary targets can be within 128 degrees of the mob's front. However,
@@ -417,22 +417,22 @@ function utils.conalDamageAdjustment(attacker, target, skill, max_damage, minimu
     -- was trying to hit. Therefore the "damage drop off" here is based from an origin of the mob's rotation
     -- instead. Should conal skills become capable of identifying their primary target, this should be changed
     -- to be based on the degree difference from the primary target instead.
-    local conal_angle_power = cone_angle - math.abs(attacker:getFacingAngle(target))
+    local conalAnglePower = coneAngle - math.abs(attacker:getFacingAngle(target))
 
-    if conal_angle_power < 0 then
+    if conalAnglePower < 0 then
         -- #TODO The below print will be a valid print upon fixing to-do above relating to beam center orgin
-        conal_angle_power = 0
+        conalAnglePower = 0
     end
 
     -- Calculate the amount of damage to add above the minimum percentage based on how close
     -- the target is to the center of the conal (0 degrees from the attacker's facing)
-    local minimum_damage = max_damage * minimum_percentage
-    local damage_per_angle = (max_damage - minimum_damage) / cone_angle
-    local additional_damage = damage_per_angle * conal_angle_power
+    local minimumDamage    = maxDamage * minimumPercentage
+    local damagePerAngle   = (maxDamage - minimumDamage) / coneAngle
+    local additionalDamage = damagePerAngle * conalAnglePower
 
-    final_damage = math.max(1, math.ceil(minimum_damage + additional_damage))
+    finalDamage = math.max(1, math.ceil(minimumDamage + additionalDamage))
 
-    return final_damage
+    return finalDamage
 end
 
 -- returns true if taken by third eye
@@ -745,7 +745,6 @@ function utils.splitStr(s, sep)
 end
 
 function utils.mobTeleport(mob, hideDuration, pos, disAnim, reapAnim)
-
     --TODO Table of animations that are used for teleports for reference
 
     if hideDuration == nil then
@@ -808,14 +807,14 @@ end
 function utils.lateralTranslateWithOriginRotation(origin, translation)
     local degrees = utils.ffxiRotToDegrees(origin.rot)
     local rads = math.rad(degrees)
-    local new_coords = {}
+    local newCoords = {}
 
-    new_coords.x = origin.x + ((math.cos(rads) * translation.x) + (math.sin(rads) * translation.z))
-    new_coords.z = origin.z + ((math.cos(rads) * translation.z) - (math.sin(rads) * translation.x))
-    new_coords.y = origin.y
-    new_coords.rot = origin.rot
+    newCoords.x = origin.x + ((math.cos(rads) * translation.x) + (math.sin(rads) * translation.z))
+    newCoords.z = origin.z + ((math.cos(rads) * translation.z) - (math.sin(rads) * translation.x))
+    newCoords.y = origin.y
+    newCoords.rot = origin.rot
 
-    return new_coords
+    return newCoords
 end
 
 function utils.getNearPosition(origin, offset, radians)
@@ -906,4 +905,22 @@ function utils.ternary(conditional, trueVal, falseVal)
     end
 
     return falseVal
+end
+
+function utils.arenaDrawIn(mob, target, table)
+    local nextDrawIn = target:getLocalVar("[Draw-In]WaitTime")
+    local condition1 = utils.ternary(table.condition1 ~= nil, table.condition1, false)
+    local condition2 = utils.ternary(table.condition2 ~= nil, table.condition2, false)
+    local condition3 = utils.ternary(table.condition3 ~= nil, table.condition3, false)
+    local condition4 = utils.ternary(table.condition4 ~= nil, table.condition4, false)
+    local position   = utils.ternary(table.position ~= nil, table.position, { mob:getXPos(), mob:getYPos(), mob:getZPos(), mob:getRotPos() })
+
+    if
+        (condition1 or condition2 or condition3 or condition4) and
+        (os.time() > nextDrawIn)
+    then
+        target:setPos(position[1], position[2], position[3], utils.ternary(position[4] ~= nil, position[4], 0))
+        mob:messageBasic(232, 0, 0, target)
+        target:setLocalVar("[Draw-In]WaitTime", os.time() + 1)
+    end
 end
