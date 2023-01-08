@@ -553,6 +553,11 @@ bool CStatusEffectContainer::AddStatusEffect(CStatusEffect* PStatusEffect, bool 
         }
         m_POwner->updatemask |= UPDATE_HP;
 
+        if (statusId == EFFECT_FOOD || statusId == EFFECT_DEDICATION)
+        {
+            m_POwner->StatusEffectContainer->SaveStatusEffects();
+        }
+
         return true;
     }
     else
@@ -775,7 +780,7 @@ void CStatusEffectContainer::DelStatusEffectsByType(uint16 Type)
 
 /************************************************************************
  *                                                                       *
- *  Удаляем все эффекты с указанными флагами                             *
+ *  Remove all effects with the specified flags                          *
  *                                                                       *
  ************************************************************************/
 
@@ -785,10 +790,25 @@ void CStatusEffectContainer::DelStatusEffectsByFlag(uint32 flag, bool silent)
     {
         if (PStatusEffect->GetFlag() & flag)
         {
-            // If this is a Nightmare effect flag, it needs to be removed explictly by a cure
+            // See if this is Nightmare
+            bool isNightmare = (PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == EFFECT_BIO) ? true : false;
 
-            if (!(flag & EFFECTFLAG_DAMAGE && PStatusEffect->GetStatusID() == EFFECT_SLEEP && PStatusEffect->GetSubID() == (uint32)EFFECT_BIO))
+            if (flag & EFFECTFLAG_DAMAGE && isNightmare)
+            {
+                // If it's a player, or player's pet, then taking damage should not wake the entity
+                if (this->m_POwner->objtype == TYPE_PC or this->m_POwner->objtype == TYPE_PET)
+                {
+                    continue;
+                }
+                else
+                {
+                    RemoveStatusEffect(PStatusEffect, silent);
+                }
+            }
+            else
+            {
                 RemoveStatusEffect(PStatusEffect, silent);
+            }
         }
     }
 }
@@ -1905,8 +1925,12 @@ void CStatusEffectContainer::TickRegen(time_point tick)
             {
                 DelStatusEffectSilent(EFFECT_HEALING);
                 m_POwner->takeDamage(damage);
-                if (!(m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO))
+
+                bool hasNightmare = (m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP) && m_POwner->StatusEffectContainer->GetStatusEffect(EFFECT_SLEEP)->GetSubID() == (uint32)EFFECT_BIO);
+                if (!hasNightmare)
+                {
                     WakeUp(); // dots dont wake up from nightmare
+                }
             }
         }
 

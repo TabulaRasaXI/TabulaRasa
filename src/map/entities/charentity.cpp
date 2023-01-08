@@ -1350,6 +1350,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         // get any available merit recast reduction
         uint8 meritRecastReduction = 0;
+        uint8 chargeTime           = 0;
 
         if (PAbility->getMeritModID() > 0 && !(PAbility->getAddType() & ADDTYPE_MERIT))
         {
@@ -1359,7 +1360,14 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         auto* charge = ability::GetCharge(this, PAbility->getRecastId());
         if (charge && PAbility->getID() != ABILITY_SIC)
         {
-            action.recast = charge->chargeTime * PAbility->getRecastTime() - meritRecastReduction;
+            // Ready is 2sec/merit (Sic is 4sec/merit so divide by 2)
+            if (PAbility->getMeritModID() == 902)
+            {
+                meritRecastReduction /= 2;
+            }
+
+            chargeTime    = charge->chargeTime - meritRecastReduction;
+            action.recast = chargeTime * PAbility->getRecastTime();
         }
         else
         {
@@ -1627,7 +1635,7 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
 
         if (charge)
         {
-            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, charge->chargeTime, charge->maxCharges);
+            PRecastContainer->Add(RECAST_ABILITY, PAbility->getRecastId(), action.recast, chargeTime, charge->maxCharges);
         }
         else
         {
@@ -2127,12 +2135,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     bool  isParalyzed      = battleutils::IsParalyzed(this);
     bool  itemLoss         = lua["xi"]["settings"]["map"]["ITEM_PARALYSIS_LOSS"].get<bool>();
     bool  scrollProtection = lua["xi"]["settings"]["map"]["ITEM_PARALYSIS_SCROLL_PROTECTION"].get<bool>();
-    // clang-format off
-    bool isScroll = (PItem->getID() >= 4606 && PItem->getID() <= 4638) || PItem->getID() == 4641 ||
-                    (PItem->getID() >= 4646 && PItem->getID() <= 4647) || (PItem->getID() >= 4651 && PItem->getID() <= 4851) ||
-                    (PItem->getID() >= 4853 && PItem->getID() <= 4863) || (PItem->getID() >= 4866 && PItem->getID() <= 4958) ||
-                    (PItem->getID() >= 4961 && PItem->getID() <= 5106) || (PItem->getID() >= 6569 && PItem->getID() <= 6571);
-    // clang-format on
+    bool  isScroll         = PItem->isScroll();
 
     // TODO: I'm sure this is supposed to be in the action packet... (animation, message)
     if (PItem->getAoE())

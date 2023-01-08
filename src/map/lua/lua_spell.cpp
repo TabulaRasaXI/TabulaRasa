@@ -51,6 +51,11 @@ void CLuaSpell::setMsg(uint16 messageID)
     m_PLuaSpell->setMessage(messageID);
 }
 
+void CLuaSpell::setModifier(uint8 modifier)
+{
+    m_PLuaSpell->setModifier(static_cast<MODIFIER>(modifier));
+}
+
 void CLuaSpell::setAoE(uint8 aoe)
 {
     m_PLuaSpell->setAOE(aoe);
@@ -94,6 +99,11 @@ bool CLuaSpell::canTargetEnemy()
 uint16 CLuaSpell::getTotalTargets()
 {
     return m_PLuaSpell->getTotalTargets();
+}
+
+uint32 CLuaSpell::getPrimaryTargetID()
+{
+    return m_PLuaSpell->getPrimaryTargetID();
 }
 
 uint16 CLuaSpell::getMagicBurstMessage()
@@ -152,6 +162,7 @@ void CLuaSpell::Register()
 {
     SOL_USERTYPE("CSpell", CLuaSpell);
     SOL_REGISTER("setMsg", CLuaSpell::setMsg);
+    SOL_REGISTER("setModifier", CLuaSpell::setModifier);
     SOL_REGISTER("setAoE", CLuaSpell::setAoE);
     SOL_REGISTER("setFlag", CLuaSpell::setFlag);
     SOL_REGISTER("setRadius", CLuaSpell::setRadius);
@@ -163,6 +174,7 @@ void CLuaSpell::Register()
     SOL_REGISTER("getMagicBurstMessage", CLuaSpell::getMagicBurstMessage);
     SOL_REGISTER("getElement", CLuaSpell::getElement);
     SOL_REGISTER("getTotalTargets", CLuaSpell::getTotalTargets);
+    SOL_REGISTER("getPrimaryTargetID", CLuaSpell::getPrimaryTargetID);
     SOL_REGISTER("getSkillType", CLuaSpell::getSkillType);
     SOL_REGISTER("getID", CLuaSpell::getID);
     SOL_REGISTER("getMPCost", CLuaSpell::getMPCost);

@@ -63,6 +63,16 @@ SpellID CSpell::getID()
     return m_ID;
 }
 
+void CSpell::setPrimaryTargetID(uint32 targid)
+{
+    m_primaryTargetID = targid;
+}
+
+uint32 CSpell::getPrimaryTargetID() const
+{
+    return m_primaryTargetID;
+}
+
 uint8 CSpell::getJob(JOBTYPE JobID)
 {
     return (m_job[JobID] == CANNOT_USE_SPELL ? 255 : m_job[JobID]);
@@ -325,6 +335,16 @@ uint16 CSpell::getMagicBurstMessage() const
 void CSpell::setMagicBurstMessage(uint16 message)
 {
     m_MagicBurstMessage = message;
+}
+
+MODIFIER CSpell::getModifier()
+{
+    return m_MessageModifier;
+}
+
+void CSpell::setModifier(MODIFIER modifier)
+{
+    m_MessageModifier = modifier;
 }
 
 uint16 CSpell::getElement() const
