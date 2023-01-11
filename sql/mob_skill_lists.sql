@@ -514,7 +514,6 @@ INSERT INTO `mob_skill_lists` VALUES ('Gnole',132,2175);
 INSERT INTO `mob_skill_lists` VALUES ('Gnole',132,2176);
 INSERT INTO `mob_skill_lists` VALUES ('Goblin',133,590);
 INSERT INTO `mob_skill_lists` VALUES ('Goblin',133,591);
-INSERT INTO `mob_skill_lists` VALUES ('Goblin',133,592);
 INSERT INTO `mob_skill_lists` VALUES ('God',134,1491);
 INSERT INTO `mob_skill_lists` VALUES ('God',134,1492);
 INSERT INTO `mob_skill_lists` VALUES ('God',134,1493);
@@ -674,9 +673,9 @@ INSERT INTO `mob_skill_lists` VALUES ('Khimaira',168,2026);
 INSERT INTO `mob_skill_lists` VALUES ('Khimaira',168,2027);
 INSERT INTO `mob_skill_lists` VALUES ('Khimaira',168,2028);
 -- INSERT INTO `mob_skill_lists` VALUES ('Khimaira',168,2698);
-INSERT INTO `mob_skill_lists` VALUES ('Kindred_ROZ',169,559); -- Demonic Howl
-INSERT INTO `mob_skill_lists` VALUES ('Kindred_ROZ',169,560); -- Soul Drain
-INSERT INTO `mob_skill_lists` VALUES ('Kindred_ROZ',169,563); -- Hecatomb Wave
+INSERT INTO `mob_skill_lists` VALUES ('Kindred_ROZ',169,559); -- Soul Drain
+INSERT INTO `mob_skill_lists` VALUES ('Kindred_ROZ',169,560); -- Hecatomb Wave
+INSERT INTO `mob_skill_lists` VALUES ('Kindred_ROZ',169,563); -- Demonic Howl
 INSERT INTO `mob_skill_lists` VALUES ('Ladybug_Day',170,2178);
 INSERT INTO `mob_skill_lists` VALUES ('Ladybug_Day',170,2179);
 INSERT INTO `mob_skill_lists` VALUES ('Ladybug_Day',170,2180);
