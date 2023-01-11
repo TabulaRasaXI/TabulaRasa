@@ -1404,7 +1404,6 @@ UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Wardrobe' AND
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Mezraq' AND ID = 5001;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ID = 11020;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Athenienne' AND ID = 11024;
-UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Plain Sword' AND ID = 11518;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Lt. Steel Sheet' AND ID = 11529;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Lt. Steel Sheet' AND ID = 11534;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Bannaret Mail' AND ID = 11553;
@@ -1548,7 +1547,6 @@ UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Chocobo Blink
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Armored Ring' AND ID = 41022;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Aiming Gloves' AND ID = 41034;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Frigid Skin' AND ID = 42501;
-UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Himantes' AND ID = 42503;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Raptor Strap' AND ID = 42508;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Noble Himantes' AND ID = 42513;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Ice Trousers' AND ID = 42520;
@@ -1648,7 +1646,6 @@ UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Copper Bullet
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Automaton Oil' AND ID = 61025;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Little Comet' AND ID = 61517;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Bullet' AND ID = 62001;
-UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Bokuto' AND ID = 62007;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Poison Katars' AND ID = 62014;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Iron Bullet' AND ID = 62028;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Stabilizer' AND ID = 62032;
@@ -1897,7 +1894,6 @@ UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Firesand' AND
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Hi-Potion Drop' AND ID = 62555;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ID = 64551;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Cheese Sandwich' AND ID = 70018;
-UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Honey' AND ID = 70507;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Army Biscuit' AND ID = 70511;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Bavarois' AND ID = 72013;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Soba Noodles' AND ID = 72027;
@@ -1952,6 +1948,7 @@ UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Marinara Pizz
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Marinara Slice' AND ID = 71545;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Pizza Dough' AND ID = 72004;
 UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Cherry Muffin' AND ID = 72011;
+UPDATE `synth_recipes` SET ContentTag = 'WOTG' WHERE ResultName = 'Dhalmel Hair' AND ID = 41031;
 
 -- ------------------------------------------------------------
 -- ACP
@@ -2789,5 +2786,6 @@ UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ID = 65015;
 UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ResultName = 'Bagua Charm' AND ID = 65016;
 UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ID = 65017;
 UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ResultName = 'Wispy Broth' AND ID = 70520;
+UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ResultName = 'Pearl' AND ID = 50514; -- OOE change
 
 UNLOCK TABLES;

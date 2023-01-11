@@ -1946,6 +1946,8 @@ namespace fishingutils
         }
         else
         {
+            auto secs = std::chrono::duration_cast<std::chrono::seconds>(server_clock::now().time_since_epoch());
+            PChar->setCharVar("[Fish]LastCastTime", secs.count());
             PChar->lastCastTime = vanaTime;
             PChar->nextFishTime = PChar->lastCastTime + 5;
         }
@@ -2243,6 +2245,12 @@ namespace fishingutils
                     }
                     else
                     {
+                        // ignore pirates chart items since not in pirates fight
+                        if (item->fishID == 5329 || item->fishID == 5330)
+                        {
+                            continue;
+                        }
+
                         if (!item->quest_only && FishingPools[PChar->getZone()].catchPools[area->areaId].stock[item->fishID].quantity == 0)
                         {
                             NoCatchList.insert(item->fishID);
