@@ -4096,8 +4096,8 @@ void CLuaBaseEntity::confirmTrade()
             CItem* PItem = PChar->TradeContainer->getItem(slotID);
             if (PItem)
             {
-                uint8 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
-                auto  quantity       = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
+                uint32 confirmedItems = PChar->TradeContainer->getConfirmedStatus(slotID);
+                auto   quantity       = (int32)std::min<uint32>(PChar->TradeContainer->getQuantity(slotID), confirmedItems);
 
                 PItem->setReserve(PItem->getReserve() - quantity);
                 if (confirmedItems > 0)
@@ -5219,7 +5219,7 @@ bool CLuaBaseEntity::getGMHidden()
 
 /************************************************************************
  *  Function: setGMHidden()
- *  Purpose : Sets a GM to hidden mode
+ *  Purpose : Sets a GM to hidden mode. Adds invis status.
  *  Example : player:setGMHidden(1)
  ************************************************************************/
 
@@ -5230,6 +5230,17 @@ void CLuaBaseEntity::setGMHidden(bool isHidden)
     auto* PChar         = static_cast<CCharEntity*>(m_PBaseEntity);
     PChar->m_isGMHidden = isHidden;
 
+    // Adds an invisible effect.
+    if (isHidden)
+    {
+        PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_HIDE, EFFECT_HIDE, 99, 0, 0, 0, 0, 0, EFFECTFLAG_NO_CANCEL));
+    }
+    else
+    {
+        PChar->StatusEffectContainer->DelStatusEffect(EFFECT_HIDE);
+    }
+
+    // Push packets so characters spawn / despawn for other entities as needed
     if (PChar->loc.zone)
     {
         if (PChar->m_isGMHidden)
@@ -15477,6 +15488,16 @@ void CLuaBaseEntity::clearActionQueue()
     }
 }
 
+void CLuaBaseEntity::clearTimerQueue()
+{
+    if (m_PBaseEntity == nullptr)
+    {
+        return;
+    }
+
+    m_PBaseEntity->PAI->ClearTimerQueue();
+}
+
 void CLuaBaseEntity::setMannequinPose(uint16 itemID, uint8 race, uint8 pose)
 {
     TracyZoneScoped;
@@ -16355,6 +16376,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("restoreNpcLook", CLuaBaseEntity::restoreNpcLook);
     SOL_REGISTER("getTraits", CLuaBaseEntity::getTraits);
     SOL_REGISTER("clearActionQueue", CLuaBaseEntity::clearActionQueue);
+    SOL_REGISTER("clearTimerQueue", CLuaBaseEntity::clearTimerQueue);
 
     SOL_REGISTER("getChocoboRaisingInfo", CLuaBaseEntity::getChocoboRaisingInfo);
     SOL_REGISTER("setChocoboRaisingInfo", CLuaBaseEntity::setChocoboRaisingInfo);

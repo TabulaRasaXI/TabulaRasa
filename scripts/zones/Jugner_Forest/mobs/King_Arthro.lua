@@ -47,6 +47,7 @@ entity.onMobDespawn = function(mob)
     print(respawnTime)
     for offset = 1, 10 do
         xi.mob.nmTODPersist(GetMobByID(kingArthroID - offset), respawnTime)
+        DisallowRespawn(kingArthroID - offset, false)
     end
     SetServerVariable("[Spawn]King_Arthro_Crabs", os.time() + respawnTime)
 end

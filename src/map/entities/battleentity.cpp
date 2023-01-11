@@ -861,7 +861,7 @@ uint16 CBattleEntity::GetBaseRACC(uint8 skill, uint16 bonusSkill)
     return std::clamp(acc + std::min<int16>(((100 + getMod(Mod::FOOD_RACCP) * acc) / 100), getMod(Mod::FOOD_RACC_CAP)), 0, 65535);
 }
 
-uint16 CBattleEntity::ACC(uint8 attackNumber, uint8 offsetAccuracy)
+uint16 CBattleEntity::ACC(uint8 attackNumber, int8 offsetAccuracy)
 {
     TracyZoneScoped;
     if (this->objtype & TYPE_PC)
@@ -1732,6 +1732,7 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
     auto totalTargets = (uint16)PAI->TargetFind->m_targets.size();
 
     PSpell->setTotalTargets(totalTargets);
+    PSpell->setPrimaryTargetID(PActionTarget->id);
 
     action.id         = id;
     action.actiontype = ACTION_MAGIC_FINISH;
@@ -1794,15 +1795,9 @@ void CBattleEntity::OnCastFinished(CMagicState& state, action_t& action)
                 msg = PSpell->getAoEMessage();
             }
 
-            if (damage < 0)
-            {
-                msg                = MSGBASIC_MAGIC_RECOVERS_HP;
-                actionTarget.param = static_cast<uint16>(std::clamp(damage * -1, 0, PTarget->GetMaxHP() - PTarget->health.hp));
-            }
-            else
-            {
-                actionTarget.param = damage;
-            }
+            actionTarget.param    = damage;
+            actionTarget.modifier = PSpell->getModifier();
+            PSpell->setModifier(MODIFIER::NONE); // Reset modifier on use
         }
 
         if (actionTarget.animation == 122)
@@ -2120,7 +2115,17 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
                         }
 
                         float DamageRatio = battleutils::GetDamageRatio(PTarget, this, attack.IsCritical(), csJpAtkBonus, SLOT_MAIN, 0, attack.IsGuarded());
-                        auto  damage      = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
+                        auto  damage      = 0;
+
+                        if (PTarget->objtype == TYPE_MOB)
+                        {
+                            int8 mobH2HDamage = PTarget->GetMLevel() + 2;
+                            damage            = (int32)((std::floor((mobH2HDamage + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * 0.9f) / 2) * DamageRatio);
+                        }
+                        else
+                        {
+                            damage = (int32)((PTarget->GetMainWeaponDmg() + naturalh2hDMG + battleutils::GetFSTR(PTarget, this, SLOT_MAIN)) * DamageRatio);
+                        }
 
                         actionTarget.spikesParam =
                             battleutils::TakePhysicalDamage(PTarget, this, attack.GetAttackType(), damage, false, SLOT_MAIN, 1, nullptr, true, false, true);
@@ -2351,7 +2356,7 @@ void CBattleEntity::OnDespawn(CDespawnState& /*unused*/)
 {
     TracyZoneScoped;
     FadeOut();
-    //#event despawn
+    // #event despawn
     PAI->EventHandler.triggerListener("DESPAWN", CLuaBaseEntity(this));
     PAI->Internal_Respawn(0s);
 }
