@@ -13,7 +13,7 @@ local entity = {}
 
 entity.onMobInitialize = function(mob)
     mob:addMod(xi.mod.SLEEPRES, 100)
-    mob:setMod(xi.mod.EVA, 400)
+    -- mob:setMod(xi.mod.EVA, 400)
 end
 
 entity.onMobSpawn = function(mob)
