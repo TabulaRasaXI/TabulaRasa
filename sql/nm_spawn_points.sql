@@ -560,6 +560,16 @@ INSERT INTO `nm_spawn_points` VALUES (16896107,46,641.520,20.508,666.251);
 INSERT INTO `nm_spawn_points` VALUES (16896107,47,635.831,20.273,674.376);
 INSERT INTO `nm_spawn_points` VALUES (16896107,48,643.327,20.000,679.882);
 INSERT INTO `nm_spawn_points` VALUES (16896107,49,653.482,20.489,681.112);
+INSERT INTO `nm_spawn_points` VALUES (16900230,0,-177.14,48.00,-860.12); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900231,0,-199.48,47.86,-846.69); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900232,0,-191.20,48.22,-854.39); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900233,0,-177.91,47.91,-860.99); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900234,0,-174.60,48.33,-862.92); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900235,0,-174.40,47.74,-861.63); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900236,0,-173.86,48.08,-860.40); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900237,0,-178.71,47.50,-864.46); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900238,0,-174.73,48.20,-859.06); -- Carmine Dobsonfly
+INSERT INTO `nm_spawn_points` VALUES (16900239,0,-179.69,47.63,-863.42); -- Carmine Dobsonfly
 INSERT INTO `nm_spawn_points` VALUES (16916814,0,-426.739,-0.500,687.728); -- Jailer of Temperance
 INSERT INTO `nm_spawn_points` VALUES (16941066,0,43.488,-16.666,-6.216); -- Woodnix_Shrillwhistle
 INSERT INTO `nm_spawn_points` VALUES (16941082,0,-11.923,-15.769,0.747); -- Shamblix_Rottenheart
@@ -7093,14 +7103,6 @@ INSERT INTO `nm_spawn_points` VALUES (17281281,2,-408.017,17.000,-355.777);
 INSERT INTO `nm_spawn_points` VALUES (17281281,3,-392.175,17.000,-350.777);
 INSERT INTO `nm_spawn_points` VALUES (17281281,4,-417.712,17.000,-365.187);
 INSERT INTO `nm_spawn_points` VALUES (17281281,5,-428.881,17.000,-362.7055);
-INSERT INTO `nm_spawn_points` VALUES (16879737,0,203.139,-23.028,297.725);
-INSERT INTO `nm_spawn_points` VALUES (16879737,1,238.317,-23.850,284.075);
-INSERT INTO `nm_spawn_points` VALUES (16879737,2,235.083,-23.712,314.829);
-INSERT INTO `nm_spawn_points` VALUES (16879737,3,240.160,-16.465,241.124);
-INSERT INTO `nm_spawn_points` VALUES (16879758,0,83.241,-8.259,-41.968);
-INSERT INTO `nm_spawn_points` VALUES (16879758,1,69.174,-7.50,-109.377);
-INSERT INTO `nm_spawn_points` VALUES (16879758,2,89.564,-7.73,-123.906);
-INSERT INTO `nm_spawn_points` VALUES (16879758,3,46.827,-7.80,-80.884);
 INSERT INTO `nm_spawn_points` VALUES (17469747,0,169.270,8.028,-110.580);
 INSERT INTO `nm_spawn_points` VALUES (17469747,1,155.792,8.334,-124.494);
 INSERT INTO `nm_spawn_points` VALUES (17469747,2,169.525,11.964,-128.288);

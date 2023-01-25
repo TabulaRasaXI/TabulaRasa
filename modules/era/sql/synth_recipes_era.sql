@@ -1745,6 +1745,7 @@ UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Bloody Chocol
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Sutlac' AND ID = 71547;
 UPDATE `synth_recipes` SET ContentTag = 'TOAU' WHERE ResultName = 'Simit' AND ID = 72008;
 UPDATE `synth_recipes` SET ContentTag = 'ToAU' WHERE ResultName = 'Mercury' AND ID = 60519;
+UPDATE `synth_recipes` SET ContentTag = 'ToAU' WHERE ResultName = 'Pebble' AND ID = 50516;
 
 -- ------------------------------------------------------------
 -- WotG Synths
@@ -2785,6 +2786,5 @@ UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ID = 65015;
 UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ResultName = 'Bagua Charm' AND ID = 65016;
 UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ID = 65017;
 UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ResultName = 'Wispy Broth' AND ID = 70520;
-UPDATE `synth_recipes` SET ContentTag = 'ROV' WHERE ResultName = 'Pearl' AND ID = 50514; -- OOE change
 
 UNLOCK TABLES;
