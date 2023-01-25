@@ -54,13 +54,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-<<<<<<< HEAD
-    UpdateNMSpawnPoint(mob:getID())
-    local respawn = math.random(75600,77400) -- 21 to 21.5 hours
-    xi.mob.NMPersist(mob,respawn)
-=======
     xi.mob.nmTODPersist(mob, math.random(75600, 77400)) -- 21 to 21.5 hours
->>>>>>> ASB/staging
     DespawnMob(ID.mob.BRIGHT_HANDED_KUNBERRY + 1)
     DespawnMob(ID.mob.BRIGHT_HANDED_KUNBERRY + 2)
 end
