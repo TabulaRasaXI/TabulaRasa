@@ -29,13 +29,13 @@ WHERE itemId IN (
     )
 AND modId = 165;
 
-UPDATE item_mods
-SET modId = 1169
-WHERE itemId IN (
-    SELECT itemId
-    FROM item_weapon
-    WHERE skill < 25
-    )
-AND modId = 23;
+-- UPDATE item_mods
+-- SET modId = 1169
+-- WHERE itemId IN (
+--     SELECT itemId
+--     FROM item_weapon
+--     WHERE skill < 25
+--     )
+-- AND modId = 23;
 
 UNLOCK TABLES;

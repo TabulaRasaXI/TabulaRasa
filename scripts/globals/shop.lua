@@ -290,7 +290,7 @@ xi.shop =
         [xi.skill.ALCHEMY] =
         {
                 2131,      75,      xi.craftRank.AMATEUR,      -- Triturator
-                 912,      40,      xi.craftRank.AMATEUR,      -- Beehive Chip
+                 912,      80,      xi.craftRank.AMATEUR,      -- Beehive Chip
                  914,    1700,      xi.craftRank.AMATEUR,      -- Mercury
                  937,     300,      xi.craftRank.RECRUIT,      -- Animal Glue
                  943,     320,      xi.craftRank.RECRUIT,      -- Poison Dust
