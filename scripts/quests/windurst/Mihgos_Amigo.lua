@@ -20,7 +20,7 @@ local gilPerTrade = 200
 
 quest.reward =
 {
-    fame = 4, -- Baesd on 212 yag necklaces needed to reach level 4 tenshodo fame.
+    fame = 16, -- Baesd on 212 yag necklaces needed to reach level 4 tenshodo fame.
     fameArea = xi.quest.fame_area.NORG,
     title = xi.title.CAT_BURGLAR_GROUPIE,
 }
