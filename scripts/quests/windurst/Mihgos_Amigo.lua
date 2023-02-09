@@ -124,7 +124,7 @@ quest.sections =
                 [494] = function(player, csid, option, npc)
                     player:confirmTrade()
                     player:addGil(gilPerTrade)
-                    player:addFame(xi.quest.fame_area.NORG, 4)
+                    player:addFame(xi.quest.fame_area.NORG, 16)
                 end,
             },
         },
