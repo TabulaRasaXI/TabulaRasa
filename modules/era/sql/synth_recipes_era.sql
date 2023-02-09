@@ -132,6 +132,7 @@ ALTER TABLE `synth_recipes`
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Cursed Breeches' AND ID = 14516;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Mlbd. Sheet' AND ID = 14520;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Death Scythe' AND ID = 14522;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Yasha Jinpachi' AND ID = 14523;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Cursed Sollerets' AND ID = 14527;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Black Cuisses' AND ID = 14529;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Hachiman Kote' AND ID = 14531;
@@ -674,7 +675,6 @@ ALTER TABLE `synth_recipes`
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Dhalmel Mantle' AND ID = 41028;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Noct Brais' AND ID = 41029;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Studded Boots' AND ID = 41030;
--- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Dhalmel Hair' AND ID = 41031;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Sandals' AND ID = 41032;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ID = 41033;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Breath Mantle' AND ID = 41035;
@@ -867,8 +867,6 @@ ALTER TABLE `synth_recipes`
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Vivio Femur' AND ID = 50507;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Fish Scales' AND ID = 50509;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Gelatin' AND ID = 50510;
--- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Pebble' AND ID = 50515;
--- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Pearl' AND ID = 50516;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Pebble' AND ID = 50517;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Carapace Powder' AND ID = 51001;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Gemshorn' AND ID = 51007;
@@ -1373,6 +1371,15 @@ ALTER TABLE `synth_recipes`
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Windurst Taco' AND ID = 72002;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Salmon Roe' AND ID = 72005;
 -- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Rainbow Powder' AND ID = 63503;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Honey' AND ID = 70507;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Mercury' AND ID = 60515;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Himantes' AND ID = 42503;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Beast Horn' AND ID = 53025;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Reraise Gorget' AND ID = 54007;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Bittern' AND ID = 60537;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Bullet' AND ID = 62001;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Poison Katars' AND ID = 62014;
+-- UPDATE `synth_recipes` SET ContentTag = 'COP' WHERE ResultName = 'Couse' AND ID = 3516;
 
 -- ------------------------------------------------------------
 -- ToAU Synths
