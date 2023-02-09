@@ -84,14 +84,14 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 510 and option == 0 then
         local stockA =
         {
-            4641, 1165, 1, -- Scroll of Diaga
-            4664, 837, 1,  -- Scroll of Slow
-            4662, 7025, 1, -- Scroll of Stoneskin
+            4641, 1165, 3, -- Scroll of Diaga
+            4664, 837, 3,  -- Scroll of Slow
+            4662, 7025, 3, -- Scroll of Stoneskin
 
-            4636, 140, 2,  -- Scroll of Banish
-            4646, 1165, 2, -- Scroll of Banishga
-            4661, 2097, 2, -- Scroll of Blink
-            4610, 585, 2,  -- Scroll of Cure II
+            4636, 140, 3,  -- Scroll of Banish
+            4646, 1165, 3, -- Scroll of Banishga
+            4661, 2097, 3, -- Scroll of Blink
+            4610, 585, 3,  -- Scroll of Cure II
 
             4663, 360, 3,  -- Scroll of Aquaveil
             4624, 990, 3,  -- Scroll of Blindna
