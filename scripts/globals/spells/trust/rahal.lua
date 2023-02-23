@@ -26,7 +26,10 @@ spellObject.onMobSpawn = function(mob)
                         ai.r.JA, ai.s.SPECIFIC, xi.ja.DEFENDER)
 
     mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 50,
-                        ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE)end
+                        ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE)
+    mob:addMod(xi.mod.ENMITY, 20)
+
+end
 
 spellObject.onMobDespawn = function(mob)
     xi.trust.message(mob, xi.trust.message_offset.DESPAWN)

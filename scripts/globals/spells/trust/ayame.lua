@@ -4,6 +4,7 @@
 require("scripts/globals/ability")
 require("scripts/globals/gambits")
 require("scripts/globals/magic")
+require("scripts/globals/spell_data")
 require("scripts/globals/status")
 require("scripts/globals/trust")
 require("scripts/globals/weaponskillids")
@@ -24,8 +25,8 @@ spellObject.onMobSpawn = function(mob)
         [xi.magic.spell.GILGAMESH] = xi.trust.message_offset.TEAMWORK_2,
     })
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, xi.effect.HASSO,
-        ai.r.JA, ai.s.SPECIFIC, xi.ja.HASSO)
+    -- mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, xi.effect.HASSO,
+    --     ai.r.JA, ai.s.SPECIFIC, xi.ja.HASSO)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0,
         ai.r.JA, ai.s.SPECIFIC, xi.ja.THIRD_EYE)
