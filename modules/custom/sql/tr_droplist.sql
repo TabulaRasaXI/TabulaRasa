@@ -11489,29 +11489,29 @@ INSERT INTO `mob_droplist` VALUES (1410,0,0,1000,1311,@VRARE);    -- Piece Of Ox
 INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,497,@COMMON);  -- Gigas Socks (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,1426,@COMMON); -- Warriors Testimony (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,499,@UNCOMMON);      -- Gigas Necklace (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,2385,0);         -- Moldy Buckler (0.0%)
-INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,2386,0);         -- Hoary Battle Horn (0.0%)
+INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,2385,@RARE);         -- Moldy Buckler (5.0%)
+INSERT INTO `mob_droplist` VALUES (1411,0,0,1000,2386,@RARE);         -- Hoary Battle Horn (5.0%)
 
 -- ZoneID: 158 - Jotunn Hallkeeper
 INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,497,@COMMON);  -- Gigas Socks (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,1427,@COMMON); -- Monks Testimony (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,499,@UNCOMMON);      -- Gigas Necklace (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,2385,0);         -- Moldy Buckler (0.0%)
-INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,2386,0);         -- Hoary Battle Horn (0.0%)
+INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,2385,@RARE);         -- Moldy Buckler (5.0%)
+INSERT INTO `mob_droplist` VALUES (1412,0,0,1000,2386,@RARE);         -- Hoary Battle Horn (5.0%)
 
 -- ZoneID: 158 - Jotunn Wallkeeper
 INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,497,@COMMON);  -- Gigas Socks (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,1436,@COMMON); -- Rangers Testimony (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,5010,@UNCOMMON);     -- Scroll Of Archers Prelude (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,2385,0);         -- Moldy Buckler (0.0%)
-INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,2386,0);         -- Hoary Battle Horn (0.0%)
+INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,2385,@RARE);         -- Moldy Buckler (5.0%)
+INSERT INTO `mob_droplist` VALUES (1413,0,0,1000,2386,@RARE);         -- Hoary Battle Horn (5.0%)
 
 -- ZoneID: 158 - Jotunn Wildkeeper
 INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,497,@VCOMMON);    -- Gigas Socks (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,1434,@COMMON); -- Beastmasters Testimony (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,499,@UNCOMMON);      -- Gigas Necklace (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,2385,0);         -- Moldy Buckler (0.0%)
-INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,2386,0);         -- Hoary Battle Horn (0.0%)
+INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,2385,@RARE);         -- Moldy Buckler (5.0%)
+INSERT INTO `mob_droplist` VALUES (1414,0,0,1000,2386,@RARE);         -- Hoary Battle Horn (5.0%)
 
 -- ZoneID:   5 - Judicator Demon
 INSERT INTO `mob_droplist` VALUES (1415,0,0,1000,902,@COMMON); -- Demon Horn (Common, 15%)
