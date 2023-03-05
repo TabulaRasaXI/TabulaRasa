@@ -9,9 +9,9 @@ mixins = { require("scripts/mixins/families/empty_terroanima") }
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    mob:addMod(xi.mod.TRIPLE_ATTACK, 10)
-    mob:addMod(xi.mod.DEFP, 35)
-    mob:setMod(xi.mod.STORETP, 100)
+    -- mob:addMod(xi.mod.TRIPLE_ATTACK, 10)
+    -- mob:addMod(xi.mod.DEFP, 35)
+    -- mob:setMod(xi.mod.STORETP, 100)
 end
 
 entity.onMobSpawn = function(mob)
