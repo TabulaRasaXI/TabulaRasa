@@ -581,7 +581,7 @@ INSERT INTO `item_latents` VALUES (13557,13,3,53,0);     -- MND +3 in areas insi
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (13558,1,4,53,0);      -- DEF +4 in areas inside own nation's control
 INSERT INTO `item_latents` VALUES (13558,11,2,53,0);     -- AGI +2 in areas inside own nation's control
-INSERT INTO `item_latents` VALUES (13558,10,2,53,0);     -- VIT +3 in areas inside own nation's control
+INSERT INTO `item_latents` VALUES (13558,10,3,53,0);     -- VIT +3 in areas inside own nation's control
 
 -- -------------------------------------------------------
 -- Patriarch Protector's Ring
@@ -906,13 +906,13 @@ INSERT INTO `item_latents` VALUES (14009,23,9,0,75);     -- Attack+9 when HP <=7
 -- Grand Temple Knight's Gauntlets
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (14013,9,2,53,1);      -- DEX +2 in areas outside own nation's control
-INSERT INTO `item_latents` VALUES (14013,110,10,53,1);   -- DEX +2 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES (14013,110,10,53,1);   -- PARRY +10 in areas outside own nation's control
 
 -- -------------------------------------------------------
 -- Grand Temple Knight's Bangles
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (14014,11,2,53,1);     -- AGI +2 in areas outside own nation's control
-INSERT INTO `item_latents` VALUES (14014,68,7,53,1);     -- EVA +7 in areas outside own nation's control
+INSERT INTO `item_latents` VALUES (14014,108,7,53,1);     -- Evasion Skill +7 in areas outside own nation's control
 
 -- -------------------------------------------------------
 -- Praefectus's Gloves
@@ -2313,19 +2313,21 @@ INSERT INTO `item_latents` VALUES (17592,171,83,49,4468); -- (pamamas)
 INSERT INTO `item_latents` VALUES (17592,171,83,49,4596); -- (wild pamamas)
 
 -- -------------------------------------------------------
--- Diabolos's Pole
+-- Dagger of Trials
 -- -------------------------------------------------------
-INSERT INTO `item_latents` VALUES (17599,315,25,52,8);   -- +25% drain/aspir potency in Dark weather
-
+INSERT INTO `item_latents` VALUES (17616,18,-10,47,0);
 INSERT INTO `item_latents` VALUES (17616,2,-20,47,0);
 INSERT INTO `item_latents` VALUES (17616,16,-10,47,0);
+
+-- -------------------------------------------------------
+-- Diabolos's Pole
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES (17599,315,25,52,8);   -- +25% ENH_DRAIN_ASPIR in dark weather
 
 -- -------------------------------------------------------
 -- Master Caster's Knife
 -- -------------------------------------------------------
 INSERT INTO `item_latents` VALUES (17617,1,10,70,2);    -- Citizens of Windurst: DEF +10
-
-INSERT INTO `item_latents` VALUES (17616,18,-10,47,0);
 
 -- -------------------------------------------------------
 -- Daylight Dagger
