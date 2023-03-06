@@ -287,6 +287,11 @@ namespace mobutils
                 {
                     mobHP = (baseMobHP + sjHP) * .95;
                 }
+                // Manticore family has 50% more HP
+                else if (PMob->m_Family == 179)
+                {
+                    mobHP = (baseMobHP + sjHP) * 1.5;
+                }
                 else
                 {
                     mobHP = baseMobHP + sjHP;
@@ -1393,7 +1398,7 @@ Usage:
                 newZone->GetZoneEntities()->AssignDynamicTargIDandLongID(PMob);
 
                 // Ensure dynamic targid is released on death
-                PMob->m_bReleaseTargIDOnDeath = true;
+                PMob->m_bReleaseTargIDOnDisappear = true;
 
                 // Insert ally into zone's mob list. TODO: Do we need to assign party for allies?
                 newZone->GetZoneEntities()->m_mobList[PMob->targid] = PMob;

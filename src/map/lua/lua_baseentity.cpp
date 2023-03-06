@@ -10864,6 +10864,23 @@ bool CLuaBaseEntity::getClaimable()
 }
 
 /************************************************************************
+ *  Function: clearEnmityForEntity(...)
+ *  Purpose :
+ *  Example : mob:clearEnmityForEntity(player)
+ *  Notes   : Taken from LSB. When merging from upstream, please accept theirs.
+ ************************************************************************/
+
+void CLuaBaseEntity::clearEnmityForEntity(CLuaBaseEntity* PEntity)
+{
+    if (auto* PMob = dynamic_cast<CMobEntity*>(m_PBaseEntity))
+    {
+        PMob->PEnmityContainer->Clear(PEntity->getID());
+        return;
+    }
+    ShowError("lua::clearEnmityForEntity called on invalid entity");
+}
+
+/************************************************************************
  *  Function: addStatusEffect(effect, power, tick, duration)
  *  Purpose : Adds a specified Status Effect to the Entity
  *  Example : target:addStatusEffect(xi.effect.ACCURACY_DOWN, 20, 3, 60)
@@ -10898,9 +10915,10 @@ bool CLuaBaseEntity::addStatusEffect(sol::variadic_args va)
         auto duration   = static_cast<uint32>(va[3].as<double>());
 
         // Optional
-        auto subID    = va[4].is<uint32>() ? va[4].as<uint32>() : 0;
-        auto subPower = va[5].is<uint16>() ? va[5].as<uint16>() : 0;
-        auto tier     = va[6].is<uint16>() ? va[6].as<uint16>() : 0;
+        auto subID        = va[4].is<uint32>() ? va[4].as<uint32>() : 0;
+        auto subPower     = va[5].is<uint16>() ? va[5].as<uint16>() : 0;
+        auto tier         = va[6].is<uint16>() ? va[6].as<uint16>() : 0;
+        auto itemSourceID = va[7].is<uint16>() ? va[7].as<uint16>() : 0;
 
         CStatusEffect* PEffect = new CStatusEffect(effectID,
                                                    effectIcon,
@@ -10910,6 +10928,11 @@ bool CLuaBaseEntity::addStatusEffect(sol::variadic_args va)
                                                    subID,
                                                    subPower,
                                                    tier);
+
+        if (itemSourceID > 0)
+        {
+            PEffect->SetItemSourceID(itemSourceID);
+        }
 
         if (PEffect->GetStatusID() == EFFECT_FOOD)
         {
