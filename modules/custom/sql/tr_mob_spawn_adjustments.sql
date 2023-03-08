@@ -32,7 +32,7 @@ WHERE name IN
 
 UPDATE `mob_groups`
 SET minLevel = 56, maxLevel = 58, content_tag = NULL
-WHERE name = 'Warden_Beetle';\
+WHERE name = 'Warden_Beetle';
 
 -- HNM Idle Despawn off
 DELETE from mob_spawn_mods where modid = 55 and mobid in (
