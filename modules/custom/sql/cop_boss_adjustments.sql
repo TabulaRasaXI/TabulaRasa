@@ -1,5 +1,5 @@
 UPDATE mob_groups SET
-    minLevel = minLevel - 2
+    minLevel = minLevel - 2,
     maxLevel = maxLevel - 2
     where name in
         (

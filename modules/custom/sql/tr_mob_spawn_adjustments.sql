@@ -34,6 +34,13 @@ UPDATE `mob_groups`
 SET minLevel = 56, maxLevel = 58, content_tag = NULL
 WHERE name = 'Warden_Beetle';
 
+-- HNM Idle Despawn off
+DELETE from mob_spawn_mods where modid = 55 and mobid in (
+                                                         17297440, -- Behemoth
+                                                         17301537, -- Adamantoise
+                                                         17408018  -- Fafnir
+                                                         );
+
 --King Ranperre's Tomb
 
 UPDATE mob_groups SET content_tag=NULL WHERE name='Ogre_Bat' AND groupid='27' AND zoneid='190';
