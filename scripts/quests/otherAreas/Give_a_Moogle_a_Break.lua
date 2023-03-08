@@ -37,12 +37,12 @@ local questAvailable =
 {
     ['Moogle'] =
     {
-        onTrigger = function(player, npc)
-            return quest:progressEvent(30005, { [3] = 5,
-                                                [5] = xi.items.POWER_BOW,
-                                                [6] = xi.items.BEETLE_RING,
-                                                })
-        end,
+        -- onTrigger = function(player, npc)
+        --     return quest:progressEvent(30005, { [3] = 5,
+        --                                         [5] = xi.items.POWER_BOW,
+        --                                         [6] = xi.items.BEETLE_RING,
+        --                                         })
+        -- end,
     },
 
     onEventFinish =
@@ -72,25 +72,25 @@ local questAccepted =
             end
         end,
 
-        onTrigger = function(player, npc)
-            local questProgress = quest:getVar(player, 'Prog')
-            local questSeen = quest:getLocalVar(player, 'questSeen')
+        -- onTrigger = function(player, npc)
+        --     local questProgress = quest:getVar(player, 'Prog')
+        --     local questSeen = quest:getLocalVar(player, 'questSeen')
 
-            if questSeen ~= 0 then
-                return nil
-            end
+        --     if questSeen ~= 0 then
+        --         return nil
+        --     end
 
-            if questProgress == 0 then
-                return quest:progressEvent(30006, { [5] = xi.items.POWER_BOW,
-                                                    [6] = xi.items.BEETLE_RING,
-                                                    })
-            elseif
-                questProgress == 1 and
-                quest:getVar(player, 'Timer') < os.time()
-            then
-                return quest:progressEvent(30008)
-            end
-        end,
+        --     if questProgress == 0 then
+        --         return quest:progressEvent(30006, { [5] = xi.items.POWER_BOW,
+        --                                             [6] = xi.items.BEETLE_RING,
+        --                                             })
+        --     elseif
+        --         questProgress == 1 and
+        --         quest:getVar(player, 'Timer') < os.time()
+        --     then
+        --         return quest:progressEvent(30008)
+        --     end
+        -- end,
     },
 
     onEventFinish =

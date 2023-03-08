@@ -64,9 +64,9 @@ era/lua_dynamis/mobskills/era_xarcabard_tp_moves.lua
 era/lua_dynamis/globals/era_dynamis_zones.lua
 era/sql_dynamis/
 #-----------------------
-#    CoP Zones Access
+#    CoP Adjustments
 #-----------------------
-era/sql/disable_walking_into_cop_zones.sql
+custom/sql/cop_boss_adjustments.sql
 #-----------------------
 #       Renamer
 #-----------------------
@@ -82,7 +82,8 @@ custom/lua/conquest_npc_shops_always_open.lua
 custom/lua/conquest_regional_npcs_always_up.lua
 custom/lua/custom_conquest.lua
 custom/lua/custom_containers.lua
-custom/lua/disable_zones.lua
+custom/lua/custom_HNM_system.lua
+#custom/lua/disable_zones.lua
 custom/lua/guild_always_open.lua
 custom/lua/new_player_linkshell.lua
 custom/sql/cluster_zone_settings.sql

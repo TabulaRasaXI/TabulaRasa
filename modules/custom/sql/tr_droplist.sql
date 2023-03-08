@@ -243,6 +243,7 @@ INSERT INTO `mob_droplist` VALUES (21,0,0,1000,646,@UNCOMMON);   -- Chunk Of Ada
 INSERT INTO `mob_droplist` VALUES (21,0,0,1000,908,@UNCOMMON);   -- Adamantoise Shell (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (21,0,0,1000,12361,@UNCOMMON); -- Sipar (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (21,0,0,1000,13794,@UNCOMMON); -- Heavy Cuirass (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (21,0,0,1000,3344,@UNCOMMON);      -- Clump Of Red Pondweed (Uncommon, 10%)
 
 -- ZoneID:  92 - Adaman Quadav
 INSERT INTO `mob_droplist` VALUES (22,0,0,1000,2504,130); -- Heavy Quadav Chestplate (13.0%)
@@ -2520,6 +2521,8 @@ INSERT INTO `mob_droplist` VALUES (251,0,0,1000,860,@VCOMMON);    -- Behemoth Hi
 INSERT INTO `mob_droplist` VALUES (251,0,0,1000,860,@VCOMMON);    -- Behemoth Hide (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (251,0,0,1000,16869,@COMMON);   -- Thundercloud (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (251,0,0,1000,17294,@UNCOMMON); -- Comet Tail (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (251,0,0,1000,3342,@UNCOMMON);      -- Savory Shank (Uncommon, 5%)
+
 
 -- ZoneID:  45 - Beholder
 INSERT INTO `mob_droplist` VALUES (252,0,0,1000,2917,@COMMON); -- Bloodshot Hecteye (Common, 15%)
@@ -6745,7 +6748,7 @@ INSERT INTO `mob_droplist` VALUES (805,0,0,1000,13914,@VCOMMON);  -- Aegishjalmr
 INSERT INTO `mob_droplist` VALUES (805,0,0,1000,4486,@VCOMMON);   -- Dragon Heart (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (805,0,0,1000,16942,@UNCOMMON); -- Balmung (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (805,0,0,1000,17653,@UNCOMMON); -- Hrotti (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (805,0,0,1000,3340,@RARE);      -- Cup Of Sweet Tea (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (805,0,0,1000,3340,@UNCOMMON);      -- Cup Of Sweet Tea (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (805,0,0,1000,16555,@VRARE);    -- Ridill (Very Rare, 1%)
 INSERT INTO `mob_droplist` VALUES (805,1,1,@VCOMMON,1321,250);    -- Earthen Abjuration Hands (Group 1 - 25.0%)
 INSERT INTO `mob_droplist` VALUES (805,1,1,@VCOMMON,1326,250);    -- Aquarian Abjuration Hands (Group 1 - 25.0%)
@@ -11891,8 +11894,8 @@ INSERT INTO `mob_droplist` VALUES (1450,0,0,1000,1527,@ALWAYS);  -- Behemoth Ton
 INSERT INTO `mob_droplist` VALUES (1450,0,0,1000,831,@VCOMMON);  -- Square Of Shining Cloth (Very Common, 24%)
 INSERT INTO `mob_droplist` VALUES (1450,0,0,1000,860,@ALWAYS);   -- Behemoth Hide (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (1450,0,0,1000,860,@COMMON);   -- Behemoth Hide (Common, 15%)
-INSERT INTO `mob_droplist` VALUES (1450,1,1,1000,13415,950);     -- Pixie Earring (Group 1 - 95.0%)
-INSERT INTO `mob_droplist` VALUES (1450,1,1,1000,13566,@RARE);   -- Defending Ring (Group 1 - Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (1450,1,1,1000,13415,900);     -- Pixie Earring (Group 1 - 95.0%)
+INSERT INTO `mob_droplist` VALUES (1450,1,1,1000,13566,@UNCOMMON);   -- Defending Ring (Group 1 - Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1450,1,2,@ALWAYS,1322,250);   -- Earthen Abjuration Legs (Group 2 - 25.0%)
 INSERT INTO `mob_droplist` VALUES (1450,1,2,@ALWAYS,1328,250);   -- Aquarian Abjuration Feet (Group 2 - 25.0%)
 INSERT INTO `mob_droplist` VALUES (1450,1,2,@ALWAYS,1332,250);   -- Martial Abjuration Legs (Group 2 - 25.0%)
@@ -16996,7 +16999,7 @@ INSERT INTO `mob_droplist` VALUES (2112,0,0,1000,4172,@COMMON);    -- Reraiser (
 INSERT INTO `mob_droplist` VALUES (2112,0,0,1000,4174,@COMMON);    -- Vile Elixir (Common, 15%)
 INSERT INTO `mob_droplist` VALUES (2112,0,0,1000,16822,@ALWAYS);   -- Crimson Blade (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2112,0,0,1000,17108,@UNCOMMON); -- Healing Staff (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2112,0,0,1000,658,@RARE);       -- Damascus Ingot (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (2112,0,0,1000,658,@UNCOMMON);       -- Damascus Ingot (Rare, 10%)
 
 -- ZoneID: 176 - Rock Crab Fished
 -- ZoneID: 176 - Rock Crab
@@ -17995,7 +17998,7 @@ INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,4172,@ALWAYS);    -- Reraiser (
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,4174,@ALWAYS);    -- Vile Elixir (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,17416,@ALWAYS);   -- Arcana Breaker (Always, 100%)
 INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,14080,@UNCOMMON); -- Strider Boots (Uncommon, 10%)
-INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,658,@RARE);       -- Damascus Ingot (Rare, 5%)
+INSERT INTO `mob_droplist` VALUES (2255,0,0,1000,658,@UNCOMMON);       -- Damascus Ingot (Uncommon, 5%)
 
 -- ZoneID: 254 - Sinister Seidel
 INSERT INTO `mob_droplist` VALUES (2256,0,0,1000,3265,90); -- Flask Of Bubbling Oil (9.0%)

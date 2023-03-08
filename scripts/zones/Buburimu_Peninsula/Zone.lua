@@ -24,6 +24,9 @@ zoneObject.onInitialize = function(zone)
         end
     end
 
+    -- Disable Dynamis
+    zone:queryEntitiesByName('Hieroglyphics')[1]:setStatus(xi.status.DISAPPEAR)
+
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 
     xi.helm.initZone(zone, xi.helm.type.LOGGING)

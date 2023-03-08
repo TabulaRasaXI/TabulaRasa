@@ -10,8 +10,8 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setLocalVar("maxBabies", 2)
-    mob:addMod(xi.mod.TRIPLE_ATTACK, 10)
-    mob:setMod(xi.mod.STORETP, 100)
+    -- mob:addMod(xi.mod.TRIPLE_ATTACK, 10)
+    -- mob:setMod(xi.mod.STORETP, 100)
 end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)
