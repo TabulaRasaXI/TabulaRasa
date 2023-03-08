@@ -9,6 +9,11 @@ local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
+
+    -- Disable Dynamis
+    zone:queryEntitiesByName('Hieroglyphics')[1]:setStatus(xi.status.DISAPPEAR)
+
+
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
