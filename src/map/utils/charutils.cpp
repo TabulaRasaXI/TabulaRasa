@@ -4269,19 +4269,19 @@ namespace charutils
                                 exp *= 1.00f;
                                 break;
                             case 2:
-                                exp *= 0.75f;
+                                exp *= 0.80f;
                                 break;
                             case 3:
-                                exp *= 0.55f;
+                                exp *= 0.65f;
                                 break;
                             case 4:
-                                exp *= 0.45f;
+                                exp *= 0.55f;
                                 break;
                             case 5:
-                                exp *= 0.39f;
+                                exp *= 0.50f;
                                 break;
                             case 6:
-                                exp *= 0.35f;
+                                exp *= 0.50f;
                                 break;
                             default:
                                 exp *= (1.8f / pcinzone);
@@ -4297,19 +4297,19 @@ namespace charutils
                                 exp *= 1.00f;
                                 break;
                             case 2:
-                                exp *= 0.75f;
+                                exp *= 0.80f;
                                 break;
                             case 3:
-                                exp *= 0.55f;
+                                exp *= 0.65f;
                                 break;
                             case 4:
-                                exp *= 0.45f;
+                                exp *= 0.55f;
                                 break;
                             case 5:
-                                exp *= 0.39f;
+                                exp *= 0.50f;
                                 break;
                             case 6:
-                                exp *= 0.35f;
+                                exp *= 0.50f;
                                 break;
                             default:
                                 exp *= (1.8f / pcinzone);
@@ -4324,19 +4324,19 @@ namespace charutils
                                 exp *= 1.00f;
                                 break;
                             case 2:
-                                exp *= 0.60f;
+                                exp *= 0.80f;
                                 break;
                             case 3:
-                                exp *= 0.45f;
+                                exp *= 0.65f;
                                 break;
                             case 4:
-                                exp *= 0.40f;
+                                exp *= 0.55f;
                                 break;
                             case 5:
-                                exp *= 0.37f;
+                                exp *= 0.50f;
                                 break;
                             case 6:
-                                exp *= 0.35f;
+                                exp *= 0.50f;
                                 break;
                             default:
                                 exp *= (1.8f / pcinzone);
@@ -6393,18 +6393,6 @@ void ReloadParty(CCharEntity* PChar)
                 PChar->PParty->DelMember(PChar);
             }
             PChar->ReloadPartyDec();
-        }
-
-        // Attempt to disband party if the last trust was just released
-        // NOTE: Trusts are not counted as party members, so the current member count will be 1
-        if (PChar->PParty && PChar->PParty->HasOnlyOneMember() && PChar->PTrusts.empty())
-        {
-            // Looks good so far, check OTHER processes to see if we should disband
-            if (PChar->PParty->GetMemberCountAcrossAllProcesses() == 1)
-            {
-                PChar->PParty->DisbandParty();
-                destroy(PChar->PParty);
-            }
         }
     }
 
