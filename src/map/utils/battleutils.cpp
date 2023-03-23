@@ -4681,24 +4681,27 @@ namespace battleutils
      ************************************************************************/
     uint16 doSoulEaterEffect(CCharEntity* m_PChar, uint32 damage)
     {
-        // Souleater has no effect <10HP.
-        if (m_PChar->GetMJob() == JOB_DRK && m_PChar->health.hp >= 10 && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
+        if (m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
         {
-            // lost 10% current hp, converted to damage (displayed as just a strong regular hit)
-            float drainPercent = 0.1f;
-
             // at most 2% bonus from gear
-            auto gearBonusPercent = m_PChar->getMod(Mod::SOULEATER_EFFECT);
-            drainPercent          = drainPercent + std::min(0.02f, 0.01f * gearBonusPercent);
+            float souleaterBonus    = std::min(0.2, m_PChar->getMod(Mod::SOULEATER_EFFECT) * 0.01);
+            float souleaterBonusII  = m_PChar->getMod(Mod::SOULEATER_EFFECT_II) * 0.01; // No known cap to this bonus. Used on Agwu's scythe
+            float stalwartSoulBonus = 1 - static_cast<float>(m_PChar->getMod(Mod::STALWART_SOUL)) / 100;
+            float bonusDamage       = m_PChar->health.hp * (0.1f + souleaterBonus + souleaterBonusII);
 
-            damage += (uint32)(m_PChar->health.hp * drainPercent);
-            m_PChar->addHP(-HandleStoneskin(m_PChar, (int32)(m_PChar->health.hp * (drainPercent - m_PChar->getMod(Mod::STALWART_SOUL) * 0.001f))));
-        }
-        else if (m_PChar->GetSJob() == JOB_DRK && m_PChar->health.hp >= 10 && m_PChar->StatusEffectContainer->HasStatusEffect(EFFECT_SOULEATER))
-        {
-            // lose 10% Current HP, only HALF (5%) converted to damage
-            damage += (uint32)(m_PChar->health.hp * 0.05f);
-            m_PChar->addHP(-HandleStoneskin(m_PChar, (int32)(m_PChar->health.hp * 0.1f)));
+            if (bonusDamage >= 1)
+            {
+                m_PChar->addHP(-HandleStoneskin(m_PChar, (int32)(bonusDamage * stalwartSoulBonus)));
+
+                if (m_PChar->GetMJob() == JOB_DRK)
+                {
+                    damage += bonusDamage;
+                }
+                else
+                {
+                    damage += bonusDamage / 2;
+                }
+            }
         }
         return damage;
     }
@@ -5379,11 +5382,8 @@ namespace battleutils
 
     int32 BreathDmgTaken(CBattleEntity* PDefender, int32 damage)
     {
-        float resist = 1.0f + PDefender->getMod(Mod::UDMGBREATH) / 10000.f;
-        resist       = std::max(resist, 0.f);
-        damage       = (int32)(damage * resist);
+        float resist = 1.0f + PDefender->getMod(Mod::DMGBREATH) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
 
-        resist = 1.0f + PDefender->getMod(Mod::DMGBREATH) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
         resist = std::max(resist, 0.5f); // assuming if its floored at .5f its capped at 1.5f but who's stacking +dmgtaken equip anyway???
 
         resist += PDefender->getMod(Mod::UDMG) + PDefender->getMod(Mod::UDMGBREATH) / 10000.f;
@@ -5428,11 +5428,8 @@ namespace battleutils
             return (int32)(damage * liement);
         }
 
-        float resist = 1.f + PDefender->getMod(Mod::UDMGMAGIC) / 10000.f;
-        resist       = std::max(resist, 0.f);
-        damage       = (int32)(damage * resist);
+        float resist = 1.0f + PDefender->getMod(Mod::DMGMAGIC) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
 
-        resist = 1.f + PDefender->getMod(Mod::DMGMAGIC) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
         resist = std::max(resist, 0.5f);
 
         resist += PDefender->getMod(Mod::DMGMAGIC_II) / 10000.f;
@@ -5480,11 +5477,8 @@ namespace battleutils
 
     int32 PhysicalDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damageType, bool IsCovered)
     {
-        float resist = 1.f + PDefender->getMod(Mod::UDMGPHYS) / 10000.f;
-        resist       = std::max(resist, 0.f);
-        damage       = (int32)(damage * resist);
+        float resist = 1.0f + PDefender->getMod(Mod::DMGPHYS) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
 
-        resist = 1.f + PDefender->getMod(Mod::DMGPHYS) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
         resist = std::max(resist, 0.5f);                        // PDT caps at -50%
         resist += PDefender->getMod(Mod::DMGPHYS_II) / 10000.f; // Add Burtgang reduction after 50% cap. Extends cap to -68%
         resist = std::max(resist, 0.32f);                       // Total cap with MDT-% II included is 87.5%
@@ -5531,11 +5525,8 @@ namespace battleutils
 
     int32 RangedDmgTaken(CBattleEntity* PDefender, int32 damage, DAMAGE_TYPE damageType, bool IsCovered)
     {
-        float resist = 1.0f + PDefender->getMod(Mod::UDMGRANGE) / 10000.f;
-        resist       = std::max(resist, 0.f);
-        damage       = (int32)(damage * resist);
+        float resist = 1.0f + PDefender->getMod(Mod::DMGRANGE) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
 
-        resist = 1.0f + PDefender->getMod(Mod::DMGRANGE) / 10000.f + PDefender->getMod(Mod::DMG) / 10000.f;
         resist = std::max(resist, 0.5f);
 
         resist += PDefender->getMod(Mod::UDMG) + PDefender->getMod(Mod::UDMGRANGE) / 10000.f;
