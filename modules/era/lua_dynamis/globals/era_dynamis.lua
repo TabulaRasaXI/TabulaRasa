@@ -48,8 +48,8 @@ local dynamis_timeless = 4236
 local dynamis_perpetual = 4237
 local dynamis_min_lvl = 65
 local dynamis_reservation_cancel = 180
-local dynamis_reentry_days = 3
-local dynamis_rentry_hours = 71
+local dynamis_reentry_days = 0
+local dynamis_rentry_hours = 1
 local dynamis_staging_time = 15 -- Extra time added at registration of dynamis in minutes.
 
 local gmFlags =
