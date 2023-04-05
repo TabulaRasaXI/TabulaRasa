@@ -94,6 +94,7 @@ custom/sql/tr_droplist.sql
 custom/sql/rare_NM_drops.sql
 custom/sql/tr_mob_spawn_adjustments.sql
 custom/sql/tr_trust_adjustments.sql
+custom/sql/remove_merrymakers.sql
 
 #------------------------------
 #       Custom Job Adjustments
