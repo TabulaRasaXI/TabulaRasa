@@ -48,8 +48,8 @@ local dynamis_timeless = 4236
 local dynamis_perpetual = 4237
 local dynamis_min_lvl = 65
 local dynamis_reservation_cancel = 180
-local dynamis_reentry_days = 0
-local dynamis_rentry_hours = 1
+local dynamis_reentry_days = 3
+local dynamis_rentry_hours = 71
 local dynamis_staging_time = 15 -- Extra time added at registration of dynamis in minutes.
 
 local gmFlags =
@@ -1131,13 +1131,9 @@ xi.dynamis.registerPlayer = function(player)
     player:setCharVar(string.format("[DYNA]PlayerRegistered_%s", (xi.dynamis.dynaInfoEra[zoneID].dynaZone)), (GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) + player:getCharVar(string.format("[DYNA]PlayerRegisterKey_%s", (xi.dynamis.dynaInfoEra[zoneID].dynaZone)))))
     player:setCharVar(string.format("[DYNA]PlayerZoneToken_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))) -- Give the player a copy of the token value.
     player:setCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), GetServerVariable(string.format("[DYNA]RegTimepoint_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)))
-<<<<<<< HEAD
-    player:setCharVar("DynaReservationStart",(player:getCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) / (3600)))
-=======
     player:setCharVar("DynaReservationStart",(player:getCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) / (3600 * 1000)))
 
     AddDynamisParticipant(instanceID, player:getID())
->>>>>>> ASB/staging
 end
 
 xi.dynamis.isPlayerRegistered = function(player, dynamisToken)
@@ -1231,7 +1227,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
     local zoneTimepoint = GetServerVariable(string.format("[DYNA]Timepoint_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))
     local dynamis_time_remaining = xi.dynamis.getDynaTimeRemaining(zoneTimepoint) -- Get time remaining of Dynamis
     local entered = player:getCharVar(xi.dynamis.entryInfoEra[zoneID].enteredVar)
-    local dynamis_last_reservation = (os.time() / (3600)) - player:getCharVar("DynaReservationStart") -- Return Time of Last Reservation in Hours
+    local dynamis_last_reservation = (os.time() / (3600 * 1000)) - player:getCharVar("DynaReservationStart") -- Return Time of Last Reservation in Hours
 
     if entered == nil then
         entered = 0
