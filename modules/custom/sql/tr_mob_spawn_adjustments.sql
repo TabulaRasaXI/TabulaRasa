@@ -48,7 +48,7 @@ UPDATE mob_groups SET content_tag=NULL WHERE name='Bonnet_Beetle' AND groupid='3
 UPDATE mob_groups SET content_tag='WOTG' WHERE name='Gwyllgi' AND groupid='17' AND zoneid='190';
 UPDATE mob_groups SET content_tag='WOTG' WHERE name='Ankou' AND groupid='21' AND zoneid='190';
 UPDATE mob_groups SET content_tag='WOTG' WHERE name='Barbastelle' AND groupid='22' AND zoneid='190';
-UPDATE mob_groups SET minLevel = 77, maxLevel = 79, where name='Hati' AND groupid='30' AND zoneid='190';
+UPDATE mob_groups SET minLevel = 77, maxLevel = 79 where name='Hati' AND groupid='30' AND zoneid='190';
 
 
 -- ZONE 190 - King Ranperre's Tomb
