@@ -82,10 +82,11 @@ quest.sections =
             ['Baunise'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem (xi.ki.KNIGHTS_SOUL) then
-                        return quest:event(634)
-                    elseif player:hasKeyItem (xi.ki.BOOK_OF_THE_WEST) then
+                    if player:hasKeyItem (xi.ki.BOOK_OF_THE_WEST) then
                         return quest:messageSpecial(ID.text.TRIAL_IS_DIFFICULT)
+                    elseif player:hasKeyItem (xi.ki.BOOK_OF_TASKS) then
+                        return quest:event(634)
+                    else
                     end
                 end,
             },
@@ -93,10 +94,10 @@ quest.sections =
             ['Cahaurme'] =
             {
                 onTrigger = function(player, npc)
-                    if player:hasKeyItem (xi.ki.KNIGHTS_SOUL) then
-                        player:startEvent(633)
-                    elseif player:hasKeyItem (xi.ki.BOOK_OF_THE_EAST) then
+                    if player:hasKeyItem (xi.ki.BOOK_OF_THE_EAST) then
                         return quest:messageSpecial(ID.text.WAY_OF_THE_SWORD)
+                    elseif player:hasKeyItem (xi.ki.BOOK_OF_TASKS) then
+                        player:startEvent(633)
                     end
                 end,
             },
