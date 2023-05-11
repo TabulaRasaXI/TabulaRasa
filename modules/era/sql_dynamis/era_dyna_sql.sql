@@ -197,7 +197,7 @@ DELETE FROM `mob_droplist` WHERE dropid = "195"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,749,50); -- Mythril Beastcoin
 REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,748,50); -- Gold Beastcoin
 REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,1474,100); -- Infinity Core
-REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,11450,100); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (195,0,0,1000,1450,100); -- Jadeshell
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "1560"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (1560,1,1,200,15072,90); -- WAR Head
@@ -223,7 +223,7 @@ REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1449,240); -- Whiteshell 1
 REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1449,150); -- Whiteshell 2
 REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1449,100); -- Whiteshell 3
 REPLACE INTO `mob_droplist` VALUES (1560,2,0,1000,1449,0); -- Whiteshell (Steal)
-REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,11450,100); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (1560,0,0,1000,1450,100); -- Jadeshell
 --            Regular            --
 DELETE FROM `mob_droplist` WHERE dropid = "2553"; -- Delete
 REPLACE INTO `mob_droplist` VALUES (2553,1,1,200,15072,90); -- WAR Head
@@ -385,7 +385,7 @@ DELETE FROM `mob_droplist` WHERE dropid = "6002"; -- Quadav Statues
 REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,1456,10); -- Hundred Byne
 REPLACE INTO `mob_droplist` VALUES (6002,0,0,1000,4248,100); -- Ginurva's Battle Theory
 DELETE FROM `mob_droplist` WHERE dropid = "6003"; -- Yagudo Statues
-REPLACE INTO `mob_droplist` VALUES (6004,0,0,1000,11450,100); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (6004,0,0,1000,1450,100); -- Jadeshell
 REPLACE INTO `mob_droplist` VALUES (6004,0,0,1000,4248,100); -- Ginurva's Battle Theory
 --              NMs              --
 DELETE FROM `mob_droplist` WHERE dropid = "176"; -- Goblin NM
@@ -495,7 +495,7 @@ REPLACE INTO `mob_droplist` VALUES (265,1,1,200,15101,67); -- SMN Body
 REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,1449,150); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,1449,100); -- Whiteshell
 REPLACE INTO `mob_droplist` VALUES (265,2,0,1000,1449,150); -- Whiteshell (Steal)
-REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,11450,100); -- Jadeshell
+REPLACE INTO `mob_droplist` VALUES (265,0,0,1000,1450,100); -- Jadeshell
 DELETE FROM `mob_droplist` WHERE dropid = "559"; -- Dagourmarche
 REPLACE INTO `mob_droplist` VALUES (559,1,1,@ALWAYS,1560,333); -- Attestation of Bravery
 REPLACE INTO `mob_droplist` VALUES (559,1,1,@ALWAYS,1563,333); -- Attestation of Fortitude
