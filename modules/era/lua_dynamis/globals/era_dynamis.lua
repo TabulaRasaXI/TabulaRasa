@@ -1131,7 +1131,7 @@ xi.dynamis.registerPlayer = function(player)
     player:setCharVar(string.format("[DYNA]PlayerRegistered_%s", (xi.dynamis.dynaInfoEra[zoneID].dynaZone)), (GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) + player:getCharVar(string.format("[DYNA]PlayerRegisterKey_%s", (xi.dynamis.dynaInfoEra[zoneID].dynaZone)))))
     player:setCharVar(string.format("[DYNA]PlayerZoneToken_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))) -- Give the player a copy of the token value.
     player:setCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), GetServerVariable(string.format("[DYNA]RegTimepoint_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)))
-    player:setCharVar("DynaReservationStart",(player:getCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) / (3600 * 1000)))
+    player:setCharVar("DynaReservationStart",(player:getCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) / (3600)))
 
     AddDynamisParticipant(instanceID, player:getID())
 end
@@ -1227,7 +1227,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
     local zoneTimepoint = GetServerVariable(string.format("[DYNA]Timepoint_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))
     local dynamis_time_remaining = xi.dynamis.getDynaTimeRemaining(zoneTimepoint) -- Get time remaining of Dynamis
     local entered = player:getCharVar(xi.dynamis.entryInfoEra[zoneID].enteredVar)
-    local dynamis_last_reservation = (os.time() / (3600 * 1000)) - player:getCharVar("DynaReservationStart") -- Return Time of Last Reservation in Hours
+    local dynamis_last_reservation = (os.time() / (3600)) - player:getCharVar("DynaReservationStart") -- Return Time of Last Reservation in Hours
 
     if entered == nil then
         entered = 0
