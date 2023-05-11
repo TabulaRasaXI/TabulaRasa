@@ -41,6 +41,18 @@ spellObject.onSpellCast = function(caster, target, spell)
         dmg = ((100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF))) * (caster:getStat(xi.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), xi.job.BLM, xi.skill.ELEMENTAL_MAGIC)) / 6) * 5
     elseif caster:isMob() and caster:getName() == "King_Behemoth" then
         dmg = 14 + caster:getMainLvl() * 30
+
+        local people = spell:getTotalTargets()
+        if people == 1 then
+			people = 1
+		elseif people == 2 then
+			people = .9
+		elseif people >= 3 and people <= 9 then
+			people = .6
+		elseif people >= 10 then
+			people = .3
+		end
+        dmg = dmg * people
     else
         dmg = ((100 + caster:getMod(xi.mod.MATT)) / (100 + target:getMod(xi.mod.MDEF))) * (caster:getStat(xi.mod.INT) + (caster:getMaxSkillLevel(caster:getMainLvl(), xi.job.BLM, xi.skill.ELEMENTAL_MAGIC)) / 6) * 9.4
     end

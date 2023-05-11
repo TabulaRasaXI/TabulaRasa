@@ -14868,7 +14868,7 @@ INSERT INTO `mob_droplist` VALUES (1825,0,0,1000,4719,@COMMON);   -- Scroll Of R
 INSERT INTO `mob_droplist` VALUES (1825,0,0,1000,4443,@UNCOMMON); -- Cobalt Jellyfish (Uncommon, 10%)
 INSERT INTO `mob_droplist` VALUES (1825,0,0,1000,4514,@RARE);     -- Quus (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (1825,0,0,1000,4618,@RARE);     -- Scroll Of Curaga Iv (Rare, 5%)
-INSERT INTO `mob_droplist` VALUES (1973,0,0,1000,1313,@UNCOMMON);  -- Sirens Hair (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (1825,0,0,1000,1313,@UNCOMMON);  -- Sirens Hair (Uncommon, 10%)
 
 -- ZoneID: 216 - Npfundlwa
 INSERT INTO `mob_droplist` VALUES (1826,0,0,1000,3170,@UNCOMMON);  -- Ravagers Seal Legs (Uncommon, 10%)
@@ -23212,7 +23212,7 @@ INSERT INTO `mob_droplist` VALUES (2813,0,0,1000,4360,@RARE);      -- Bastore Sa
 INSERT INTO `mob_droplist` VALUES (2813,0,0,1000,4443,@RARE);      -- Cobalt Jellyfish (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2813,0,0,1000,4514,@RARE);      -- Quus (Rare, 5%)
 INSERT INTO `mob_droplist` VALUES (2813,2,0,1000,748,0);           -- Gold Beastcoin (Steal)
-INSERT INTO `mob_droplist` VALUES (1973,0,0,1000,1313,@UNCOMMON);  -- Sirens Hair (Uncommon, 10%)
+INSERT INTO `mob_droplist` VALUES (2813,0,0,1000,1313,@UNCOMMON);  -- Sirens Hair (Uncommon, 10%)
 
 -- ZoneID: 153 - Snaggletooth Peapuk
 INSERT INTO `mob_droplist` VALUES (2814,0,0,1000,3504,@VCOMMON);  -- Peapuk Wing (Very Common, 24%)
