@@ -31,7 +31,7 @@ zoneObject.onZoneIn = function(player, prevZone)
     if
         os.time() > zoreRespawn and
         os.time() > zoneWindow and
-        math.random(1, 10) > 7
+        math.random(1, 3) == 3
     then
         GetMobByID(ID.mob.ZOREDONITE):setRespawnTime(math.random(120, 480))
     end
