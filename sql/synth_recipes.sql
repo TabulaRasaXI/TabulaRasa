@@ -395,7 +395,7 @@ INSERT INTO `synth_recipes` VALUES (3045,0,0,69,0,0,0,0,0,0,0,4098,4240,711,719,
 INSERT INTO `synth_recipes` VALUES (3046,0,0,70,37,0,0,0,19,0,0,4098,4240,654,717,719,893,932,0,0,0,17220,17227,17227,17227,1,1,1,1,'Heavy Crossbow'); -- one source 32 WW, one ?? Bone, others agree 10/29/21
 INSERT INTO `synth_recipes` VALUES (3047,0,0,70,18,0,0,0,0,0,0,4099,4241,662,725,725,0,0,0,0,0,12359,12370,12370,12370,1,1,1,1,'Hickory Shield'); -- ??SM, 8 & 18 posted (typo?), used 18 (iron sheet caps 22)
 INSERT INTO `synth_recipes` VALUES (3048,0,0,70,0,0,0,0,45,0,0,4098,4240,720,830,2513,2747,2762,0,0,0,18736,18736,18736,18736,1,1,1,1,'Fay Gendawa'); -- ??BO, 45/53 srcs, old era talk crafted at 39 - used 45
-INSERT INTO `synth_recipes` VALUES (3049,2,0,70,0,0,0,0,0,0,0,4102,4244,489,0,0,0,0,0,0,0,17386,17386,17386,17386,1,1,1,1,'Lu Shang\'s Fishing Rod'); -- multiple source agree 10/29/21
+INSERT INTO `synth_recipes` VALUES (3049,2,0,80,0,0,0,0,0,0,0,4102,4244,489,0,0,0,0,0,0,0,17386,17386,17386,17386,1,1,1,1,'Lu Shang\'s Fishing Rod'); -- multiple source agree 10/29/21
 -- INSERT INTO `synth_recipes` VALUES (3050,0,0,70,0,255,0,0,0,0,0,4099,4241,711,711,711,711,717,717,745,0,444,444,444,444,1,1,1,1,'Luxurious Chest');
 INSERT INTO `synth_recipes` VALUES (3501,0,0,71,0,0,0,0,0,0,0,4099,4241,719,719,927,0,0,0,0,0,17357,17833,17848,17848,1,1,1,1,'Ebony Harp');
 INSERT INTO `synth_recipes` VALUES (3502,0,0,71,0,0,0,0,0,0,0,4099,4241,662,716,716,716,0,0,0,0,95,95,95,95,1,1,1,1,'Water Barrel');
@@ -2109,13 +2109,14 @@ INSERT INTO `synth_recipes` VALUES (29980,1,0,0,0,25,0,0,0,0,0,4098,4240,1625,0,
 INSERT INTO `synth_recipes` VALUES (29981,1,0,0,0,85,0,0,0,0,0,4100,4242,13351,0,0,0,0,0,0,0,785,785,746,746,1,1,1,2,'Emerald Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10017.html
 INSERT INTO `synth_recipes` VALUES (29982,1,0,0,0,85,0,0,0,0,0,4100,4242,13353,0,0,0,0,0,0,0,787,787,746,746,1,1,1,2,'Diamond Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10017.html
 INSERT INTO `synth_recipes` VALUES (29983,1,0,0,0,85,0,0,0,0,0,4100,4242,13318,0,0,0,0,0,0,0,789,789,746,746,1,1,1,2,'Topaz Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10017.html
-INSERT INTO `synth_recipes` VALUES (29984,1,0,0,0,85,0,0,0,0,0,4100,4242,13354,0,0,0,0,0,0,0,786,786,746,746,1,1,1,2,'Spinel Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10015.html
+INSERT INTO `synth_recipes` VALUES (29984,1,0,0,0,85,0,0,0,0,0,4100,4242,13354,0,0,0,0,0,0,0,804,804,804,804,1,1,1,2,'Spinel Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10015.html
 INSERT INTO `synth_recipes` VALUES (29985,1,0,0,0,85,0,0,0,0,0,4100,4242,13356,0,0,0,0,0,0,0,812,812,746,746,1,1,1,2,'Death Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10017.html
 INSERT INTO `synth_recipes` VALUES (29986,1,0,0,0,85,0,0,0,0,0,4100,4242,13357,0,0,0,0,0,0,0,813,813,746,746,1,1,1,2,'Angel\'s Earring (desynth)'); -- JP Wiki says desynth available http://wiki.ffo.jp/html/10013.html
 INSERT INTO `synth_recipes` VALUES (29987,1,0,0,0,12,0,0,0,0,0,4100,4242,12449,0,0,0,0,0,0,0,649,650,850,850,1,1,1,2,'Brass Cap (desynth)');
 INSERT INTO `synth_recipes` VALUES (29988,1,0,0,0,12,0,0,0,0,0,4100,4242,12528,0,0,0,0,0,0,0,649,650,850,850,1,1,1,2,'Brass Cap +1 (desynth)');
 INSERT INTO `synth_recipes` VALUES (29989,1,0,0,0,12,0,0,0,0,0,4100,4242,12961,0,0,0,0,0,0,0,649,650,850,850,1,1,1,2,'Brass Leggings (desynth)');
 INSERT INTO `synth_recipes` VALUES (29990,1,0,0,0,12,0,0,0,0,0,4100,4242,13027,0,0,0,0,0,0,0,649,650,850,850,1,1,1,2,'Brass Leggings +1 (desynth)');
+INSERT INTO `synth_recipes` VALUES (29991,1,0,0,0,77,0,0,0,0,0,4100,4242,12674,0,0,0,0,0,0,0,850,931,931,745,2,2,3,1,'Gold Gauntlets (desynth)');
 INSERT INTO `synth_recipes` VALUES (30001,0,0,0,0,0,1,1,0,0,1,4099,4241,917,4497,13568,0,0,0,0,0,5230,5231,5231,5231,1,1,1,1,'Love Chocolate');
 INSERT INTO `synth_recipes` VALUES (30002,1,0,0,0,0,1,0,0,0,0,4098,4240,498,0,0,0,0,0,0,0,817,817,817,817,3,6,9,12,'Yagudo Necklace (desynth)');
 INSERT INTO `synth_recipes` VALUES (30003,0,2011,0,0,0,2,0,0,0,0,4098,4240,840,840,840,840,840,840,2145,0,1221,1221,1221,1221,18,24,30,36,'Chocobo Fletchings');
@@ -2394,7 +2395,7 @@ INSERT INTO `synth_recipes` VALUES (33027,0,0,0,0,0,66,0,0,0,0,4102,4244,816,816
 INSERT INTO `synth_recipes` VALUES (33028,0,0,0,0,0,66,0,0,0,0,4099,4241,820,1280,1280,0,0,0,0,0,13643,13644,13644,13644,1,1,1,1,'Sarcenet Cape');
 INSERT INTO `synth_recipes` VALUES (33029,0,0,0,0,42,66,0,0,0,0,4099,4241,791,791,823,828,829,0,0,0,12732,13954,13954,13954,1,1,1,1,'Silk Cuffs'); -- 2022.08.07 JPwiki, FFXIclopedia
 -- INSERT INTO `synth_recipes` VALUES (33030,0,0,0,0,0,66,255,0,0,0,4102,4244,760,828,828,828,850,850,1767,2113,2476,16365,16366,16366,16366,1,1,1,1,'Argent Hose');
--- INSERT INTO `synth_recipes` VALUES (33031,0,0,0,0,255,67,0,0,0,0,4099,4241,752,823,828,829,829,0,0,0,12860,12927,12927,12927,1,1,1,1,'Silk Slops');
+INSERT INTO `synth_recipes` VALUES (33031,0,0,0,0,67,0,37,0,0,0,4099,4241,752,823,828,829,829,0,0,0,12860,12927,12927,12927,1,1,1,1,'Silk Slops');
 -- INSERT INTO `synth_recipes` VALUES (33032,0,0,0,0,255,67,0,0,0,0,4099,4241,752,823,828,2340,2340,0,0,0,15620,15621,15621,15621,1,1,1,1,'Silken Slops');
 INSERT INTO `synth_recipes` VALUES (33033,0,0,0,0,0,67,0,0,0,0,4099,4241,820,827,827,827,827,834,834,834,13752,13753,13753,13753,1,1,1,1,'Wool Doublet');
 INSERT INTO `synth_recipes` VALUES (33034,0,0,0,0,0,67,0,0,0,0,4099,4241,828,828,2835,0,0,0,0,0,11532,11540,11540,11540,1,1,1,1,'Accura Cape');

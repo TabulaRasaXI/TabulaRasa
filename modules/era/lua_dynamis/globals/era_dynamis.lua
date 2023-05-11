@@ -422,7 +422,7 @@ xi.dynamis.entryInfoEra =
         csFirst = 33,
         csWin = 39,
         csDyna = 58,
-        maxCapacity = 32,
+        maxCapacity = 36,
         enabled = true,
         winVar = "DynaValkurm_Win",
         enteredVar = "DynaValkurm_entered",
@@ -441,7 +441,7 @@ xi.dynamis.entryInfoEra =
         csFirst = 40,
         csWin = 46,
         csDyna = 22,
-        maxCapacity = 32,
+        maxCapacity = 36,
         enabled = true,
         winVar = "DynaBuburimu_Win",
         enteredVar = "DynaBuburimu_entered",
@@ -460,7 +460,7 @@ xi.dynamis.entryInfoEra =
         csFirst = 22,
         csWin = 28,
         csDyna = 3,
-        maxCapacity = 32,
+        maxCapacity = 36,
         enabled = true,
         winVar = "DynaQufim_Win",
         enteredVar = "DynaQufim_entered",
@@ -1131,7 +1131,7 @@ xi.dynamis.registerPlayer = function(player)
     player:setCharVar(string.format("[DYNA]PlayerRegistered_%s", (xi.dynamis.dynaInfoEra[zoneID].dynaZone)), (GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) + player:getCharVar(string.format("[DYNA]PlayerRegisterKey_%s", (xi.dynamis.dynaInfoEra[zoneID].dynaZone)))))
     player:setCharVar(string.format("[DYNA]PlayerZoneToken_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), GetServerVariable(string.format("[DYNA]Token_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))) -- Give the player a copy of the token value.
     player:setCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone), GetServerVariable(string.format("[DYNA]RegTimepoint_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)))
-    player:setCharVar("DynaReservationStart",(player:getCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) / (3600 * 1000)))
+    player:setCharVar("DynaReservationStart",(player:getCharVar(string.format("[DYNA]PlayerRegisterTime_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone)) / (3600)))
 
     AddDynamisParticipant(instanceID, player:getID())
 end
@@ -1227,7 +1227,7 @@ xi.dynamis.entryNpcOnTrade = function(player, npc, trade)
     local zoneTimepoint = GetServerVariable(string.format("[DYNA]Timepoint_%s", xi.dynamis.dynaInfoEra[zoneID].dynaZone))
     local dynamis_time_remaining = xi.dynamis.getDynaTimeRemaining(zoneTimepoint) -- Get time remaining of Dynamis
     local entered = player:getCharVar(xi.dynamis.entryInfoEra[zoneID].enteredVar)
-    local dynamis_last_reservation = (os.time() / (3600 * 1000)) - player:getCharVar("DynaReservationStart") -- Return Time of Last Reservation in Hours
+    local dynamis_last_reservation = (os.time() / (3600)) - player:getCharVar("DynaReservationStart") -- Return Time of Last Reservation in Hours
 
     if entered == nil then
         entered = 0
@@ -1344,8 +1344,9 @@ end
 
 m:addOverride("xi.dynamis.qmOnTrigger", function(player, npc) -- Override standard qmOnTrigger()
     local zoneId = npc:getZoneID()
-    player:addKeyItem(xi.dynamis.dynaInfoEra[zoneId].winKI)
-    player:messageSpecial(zones[zoneId].text.KEYITEM_OBTAINED, xi.dynamis.dynaInfoEra[zoneId].winKI)
+    if not player:hasKeyItem(xi.dynamis.dynaInfoEra[zoneId].winKI) then
+        npcUtil.giveKeyItem(player, xi.dynamis.dynaInfoEra[zoneId].winKI)
+    end
 end)
 
 --------------------------------------------

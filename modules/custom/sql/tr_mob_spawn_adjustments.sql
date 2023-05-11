@@ -34,6 +34,14 @@ UPDATE `mob_groups`
 SET minLevel = 56, maxLevel = 58, content_tag = NULL
 WHERE name = 'Warden_Beetle';
 
+UPDATE `mob_groups`
+SET minLevel = 58, maxLevel = 60, content_tag = 'COP'
+WHERE name = 'Blazedrake';
+
+UPDATE `mob_groups`
+SET minLevel = 45, maxLevel = 48, content_tag = 'COP'
+WHERE name = 'Darner';
+
 -- HNM Idle Despawn off
 DELETE from mob_spawn_mods where modid = 55 and mobid in (
                                                          17297440, -- Behemoth

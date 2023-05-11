@@ -35,7 +35,6 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.MATT, 0)
     mob:setMod(xi.mod.ATT, 436)
     mob:setMod(xi.mod.REFRESH, 200)
-    mob:setDelay(3000)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
 
     mob:addListener("TAKE_DAMAGE", "TIAMAT_TAKE_DAMAGE", function(defender, amount, attacker, attackType, damageType)
@@ -71,7 +70,6 @@ end
 entity.land = function(mob)
     mob:useMobAbility(1282)
     mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
-    mob:setDelay(3000) -- 180 delay
     mob:setLocalVar("changeTime", os.time() + 120)
 end
 
@@ -80,21 +78,17 @@ entity.flight = function(mob)
     mob:addStatusEffectEx(xi.effect.ALL_MISS, 0, 1, 0, 0)
     mob:setBehaviour(0)
     mob:setMobSkillAttack(730)
-    mob:setDelay(3600) -- 220 delay
     mob:setLocalVar("changeTime", os.time() + 120)
 end
 
 entity.onMobFight = function(mob, target)
-    local drawInTableNorth =
-    {
-        condition1 = target:getXPos() < -515 and target:getZPos() > 8,
-        position   = { -530.642, -4.013, 6.262, target:getRotPos() },
-    }
-    local drawInTableEast =
-    {
-        condition1 = target:getXPos() > -480 and target:getZPos() > -50,
-        position   = { -481.179, -4, -41.92, target:getRotPos() },
-    }
+    -- Wyrms automatically wake from sleep in the air
+    if
+        hasSleepEffects(mob) and
+        mob:getAnimationSub() == 1
+    then
+        mob:wakeUp()
+    end
 
     -- Gains a large attack boost when health is under 25% which cannot be Dispelled.
     if mob:getHPP() <= 25 and mob:getMod(xi.mod.ATT) <= 800 then
@@ -111,10 +105,9 @@ entity.onMobFight = function(mob, target)
         if
             mob:getAnimationSub() == 2 and
             os.time() > twohourTime
-        then -- If mob uses its 2hr increase attack speed slightly
+        then -- If mob uses its 2hr
             mob:useMobAbility(688)
             twohourTime = os.time() + math.random(180, 300)
-            mob:setDelay(2700)
             mob:setLocalVar("twohourTime", twohourTime)
         elseif -- subanimation 2 is grounded mode, so check if she should take off
             (mob:getAnimationSub() == 0 or mob:getAnimationSub() == 2) and
@@ -137,13 +130,16 @@ entity.onMobFight = function(mob, target)
         mob:setMagicCastingEnabled(true)
     end
 
-    -- Wyrms automatically wake from sleep in the air
-    if
-        hasSleepEffects(mob) and
-        mob:getAnimationSub() == 1
-    then
-        mob:wakeUp()
-    end
+    local drawInTableNorth =
+    {
+        condition1 = target:getXPos() < -515 and target:getZPos() > 8,
+        position   = { -530.642, -4.013, 6.262, target:getRotPos() },
+    }
+    local drawInTableEast =
+    {
+        condition1 = target:getXPos() > -480 and target:getZPos() > -50,
+        position   = { -481.179, -4, -41.92, target:getRotPos() },
+    }
 
     -- Tiamat draws in from set boundaries leaving her spawn area
     utils.arenaDrawIn(mob, target, drawInTableNorth)
@@ -174,6 +170,7 @@ entity.onMobDisengage = function(mob)
         mob:delStatusEffect(xi.effect.ALL_MISS)
         mob:setMobSkillAttack(0)
         mob:setBehaviour(bit.bor(mob:getBehaviour(), xi.behavior.NO_TURN))
+        mob:resetLocalVars()
     end
 end
 
