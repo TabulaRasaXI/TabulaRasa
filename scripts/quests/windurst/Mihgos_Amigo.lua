@@ -106,7 +106,7 @@ quest.sections =
         {
             ['Nanaa_Mihgo'] =
             {
-                onTrigger = function (player, npc)
+                onTrigger = function(player, npc)
                     if player:getQuestStatus(xi.quest.log_id.WINDURST, xi.quest.id.windurst.ROCK_RACKETEER) < QUEST_ACCEPTED then
                         return quest:event(89):replaceDefault()
                     end
