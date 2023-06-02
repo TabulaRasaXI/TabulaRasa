@@ -63,9 +63,12 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
 end
 
 zoneObject.onTransportEvent = function(player, transport)
-    if player:getLocalVar('[BOAT]Paid') == 1 then
+    -- if player:getLocalVar('[BOAT]Paid') == 1 then
         if transport == 47 or transport == 46 then
-            if not player:hasKeyItem(xi.ki.BOARDING_PERMIT) or xi.settings.main.ENABLE_TOAU == 0 then
+            if
+                not player:hasKeyItem(xi.ki.BOARDING_PERMIT) or
+                xi.settings.main.ENABLE_TOAU == 0
+            then
                 player:setPos(8.200, -1.363, 3.445, 192)
                 player:messageSpecial(ID.text.DO_NOT_POSSESS, xi.ki.BOARDING_PERMIT)
             else
@@ -74,10 +77,10 @@ zoneObject.onTransportEvent = function(player, transport)
         else
             player:startEvent(200)
         end
-    else
-        player:setPos(48.1156, -8.0000, 40.8011, 66)
-        player:setLocalVar('[BOAT]Paid', 0)
-    end
+    -- else
+        -- player:setPos(48.1156, -8.0000, 40.8011, 66)
+        -- player:setLocalVar('[BOAT]Paid', 0)
+    -- end
 end
 
 zoneObject.onEventUpdate = function(player, csid, option)
