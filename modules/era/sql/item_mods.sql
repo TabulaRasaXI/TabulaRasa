@@ -20,6 +20,7 @@ REPLACE INTO `item_mods` (`itemid`, `modid`, `value`) VALUES
     (15400,521,10), -- Black Cuisses AUGMENTS_ABSORB: 10
     (15339,521,10); -- Black Sollerets AUGMENTS_ABSORB: 10
 
+-- Set Critical hit rate bonus in main/sub slots to apply only to slot with CRITHITRATE_SLOT mod
 UPDATE item_mods
 SET modId = 1168
 WHERE itemId IN (
