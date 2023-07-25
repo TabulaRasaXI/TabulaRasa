@@ -540,7 +540,7 @@ namespace charutils
         {
             PChar->getStorage(LOC_INVENTORY)->AddBuff((uint8)sql->GetIntData(0));
             PChar->getStorage(LOC_MOGSAFE)->AddBuff((uint8)sql->GetIntData(1));
-            // PChar->getStorage(LOC_MOGSAFE2)->AddBuff((uint8)sql->GetIntData(1));
+            PChar->getStorage(LOC_MOGSAFE2)->AddBuff((uint8)sql->GetIntData(1));
             PChar->getStorage(LOC_TEMPITEMS)->AddBuff(50);
             PChar->getStorage(LOC_MOGLOCKER)->AddBuff((uint8)sql->GetIntData(2));
             PChar->getStorage(LOC_MOGSATCHEL)->AddBuff((uint8)sql->GetIntData(3));
@@ -6295,15 +6295,17 @@ namespace charutils
         }
     }
 
-    void ReloadParty(CCharEntity* PChar)
+void ReloadParty(CCharEntity* PChar)
     {
         TracyZoneScoped;
 
+        printf("DEBUG => Reloading Party\n");
         int ret = sql->Query("SELECT partyid, allianceid, partyflag & %d FROM accounts_sessions s JOIN accounts_parties p ON "
                              "s.charid = p.charid WHERE p.charid = %u;",
                              (PARTY_SECOND | PARTY_THIRD), PChar->id);
         if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
         {
+            printf("DEBUG => DB Succeeded\n");
             uint32 partyid     = sql->GetUIntData(0);
             uint32 allianceid  = sql->GetUIntData(1);
             uint32 partynumber = sql->GetUIntData(2);
@@ -6312,6 +6314,7 @@ namespace charutils
             // for example, joining a party from another server
             if (PChar->PParty)
             {
+                printf("DEBUG => Party Existed\n");
                 if (PChar->PParty->GetPartyID() != partyid)
                 {
                     PChar->PParty->SetPartyID(partyid);
@@ -6320,34 +6323,40 @@ namespace charutils
             else
             {
                 // find if party exists on this server already
+                printf("DEBUG => Searching For Party\n");
                 CParty* PParty = nullptr;
                 zoneutils::ForEachZone([partyid, &PParty](CZone* PZone)
                                        { PZone->ForEachChar([partyid, &PParty](CCharEntity* PChar)
                                                             {
                         if (PChar->PParty && PChar->PParty->GetPartyID() == partyid)
                         {
+                            printf("DEBUG => Found Party\n");
                             PParty = PChar->PParty;
                         } }); });
 
                 // create new party if it doesn't exist already
                 if (!PParty)
                 {
+                    printf("DEBUG => Party Not Found, Creating\n");
                     PParty = new CParty(partyid);
                 }
 
                 PParty->PushMember(PChar);
             }
 
+            printf("DEBUG => Checking Sync\n");
             CBattleEntity* PSyncTarget = PChar->PParty->GetSyncTarget();
             if (PSyncTarget && PChar->getZone() == PSyncTarget->getZone() && !(PChar->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC)) &&
                 PSyncTarget->StatusEffectContainer->HasStatusEffect(EFFECT_LEVEL_SYNC) &&
                 PSyncTarget->StatusEffectContainer->GetStatusEffect(EFFECT_LEVEL_SYNC)->GetDuration() == 0)
             {
+                printf("DEBUG => Sending Sync Packet\n");
                 PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, 0, PSyncTarget->GetMLevel(), 540));
                 PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_SYNC, EFFECT_LEVEL_SYNC, PSyncTarget->GetMLevel(), 0, 0), true);
                 PChar->StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DISPELABLE);
             }
 
+            printf("DEBUG => Checking Alliance\n");
             if (allianceid != 0)
             {
                 if (PChar->PParty->m_PAlliance)

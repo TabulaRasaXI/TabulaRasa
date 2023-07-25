@@ -81,7 +81,7 @@ for _, shop in pairs(lookupTable) do
             m:addOverride(string.format("xi.zones.%s.npcs.%s.onTrigger", shop[2], shop[3]),
             function(player, npc)
                 if (player:hasKeyItem(xi.ki.TENSHODO_MEMBERS_CARD)) then
-                    if (player:sendGuild(shop[4], -1, 25, 8)) then
+                    if (player:sendGuild(shop[4], 0, 25, 8)) then
                         player:showText(npc, ID.text[shop[5]])
                     end
                 end
