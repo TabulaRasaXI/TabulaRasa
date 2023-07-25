@@ -540,7 +540,7 @@ namespace charutils
         {
             PChar->getStorage(LOC_INVENTORY)->AddBuff((uint8)sql->GetIntData(0));
             PChar->getStorage(LOC_MOGSAFE)->AddBuff((uint8)sql->GetIntData(1));
-            // PChar->getStorage(LOC_MOGSAFE2)->AddBuff((uint8)sql->GetIntData(1));
+            PChar->getStorage(LOC_MOGSAFE2)->AddBuff((uint8)sql->GetIntData(1));
             PChar->getStorage(LOC_TEMPITEMS)->AddBuff(50);
             PChar->getStorage(LOC_MOGLOCKER)->AddBuff((uint8)sql->GetIntData(2));
             PChar->getStorage(LOC_MOGSATCHEL)->AddBuff((uint8)sql->GetIntData(3));

@@ -1,0 +1,1 @@
+UPDATE npc_list set content_tag = null where npcid = 17596840;
