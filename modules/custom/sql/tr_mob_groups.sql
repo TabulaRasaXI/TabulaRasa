@@ -1,0 +1,1 @@
+UPDATE mob_groups SET spawntype = 0 WHERE name = 'Orcish_Barricader';
