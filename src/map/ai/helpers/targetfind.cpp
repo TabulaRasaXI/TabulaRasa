@@ -445,11 +445,11 @@ validEntity will check if the given entity can be targeted in the AoE.
 */
 bool CTargetFind::validEntity(CBattleEntity* PTarget)
 {
-    //this is breaking
-    //if (PTarget == nullptr || PTarget->id == 0)
-    //{
-    //    return false;
-    //}
+    // this is breaking
+    // if (PTarget == nullptr || PTarget->id == 0)
+    // {
+    //     return false;
+    // }
 
     // Check if entity is already in list
     // TODO: Does it make sense to use a hashmap here instead?
