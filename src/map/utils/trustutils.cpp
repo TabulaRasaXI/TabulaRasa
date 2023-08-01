@@ -295,7 +295,7 @@ namespace trustutils
 
                 // retail seems to have a static *155* for all Trusts in client memory
                 // TODO: trust->speed = 155;
-                trust->speed = (uint8)sql->GetIntData(20);
+                trust->speed = (uint8)sql->GetIntData(20) + 20; // as hacky as it gets, folks.
 
                 // similarly speedSub is always 50
                 trust->subSpeed = 50;
