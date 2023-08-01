@@ -988,6 +988,11 @@ namespace gambits
                                     chosen_skillchain = possible_skillchain;
                                 }
                             }
+                            else
+                            {
+                                // she cant make a proper opener, pick the best one as a default.
+                                chosen_skill = tp_skills.at(tp_skills.size() - 1);
+                            }
                         }
                     }
                     else
