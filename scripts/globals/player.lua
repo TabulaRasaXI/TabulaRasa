@@ -233,15 +233,27 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
     end
 
     if xi.settings.main.TR_TRUST_ENABLED == 1 then
-        player:addSpell(896)
-        player:addSpell(898)
-        player:addSpell(900)
-        player:addSpell(951)
+        player:addSpell(896) -- shantotto
+        player:addSpell(898) -- kupipi
+        player:addSpell(900) -- ayame
+        player:addSpell(951) -- rahal
+        player:addSpell(952) -- koru moru
+        player:addSpell(914) -- ulmia
+        player:addSpell(922) -- lehko habhoka
+        player:addSpell(906) -- zeid
+        player:addSpell(901) -- nanaa mihgo
+        player:addSpell(902) -- curilla
     else
-        player:delSpell(896)
-        player:delSpell(898)
-        player:delSpell(900)
-        player:delSpell(951)
+        player:delSpell(896) -- shantotto
+        player:delSpell(898) -- kupipi
+        player:delSpell(900) -- ayame
+        player:delSpell(951) -- rahal
+        player:delSpell(952) -- koru moru
+        player:delSpell(914) -- ulmia
+        player:delSpell(922) -- lehko habhoka
+        player:delSpell(906) -- zeid
+        player:delSpell(901) -- nanaa mihgo
+        player:delSpell(902) -- curilla
     end
     -- !hide
     if player:getCharVar("GMHidden") == 1 then
