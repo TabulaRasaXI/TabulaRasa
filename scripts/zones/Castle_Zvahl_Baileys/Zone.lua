@@ -1,11 +1,10 @@
 -----------------------------------
 -- Zone: Castle_Zvahl_Baileys (161)
 -----------------------------------
-local ID = require("scripts/zones/Castle_Zvahl_Baileys/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/treasure")
-require("scripts/globals/zone")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Castle_Zvahl_Baileys/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/treasure')
+require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
@@ -21,7 +20,6 @@ zoneObject.onInitialize = function(zone)
     if xi.settings.main.ENABLE_WOTG == 1 then
         xi.mob.nmTODPersistCache(zone, ID.mob.LIKHO)
     end
-
     xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_ALLOCEN)
     xi.mob.nmTODPersistCache(zone, ID.mob.MARQUIS_AMON)
     xi.mob.nmTODPersistCache(zone, ID.mob.DUKE_HABORYM)

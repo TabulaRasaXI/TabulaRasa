@@ -32,9 +32,8 @@ end
 
 entity.onEventFinish = function(player, csid, option)
     if csid == 124 then
-        npcUtil.completeQuest(player, xi.quest.log_id.WINDURST, xi.quest.id.windurst.I_CAN_HEAR_A_RAINBOW, {
-            title = xi.title.RAINBOW_WEAVER,
-        })
+        player:completeQuest(xi.quest.log_id.WINDURST, xi.quest.id.windurst.I_CAN_HEAR_A_RAINBOW)
+        player:addTitle(xi.title.RAINBOW_WEAVER)
         player:unlockJob(xi.job.SMN)
         player:addSpell(296)
         player:messageSpecial(ID.text.UNLOCK_SUMMONER)

@@ -2,8 +2,6 @@
 -- Area: Garlaige Citadel (200)
 --   NM: Old Two-Wings
 -----------------------------------
-require("scripts/globals/mobs")
------------------------------------
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)

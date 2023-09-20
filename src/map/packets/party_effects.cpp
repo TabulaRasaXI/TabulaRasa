@@ -32,16 +32,10 @@ CPartyEffectsPacket::CPartyEffectsPacket()
 
 void CPartyEffectsPacket::AddMemberEffects(CBattleEntity* PMember)
 {
-    if (members < 5)
-    {
-        ref<uint32>(members * 0x30 + 0x04) = PMember->id;
-        ref<uint16>(members * 0x30 + 0x08) = PMember->targid;
-        ref<uint64>(members * 0x30 + 0x0C) = PMember->StatusEffectContainer->m_Flags;
-        memcpy(data + (members * 0x30 + 0x14), PMember->StatusEffectContainer->m_StatusIcons, 32);
-    }
-    else
-    {
-        ShowError("Too many party members detected: Party effects");
-    }
+    XI_DEBUG_BREAK_IF(members == 5);
+    ref<uint32>(members * 0x30 + 0x04) = PMember->id;
+    ref<uint16>(members * 0x30 + 0x08) = PMember->targid;
+    ref<uint64>(members * 0x30 + 0x0C) = PMember->StatusEffectContainer->m_Flags;
+    memcpy(data + (members * 0x30 + 0x14), PMember->StatusEffectContainer->m_StatusIcons, 32);
     ++members;
 }

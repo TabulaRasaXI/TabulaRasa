@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Kaaya Majiad
+-- Working 100%
 -----------------------------------
 local entity = {}
 

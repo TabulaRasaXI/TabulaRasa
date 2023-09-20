@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Port Windurst
 --  NPC: Nbeh Dimehbariga
+-- Working 100%
+-----------------------------------
+require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 

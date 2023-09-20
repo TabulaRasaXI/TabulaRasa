@@ -9,8 +9,8 @@ local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.NO_LINK, 1)
-    -- mob:setMod(xi.mod.DOUBLE_ATTACK, 20)
-    -- mob:setMod(xi.mod.STORETP, 100)
+    mob:setMod(xi.mod.DOUBLE_ATTACK, 20)
+    mob:setMod(xi.mod.STORETP, 100)
 end
 
 entity.onMobWeaponSkillPrepare = function(mob, target)

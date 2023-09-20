@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Port Windurst
 --  NPC: Wanja-Daruja
+-- Working 100%
+-----------------------------------
+require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 

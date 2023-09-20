@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Yomotsutsu
+-- Working 100%
+-----------------------------------
+require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 

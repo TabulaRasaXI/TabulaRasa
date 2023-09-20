@@ -113,7 +113,6 @@ local pathNodes =
 }
 
 entity.onMobSpawn = function(mob)
-    mob:setSpeed(80)
     mob:setMod(xi.mod.REGAIN, 200)
     mob:pathThrough(pathNodes, xi.path.flag.PATROL)
 end

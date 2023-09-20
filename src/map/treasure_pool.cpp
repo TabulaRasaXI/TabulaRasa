@@ -79,12 +79,6 @@ void CTreasurePool::AddMember(CCharEntity* PChar)
         return;
     }
 
-    if (std::find(members.begin(), members.end(), PChar) != members.end())
-    {
-        ShowWarning("CTreasurePool::AddMember() - PChar was already in the members list!");
-        return;
-    }
-
     members.push_back(PChar);
 
     if (m_TreasurePoolType == TREASUREPOOL_SOLO && members.size() > 1)
@@ -118,25 +112,26 @@ void CTreasurePool::DelMember(CCharEntity* PChar)
     {
         if (!m_PoolItems[i].Lotters.empty())
         {
-            auto lotterIterator = m_PoolItems[i].Lotters.begin();
-            while (lotterIterator != m_PoolItems[i].Lotters.end())
+            for (size_t j = 0; j < m_PoolItems[i].Lotters.size(); j++)
             {
                 // remove their lot info
-                LotInfo* info = &(*lotterIterator);
-                if (PChar->id == info->member->id)
+                if (PChar->id == m_PoolItems[i].Lotters[j].member->id)
                 {
-                    lotterIterator = m_PoolItems[i].Lotters.erase(lotterIterator);
+                    m_PoolItems[i].Lotters.erase(m_PoolItems[i].Lotters.begin() + j);
                 }
             }
         }
     }
     //}
 
-    auto memberToDelete = std::find(members.begin(), members.end(), PChar);
-    if (memberToDelete != members.end())
+    for (uint32 i = 0; i < members.size(); ++i)
     {
-        PChar->PTreasurePool = nullptr;
-        members.erase(memberToDelete);
+        if (PChar == members.at(i))
+        {
+            PChar->PTreasurePool = nullptr;
+            members.erase(members.begin() + i);
+            break;
+        }
     }
 
     if ((m_TreasurePoolType == TREASUREPOOL_PARTY || m_TreasurePoolType == TREASUREPOOL_ALLIANCE) && members.size() == 1)
@@ -163,7 +158,7 @@ void CTreasurePool::DelMember(CCharEntity* PChar)
 uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
 {
     uint8      SlotID;
-    uint8      FreeSlotID = TREASUREPOOL_SIZE;
+    uint8      FreeSlotID = -1;
     time_point oldest     = time_point::max();
 
     switch (ItemID)
@@ -174,12 +169,12 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
         case 2956: // high kindred crest
             for (auto& member : members)
             {
-                member->PRecastContainer->Add(RECAST_LOOT, 1, 150); // 300 = 5 min cooldown
+                member->PRecastContainer->Add(RECAST_LOOT, 1, 300); // 300 = 5 min cooldown
             }
             break;
     }
 
-    for (SlotID = 0; SlotID < TREASUREPOOL_SIZE; ++SlotID)
+    for (SlotID = 0; SlotID < 10; ++SlotID)
     {
         if (m_PoolItems[SlotID].ID == 0)
         {
@@ -187,10 +182,10 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
             break;
         }
     }
-    if (FreeSlotID >= TREASUREPOOL_SIZE)
+    if (FreeSlotID > TREASUREPOOL_SIZE)
     {
         // find the oldest non-rare and non-ex item
-        for (SlotID = 0; SlotID < TREASUREPOOL_SIZE; ++SlotID)
+        for (SlotID = 0; SlotID < 10; ++SlotID)
         {
             CItem* PItem = itemutils::GetItemPointer(m_PoolItems[SlotID].ID);
             if (PItem != nullptr && !(PItem->getFlag() & (ITEM_FLAG_RARE | ITEM_FLAG_EX)) && m_PoolItems[SlotID].TimeStamp < oldest)
@@ -199,10 +194,10 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
                 oldest     = m_PoolItems[SlotID].TimeStamp;
             }
         }
-        if (FreeSlotID >= TREASUREPOOL_SIZE)
+        if (FreeSlotID > TREASUREPOOL_SIZE)
         {
             // find the oldest non-ex item
-            for (SlotID = 0; SlotID < TREASUREPOOL_SIZE; ++SlotID)
+            for (SlotID = 0; SlotID < 10; ++SlotID)
             {
                 CItem* PItem = itemutils::GetItemPointer(m_PoolItems[SlotID].ID);
                 if (PItem != nullptr && !(PItem->getFlag() & (ITEM_FLAG_EX)) && m_PoolItems[SlotID].TimeStamp < oldest)
@@ -212,10 +207,10 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
                 }
             }
 
-            if (FreeSlotID >= TREASUREPOOL_SIZE)
+            if (FreeSlotID > TREASUREPOOL_SIZE)
             {
                 // find the oldest item
-                for (SlotID = 0; SlotID < TREASUREPOOL_SIZE; ++SlotID)
+                for (SlotID = 0; SlotID < 10; ++SlotID)
                 {
                     if (m_PoolItems[SlotID].TimeStamp < oldest)
                     {
@@ -224,7 +219,7 @@ uint8 CTreasurePool::AddItem(uint16 ItemID, CBaseEntity* PEntity)
                     }
                 }
 
-                if (FreeSlotID >= TREASUREPOOL_SIZE)
+                if (FreeSlotID > TREASUREPOOL_SIZE)
                 {
                     // default fallback
                     FreeSlotID = 0;

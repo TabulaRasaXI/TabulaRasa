@@ -1,11 +1,10 @@
 -----------------------------------
 -- Zone: Garlaige_Citadel (200)
 -----------------------------------
-local ID = require("scripts/zones/Garlaige_Citadel/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/treasure")
-require("scripts/globals/status")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Garlaige_Citadel/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/treasure')
+require('scripts/globals/status')
 -----------------------------------
 local zoneObject = {}
 
@@ -34,7 +33,7 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.SERKET)
 
     UpdateNMSpawnPoint(ID.mob.SKEWER_SAM)
-    xi.mob.NMPersistCache(ID.mob.SKEWER_SAM)
+    GetMobByID(ID.mob.SKEWER_SAM):setRespawnTime(math.random(900, 10800))
 
     xi.treasure.initZone(zone)
 end
@@ -87,15 +86,16 @@ zoneObject.onTriggerAreaEnter = function(player, triggerArea)
             for _, zonePlayer in pairs(zonePlayers) do
                 -- send gate opening text to each player in zone
                 zonePlayer:messageSpecial(ID.text.BANISHING_GATES + leverSet)
+
+                gate:timer(1000 * time, function(gateArg)
+                    -- send gate closing text to each player in zone
+                    zonePlayer:messageSpecial(ID.text.BANISHING_GATES_CLOSING + leverSet)
+                end)
             end
 
-            -- set gate closed var to allow this gate to be opened again.
             gate:timer(1000 * time, function(gateArg)
+                -- set gate closed var to allow this gate to be opened again.
                 gateArg:setLocalVar("isOpen", 0)
-                local zoneChars = gateArg:getZone():getPlayers()
-                for _, zoneChar in pairs(zoneChars) do
-                    zoneChar:messageSpecial(ID.text.BANISHING_GATES_CLOSING + leverSet)
-                end
             end)
         end
     end

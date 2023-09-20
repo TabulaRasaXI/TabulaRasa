@@ -11,10 +11,6 @@ zoneObject.onInitialize = function(zone)
     -- it on the top floor while moving up the ramp from homepoint.
     zone:registerTriggerArea(1, -5, -24, 18, 5, -20, 27)
     zone:registerTriggerArea(2, 104, -42, -88, 113, -38, -77)
-
-    -- Disable Dynamis
-    zone:queryEntitiesByName('Hieroglyphics')[1]:setStatus(xi.status.DISAPPEAR)
-
 end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)

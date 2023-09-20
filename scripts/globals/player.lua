@@ -232,17 +232,6 @@ xi.player.onGameIn = function(player, firstLogin, zoning)
         player:setUnkillable(true)
     end
 
-    if xi.settings.main.TR_TRUST_ENABLED == 1 then
-        player:addSpell(896)
-        player:addSpell(898)
-        player:addSpell(900)
-        player:addSpell(951)
-    else
-        player:delSpell(896)
-        player:delSpell(898)
-        player:delSpell(900)
-        player:delSpell(951)
-    end
     -- !hide
     if player:getCharVar("GMHidden") == 1 then
         player:setGMHidden(true)

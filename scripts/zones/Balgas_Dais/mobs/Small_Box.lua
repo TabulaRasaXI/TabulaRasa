@@ -29,7 +29,7 @@ entity.onMobEngaged = function(mob, target)
         DespawnMob(mobId + 1)
         DespawnMob(mobId + 2)
 
-        if battlefield:getLocalVar("Winning_Box") == 3 then
+        if math.random(1, 3) == 1 then
             DespawnMob(mobId)
             replaceWithCrate(mob)
         else

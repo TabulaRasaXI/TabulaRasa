@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Hororo
+-- Working 100%
 -----------------------------------
 local ID = require("scripts/zones/Windurst_Waters/IDs")
 require("scripts/globals/pathfind")

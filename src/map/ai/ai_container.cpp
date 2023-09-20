@@ -366,7 +366,7 @@ bool CAIContainer::Internal_UseItem(uint16 targetid, uint8 loc, uint8 slotid)
 
 CState* CAIContainer::GetCurrentState()
 {
-    if (!m_stateStack.empty() && m_stateStack.top() != nullptr)
+    if (!m_stateStack.empty())
     {
         return m_stateStack.top().get();
     }

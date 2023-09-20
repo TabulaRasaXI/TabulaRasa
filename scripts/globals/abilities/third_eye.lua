@@ -25,7 +25,6 @@ abilityObject.onUseAbility = function(player, target, ability)
         if xi.settings.main.ENABLE_TOAU == 1 then
             duration = 30
         end
-
         player:addStatusEffect(xi.effect.THIRD_EYE, 0, 0, duration) -- Power keeps track of procs
     end
 end

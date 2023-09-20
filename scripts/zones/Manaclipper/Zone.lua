@@ -9,7 +9,6 @@ require('scripts/globals/zone')
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    xi.mob.nmTODPersistCache(zone, ID.mob.ZOREDONITE)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)
@@ -25,14 +24,14 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(0, -3, -8, 60)
     end
 
-    local zoreRespawn = GetServerVariable("\\[SPAWN\\]"..ID.mob.ZOREDONITE)
+    local zoreRespawn = GetMobByID(ID.mob.ZOREDONITE):getLocalVar("respawn")
     local zoneWindow = GetMobByID(ID.mob.ZOREDONITE):getLocalVar("zoneWindow")
 
     -- If Zoredonite respawn is up, 30% chance to spawn
     if
         os.time() > zoreRespawn and
         os.time() > zoneWindow and
-        math.random(1, 3) == 3
+        math.random(1, 10) > 7
     then
         GetMobByID(ID.mob.ZOREDONITE):setRespawnTime(math.random(120, 480))
     end

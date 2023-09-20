@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Al Zahbi
 --  NPC: Yando-Memondo
+-- Working 100%
 -----------------------------------
 local entity = {}
 

@@ -2,8 +2,6 @@
 -- Area: Castle Zvahl Baileys (161)
 --   NM: Duke Haborym
 -----------------------------------
-require("scripts/globals/mobs")
-
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)

@@ -1,6 +1,9 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Khuta Colaara
+-- Working 100%
+-----------------------------------
+require("scripts/globals/settings")
 -----------------------------------
 local entity = {}
 

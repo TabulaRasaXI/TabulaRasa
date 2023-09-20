@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Polink-Moink
+-- Working 100%
 -----------------------------------
 require("scripts/globals/pathfind")
 -----------------------------------

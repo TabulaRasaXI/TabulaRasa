@@ -216,7 +216,6 @@ end
 xi.job_utils.dragoon.useSpiritSurge = function(player, target, ability)
     local wyvern = player:getPet()
     local petTP = wyvern:getTP()
-    local petHP = wyvern:getHP()
     local duration = 60
 
     -- Spirit Surge increases dragoon's MAX HP increases by 25% of wyvern MaxHP
@@ -238,7 +237,6 @@ xi.job_utils.dragoon.useSpiritSurge = function(player, target, ability)
     target:resetRecast(xi.recast.ABILITY, 160) -- Super Jump
 
     target:addStatusEffect(xi.effect.SPIRIT_SURGE, maxHPBoost, 0, duration, 0, strBoost)
-    target:addHP(petHP) -- Add in wyvern's remaining HP before the wyvern was despawned
 end
 
 xi.job_utils.dragoon.useCallWyvern = function(player, target, ability)
@@ -603,7 +601,7 @@ xi.job_utils.dragoon.useSteadyWing = function(player, target, ability, action)
 
     -- https://www.bg-wiki.com/ffxi/Steady_Wing
     if wyvern then
-        local power = wyvern:getMaxHP() * 0.3 + wyvern:getMaxHP() - wyvern:getHP()
+        local power = 1.3 * wyvern:getMaxHP() + wyvern:getHP()
 
         action:reaction(wyvern:getID(), 0x10) -- Observed on retail
         if wyvern:addStatusEffect(xi.effect.STONESKIN, power, 0, 300) then

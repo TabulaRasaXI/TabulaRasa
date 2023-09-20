@@ -20,10 +20,6 @@ zoneObject.onInitialize = function(zone)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
     xi.mogTablet.onZoneInitialize(zone)
 
-    -- Disable Dynamis
-    zone:queryEntitiesByName('Hieroglyphics')[1]:setStatus(xi.status.DISAPPEAR)
-
-
     local results = zone:queryEntitiesByName("qm2")
     if results ~= nil and results[1] ~= nil then
         local qm2 = results[1]

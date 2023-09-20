@@ -61,28 +61,24 @@ zones[xi.zone.FEIYIN] =
         },
         NORTHERN_SHADOW_PH  =
         {
-            [17613098] = 17613102,
+            [17613098] = 17613102, -- -159.000 -16.000 146.000
         },
         EASTERN_SHADOW_PH   =
         {
-            [17613107] = 17613109,
+            [17613107] = 17613109, -- -86.000 -15.000 152.000
         },
         SOUTHERN_SHADOW_PH  =
         {
-            [17613117] = 17613120,
+            [17613117] = 17613120, -- -169.000 -16.000 87.000
         },
         WESTERN_SHADOW_PH   =
         {
-            [17613094] = 17613095,
+            [17613094] = 17613095, -- -204.000 -15.000 118.000
         },
         ALTEDOUR_I_TAVNAZIA = 17612836,
         MISER_MURPHY        = 17612849,
         DABOTZS_GHOST       = 17613128,
         CAPRICIOUS_CASSIE   = 17613129,
-        NORTHEN_SHADOW      = 17613102,
-        EASTERN_SHADOW      = 17613109,
-        SOUTHERN_SHADOW     = 17613120,
-        WESTERN_SHADOW      = 17613095,
         HUMBABA             = 17232094,
     },
     npc =

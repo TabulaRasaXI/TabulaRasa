@@ -2,6 +2,7 @@
 -- Area: Port Bastok
 --  NPC: Dulsie
 -- Adventurer's Assistant
+-- Working 100%
 -----------------------------------
 require("scripts/globals/settings")
 local ID = require("scripts/zones/Port_Bastok/IDs")

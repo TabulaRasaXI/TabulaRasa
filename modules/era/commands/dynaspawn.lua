@@ -48,7 +48,7 @@ function onTrigger(player, zoneName, mobIndex)
     end
 
     mobIndex = tonumber(mobIndex)
-    if not mobIndex then
+    if not wave then
         error(player, string.format("[DynaSetWave] Invalid monster index provided."))
         return
     end

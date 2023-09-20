@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Kimumu
+-- Working 100%
 -----------------------------------
 local entity = {}
 

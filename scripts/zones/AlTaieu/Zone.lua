@@ -33,8 +33,4 @@ end
 zoneObject.onEventFinish = function(player, csid, option)
 end
 
-zoneObject.afterZoneIn = function(player)
-    player:entityVisualPacket("on00", player) -- Fog effect on zone in
-end
-
 return zoneObject

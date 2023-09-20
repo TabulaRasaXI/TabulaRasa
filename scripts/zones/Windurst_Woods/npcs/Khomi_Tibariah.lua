@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Khomi Tibariah
+-- Working 100%
 -----------------------------------
 local entity = {}
 

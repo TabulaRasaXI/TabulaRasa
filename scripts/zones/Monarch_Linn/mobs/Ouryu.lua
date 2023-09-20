@@ -8,7 +8,7 @@ require("scripts/globals/status")
 local entity = {}
 
 entity.onMobInitialize = function(mob)
-    -- mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(xi.mobMod.ADD_EFFECT, 1)
 end
 
 entity.onMobSpawn = function(mob)
@@ -31,14 +31,18 @@ entity.onMobFight = function(mob, target)
         return
     end
 
-    -- can use invincible on ground or air
-    if mob:getHPP() < mob:getLocalVar("setTwoHourThreshold") then
+    -- only use invincible on the groud
+    if
+        mob:getAnimationSub() == 2 and
+        mob:getHPP() < mob:getLocalVar("setTwoHourThreshold")
+    then
         mob:useMobAbility(694)
         --make sure to use only once in case of regen back above threshold
         mob:setLocalVar("setTwoHourThreshold", 0)
     end
 
     if
+        not mob:hasStatusEffect(xi.effect.INVINCIBLE) and
         mob:actionQueueEmpty() and
         mob:canUseAbilities()
     then

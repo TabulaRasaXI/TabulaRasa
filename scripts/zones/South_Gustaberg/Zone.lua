@@ -18,7 +18,6 @@ zoneObject.onInitialize = function(zone)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     end
-
     -- NM Persistence
     if xi.settings.main.ENABLE_WOTG == 1 then
         xi.mob.nmTODPersistCache(zone, ID.mob.TOCOCO)
@@ -50,7 +49,8 @@ end
 zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE107_ITEMS", 0)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
-        xi.events.starlightCelebration.resetSmileHelpers(xi.zone.SOUTH_GUSTABERG)
+        local zone = 107
+        xi.events.starlightCelebration.resetSmileHelpers(zone)
     end
 end
 

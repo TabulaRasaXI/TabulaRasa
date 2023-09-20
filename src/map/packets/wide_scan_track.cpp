@@ -24,7 +24,6 @@
 #include <cstring>
 
 #include "../entities/baseentity.h"
-#include "../entities/battleentity.h"
 #include "wide_scan_track.h"
 
 CWideScanTrackPacket::CWideScanTrackPacket(CBaseEntity* PEntity)
@@ -38,14 +37,5 @@ CWideScanTrackPacket::CWideScanTrackPacket(CBaseEntity* PEntity)
 
     ref<uint8>(0x10)  = 1;
     ref<uint16>(0x12) = PEntity->targid;
-
-    if (PEntity->objtype != TYPE_NPC)
-    {
-        auto* PBattleEntity = static_cast<CBattleEntity*>(PEntity);
-        ref<uint8>(0x14)    = (PEntity->status == STATUS_TYPE::DISAPPEAR || (PBattleEntity->GetLocalVar("BotCheckEnd") > 0)) ? 2 : 1;
-    }
-    else
-    {
-        ref<uint8>(0x14) = PEntity->status == STATUS_TYPE::DISAPPEAR ? 2 : 1;
-    }
+    ref<uint8>(0x14)  = PEntity->status == STATUS_TYPE::DISAPPEAR ? 2 : 1;
 }

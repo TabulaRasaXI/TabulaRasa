@@ -54,12 +54,6 @@
 
 #include "packets/action.h"
 #include "packets/char.h"
-#include "packets/char_abilities.h"
-#include "packets/char_jobs.h"
-#include "packets/char_recast.h"
-#include "packets/char_skills.h"
-#include "packets/char_spells.h"
-#include "packets/char_stats.h"
 #include "packets/char_sync.h"
 #include "packets/char_update.h"
 #include "packets/entity_update.h"
@@ -236,42 +230,42 @@ const std::string& CZone::GetName()
     return m_zoneName;
 }
 
-uint16 CZone::GetSoloBattleMusic() const
+uint8 CZone::GetSoloBattleMusic() const
 {
     return m_zoneMusic.m_bSongS;
 }
 
-uint16 CZone::GetPartyBattleMusic() const
+uint8 CZone::GetPartyBattleMusic() const
 {
     return m_zoneMusic.m_bSongM;
 }
 
-uint16 CZone::GetBackgroundMusicDay() const
+uint8 CZone::GetBackgroundMusicDay() const
 {
     return m_zoneMusic.m_songDay;
 }
 
-uint16 CZone::GetBackgroundMusicNight() const
+uint8 CZone::GetBackgroundMusicNight() const
 {
     return m_zoneMusic.m_songNight;
 }
 
-void CZone::SetSoloBattleMusic(uint16 music)
+void CZone::SetSoloBattleMusic(uint8 music)
 {
     m_zoneMusic.m_bSongS = music;
 }
 
-void CZone::SetPartyBattleMusic(uint16 music)
+void CZone::SetPartyBattleMusic(uint8 music)
 {
     m_zoneMusic.m_bSongM = music;
 }
 
-void CZone::SetBackgroundMusicDay(uint16 music)
+void CZone::SetBackgroundMusicDay(uint8 music)
 {
     m_zoneMusic.m_songDay = music;
 }
 
-void CZone::SetBackgroundMusicNight(uint16 music)
+void CZone::SetBackgroundMusicNight(uint8 music)
 {
     m_zoneMusic.m_songNight = music;
 }
@@ -476,10 +470,10 @@ void CZone::LoadZoneSettings()
 
         inet_pton(AF_INET, (const char*)sql->GetData(1), &m_zoneIP);
         m_zonePort              = (uint16)sql->GetUIntData(2);
-        m_zoneMusic.m_songDay   = (uint16)sql->GetUIntData(3);          // background music (day)
-        m_zoneMusic.m_songNight = (uint16)sql->GetUIntData(4);          // background music (night)
-        m_zoneMusic.m_bSongS    = (uint16)sql->GetUIntData(5);          // solo battle music
-        m_zoneMusic.m_bSongM    = (uint16)sql->GetUIntData(6);          // party battle music
+        m_zoneMusic.m_songDay   = (uint8)sql->GetUIntData(3);           // background music (day)
+        m_zoneMusic.m_songNight = (uint8)sql->GetUIntData(4);           // background music (night)
+        m_zoneMusic.m_bSongS    = (uint8)sql->GetUIntData(5);           // solo battle music
+        m_zoneMusic.m_bSongM    = (uint8)sql->GetUIntData(6);           // party battle music
         m_tax                   = (uint16)(sql->GetFloatData(7) * 100); // tax for bazaar
         m_miscMask              = (uint16)sql->GetUIntData(8);
         m_updatedNavmesh        = (bool)sql->GetIntData(10);
@@ -635,8 +629,6 @@ void CZone::updateCharLevelRestriction(CCharEntity* PChar)
     {
         PChar->StatusEffectContainer->AddStatusEffect(new CStatusEffect(EFFECT_LEVEL_RESTRICTION, EFFECT_LEVEL_RESTRICTION, m_levelRestriction, 0, 0));
     }
-
-    charutils::CheckValidEquipment(PChar);
 }
 
 void CZone::SetWeather(WEATHER weather)
@@ -1071,23 +1063,22 @@ void CZone::CharZoneIn(CCharEntity* PChar)
 
     PChar->ReloadPartyInc();
 
-    // Zone-wide treasure pool takes precendence over all others
-    if (m_TreasurePool != nullptr && m_TreasurePool->GetPoolType() == TREASUREPOOL_ZONE)
+    if (PChar->PParty != nullptr)
     {
-        PChar->PTreasurePool = m_TreasurePool;
-        PChar->PTreasurePool->AddMember(PChar);
-    }
-    else
-    {
-        if (PChar->PParty != nullptr)
+        if (m_TreasurePool != nullptr)
         {
-            PChar->PParty->ReloadTreasurePool(PChar);
+            PChar->PTreasurePool = m_TreasurePool;
+            PChar->PTreasurePool->AddMember(PChar);
         }
         else
         {
-            PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_SOLO);
-            PChar->PTreasurePool->AddMember(PChar);
+            PChar->PParty->ReloadTreasurePool(PChar);
         }
+    }
+    else
+    {
+        PChar->PTreasurePool = new CTreasurePool(TREASUREPOOL_SOLO);
+        PChar->PTreasurePool->AddMember(PChar);
     }
 
     if (m_zoneType != ZONE_TYPE::DUNGEON_INSTANCED)

@@ -20,7 +20,7 @@ abilityObject.onPetAbility = function(target, pet, skill)
     params.element = xi.magic.ele.LIGHTNING
     params.includemab = true
     params.maccBonus = xi.summon.getSummoningSkillOverCap(pet)
-    params.damageSpell = true
+    params.ignoreStateLock = true
 
     local damage = xi.summon.avatarMagicSkill(pet, target, skill, params)
 

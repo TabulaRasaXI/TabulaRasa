@@ -1,8 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Auction Counter
------------------------------------
-require("scripts/quests/tutorial")
+-- Working 100%
 -----------------------------------
 local entity = {}
 

@@ -920,42 +920,41 @@ local function calculateSkillUp(player)
     local skillRank  = player:getSkillRank(xi.skill.DIG)
     local realSkill  = player:getCharSkillLevel(xi.skill.DIG)
 
-    -- local digsTable = -- Era Dig Table
-    -- {
-    --     [0] = {  1600 },
-    --     [1] = {  3600 },
-    --     [2] = {  6000 },
-    --     [3] = {  9000 },
-    --     [4] = { 12600 },
-    --     [5] = { 16200 },
-    --     [6] = { 21000 },
-    --     [7] = { 27000 },
-    --     [8] = { 33000 },
-    --     [9] = { 39000 },
-    -- }
-
-    local digsTable = -- Tabula Rasa Dig Table
+    local digsTable = -- Era Dig Table
     {
-        [0] = {  800 },
-        [1] = {  1800 },
-        [2] = {  3000 },
-        [3] = {  4500 },
-        [4] = {  6300 },
-        [5] = {  8100 },
-        [6] = { 10500 },
-        [7] = { 13500 },
-        [8] = { 16500 },
-        [9] = { 19500 },
+        [0] = {  1600 },
+        [1] = {  3600 },
+        [2] = {  6000 },
+        [3] = {  9000 },
+        [4] = { 12600 },
+        [5] = { 16200 },
+        [6] = { 21000 },
+        [7] = { 27000 },
+        [8] = { 33000 },
+        [9] = { 39000 },
     }
+
+    -- local digsTable = -- Limit Break Dig Table
+    -- {
+        -- [0] = {  2000 },
+        -- [1] = {  2500 },
+        -- [2] = {  3300 },
+        -- [3] = {  5000 },
+        -- [4] = { 10000 },
+        -- [5] = { 11100 },
+        -- [6] = { 12500 },
+        -- [7] = { 14300 },
+        -- [8] = { 16700 },
+        -- [9] = { 20000 },
+    -- }
 
     if math.random(1, math.floor(digsTable[skillRank][1] / 100)) == 1 then
         if realSkill < 1000 then -- Safety check.
             player:setSkillLevel(xi.skill.DIG, realSkill + 1)
-            player:PrintToPlayer(string.format("%s's Chocobo Digging skill rises 0.1 points.", player:getName()), xi.msg.channel.SYSTEM_3)
+
             -- Digging does not have test items, so increment rank once player hits 10.0, 20.0, .. 100.0
             if (realSkill + 1) >= (skillRank * 100) + 100 then
                 player:setSkillRank(xi.skill.DIG, skillRank + 1)
-                player:PrintToPlayer(string.format("%s's Chocobo Digging rank increased!", player:getName()), xi.msg.channel.SYSTEM_3)
             end
         end
     end

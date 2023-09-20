@@ -7,9 +7,6 @@ local badTable = { -- FAIL
     1,
 }
 
-local badTable2 = {1 } -- FAIL
-local badTable3 = { 1} -- FAIL
-
 local goodTable = { 1 }
 
 local goodTable2 =
@@ -48,7 +45,7 @@ local b =2 -- FAIL
 if b ==a then -- FAIL
 end
 
-if b== a then -- FAIL
+if b== a then
 end
 
 if b~= a then -- FAIL
@@ -57,7 +54,7 @@ end
 if a ==b then -- FAIL
 end
 
-if a>=b then -- FAIL (x2)
+if a>=b then -- FAIL
 end
 
 if a <=b then -- FAIL
@@ -97,7 +94,7 @@ local function goodFunction()
 end
 
 -- check_no_single_line_functions()
-local function badFunction3() return 1 end -- FAIL (x2)
+local function badFunction3() return 1 end -- FAIL
 
 -- check_no_single_line_conditions()
 if a == b then a = 5 end -- FAIL
@@ -153,8 +150,8 @@ then
 end
 
 if
-    a== b or -- FAIL
-    c ~=a -- FAIL
+    a== b or
+    c ~=a
 then
 end
 

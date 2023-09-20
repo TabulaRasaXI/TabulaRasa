@@ -2,8 +2,12 @@
 -- Area: Port Windurst
 --  NPC: Goltata
 --  Involved in Quests: Wonder Wands
+-- Working 100%
 -----------------------------------
+require("scripts/globals/settings")
+require("scripts/globals/keyitems")
 require("scripts/globals/quests")
+require("scripts/globals/titles")
 -----------------------------------
 local entity = {}
 

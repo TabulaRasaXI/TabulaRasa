@@ -18,7 +18,7 @@ entity.onMobDeath = function(mob, player, optParams)
 end
 
 entity.onMobDespawn = function(mob)
-    xi.assault.progressInstance(mob, 1)
+    xi.assault.progressInstance(mob)
 end
 
 return entity

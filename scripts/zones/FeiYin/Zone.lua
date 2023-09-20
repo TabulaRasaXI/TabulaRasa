@@ -1,22 +1,17 @@
 -----------------------------------
 -- Zone: FeiYin (204)
 -----------------------------------
-local ID = require("scripts/zones/FeiYin/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/keyitems")
-require("scripts/globals/missions")
-require("scripts/globals/treasure")
-require("scripts/globals/quests")
-require("scripts/globals/zone")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/FeiYin/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/keyitems')
+require('scripts/globals/missions')
+require('scripts/globals/treasure')
+require('scripts/globals/quests')
+require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
 zoneObject.onInitialize = function(zone)
-    xi.mob.lotteryPersistCache(zone, ID.mob.NORTHEN_SHADOW)
-    xi.mob.lotteryPersistCache(zone, ID.mob.EASTERN_SHADOW)
-    xi.mob.lotteryPersistCache(zone, ID.mob.SOUTHERN_SHADOW)
-    xi.mob.lotteryPersistCache(zone, ID.mob.WESTERN_SHADOW)
     -- NM Persistence
     xi.mob.nmTODPersistCache(zone, ID.mob.CAPRICIOUS_CASSIE)
 

@@ -3,7 +3,6 @@
 --   NM: Skewer Sam
 -----------------------------------
 require("scripts/globals/titles")
-require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 

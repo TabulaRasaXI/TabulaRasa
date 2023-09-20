@@ -15,8 +15,7 @@ end
 entity.onTrigger = function(player, npc)
     if
         player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.ONE_TO_BE_FEARED or
-        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.THE_WARRIORS_PATH or
-        player:hasStatusEffect(xi.effect.BATTLEFIELD)
+        player:getCurrentMission(xi.mission.log_id.COP) == xi.mission.id.cop.THE_WARRIORS_PATH
     then
         xi.bcnm.onTrigger(player, npc)
     else

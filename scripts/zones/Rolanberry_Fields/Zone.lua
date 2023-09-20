@@ -1,13 +1,12 @@
 -----------------------------------
 -- Zone: Rolanberry_Fields (110)
 -----------------------------------
-local ID = require("scripts/zones/Rolanberry_Fields/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/missions")
-require("scripts/globals/zone")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Rolanberry_Fields/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/missions')
+require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
@@ -20,9 +19,6 @@ zoneObject.onInitialize = function(zone)
     xi.mob.nmTODPersistCache(zone, ID.mob.SIMURGH)
 
     xi.voidwalker.zoneOnInit(zone)
-end
-
-zoneObject.onZoneTick = function(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

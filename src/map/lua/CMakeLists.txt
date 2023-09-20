@@ -11,8 +11,6 @@ set(LUA_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/lua_instance.h
     ${CMAKE_CURRENT_SOURCE_DIR}/lua_item.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lua_item.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/lua_loot.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/lua_loot.h
     ${CMAKE_CURRENT_SOURCE_DIR}/lua_mobskill.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lua_mobskill.h
     ${CMAKE_CURRENT_SOURCE_DIR}/lua_petskill.cpp

@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Augu-Maugu
+-- Working 100%
 -----------------------------------
 local entity = {}
 

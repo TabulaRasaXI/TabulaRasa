@@ -337,7 +337,6 @@ local function getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, f
                 local ftpHybrid = xi.weaponskills.fTP(calcParams.tp, wsParams.ftp100, wsParams.ftp200, wsParams.ftp300) + calcParams.bonusfTP
                 local magicdmg = finaldmg * ftpHybrid
 
-                wsParams.damageSpell = true
                 wsParams.bonus = calcParams.bonusAcc
                 magicdmg = magicdmg * xi.magic.applyAbilityResistance(attacker, target, wsParams)
                 magicdmg = target:magicDmgTaken(magicdmg, wsParams.ele)
@@ -554,7 +553,7 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
 
     -- Calculate the damage from the first hit
     if isRanged then
-        hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, true, isRanged, false)
+        hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, false, isRanged, false)
     else
         hitdmg, calcParams = getSingleHitDamage(attacker, target, dmg, wsParams, calcParams, true, isRanged, false)
     end
@@ -638,12 +637,6 @@ xi.weaponskills.calculateRawWSDmg = function(attacker, target, wsID, tp, action,
         calcParams.extraOffhandHit = false
     end
 
-    -- adding one to make sure the extra hit from dw or h2h doesnt eat 1 base hit of the ws
-    if calcParams.extraOffhandHit then
-        numHits = utils.clamp(numHits + 1, 0, 8)
-        calcParams.extraOffhandHit = false
-    end
-
     if isRanged then
         numHits = wsParams.numHits
     end
@@ -710,10 +703,6 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
         ['weaponType'] = attacker:getWeaponSkillType(xi.slot.MAIN),
         ['damageType'] = attacker:getWeaponDamageType(xi.slot.MAIN)
     }
-
-    if wsParams.specialDamageType then
-        attack['damageType'] = wsParams.specialDamageType
-    end
 
     local calcParams = {}
     calcParams.wsID = wsID
@@ -805,10 +794,6 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
         ['attackType'] = xi.attackType.RANGED,
     }
 
-    if wsParams.specialDamageType then
-        attack['damageType'] = wsParams.specialDamageType
-    end
-
     local calcParams =
     {
         wsID = wsID,
@@ -859,8 +844,6 @@ end
 --         ele (xi.magic.ele.FIRE), skill (xi.skill.STAFF)
 
 xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, tp, action, primaryMsg)
-    -- Magical WSs do not resist to 0
-    wsParams.damageSpell = true
     -- Set up conditions and wsParams used for calculating weaponskill damage
     local attack =
     {
@@ -1002,7 +985,14 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
         action:reaction(defender:getID(), xi.reaction.EVADE)
     end
 
-    finaldmg = xi.damage.applyDamageTaken(defender, finaldmg, attack.type, attack.damageType)
+    if attack.attackType == xi.attackType.MAGICAL then
+        local targetMDTA = xi.spells.damage.calculateTMDA(attacker, defender, attack.damageType)
+        finaldmg = finaldmg * targetMDTA
+    elseif attack.attackType == xi.attackType.RANGED then
+        finaldmg = xi.damage.applyDamageTaken(defender, finaldmg, xi.attackType.RANGED)
+    else
+        finaldmg = xi.damage.applyDamageTaken(defender, finaldmg, utils.ternary(attack.damageType ~= nil, attack.damageType, xi.attackType.PHYSICAL))
+    end
 
     local targetTPMult = wsParams.targetTPMult or 1
     local attackerTPMult = wsParams.attackerTPMult or 1

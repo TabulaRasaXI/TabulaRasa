@@ -45,9 +45,9 @@ entity.onMobDeath = function(mob, player, optParams)
             person:checkDistance(mob) < 32
         then
             if mob:getLocalVar("tookDamage") == 0 then
-                person:setCharVar("Quest[2][31]Prog", 2)
+                person:setCharVar("TheFangedOneCS", 2)
             else
-                person:setCharVar("Quest[2][31]Timer", os.time() + 300)
+                person:setCharVar("TheFangedOneTimer", os.time() + 300)
             end
         end
     end

@@ -1,11 +1,9 @@
 -----------------------------------
 -- Zone: Ordelles Caves (193)
 -----------------------------------
-local ID = require("scripts/zones/Ordelles_Caves/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/treasure")
-require("scripts/globals/zone")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Ordelles_Caves/IDs')
+require('scripts/globals/conquest')
+require('scripts/globals/treasure')
 -----------------------------------
 local zoneObject = {}
 

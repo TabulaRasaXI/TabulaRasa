@@ -2,8 +2,7 @@
 -- Area: Gustav Tunnel
 --   NM: Bune
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
-require("scripts/globals/mobs")
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 

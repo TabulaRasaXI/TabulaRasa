@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Meh Kotomaihro
+-- Working 100%
 -----------------------------------
 local entity = {}
 
