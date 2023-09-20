@@ -2,8 +2,10 @@
 -- Area: Windurst Walls
 --  Location: X:-91  Y:-9  Z:109
 --  NPC: Zayhi-Bauhi
+--    Working 100%
 --  Starts and Finishes Quest: To Bee or Not to Bee?
 -----------------------------------
+require("scripts/globals/settings")
 require("scripts/globals/quests")
 -----------------------------------
 local entity = {}

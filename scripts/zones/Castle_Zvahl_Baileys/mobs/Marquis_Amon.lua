@@ -2,8 +2,7 @@
 -- Area: Castle Zvahl Baileys (161)
 --   NM: Marquis Amon
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
-require("scripts/globals/mobs")
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 

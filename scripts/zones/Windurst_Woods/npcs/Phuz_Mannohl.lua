@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Phuz Mannohl
+-- Working 100%
 -----------------------------------
 local entity = {}
 

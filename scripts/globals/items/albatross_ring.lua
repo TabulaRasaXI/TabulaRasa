@@ -15,12 +15,11 @@ itemObject.onItemCheck = function(target)
     if target:getMod(xi.mod.ALBATROSS_RING_EFFECT) == 1 then
         result = xi.msg.basic.ITEM_UNABLE_TO_USE_2
     end
-
     return result
 end
 
 itemObject.onItemUse = function(target)
-    target:addStatusEffectEx(xi.effect.ENCHANTMENT, xi.effect.ENCHANTMENT, 0, 3, 1200, 15552)
+    target:addStatusEffectEx(xi.effect.ENCHANTMENT, xi.effect.ENCHANTMENT, 0, 3, 1200)
 end
 
 itemObject.onEffectGain = function(target, effect)

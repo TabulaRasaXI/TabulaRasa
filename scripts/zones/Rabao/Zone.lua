@@ -25,10 +25,6 @@ zoneObject.onZoneIn = function(player, prevZone)
     return cs
 end
 
-zoneObject.afterZoneIn = function(player)
-    xi.chocobo.confirmRentalAfterZoneIn(player)
-end
-
 zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end

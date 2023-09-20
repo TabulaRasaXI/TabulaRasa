@@ -62,6 +62,4 @@ bool check_string(std::string const& str, std::size_t max_length);
  * login data close socket
  *-------------------------------------------*/
 int32 do_close_login(login_session_data_t* loginsd, int32 fd);
-bool  isBanned(uint32 ip);
-
 #endif

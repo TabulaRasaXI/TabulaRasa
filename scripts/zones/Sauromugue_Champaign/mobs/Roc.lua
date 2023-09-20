@@ -8,13 +8,12 @@ mixins =
     require("scripts/mixins/job_special"),
 }
 require("scripts/globals/titles")
-require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 
 entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.DRAW_IN, 1)
-    -- mob:setMod(xi.mod.EVA, 300)
+    mob:setMod(xi.mod.EVA, 300)
     -- custom distance from retail capture
     mob:setMobMod(xi.mobMod.DRAW_IN_CUSTOM_RANGE, 34)
 end

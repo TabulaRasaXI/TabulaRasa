@@ -140,7 +140,6 @@ namespace battleutils
     bool IsParalyzed(CBattleEntity* PAttacker);
     bool IsAbsorbByShadow(CBattleEntity* PDefender, CBattleEntity* PAttacker);
     bool IsIntimidated(CBattleEntity* PAttacker, CBattleEntity* PDefender);
-    bool IsTandemValid(CBattleEntity* PAttacker);
 
     int32 GetFSTR(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 SlotID);
     uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 attackNumber, int8 offsetAccuracy);
@@ -155,7 +154,7 @@ namespace battleutils
     uint8 GetParryRate(CBattleEntity* PAttacker, CBattleEntity* PDefender);
     uint8 GetGuardRate(CBattleEntity* PAttacker, CBattleEntity* PDefender);
     float GetDamageRatio(CBattleEntity* PAttacker, CBattleEntity* PDefender, bool isCritical = false, float bonusAttPercent = 1, uint16 slot = SLOT_MAIN, uint16 ignoredDef = 0, bool isGuarded = false);
-    float GetRangedDistanceCorrection(CBattleEntity* PBattleEntity, float distance, bool atk);
+    float GetRangedDistanceCorrection(CBattleEntity* PBattleEntity, float distance);
 
     int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked,
                              uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter = false,
@@ -270,8 +269,7 @@ namespace battleutils
     bool           IsMagicCovered(CCharEntity* PCoverAbilityUser);
     void           ConvertDmgToMP(CBattleEntity* PDefender, int32 damage, bool IsCovered);
     float          CheckLiementAbsorb(CBattleEntity* PBattleEntity, DAMAGE_TYPE DamageType);
-
-    int16 CalculateReturnedTPWS(CBattleEntity* PAttacker, bool isRanged, CItemWeapon* weapon);
+    int16          CalculateReturnedTPWS(CBattleEntity* PAttacker, bool isRanged, CItemWeapon* weapon);
 }; // namespace battleutils
 
 #endif

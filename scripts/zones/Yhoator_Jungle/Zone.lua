@@ -1,16 +1,15 @@
 -----------------------------------
 -- Zone: Yhoator_Jungle (124)
 -----------------------------------
-local ID = require("scripts/zones/Yhoator_Jungle/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/chocobo")
-require("scripts/globals/helm")
-require("scripts/globals/zone")
-require("scripts/globals/beastmentreasure")
-require("scripts/missions/amk/helpers")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Yhoator_Jungle/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/chocobo')
+require('scripts/globals/helm')
+require('scripts/globals/zone')
+require('scripts/globals/beastmentreasure')
+require('scripts/missions/amk/helpers')
 -----------------------------------
 local zoneObject = {}
 
@@ -33,8 +32,6 @@ zoneObject.onInitialize = function(zone)
         xi.mob.nmTODPersistCache(zone, ID.mob.POWDERER_PENNY)
     end
 
-    UpdateNMSpawnPoint(ID.mob.BISQUE_HEELED_SUNBERRY)
-    UpdateNMSpawnPoint(ID.mob.BRIGHT_HANDED_KUNBERRY)
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 
     xi.chocobo.initZone(zone)

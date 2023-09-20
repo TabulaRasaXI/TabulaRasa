@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Tosh Hohnay
+-- Working 100%
 -----------------------------------
 local entity = {}
 

@@ -2,6 +2,7 @@
 -- Area: Windurst Walls
 --  Location: X:-90  Y:-9  Z:109
 --  NPC: Kalupa-Tawalupa
+-- Working 100%
 --  Involved in Quest: To Bee or Not to Bee?
 -----------------------------------
 require("scripts/globals/quests")

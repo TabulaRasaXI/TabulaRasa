@@ -22,8 +22,7 @@ entity.onTrigger = function(player, npc)
         player:messageSpecial(ID.text.YOU_SHOW_OFF_THE, 0, xi.ki.NEW_MODEL_HAT)
         player:startEvent(58)
     else
-        xi.moghouse.onTriggerRentARoom(player, npc)
-        -- player:startEvent(526)
+        player:startEvent(526)
     end
 end
 
@@ -35,8 +34,6 @@ entity.onEventFinish = function(player, csid, option)
         player:setCharVar("QuestHatInHand_var", utils.mask.setBit(player:getCharVar("QuestHatInHand_var"), 0, true))
         player:incrementCharVar("QuestHatInHand_count", 1)
     end
-
-    xi.moghouse.onEventFinishRentARoom(player, csid, option)
 end
 
 return entity

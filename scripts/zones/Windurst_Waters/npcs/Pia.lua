@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Pia
+-- Working 100%
 -----------------------------------
 local ID = require("scripts/zones/Windurst_Waters/IDs")
 require("scripts/globals/pathfind")
@@ -33,7 +34,6 @@ entity.onTrigger = function(player, npc)
             return
         end
     end
-
     player:startEvent(597)
 end
 

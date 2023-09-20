@@ -11,7 +11,6 @@ local zoneObject = {}
 zoneObject.onInitialize = function(zone)
 --    UpdateNMSpawnPoint(ID.mob.CEREBRATOR)
 --    GetMobByID(ID.mob.CEREBRATOR):setRespawnTime(math.random(3600, 21600))
-
     xi.promyvion.initZone(zone)
 end
 

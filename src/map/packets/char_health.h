@@ -28,14 +28,12 @@
 
 class CCharEntity;
 class CTrustEntity;
-class CFellowEntity;
 
 class CCharHealthPacket : public CBasicPacket
 {
 public:
     CCharHealthPacket(CCharEntity* PChar);
     CCharHealthPacket(CTrustEntity* PTrust);
-    CCharHealthPacket(CFellowEntity* PFellow);
 };
 
 #endif

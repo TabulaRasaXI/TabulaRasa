@@ -13,21 +13,23 @@ local loot =
     [193] =
     {
         {
-            { itemid = 13148, droprate = 166 }, -- evasion_torque
-            { itemid = 13149, droprate = 166 }, -- parrying_torque
-            { itemid = 13151, droprate = 166 }, -- guarding_torque
-            { itemid = 13159, droprate = 166 }, -- ninjutsu_torque
-            { itemid = 13161, droprate = 167 }, -- wind_torque
-            { itemid = 13158, droprate = 167 }, -- summoning_torque
+            { itemid =     0, droprate = 100 }, -- nothing
+            { itemid = 13148, droprate = 150 }, -- evasion_torque
+            { itemid = 13149, droprate = 150 }, -- parrying_torque
+            { itemid = 13151, droprate = 150 }, -- guarding_torque
+            { itemid = 13159, droprate = 150 }, -- ninjutsu_torque
+            { itemid = 13161, droprate = 150 }, -- wind_torque
+            { itemid = 13158, droprate = 150 }, -- summoning_torque
         },
 
         {
-            { itemid = 13152, droprate = 166 }, -- divine_torque
-            { itemid = 13153, droprate = 166 }, -- dark_torque
-            { itemid = 13154, droprate = 166 }, -- enhancing_torque
-            { itemid = 13155, droprate = 166 }, -- enfeebling_torque
-            { itemid = 13156, droprate = 167 }, -- elemental_torque
-            { itemid = 13157, droprate = 167 }, -- healing_torque
+            { itemid =     0, droprate = 100 }, -- nothing
+            { itemid = 13152, droprate = 150 }, -- divine_torque
+            { itemid = 13153, droprate = 150 }, -- dark_torque
+            { itemid = 13154, droprate = 150 }, -- enhancing_torque
+            { itemid = 13155, droprate = 150 }, -- enfeebling_torque
+            { itemid = 13156, droprate = 150 }, -- elemental_torque
+            { itemid = 13157, droprate = 150 }, -- healing_torque
         },
 
         {
@@ -61,14 +63,15 @@ local loot =
         },
 
         {
-            { itemid = 1255, droprate =  125 }, -- Chunk Of Fire Ore
-            { itemid = 1256, droprate =  125 }, -- Chunk Of Ice Ore
-            { itemid = 1257, droprate =  125 }, -- Chunk Of Wind Ore
-            { itemid = 1258, droprate =  125 }, -- Chunk Of Earth Ore
-            { itemid = 1259, droprate =  125 }, -- Chunk Of Lightning Ore
-            { itemid = 1260, droprate =  125 }, -- Chunk Of Water Ore
-            { itemid = 1261, droprate =  125 }, -- Chunk Of Light Ore
-            { itemid = 1262, droprate =  125 }, -- Chunk Of Dark Ore
+            { itemid =    0, droprate = 600 }, -- nothing
+            { itemid = 1260, droprate =  50 }, -- chunk_of_water_ore
+            { itemid = 1256, droprate =  50 }, -- chunk_of_ice_ore
+            { itemid = 1259, droprate =  50 }, -- chunk_of_lightning_ore
+            { itemid = 1258, droprate =  50 }, -- chunk_of_earth_ore
+            { itemid = 1255, droprate =  50 }, -- chunk_of_fire_ore
+            { itemid = 1261, droprate =  50 }, -- chunk_of_light_ore
+            { itemid = 1262, droprate =  50 }, -- chunk_of_dark_ore
+            { itemid = 1257, droprate =  50 }, -- chunk_of_wind_ore
         },
     },
 

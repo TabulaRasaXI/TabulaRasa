@@ -1,13 +1,12 @@
 -----------------------------------
 -- Zone: Eastern_Altepa_Desert (114)
 -----------------------------------
-local ID = require("scripts/zones/Eastern_Altepa_Desert/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/chocobo")
-require("scripts/missions/amk/helpers")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Eastern_Altepa_Desert/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/chocobo')
+require('scripts/missions/amk/helpers')
 -----------------------------------
 local zoneObject = {}
 
@@ -20,7 +19,6 @@ zoneObject.onInitialize = function(zone)
     if xi.settings.main.ENABLE_WOTG == 1 then
         xi.mob.nmTODPersistCache(zone, ID.mob.NANDI)
     end
-
     xi.mob.nmTODPersistCache(zone, ID.mob.CACTROT_RAPIDO)
     xi.mob.nmTODPersistCache(zone, ID.mob.CENTURIO_XII_I)
 

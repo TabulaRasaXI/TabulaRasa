@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Waters
 --  NPC: Ramasese
+-- Working 100%
 -----------------------------------
 require("scripts/globals/pathfind")
 -----------------------------------

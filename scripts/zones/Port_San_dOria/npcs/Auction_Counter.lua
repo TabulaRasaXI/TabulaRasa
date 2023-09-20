@@ -1,8 +1,7 @@
 -----------------------------------
 -- Area: Port San d'Oria
 --  NPC: Auction Counter
------------------------------------
-require("scripts/quests/tutorial")
+-- Working 100%
 -----------------------------------
 local entity = {}
 

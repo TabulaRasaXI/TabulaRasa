@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Horuni-Mawoni
+-- Working 100%
 -----------------------------------
 local entity = {}
 

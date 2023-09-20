@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Otte Burhiyu
+-- Working 100%
 -----------------------------------
 local entity = {}
 

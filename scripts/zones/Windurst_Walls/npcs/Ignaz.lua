@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Ignaz
+-- Working 100%
 -----------------------------------
 local entity = {}
 

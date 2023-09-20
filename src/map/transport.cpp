@@ -48,15 +48,10 @@ void Transport_Ship::setVisible(bool visible) const
     if (visible)
     {
         this->npc->status = STATUS_TYPE::NORMAL;
-        // This appears to be some sort of magic bit/flag set. In QSC 0x8001 is observed on the effects that light up the weight on the weighted doors.
-        // The effect of 0x8001 appears to be to "stay in place" and not "stand on top of" things, such as the floor -- most likely fixes positions to the exact X/Y/Z coords supplied in 0x00E.
-        this->npc->loc.p.moving = 0x8007;
     }
     else
     {
         this->npc->status = STATUS_TYPE::DISAPPEAR;
-        // Missing 0x0001 bit here
-        this->npc->loc.p.moving = 0x8006;
     }
 }
 
@@ -133,7 +128,7 @@ void CTransportHandler::InitializeTransport()
                             boundary, zone, anim_arrive, anim_depart, time_offset, time_interval, \
                             time_waiting, time_anim_arrive, time_anim_depart, anim_path FROM transport LEFT JOIN \
                             zone_settings ON ((transport >> 12) & 0xFFF) = zoneid WHERE \
-                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE) and zoneid not in (2);";
+                            IF(%d <> 0, '%s' = zoneip AND %d = zoneport, TRUE);";
 
     char address[INET_ADDRSTRLEN];
     inet_ntop(AF_INET, &map_ip, address, INET_ADDRSTRLEN);

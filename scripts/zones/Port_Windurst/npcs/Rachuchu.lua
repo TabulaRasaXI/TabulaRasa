@@ -1,8 +1,10 @@
 -----------------------------------
 -- Area: Port Windurst
 --  NPC: Rachuchu
+-- Working 100%
 -----------------------------------
 require("scripts/globals/npc_util")
+require("scripts/globals/settings")
 require("scripts/globals/magic")
 -----------------------------------
 local entity = {}

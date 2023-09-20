@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Karola
+-- Working 100%
 -----------------------------------
 local entity = {}
 

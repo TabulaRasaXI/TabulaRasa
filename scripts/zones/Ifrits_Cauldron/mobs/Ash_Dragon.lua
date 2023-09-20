@@ -3,7 +3,6 @@
 --  Mob: Ash Dragon
 -----------------------------------
 require("scripts/globals/titles")
-require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 

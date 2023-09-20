@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Uwaine
+-- Working 100%
 -----------------------------------
 local entity = {}
 

@@ -12,6 +12,8 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - uses: fregante/setup-git-user@v1
+      with:
+        fetch-depth: 1
     - name: Install dependencies
       run: |
         sudo apt-get update
@@ -19,8 +21,7 @@ jobs:
         pip3 install requests
     - name: Generate changelog
       run: |
-          # https://docs.github.com/en/developers/webhooks-and-events/events/github-event-types
-          python3 tools/generate_changelog.py ci ${{ github.repository }}
+          python3 tools/generate_changelog.py ci
           cat changelog-$(date +'%Y-%m-%d').md
     - name: Capture date
       id: date

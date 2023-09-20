@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Mul Betreh
+-- Working 100%
 -----------------------------------
 local entity = {}
 

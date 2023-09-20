@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Chihpi Kapirapehro
+-- Working 100%
 -----------------------------------
 local entity = {}
 

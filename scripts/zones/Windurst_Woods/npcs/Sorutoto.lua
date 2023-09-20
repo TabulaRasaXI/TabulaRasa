@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Sorutoto
+-- Working 100%
 -----------------------------------
 local entity = {}
 

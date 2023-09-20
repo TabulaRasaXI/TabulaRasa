@@ -2,7 +2,7 @@
 -- ID: 18402
 -- Item: mana_wand
 -- Item Effect: MPHEAL +2
--- Duration: 30 minutes
+-- Duration: 30 seconds
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------

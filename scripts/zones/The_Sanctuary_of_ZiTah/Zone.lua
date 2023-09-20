@@ -25,9 +25,6 @@ zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
 end
 
-zoneObject.onZoneTick = function(zone)
-end
-
 zoneObject.onZoneIn = function(player, prevZone)
     local cs = -1
 

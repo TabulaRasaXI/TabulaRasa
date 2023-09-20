@@ -38,10 +38,7 @@ entity.onTrigger = function(player, npc)
     elseif questStatus == QUEST_ACCEPTED then
         local IsacioElderMemVar = player:getCharVar("IsacioElderMemVar")
 
-        if
-            xi.settings.main.ENABLE_ROV == 1 and
-            player:hasKeyItem(xi.ki.GILGAMESHS_INTRODUCTORY_LETTER)
-        then
+        if xi.settings.main.ENABLE_ROV == 1 and player:hasKeyItem(xi.ki.GILGAMESHS_INTRODUCTORY_LETTER) then
             player:startEvent(117)
         elseif  IsacioElderMemVar == 1 then
             player:startEvent(114, 538)
@@ -75,10 +72,9 @@ entity.onEventFinish = function(player, csid, option)
     elseif csid == 117 then
         player:confirmTrade()
         player:unlockJob(0)
+        player:setCharVar("IsacioElderMemVar", 0)
         player:messageSpecial(ID.text.SUBJOB_UNLOCKED)
-        npcUtil.completeQuest(player, xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.ELDER_MEMORIES, {
-            var = "IsacioElderMemVar",
-        })
+        player:completeQuest(xi.quest.log_id.OTHER_AREAS, xi.quest.id.otherAreas.ELDER_MEMORIES)
     end
 end
 

@@ -33,12 +33,10 @@ local function updateFullMoonStatus()
                 for i = ID.npc.MOONGATE_OFFSET, ID.npc.MOONGATE_OFFSET + 7 do
                     GetNPCByID(i):setAnimation(xi.anim.OPEN_DOOR) -- Open them
                 end
-
                 moongate2:setUntargetable(true)
                 moongate1:setUntargetable(true)
                 moongate1:setLocalVar("romaeveActive", 1) -- Make this loop unavailable after firing
             end
-
             -- Clean up outside of full moon window
         else
             local moongate1 = GetNPCByID(ID.npc.MOONGATE_OFFSET)
@@ -49,7 +47,6 @@ local function updateFullMoonStatus()
                 for i = ID.npc.MOONGATE_OFFSET, ID.npc.MOONGATE_OFFSET + 7 do
                     GetNPCByID(i):setAnimation(xi.anim.CLOSE_DOOR)
                 end
-
                 moongate2:setUntargetable(false)
                 moongate1:setUntargetable(false)
                 moongate1:setLocalVar("romaeveActive", 0) -- Make loop available again
@@ -68,9 +65,6 @@ end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
-end
-
-zoneObject.onZoneTick = function(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

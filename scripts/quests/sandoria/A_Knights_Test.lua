@@ -86,9 +86,6 @@ quest.sections =
                         return quest:progressEvent(634)
                     elseif player:hasKeyItem (xi.ki.BOOK_OF_THE_WEST) then
                         return quest:messageSpecial(ID.text.TRIAL_IS_DIFFICULT)
-                    elseif player:hasKeyItem (xi.ki.BOOK_OF_TASKS) then
-                        return quest:event(634)
-                    else
                     end
                 end,
             },
@@ -97,11 +94,9 @@ quest.sections =
             {
                 onTrigger = function(player, npc)
                     if not player:hasKeyItem (xi.ki.BOOK_OF_THE_EAST) then
-                        return quest:progressEvent(633)
+                        quest:progressEvent(633)
                     elseif player:hasKeyItem (xi.ki.BOOK_OF_THE_EAST) then
                         return quest:messageSpecial(ID.text.WAY_OF_THE_SWORD)
-                    elseif player:hasKeyItem (xi.ki.BOOK_OF_TASKS) then
-                        player:startEvent(633)
                     end
                 end,
             },
@@ -147,6 +142,7 @@ quest.sections =
                 end,
             },
         },
+
     },
 
     {

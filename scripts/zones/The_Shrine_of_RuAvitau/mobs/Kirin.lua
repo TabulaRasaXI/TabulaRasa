@@ -23,7 +23,7 @@ entity.onMobSpawn = function(mob)
     mob:setMod(xi.mod.STUNRES, 35)
     mob:setMod(xi.mod.BINDRES, 35)
     mob:setMod(xi.mod.GRAVITYRES, 35)
-    mob:setMod(xi.mod.REGEN, 50)
+    mob:setMod(xi.mob.REGEN, 50)
     mob:setLocalVar("numAdds", 1)
     mob:setAutoAttackEnabled(true)
     mob:setMobAbilityEnabled(true)
@@ -47,7 +47,6 @@ entity.onMobFight = function(mob, target)
                 table.insert(godsRemaining, i)
             end
         end
-
         if #godsRemaining > 0 and mob:getLocalVar("summoning") == 0 then
             local g = godsRemaining[math.random(#godsRemaining)]
             local god = GetMobByID(ID.mob.KIRIN + g)
@@ -63,11 +62,9 @@ entity.onMobFight = function(mob, target)
                     mobArg:entityAnimationPacket("shsm")
                     god:setSpawn(mob:getXPos() + 1, mob:getYPos(), mob:getZPos() + 1)
                     god:spawn()
-
                     if mobArg:getTarget() ~= nil then
                         god:updateEnmity(target)
                     end
-
                     mobArg:setLocalVar("add"..g, 1)
                     mobArg:setLocalVar("numAdds", numAdds + 1)
                     mobArg:setLocalVar("summoning", 0)
@@ -105,7 +102,6 @@ entity.onMobDespawn = function(mob)
     for i = ID.mob.KIRIN + 1, ID.mob.KIRIN + 4 do
         DespawnMob(i)
     end
-
     GetNPCByID(ID.npc.KIRIN_QM):updateNPCHideTime(xi.settings.main.FORCE_SPAWN_QM_RESET_TIME)
 end
 

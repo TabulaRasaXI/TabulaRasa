@@ -1,1 +1,0 @@
-DELETE from npc_list where polutils_name like '%Merrymaker%';

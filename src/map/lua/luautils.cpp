@@ -35,7 +35,6 @@
 #include "lua_battlefield.h"
 #include "lua_instance.h"
 #include "lua_item.h"
-#include "lua_loot.h"
 #include "lua_mobskill.h"
 #include "lua_petskill.h"
 #include "lua_spell.h"
@@ -88,7 +87,6 @@
 #include "transport.h"
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
-#include "utils/fishingcontest.h"
 #include "utils/instanceutils.h"
 #include "utils/itemutils.h"
 #include "utils/moduleutils.h"
@@ -115,7 +113,7 @@ namespace luautils
 
         ShowInfo("luautils: Lua initializing");
 
-        // Bind math.random(...) globally
+        // Bind math.randon(...) globally
         // clang-format off
         lua["math"]["random"] =
             sol::overload([]() { return xirand::GetRandomNumber(1.0f); },
@@ -162,7 +160,6 @@ namespace luautils
         lua.set_function("VanadielDayElement", &luautils::VanadielDayElement);
         lua.set_function("VanadielMoonPhase", &luautils::VanadielMoonPhase);
         lua.set_function("VanadielMoonDirection", &luautils::VanadielMoonDirection);
-        lua.set_function("VanadielMoonLatentPhase", &luautils::VanadielMoonLatentPhase);
         lua.set_function("VanadielRSERace", &luautils::VanadielRSERace);
         lua.set_function("VanadielRSELocation", &luautils::VanadielRSELocation);
         lua.set_function("SetVanadielTimeOffset", &luautils::SetVanadielTimeOffset);
@@ -195,16 +192,7 @@ namespace luautils
         lua.set_function("GetCachedInstanceScript", &luautils::GetCachedInstanceScript);
         lua.set_function("GetItemIDByName", &luautils::GetItemIDByName);
         lua.set_function("GetItemNameByID", &luautils::GetItemNameByID);
-        lua.set_function("SendItemToDeliveryBox", &luautils::SendItemToDeliveryBox);
         lua.set_function("SendLuaFuncStringToZone", &luautils::SendLuaFuncStringToZone);
-        lua.set_function("NewFishingContest", &luautils::NewFishingContest);
-        lua.set_function("UpdateContestStatus", &luautils::UpdateContestStatus);
-        lua.set_function("GetFishingContest", &luautils::GetFishingContest);
-        lua.set_function("GetCurrentFishingContest", &luautils::GetCurrentFishingContest);
-        lua.set_function("SetContestStartTime", &luautils::SetContestStartTime);
-        lua.set_function("SetContestFish", &luautils::SetContestFish);
-        lua.set_function("InitializeFishingContestSystem", &luautils::InitializeFishingContestSystem);
-        lua.set_function("ProgressFishingContest", &luautils::ProgressFishingContest);
 
         // This binding specifically exists to forcefully crash the server.
         // clang-format off
@@ -220,11 +208,6 @@ namespace luautils
                 version::GetGitCommitSubject(),
                 version::GetGitDate());
         });
-
-        lua.set_function("GetFirstID", [](std::string const& name)
-        {
-            return "LOOKUP_" + name;
-        });
         // clang-format on
 
         // Register Sol Bindings
@@ -233,7 +216,6 @@ namespace luautils
         CLuaBaseEntity::Register();
         CLuaBattlefield::Register();
         CLuaInstance::Register();
-        CLuaLootContainer::Register();
         CLuaMobSkill::Register();
         CLuaPetSkill::Register();
         CLuaTriggerArea::Register();
@@ -268,7 +250,6 @@ namespace luautils
 
         // Pet Scripts
         CacheLuaObjectFromFile("./scripts/globals/pets/automaton.lua");
-        CacheLuaObjectFromFile("./scripts/globals/pets/fellow.lua");
         CacheLuaObjectFromFile("./scripts/globals/pets/luopan.lua");
         CacheLuaObjectFromFile("./scripts/globals/pets/wyvern.lua");
 
@@ -437,13 +418,6 @@ namespace luautils
             std::string mob_name = static_cast<CPetEntity*>(PEntity)->GetScriptName();
 
             if (auto cached_func = lua["xi"]["globals"]["pets"][mob_name][funcName]; cached_func.valid())
-            {
-                return cached_func;
-            }
-        }
-        else if (PEntity->objtype == TYPE_FELLOW)
-        {
-            if (auto cached_func = lua["xi"]["globals"]["pets"]["fellow"][funcName]; cached_func.valid())
             {
                 return cached_func;
             }
@@ -786,10 +760,6 @@ namespace luautils
             std::string mob_name = static_cast<CPetEntity*>(PEntity)->GetScriptName();
             filename             = fmt::format("./scripts/globals/pets/{}.lua", static_cast<CPetEntity*>(PEntity)->GetScriptName());
         }
-        else if (PEntity->objtype == TYPE_FELLOW)
-        {
-            filename = fmt::format("./scripts/globals/pets/fellow.lua");
-        }
         else if (PEntity->objtype == TYPE_TRUST)
         {
             std::string mob_name = PEntity->GetName();
@@ -805,14 +775,8 @@ namespace luautils
 
         // Make sure this has been run at least once!
         auto result = lua.safe_script_file("scripts/globals/zone.lua");
-        if (!result.valid())
-        {
-            sol::error err = result;
-            ShowError(fmt::format("Failed to load globals/zone.lua: {}", err.what()));
-        }
 
         // clang-format off
-        std::string lookupPrefix = "LOOKUP_";
         auto handleZone = [&](CZone* PZone)
         {
             auto zoneName = PZone->GetName();
@@ -827,58 +791,54 @@ namespace luautils
                     {
                         for (auto [innerKey, innerValue] : outerValue.as<sol::table>())
                         {
-                            if (innerKey.get_type() == sol::type::string && innerValue.get_type() == sol::type::string)
+                            if (innerKey.get_type() == sol::type::string && innerValue.get_type() == sol::type::number)
                             {
-                                auto innerName  = to_upper(innerKey.as<std::string>());
-                                auto lookupName = innerValue.as<std::string>();
+                                auto name = to_upper(innerKey.as<std::string>());
+                                auto num  = innerValue.as<int32>();
 
-                                if (!starts_with(lookupName, lookupPrefix))
+                                // -1 == DYNAMIC_LOOKUP
+                                if (num == -1)
                                 {
-                                    continue;
-                                }
-
-                                // We have a lookup string, remove the prefix
-                                lookupName = lookupName.substr(lookupPrefix.length());
-
-                                bool found = false;
-                                if (outerName == "mob")
-                                {
-                                    // TODO: Execute this as a single query per-zone and pull out the desired results.
-                                    auto query = fmt::sprintf("SELECT mobid FROM mob_spawn_points "
-                                                        "WHERE ((mobid >> 12) & 0xFFF) = %i AND "
-                                                        "UPPER(REPLACE(mobname, '-', '_')) = '%s' "
-                                                        "LIMIT 1;", PZone->GetID(), lookupName.c_str());
-                                    DebugIDLookup(query.c_str());
-                                    auto ret = sql->Query(query.c_str());
-                                    if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                                    bool found = false;
+                                    if (outerName == "mob")
                                     {
-                                        lua["zones"][PZone->GetID()][outerName][innerName] = sql->GetUIntData(0);
-                                        found = true;
-                                        DebugIDLookup(fmt::format("New value for {}.ID.{}.{} = {}",
-                                            zoneName, outerName, innerName, lua["zones"][PZone->GetID()][outerName][innerName].get<uint32>()));
+                                        // TODO: Execute this as a single query per-zone and pull out the desired results.
+                                        auto query = fmt::sprintf("SELECT mobid FROM mob_spawn_points "
+                                                            "WHERE ((mobid >> 12) & 0xFFF) = %i AND "
+                                                            "UPPER(REPLACE(mobname, '-', '_')) = '%s' "
+                                                            "LIMIT 1;", PZone->GetID(), name.c_str());
+                                        DebugIDLookup(query.c_str());
+                                        auto ret = sql->Query(query.c_str());
+                                        if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                                        {
+                                            lua["zones"][PZone->GetID()][outerName][name] = sql->GetUIntData(0);
+                                            found = true;
+                                            DebugIDLookup(fmt::format("New value for {}.ID.{}.{} = {}",
+                                                zoneName, outerName, name, lua["zones"][PZone->GetID()][outerName][name].get<uint32>()));
+                                        }
                                     }
-                                }
-                                else if (outerName == "npc")
-                                {
-                                    // TODO: Execute this as a single query per-zone and pull out the desired results.
-                                    auto query = fmt::sprintf("SELECT npcid FROM npc_list "
-                                                        "WHERE ((npcid >> 12) & 0xFFF) = %i AND "
-                                                        "UPPER(REPLACE(CAST(`name` as CHAR(64)), '-', '_')) = '%s' "
-                                                        "LIMIT 1;", PZone->GetID(), lookupName.c_str());
-                                    DebugIDLookup(query.c_str());
-                                    auto ret = sql->Query(query.c_str());
-                                    if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                                    else if (outerName == "npc")
                                     {
-                                        lua["zones"][PZone->GetID()][outerName][innerName] = sql->GetUIntData(0);
-                                        found = true;
-                                        DebugIDLookup(fmt::format("New value for {}.ID.{}.{} = {}",
-                                            zoneName, outerName, innerName, lua["zones"][PZone->GetID()][outerName][innerName].get<uint32>()));
+                                        // TODO: Execute this as a single query per-zone and pull out the desired results.
+                                        auto query = fmt::sprintf("SELECT npcid FROM npc_list "
+                                                            "WHERE ((npcid >> 12) & 0xFFF) = %i AND "
+                                                            "UPPER(REPLACE(CAST(`name` as CHAR(64)), '-', '_')) = '%s' "
+                                                            "LIMIT 1;", PZone->GetID(), name.c_str());
+                                        DebugIDLookup(query.c_str());
+                                        auto ret = sql->Query(query.c_str());
+                                        if (ret != SQL_ERROR && sql->NumRows() != 0 && sql->NextRow() == SQL_SUCCESS)
+                                        {
+                                            lua["zones"][PZone->GetID()][outerName][name] = sql->GetUIntData(0);
+                                            found = true;
+                                            DebugIDLookup(fmt::format("New value for {}.ID.{}.{} = {}",
+                                                zoneName, outerName, name, lua["zones"][PZone->GetID()][outerName][name].get<uint32>()));
+                                        }
                                     }
-                                }
 
-                                if (!found)
-                                {
-                                    ShowError(fmt::format("Could not complete id lookup for {}.ID.{}.{}", zoneName, outerName, innerName))
+                                    if (!found)
+                                    {
+                                        ShowError(fmt::format("Could not complete id lookup for {}.ID.{}.{}", zoneName, outerName, name))
+                                    }
                                 }
                             }
                         }
@@ -1355,12 +1315,6 @@ namespace luautils
     {
         TracyZoneScoped;
         return CVanaTime::getInstance()->getMoonPhase();
-    }
-
-    uint8 VanadielMoonLatentPhase()
-    {
-        TracyZoneScoped;
-        return CVanaTime::getInstance()->getMoonLatentPhase() + 1;
     }
 
     bool SetVanadielTimeOffset(int32 offset)
@@ -1919,21 +1873,7 @@ namespace luautils
     {
         TracyZoneScoped;
 
-        // Default to Residential Area if moghouseID != 0
-        std::string name = "Residential_Area";
-        if (PChar->m_moghouseID == 0)
-        {
-            auto destination = PChar->loc.destination;
-            auto zone        = zoneutils::GetZone(destination);
-            // Unknown or nullptr
-            if (!zone)
-            {
-                ShowError("luautils::onZoneIn: Invalid zone requested %u", destination);
-                return;
-            }
-            name = zone->GetName();
-        }
-
+        auto name     = PChar->m_moghouseID ? "Residential_Area" : zoneutils::GetZone(PChar->loc.destination)->GetName();
         auto filename = fmt::format("./scripts/zones/{}/Zone.lua", name);
 
         auto onZoneInFramework = lua["xi"]["globals"]["interaction"]["interaction_global"]["onZoneIn"];
@@ -1990,7 +1930,6 @@ namespace luautils
         auto onZoneOut          = GetCacheEntryFromFilename(filename)["onZoneOut"];
 
         auto result = onZoneOutFramework(CLuaBaseEntity(PChar), onZoneOut);
-
         if (!result.valid())
         {
             sol::error err = result;
@@ -2128,9 +2067,6 @@ namespace luautils
         {
             case TYPE_NPC:
                 pathFormat = "./scripts/zones/{}/npcs/{}.lua";
-                break;
-            case TYPE_FELLOW:
-                pathFormat = "./scripts/globals/pets/fellow.lua";
                 break;
             case TYPE_MOB:
                 pathFormat = "./scripts/zones/{}/mobs/{}.lua";
@@ -3600,8 +3536,6 @@ namespace luautils
 
                     // onMobDeath(mob, player, optParams)
                     auto result = onMobDeathFramework(LuaMobEntity, optLuaAllyEntity, optParams, onMobDeath);
-
-                    // NOTE: result is only NOT valid if the function call fails. If it returns nil its still valid (this is expected)
                     if (!result.valid())
                     {
                         sol::error err = result;
@@ -3620,8 +3554,6 @@ namespace luautils
 
             // onMobDeath(mob, player, optParams)
             auto result = onMobDeathFramework(CLuaBaseEntity(PMob), sol::lua_nil, optParams, onMobDeath);
-
-            // NOTE: result is only NOT valid if the function call fails. If it returns nil its still valid (this is expected)
             if (!result.valid())
             {
                 sol::error err = result;
@@ -5260,26 +5192,6 @@ namespace luautils
         }
     }
 
-    void OnPlayerCraftLevelUp(CCharEntity* PChar, uint8 skillID)
-    {
-        TracyZoneScoped;
-
-        auto onPlayerCraftLevelUp = lua["xi"]["player"]["onPlayerCraftLevelUp"];
-        if (!onPlayerCraftLevelUp.valid())
-        {
-            ShowWarning("luautils::onPlayerCraftLevelUp");
-            return;
-        }
-
-        auto result = onPlayerCraftLevelUp(CLuaBaseEntity(PChar), skillID);
-        if (!result.valid())
-        {
-            sol::error err = result;
-            ShowError("luautils::onPlayerCraftLevelUp: %s", err.what());
-            return;
-        }
-    }
-
     void OnPlayerMount(CCharEntity* PChar)
     {
         TracyZoneScoped;
@@ -5571,48 +5483,6 @@ namespace luautils
         customMenuContext.erase(PChar->id);
     }
 
-    int SendItemToDeliveryBox(std::string const& playerName, uint16 itemId, uint32 quantity, std::string senderText)
-    {
-        uint32 playerID = GetPlayerIDAnywhere(playerName);
-        if (!playerID)
-        {
-            return 1; // Player Not Found
-        }
-
-        // For anything other than gil, clamp to a 99 maximum
-        if (itemId != 65535)
-        {
-            quantity = std::clamp<uint32>(quantity, 1, 99);
-        }
-
-        // Check to confirm that the item legitimately exists
-        std::string itemName = GetItemNameByID(itemId);
-        if (itemName.size() == 0)
-        {
-            return 2;
-        }
-
-        const char* Query = "INSERT INTO delivery_box (charid, box, itemid, quantity, senderid, sender) VALUES ("
-                            "%u, "     // Player ID
-                            "1, "      // Box ID == 1
-                            "%u, "     // Item ID
-                            "%u, "     // Quantity
-                            "%u, "     // Sender ID ( =Player ID )
-                            "'%s'); "; // Sender Text
-        int32 ret = sql->Query(Query, playerID, itemId, quantity, playerID, senderText);
-
-        if (ret == SQL_ERROR)
-        {
-            return ret;
-        }
-        else
-        {
-            sql->TransactionCommit();
-        }
-
-        return 0;
-    }
-
     uint16 GetItemIDByName(std::string const& name)
     {
         uint16      id    = 0;
@@ -5633,87 +5503,6 @@ namespace luautils
         }
 
         return id;
-    }
-
-    auto GetCurrentFishingContest() -> sol::table
-    {
-        return GetFishingContest();
-    }
-
-    auto GetFishingContest(uint16 contestId) -> sol::table
-    {
-        sol::table table = lua.create_table();
-
-        if (contestId)
-        {
-            const char* Query = "SELECT "
-                                "contestid, " // 0
-                                "status, "    // 1
-                                "criteria, "  // 2
-                                "measure, "   // 3
-                                "fishid, "    // 4
-                                "starttime "  // 5
-                                "FROM `fishing_contest` f "
-                                "WHERE contestid = %u;";
-            int32 ret = sql->Query(Query, contestId);
-            if (ret != SQL_ERROR && sql->NextRow() == SQL_SUCCESS)
-            {
-                table["id"]         = sql->GetUIntData(0);
-                table["status"]     = sql->GetUIntData(1);
-                table["criteria"]   = sql->GetUIntData(2);
-                table["measure"]    = sql->GetUIntData(3);
-                table["fishid"]     = sql->GetUIntData(4);
-                table["starttime"]  = sql->GetUIntData(5);
-                table["changetime"] = 0xFFFFFFFF;
-            }
-            else
-            {
-                return sol::lua_nil;
-            }
-        }
-        else
-        {
-            table["id"]         = fishingcontest::GetContestID();
-            table["status"]     = fishingcontest::GetContestStatus();
-            table["criteria"]   = fishingcontest::GetContestCriteria();
-            table["measure"]    = fishingcontest::GetContestMeasure();
-            table["fishid"]     = fishingcontest::GetContestFish();
-            table["starttime"]  = fishingcontest::GetContestStartTime();
-            table["changetime"] = fishingcontest::GetContestChangeTime();
-        }
-        return table;
-    }
-
-    void NewFishingContest()
-    {
-        fishingcontest::InitNewContest();
-    }
-
-    void UpdateContestStatus(uint8 status, bool isTest)
-    {
-        fishingcontest::SetContestStatus(status, isTest);
-    }
-
-    void SetContestStartTime(uint32 startTime)
-    {
-        fishingcontest::SetContestStartTime(startTime);
-    }
-
-    void SetContestFish(uint32 fishId)
-    {
-        fishingcontest::SetContestFish(fishId);
-    }
-
-    void InitializeFishingContestSystem()
-    {
-        // IMPORTANT: This should only be called on the Zone Init in Selbina
-        // (or whatever zone you want to run the contest from)
-        fishingcontest::InitializeFishingContestSystem();
-    }
-
-    void ProgressFishingContest()
-    {
-        fishingcontest::ProgressContest();
     }
 
     std::string GetItemNameByID(uint16 const& id)

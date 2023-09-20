@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Lala Gohma
+-- Working 100%
 -----------------------------------
 local entity = {}
 

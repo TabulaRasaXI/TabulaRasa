@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Gottah Maporushanoh
+-- Working 100%
 -----------------------------------
 require("scripts/globals/quests")
 -----------------------------------

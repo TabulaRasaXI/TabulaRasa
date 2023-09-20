@@ -463,29 +463,18 @@ namespace message
 
                     PChar->m_moghouseID = 0;
 
-                    auto ipp = zoneutils::GetZoneIPP(zoneId);
+                    PChar->loc.p.x         = x;
+                    PChar->loc.p.y         = y;
+                    PChar->loc.p.z         = z;
+                    PChar->loc.p.rotation  = rot;
+                    PChar->loc.destination = zoneId;
+                    PChar->m_moghouseID    = moghouseID;
+                    PChar->loc.boundary    = 0;
+                    PChar->status          = STATUS_TYPE::DISAPPEAR;
+                    PChar->animation       = ANIMATION_NONE;
+                    PChar->clearPacketList();
 
-                    if (ipp == 0)
-                    {
-                        ipp = zoneutils::GetZoneIPP(PChar->loc.zone->GetID());
-                        PChar->loc.p.rotation += 128;
-                        ShowDebug("message::parse(MSG_SEND_TO_ZONE): %s bad zone requested, sending back to original zone.", PChar->name);
-                    }
-                    else
-                    {
-                        PChar->loc.p.x         = x;
-                        PChar->loc.p.y         = y;
-                        PChar->loc.p.z         = z;
-                        PChar->loc.p.rotation  = rot;
-                        PChar->loc.destination = zoneId;
-                        PChar->m_moghouseID    = moghouseID;
-                        PChar->loc.boundary    = 0;
-                        PChar->status          = STATUS_TYPE::DISAPPEAR;
-                        PChar->animation       = ANIMATION_NONE;
-                        PChar->clearPacketList();
-                    }
-
-                    charutils::SendToZone(PChar, 2, ipp);
+                    charutils::SendToZone(PChar, 2, zoneutils::GetZoneIPP(zoneId));
                 }
                 break;
             }

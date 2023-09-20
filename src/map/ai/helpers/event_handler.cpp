@@ -53,8 +53,3 @@ void CAIEventHandler::removeListener(std::string const& identifier)
         eventListener.second.erase(it, eventListener.second.end());
     }
 }
-
-bool CAIEventHandler::hasListener(std::string const& eventName)
-{
-    return eventListeners.count(eventName) > 0;
-}

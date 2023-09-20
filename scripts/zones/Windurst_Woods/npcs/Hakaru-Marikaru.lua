@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Woods
 --  NPC: Hakaru-Marikaru
+-- Working 100%
 -----------------------------------
 local entity = {}
 

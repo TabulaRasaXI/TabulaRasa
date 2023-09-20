@@ -36,9 +36,12 @@ bool CRespawnState::Update(time_point tick)
     auto* PMob = dynamic_cast<CMobEntity*>(m_PEntity);
     if (PMob)
     {
-        if (!PMob->m_AllowRespawn || (PMob->m_spawnSet && !PMob->CanSpawnFromGroup()))
+        if (!PMob->m_AllowRespawn)
         {
-            m_spawnTime = 0s;
+            if (m_spawnTime > 0s)
+            {
+                m_spawnTime = 0s;
+            }
         }
         else
         {
@@ -48,8 +51,7 @@ bool CRespawnState::Update(time_point tick)
             }
         }
     }
-
-    if (PMob && PMob->m_AllowRespawn && m_spawnTime > 0s && tick > GetEntryTime() + m_spawnTime)
+    if (m_spawnTime > 0s && tick > GetEntryTime() + m_spawnTime)
     {
         m_PEntity->Spawn();
         return true;

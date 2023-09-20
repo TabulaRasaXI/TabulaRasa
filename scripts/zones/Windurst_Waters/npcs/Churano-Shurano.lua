@@ -15,16 +15,16 @@ end
 
 entity.onTrigger = function(player, npc)
     -- Magicked Astrolabe is OOE for ASB, keeping in case servers want to manually re-add
-    if not player:hasKeyItem(xi.ki.MAGICKED_ASTROLABE) then
-        local cost = 10000
-        if player:getLocalVar("Astrolabe") == 0 then
-            player:startEvent(1080, cost)
-        else
-            player:startEvent(1081, cost)
-        end
-    else
-        player:startEvent(280)
-    end
+    -- if not player:hasKeyItem(xi.ki.MAGICKED_ASTROLABE) then
+    --     local cost = 10000
+    --     if player:getLocalVar("Astrolabe") == 0 then
+    --         player:startEvent(1080, cost)
+    --     else
+    --         player:startEvent(1081, cost)
+    --     end
+    -- else
+    --     player:startEvent(280)
+    -- end
 
     local hour = VanadielHour()
     if hour >= 4 and hour < 20 then

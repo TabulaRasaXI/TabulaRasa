@@ -4,7 +4,6 @@
 -----------------------------------
 require("scripts/globals/status")
 require("scripts/globals/titles")
-require("scripts/globals/mobs")
 -----------------------------------
 local entity = {}
 

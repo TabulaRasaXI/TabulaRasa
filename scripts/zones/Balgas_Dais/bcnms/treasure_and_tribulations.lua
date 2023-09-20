@@ -3,7 +3,6 @@
 -- Balga's Dais BCNM50, Comet Orb
 -- !additem 1177
 -----------------------------------
-local ID = require('scripts/zones/Balgas_Dais/IDs')
 require("scripts/globals/battlefield")
 -----------------------------------
 local battlefieldObject = {}
@@ -20,8 +19,6 @@ battlefieldObject.onBattlefieldRegister = function(player, battlefield)
 end
 
 battlefieldObject.onBattlefieldEnter = function(player, battlefield)
-        local Winning_Box = math.random(1,3);
-        battlefield:setLocalVar("Winning_Box", Winning_Box);
 end
 
 battlefieldObject.onBattlefieldLeave = function(player, battlefield, leavecode)

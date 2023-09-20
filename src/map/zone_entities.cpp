@@ -34,7 +34,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "ai/ai_container.h"
 #include "ai/controllers/mob_controller.h"
 
-#include "entities/fellowentity.h"
 #include "entities/mobentity.h"
 #include "entities/npcentity.h"
 #include "entities/trustentity.h"
@@ -340,7 +339,7 @@ void CZoneEntities::WeatherChange(WEATHER weather)
     }
 }
 
-void CZoneEntities::MusicChange(uint8 BlockID, uint16 MusicTrackID)
+void CZoneEntities::MusicChange(uint8 BlockID, uint8 MusicTrackID)
 {
     for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
     {
@@ -371,8 +370,7 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
         }
         else
         {
-            PChar->PPet->status  = STATUS_TYPE::DISAPPEAR;
-            PChar->PPet->PMaster = nullptr;
+            PChar->PPet->status = STATUS_TYPE::DISAPPEAR;
             if (((CPetEntity*)(PChar->PPet))->getPetType() == PET_TYPE::AVATAR)
             {
                 PChar->setModifier(Mod::AVATAR_PERPETUATION, 0);
@@ -396,30 +394,6 @@ void CZoneEntities::DecreaseZoneCounter(CCharEntity* PChar)
                 }
             }
             PChar->PPet = nullptr;
-        }
-    }
-
-    // remove fellow
-    if (PChar->m_PFellow != nullptr)
-    {
-        PChar->m_PFellow->status = STATUS_TYPE::DISAPPEAR;
-        if (PChar->m_PFellow != nullptr)
-        {
-            PChar->m_PFellow->PAI->Disengage();
-
-            for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
-            {
-                // inform other players of the fellows removal
-                CCharEntity*            PCurrentChar = (CCharEntity*)it->second;
-                SpawnIDList_t::iterator Fellow       = PCurrentChar->SpawnPETList.find(PChar->m_PFellow->id);
-
-                if (Fellow != PCurrentChar->SpawnPETList.end())
-                {
-                    PCurrentChar->SpawnPETList.erase(Fellow);
-                    PCurrentChar->pushPacket(new CEntityUpdatePacket(PChar->m_PFellow, ENTITY_DESPAWN, UPDATE_NONE));
-                }
-            }
-            PChar->m_PFellow = nullptr;
         }
     }
 
@@ -730,7 +704,6 @@ void CZoneEntities::SpawnPCs(CCharEntity* PChar)
         }
 
         CBaseEntity* target = state->GetTarget();
-
         if (target && target->objtype == TYPE_PC && target->id != PChar->id)
         {
             scoreBonus[target->id] += CHARACTER_SYNC_DISTANCE_SWAP_THRESHOLD;
@@ -956,7 +929,7 @@ CBaseEntity* CZoneEntities::GetEntity(uint16 targid, uint8 filter)
     }
     else if (targid < 0x1000) // 1792 - 4096 are dynamic entities
     {
-        if (filter & TYPE_PET || filter & TYPE_FELLOW)
+        if (filter & TYPE_PET)
         {
             EntityList_t::const_iterator it = m_petList.find(targid);
             if (it != m_petList.end())
@@ -1014,7 +987,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT) // Normal At Night Mob
+                if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT)
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
@@ -1034,7 +1007,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING) // Normal At Evening Mob
+                if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING)
                 {
                     PMob->SetDespawnTime(1ms);
                     PMob->m_AllowRespawn = false;
@@ -1049,44 +1022,11 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
         case TIME_DAY:
         {
             ScriptType = SCRIPT_TIME_DAY;
-
-            for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
-            {
-                CMobEntity* PMob = (CMobEntity*)it->second;
-                if ((PMob->m_SpawnType & SPAWNTYPE_ATDUSK)) // Normal At Evening Mob
-                {
-                    PMob->SetDespawnTime(1ms);
-                    PMob->m_AllowRespawn = false;
-                }
-            }
         }
         break;
         case TIME_DUSK:
         {
             ScriptType = SCRIPT_TIME_DUSK;
-
-            for (EntityList_t::const_iterator it = m_mobList.begin(); it != m_mobList.end(); ++it)
-            {
-                CMobEntity* PMob = (CMobEntity*)it->second;
-
-                if (PMob->m_SpawnType & SPAWNTYPE_ATDUSK && !PMob->PAI->IsSpawned())
-                {
-                    PMob->SetDespawnTime(0s);
-                    PMob->m_AllowRespawn = true;
-
-                    if (PMob->m_spawnSet)
-                    {
-                        if (PMob->CanSpawnFromGroup())
-                        {
-                            PMob->Spawn();
-                        }
-                    }
-                    else if (PMob->m_AllowRespawn)
-                    {
-                        PMob->Spawn();
-                    }
-                }
-            }
         }
         break;
         case TIME_EVENING:
@@ -1097,22 +1037,11 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING && !PMob->PAI->IsSpawned())
+                if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING)
                 {
                     PMob->SetDespawnTime(0s);
                     PMob->m_AllowRespawn = true;
-
-                    if (PMob->m_spawnSet)
-                    {
-                        if (PMob->CanSpawnFromGroup())
-                        {
-                            PMob->Spawn();
-                        }
-                    }
-                    else if (PMob->m_AllowRespawn)
-                    {
-                        PMob->Spawn();
-                    }
+                    PMob->Spawn();
                 }
             }
         }
@@ -1123,22 +1052,11 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
             {
                 CMobEntity* PMob = (CMobEntity*)it->second;
 
-                if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT && !PMob->PAI->IsSpawned())
+                if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT)
                 {
                     PMob->SetDespawnTime(0s);
                     PMob->m_AllowRespawn = true;
-
-                    if (PMob->m_spawnSet)
-                    {
-                        if (PMob->CanSpawnFromGroup())
-                        {
-                            PMob->Spawn();
-                        }
-                    }
-                    else if (PMob->m_AllowRespawn)
-                    {
-                        PMob->Spawn();
-                    }
+                    PMob->Spawn();
                 }
             }
         }
@@ -1468,14 +1386,6 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
             for (EntityList_t::const_iterator it = m_charList.begin(); it != m_charList.end(); ++it)
             {
                 CCharEntity* PChar = (CCharEntity*)it->second;
-
-                // If a mob is to be deleted from, then we need to ensure there's no reference
-                // to it on any players.
-                if (PChar->PClaimedMob != nullptr && PChar->PClaimedMob->id == PMob->id)
-                {
-                    PChar->PClaimedMob = nullptr;
-                }
-
                 if (distance(PChar->loc.p, PMob->loc.p) < 50)
                 {
                     PChar->SpawnMOBList.erase(PMob->id);
@@ -1549,6 +1459,15 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
         //     : this way, but we need to do this to keep allies working (for now).
         if (auto* PPet = static_cast<CPetEntity*>(it->second))
         {
+            PPet->PRecastContainer->Check();
+            PPet->StatusEffectContainer->CheckEffectsExpiry(tick);
+            if (tick > m_EffectCheckTime)
+            {
+                PPet->StatusEffectContainer->TickRegen(tick);
+                PPet->StatusEffectContainer->TickEffects(tick);
+            }
+            PPet->PAI->Tick(tick);
+
             if (PPet->status == STATUS_TYPE::DISAPPEAR)
             {
                 for (auto PMobIt : m_mobList)
@@ -1567,15 +1486,6 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
                 m_petList.erase(it++);
                 continue;
             }
-
-            PPet->PRecastContainer->Check();
-            PPet->StatusEffectContainer->CheckEffectsExpiry(tick);
-            if (tick > m_EffectCheckTime)
-            {
-                PPet->StatusEffectContainer->TickRegen(tick);
-                PPet->StatusEffectContainer->TickEffects(tick);
-            }
-            PPet->PAI->Tick(tick);
         }
         it++;
     }
@@ -1629,7 +1539,7 @@ void CZoneEntities::ZoneServer(time_point tick, bool check_trigger_areas)
     {
         CCharEntity* PChar = (CCharEntity*)it->second;
 
-        if (PChar->status != STATUS_TYPE::SHUTDOWN && PChar->status != STATUS_TYPE::DISAPPEAR)
+        if (PChar->status != STATUS_TYPE::SHUTDOWN)
         {
             PChar->PRecastContainer->Check();
             PChar->StatusEffectContainer->CheckEffectsExpiry(tick);

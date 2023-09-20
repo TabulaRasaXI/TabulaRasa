@@ -179,11 +179,6 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
         end
     end
 
-    -- If player is level synced below the level of the item, do no proc
-    if item:getReqLvl() > attacker:getMainLvl() then
-        return 0, 0, 0
-    end
-
     -- If we're not going to proc, lets not execute all those checks!
     if math.random(1, 100) > chance then
         return 0, 0, 0
@@ -197,10 +192,7 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
             damage = xi.additionalEffect.calcRangeBonus(attacker, defender, element, damage)
         end
 
-        -- Do not adjust the chance of effects that are guaranteed (like god winds)
-        if chance ~= 100 then
-            chance = xi.additionalEffect.levelCorrection(defender:getMainLvl(), attacker:getMainLvl(), chance)
-        end
+        chance = xi.additionalEffect.levelCorrection(defender:getMainLvl(), attacker:getMainLvl(), chance)
     end
 
     --------------------------------------
@@ -228,7 +220,7 @@ xi.additionalEffect.attack = function(attacker, defender, baseAttackDamage, item
     elseif addType == xi.additionalEffect.procType.DEBUFF then
         if addStatus and addStatus > 0 then
             local tick   = xi.additionalEffect.statusAttack(addStatus, defender)
-            local resist = xi.magic.applyResistanceAddEffect(attacker, defender, element, addStatus, 0, item:getSkillType())
+            local resist = xi.magic.applyResistanceAddEffect(attacker, defender, element, addStatus, 0)
             local immunity = 0
 
             for _, statusTable in pairs(immunityTable) do

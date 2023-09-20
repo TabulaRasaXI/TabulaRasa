@@ -12,6 +12,12 @@ entity.onMobSpawn = function(mob)
     mob:setMobMod(xi.mobMod.NO_MOVE, 1)
 end
 
+entity.onMobEngage = function(mob, target)
+end
+
+entity.onMobFight = function(mob, target)
+end
+
 entity.onMobDeath = function(mob, player, optParams)
 end
 

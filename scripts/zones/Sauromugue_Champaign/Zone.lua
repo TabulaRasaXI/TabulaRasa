@@ -1,13 +1,12 @@
 -----------------------------------
 -- Zone: Sauromugue_Champaign (120)
 -----------------------------------
-local ID = require("scripts/zones/Sauromugue_Champaign/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/missions")
-require("scripts/globals/zone")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Sauromugue_Champaign/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/missions')
+require('scripts/globals/zone')
 -----------------------------------
 local zoneObject = {}
 
@@ -21,9 +20,6 @@ zoneObject.onInitialize = function(zone)
 
     GetNPCByID(ID.npc.QM2 + math.random(0, 5)):setLocalVar('Quest[2][70]Option', 1) -- Determine which QM is active today for THF AF2
     xi.voidwalker.zoneOnInit(zone)
-end
-
-zoneObject.onZoneTick = function(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

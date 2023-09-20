@@ -404,7 +404,7 @@
         "ForceCrash",
         "BuildString",
         "SendLuaFuncStringToZone",
-        "GetFirstID",
+        "DYNAMIC_LOOKUP",
         "GetEntityByID",
         "GetItemIDByName",
         "GetPlayerIDAnywhere",

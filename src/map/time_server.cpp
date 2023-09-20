@@ -30,7 +30,6 @@
 #include "time_server.h"
 #include "timetriggers.h"
 #include "transport.h"
-#include "utils/fishingutils.h"
 #include "utils/guildutils.h"
 #include "utils/instanceutils.h"
 #include "utils/moduleutils.h"

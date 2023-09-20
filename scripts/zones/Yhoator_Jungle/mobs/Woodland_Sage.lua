@@ -2,8 +2,7 @@
 -- Area: Yhoator Jungle (124)
 --   NM: Woodland Sage
 -----------------------------------
-mixins = {require("scripts/mixins/job_special")}
-require("scripts/globals/mobs")
+mixins = { require("scripts/mixins/job_special") }
 -----------------------------------
 local entity = {}
 

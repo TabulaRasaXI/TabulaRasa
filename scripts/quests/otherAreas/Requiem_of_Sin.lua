@@ -39,9 +39,8 @@ quest.sections =
             onEventFinish =
             {
                 [579] = function(player, csid, option, npc)
-                    npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_SHIKAREE_Y)
-                    quest:setVar(player, 'conquestRequiem', getConquestTally())
-                    quest:begin(player)
+                        npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_SHIKAREE_Y)
+                        quest:begin(player)
                 end,
             },
         }
@@ -61,8 +60,7 @@ quest.sections =
             onEventFinish =
             {
                 [579] = function(player, csid, option, npc)
-                    npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_SHIKAREE_Y)
-                    quest:setVar(player, 'conquestRequiem', getConquestTally())
+                        npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_SHIKAREE_Y)
                 end,
             },
         }
@@ -82,9 +80,9 @@ quest.sections =
             onEventFinish =
             {
                 [579] = function(player, csid, option, npc)
-                    -- "CONQUEST_REQUIEM" is reset if players lose battlefield
-                    quest:setVar(player, 'conquestRequiem', getConquestTally())
-                    npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_THE_MITHRAN_TRACKERS)
+                        -- "CONQUEST_REQUIEM" is reset if players lose battlefield
+                        quest:setVar(player, 'conquestRequiem', getConquestTally())
+                        npcUtil.giveKeyItem(player, xi.ki.LETTER_FROM_THE_MITHRAN_TRACKERS)
                 end,
             },
         }

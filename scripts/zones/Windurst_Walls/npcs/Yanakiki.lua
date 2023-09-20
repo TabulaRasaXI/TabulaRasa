@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Yanakiki
+-- Working 100%
 -----------------------------------
 local entity = {}
 

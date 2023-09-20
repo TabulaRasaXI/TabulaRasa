@@ -47,7 +47,6 @@
 #include <sys/ioctl.h>
 #else
 #include <sys/epoll.h>
-#include <sys/resource.h>
 #endif
 
 typedef int HANDLE;
@@ -66,8 +65,6 @@ struct epoll_event login_lobbyviewEpollEvent = { EPOLLIN };
 #include "login.h"
 #include "login_auth.h"
 #include "login_conf.h"
-
-// std::thread messageThread;
 
 std::unique_ptr<SqlConnection> sql;
 
@@ -101,19 +98,6 @@ int32 do_init(int32 argc, char** argv)
     epoll_ctl(epollHandle, EPOLL_CTL_ADD, login_fd, &loginEpollEvent);
     epoll_ctl(epollHandle, EPOLL_CTL_ADD, login_lobbydata_fd, &login_lobbydataEpollEvent);
     epoll_ctl(epollHandle, EPOLL_CTL_ADD, login_lobbyview_fd, &login_lobbyviewEpollEvent);
-
-    struct rlimit limits;
-
-    // Get old limits
-    if (getrlimit(RLIMIT_NOFILE, &limits) == 0)
-    {
-        // Increase open file limit, which includes sockets, to MAX_FD. This only effects the current process and child processes
-        limits.rlim_cur = MAX_FD;
-        if (setrlimit(RLIMIT_NOFILE, &limits) == -1)
-        {
-            ShowError("Failed to increase rlim_cur to %d", MAX_FD);
-        }
-    }
 #endif
 #endif
 
@@ -142,7 +126,6 @@ int32 do_init(int32 argc, char** argv)
         ShowInfo("Character deletion is currently disabled.");
     }
 
-    // messageThread = std::thread(message_server_init, std::ref(requestExit));
     // clang-format off
     gConsoleService = std::make_unique<ConsoleService>();
 
@@ -179,13 +162,6 @@ int32 do_init(int32 argc, char** argv)
         fmt::printf("Maintenance mode changed to %i\n", maint_mode);
     });
 
-    gConsoleService->RegisterCommand(
-    "show_fds", "Print current amount of File Descriptors in use.",
-    [&](std::vector<std::string> inputs)
-    {
-        fmt::printf("Total fds in use: %i (4 are reserved for login itself)\n", fd_max);
-    });
-
     gConsoleService->RegisterCommand("exit", "Terminate the program.",
     [&](std::vector<std::string> inputs)
     {
@@ -204,13 +180,7 @@ int32 do_init(int32 argc, char** argv)
 
 void do_final(int code)
 {
-    /* requestExit = true;
-    message_server_close();
-    if (messageThread.joinable())
-    {
-        messageThread.join();
-    }
-    */
+    requestExit = true;
 
     timer_final();
     socket_final();
@@ -300,27 +270,14 @@ int do_sockets(fd_set* rfd, duration next)
 #else
     for (int i = 0; ret > 0 && i < fd_max; i++)
     {
-        int  fd        = events[i].data.fd;
-        auto thisEvent = events[i].events;
-
-        // https://man7.org/linux/man-pages/man2/epoll_ctl.2.html
-        // Handle all "always reported" error events
-        // EPOLLHUP is an "unexpected" socket shutdown from client, but seems normal when disconnecting
-        // EPOLLERR has not been witnessed, but is probably good to try to handle.
-        if (thisEvent & EPOLLHUP || thisEvent & EPOLLERR)
+        int fd = events[i].data.fd;
+        if (events[i].events & EPOLLHUP) // "unexpected" socket shutdown from client, seems normal
         {
             do_close_tcp(fd);
-            ret--;
-            continue;
         }
 
-        // Input recieved
-        // EPOLLIN is normal input
-        // EPOLLPRI appears to be "out of band" extra data from the socket. Needed to read data from sockets >1024(?)
-        if (sessions[fd] && (thisEvent & EPOLLIN || thisEvent & EPOLLPRI))
+        if (events[i].events & EPOLLIN && sessions[fd])
         {
-            ret--;
-
             // new session
             if (fd == login_fd || fd == login_lobbydata_fd || fd == login_lobbyview_fd)
             {
@@ -350,6 +307,8 @@ int do_sockets(fd_set* rfd, duration next)
                     }
                 }
             }
+
+            ret--;
         }
     }
 #endif

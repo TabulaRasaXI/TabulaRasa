@@ -129,25 +129,22 @@ bool CSpiritController::TrySpellcast(time_point tick)
         uint8          choice        = xirand::GetRandomNumber(2, 4);
         uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
 
-        if (PSpirit->PMaster)
+        // clang-format off
+        PSpirit->PMaster->ForParty([&](CBattleEntity* PMember)
         {
-            // clang-format off
-            PSpirit->PMaster->ForParty([&](CBattleEntity* PMember)
+            if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
+                !PMember->isDead())
             {
-                if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
-                    !PMember->isDead())
+                float memberPercent = PMember->health.hp / PMember->health.maxhp;
+                if (PLowest == nullptr ||
+                    (lowestPercent >= memberPercent))
                 {
-                    float memberPercent = PMember->health.hp / PMember->health.maxhp;
-                    if (PLowest == nullptr ||
-                        (lowestPercent >= memberPercent))
-                    {
-                        PLowest = PMember;
-                        lowestPercent = memberPercent;
-                    }
+                    PLowest = PMember;
+                    lowestPercent = memberPercent;
                 }
-            });
-            // clang-format on
-        }
+            }
+        });
+        // clang-format on
 
         if (lowestPercent < 0.5f) // 50% HP
         {
@@ -260,25 +257,22 @@ bool CSpiritController::TryIdleSpellcast(time_point tick)
             uint8          choice        = 2;
             uint16         chosenSpell   = static_cast<uint16>(SpellID::Cure);
 
-            if (PSpirit->PMaster)
+            // clang-format off
+            PSpirit->PMaster->ForParty([&](CBattleEntity* PMember)
             {
-                // clang-format off
-                PSpirit->PMaster->ForParty([&](CBattleEntity* PMember)
+                if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
+                    !PMember->isDead())
                 {
-                    if (PMember != nullptr && PSpirit->PMaster->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(PSpirit->loc.p, PMember->loc.p) <= 20 &&
-                        !PMember->isDead())
+                    float memberPercent = PMember->health.hp / PMember->health.maxhp;
+                    if (PLowest == nullptr ||
+                        (lowestPercent >= memberPercent))
                     {
-                        float memberPercent = PMember->health.hp / PMember->health.maxhp;
-                        if (PLowest == nullptr ||
-                            (lowestPercent >= memberPercent))
-                        {
-                            PLowest = PMember;
-                            lowestPercent = memberPercent;
-                        }
+                        PLowest = PMember;
+                        lowestPercent = memberPercent;
                     }
-                });
-                // clang-format on
-            }
+                }
+            });
+            // clang-format on
 
             if (lowestPercent < 0.5f && xirand::GetRandomNumber(100) < 25) // 50% HP
             {

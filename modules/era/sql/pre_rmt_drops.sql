@@ -15,7 +15,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- replace_drop('zone name', 'mob name', 'new item name', 'old item name');
+-- replace_drop('zone name', 'mob name', 'old item name', 'new item name', new drop chance);
 -- zone name: as found in zone_settings.sql
 -- mob name: as found in mob_groups.sql
 -- old/new item name: as found in item_basic.sql

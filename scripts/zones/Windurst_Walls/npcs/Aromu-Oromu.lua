@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Aromu-Oromu
+-- Working 100%
 -----------------------------------
 local entity = {}
 

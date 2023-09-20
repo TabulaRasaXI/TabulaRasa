@@ -32,19 +32,6 @@ function onBattlefieldHandlerInitialise(zone)
     return default
 end
 
-xi.loot = xi.loot or {}
-
-xi.loot.weight =
-{
-    EXTREMELY_LOW  = 2,
-    VERY_LOW       = 10,
-    LOW            = 30,
-    NORMAL         = 50,
-    HIGH           = 70,
-    VERY_HIGH      = 100,
-    EXTREMELY_HIGH = 140,
-}
-
 xi.battlefield = xi.battlefield or {}
 xi.battlefield.contents = xi.battlefield.contents or {}
 xi.battlefield.contentsByZone = xi.battlefield.contentsByZone or {}
@@ -73,6 +60,17 @@ xi.battlefield.leaveCode =
     WON    = 2,
     WARPDC = 3,
     LOST   = 4
+}
+
+xi.battlefield.dropChance =
+{
+    EXTREMELY_LOW  = 2,
+    VERY_LOW       = 10,
+    LOW            = 30,
+    NORMAL         = 50,
+    HIGH           = 70,
+    VERY_HIGH      = 100,
+    EXTREMELY_HIGH = 140,
 }
 
 xi.battlefield.id =
@@ -1095,7 +1093,7 @@ function Battlefield:handleLootRolls(battlefield, lootTable, npc)
 
             for _, entry in pairs(lootGroup) do
                 if type(entry) == 'table' then
-                    max = max + entry.weight
+                    max = max + entry.droprate
                 end
             end
 
@@ -1106,14 +1104,14 @@ function Battlefield:handleLootRolls(battlefield, lootTable, npc)
                 local current = 0
                 for _, entry in pairs(lootGroup) do
                     if type(entry) == 'table' then
-                        current = current + entry.weight
+                        current = current + entry.droprate
 
-                        if current >= roll then
+                        if current > roll then
                             if entry.itemid == 0 then
                                 break
                             end
 
-                            if entry.item == 65535 then
+                            if entry.itemid == 65535 then
                                 local gil = entry.amount / #players
 
                                 for k = 1, #players, 1 do
@@ -1124,7 +1122,7 @@ function Battlefield:handleLootRolls(battlefield, lootTable, npc)
                                 break
                             end
 
-                            players[1]:addTreasure(entry.item, npc)
+                            players[1]:addTreasure(entry.itemid, npc)
                             break
                         end
                     end

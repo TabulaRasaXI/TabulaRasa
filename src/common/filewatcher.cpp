@@ -1,6 +1,5 @@
 ﻿#include "filewatcher.h"
 
-#include "logging.h"
 #include "tracy.h"
 
 #include <filesystem>

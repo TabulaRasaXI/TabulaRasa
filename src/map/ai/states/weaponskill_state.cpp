@@ -97,13 +97,7 @@ void CWeaponSkillState::SpendCost()
 
     if (xirand::GetRandomNumber(100) < m_PEntity->getMod(Mod::CONSERVE_TP))
     {
-        uint16 tpGain = xirand::GetRandomNumber(10, 200);
-        m_PEntity->addTP(tpGain);
-
-        if (m_PEntity->GetBattleTarget() != nullptr)
-        {
-            m_PEntity->GetBattleTarget()->addTP(tpGain * 1.25);
-        }
+        m_PEntity->addTP(xirand::GetRandomNumber(10, 200));
     }
 
     m_spent = tp;

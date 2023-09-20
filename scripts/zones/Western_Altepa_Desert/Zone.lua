@@ -1,15 +1,14 @@
 -----------------------------------
 -- Zone: Western_Altepa_Desert (125)
 -----------------------------------
-local ID = require("scripts/zones/Western_Altepa_Desert/IDs")
-require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest")
-require("scripts/globals/world")
-require("scripts/globals/zone")
-require("scripts/globals/beastmentreasure")
-require("scripts/missions/amk/helpers")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Western_Altepa_Desert/IDs')
+require('scripts/quests/i_can_hear_a_rainbow')
+require('scripts/globals/chocobo_digging')
+require('scripts/globals/conquest')
+require('scripts/globals/world')
+require('scripts/globals/zone')
+require('scripts/globals/beastmentreasure')
+require('scripts/missions/amk/helpers')
 -----------------------------------
 local zoneObject = {}
 
@@ -18,13 +17,8 @@ zoneObject.onChocoboDig = function(player, precheck)
 end
 
 zoneObject.onInitialize = function(zone)
-    -- KV Persistence
-    UpdateNMSpawnPoint(ID.mob.KING_VINEGARROON)
-    DisallowRespawn(GetMobByID(ID.mob.KING_VINEGARROON):getID(), true)
-
-    if os.time() < GetServerVariable("\\[SPAWN\\]17289575") then
-        GetMobByID(ID.mob.KING_VINEGARROON):setRespawnTime(GetServerVariable("\\[SPAWN\\]17289575") - os.time())
-    end
+    -- NM Persistence
+    xi.mob.nmTODPersistCache(zone, ID.mob.KING_VINEGARROON)
 
     xi.bmt.updatePeddlestox(xi.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
 end
@@ -89,25 +83,18 @@ zoneObject.onZoneWeatherChange = function(weather)
 
     local kingV = GetMobByID(ID.mob.KING_VINEGARROON)
     local kvre = GetServerVariable("\\[SPAWN\\]17289575")
-    if
-        not kingV:isSpawned() and
-        os.time() > kvre and
-        weather == xi.weather.DUST_STORM
-    then
+    if not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.DUST_STORM then
         -- 10% chance for KV pop at start of single earth weather
         local chance = math.random(1, 10)
         if chance == 1 then
             DisallowRespawn(kingV:getID(), false)
             SpawnMob(ID.mob.KING_VINEGARROON)
         end
-    elseif
-        not kingV:isSpawned() and
-        os.time() > kvre and
-        weather == xi.weather.SAND_STORM
-    then
+    elseif not kingV:isSpawned() and os.time() > kvre and weather == xi.weather.SAND_STORM then
         DisallowRespawn(kingV:getID(), false)
         SpawnMob(ID.mob.KING_VINEGARROON)
     end
+
 end
 
 return zoneObject

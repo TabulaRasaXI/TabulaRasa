@@ -24,7 +24,6 @@ zoneObject.onInitialize = function(zone)
     if xi.settings.main.ENABLE_WOTG == 1 then
         xi.mob.nmTODPersistCache(zone, ID.mob.RAMBUKK)
     end
-
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
         xi.events.starlightCelebration.applyStarlightDecorations(zone:getID())
     end
@@ -55,7 +54,8 @@ end
 zoneObject.onGameDay = function()
     SetServerVariable("[DIG]ZONE101_ITEMS", 0)
     if xi.events.starlightCelebration.isStarlightEnabled ~= 0 then
-        xi.events.starlightCelebration.resetSmileHelpers(xi.zone.EAST_RONFAURE)
+        local zone = 107
+        xi.events.starlightCelebration.resetSmileHelpers(zone)
     end
 end
 

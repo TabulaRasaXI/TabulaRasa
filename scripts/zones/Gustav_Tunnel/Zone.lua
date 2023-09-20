@@ -1,9 +1,8 @@
 -----------------------------------
 -- Zone: Gustav Tunnel (212)
 -----------------------------------
-local ID = require("scripts/zones/Gustav_Tunnel/IDs")
-require("scripts/globals/conquest")
-require("scripts/globals/mobs")
+local ID = require('scripts/zones/Gustav_Tunnel/IDs')
+require('scripts/globals/conquest')
 -----------------------------------
 local zoneObject = {}
 
@@ -14,9 +13,6 @@ end
 
 zoneObject.onConquestUpdate = function(zone, updatetype)
     xi.conq.onConquestUpdate(zone, updatetype)
-end
-
-zoneObject.onZoneTick = function(zone)
 end
 
 zoneObject.onZoneIn = function(player, prevZone)

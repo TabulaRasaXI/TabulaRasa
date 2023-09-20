@@ -11,7 +11,7 @@ local entity = {}
 entity.onTrade = function(player, npc, trade)
     if
         trade:getItemCount() == 1 and
-        trade:hasItemQty(536, 1)
+        trade:hasItemQty(536, 1) == true
     then
         player:startEvent(4)
         player:addGil(xi.settings.main.GIL_RATE * 50)

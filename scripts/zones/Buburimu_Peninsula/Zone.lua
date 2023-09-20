@@ -24,9 +24,6 @@ zoneObject.onInitialize = function(zone)
         end
     end
 
-    -- Disable Dynamis
-    zone:queryEntitiesByName('Hieroglyphics')[1]:setStatus(xi.status.DISAPPEAR)
-
     xi.conq.setRegionalConquestOverseers(zone:getRegionID())
 
     xi.helm.initZone(zone, xi.helm.type.LOGGING)
@@ -77,17 +74,15 @@ zoneObject.onGameHour = function(zone)
         local hour = VanadielHour()
         local nmBackoo = GetMobByID(ID.mob.BACKOO)
 
-        if nmBackoo ~= nil then
-            if hour == 6 then -- backoo time-of-day pop condition open
-                DisallowRespawn(ID.mob.BACKOO, false)
-                if nmBackoo:getRespawnTime() == 0 then
-                    nmBackoo:setRespawnTime(1)
-                end
-            elseif hour == 16 then -- backoo despawns
-                DisallowRespawn(ID.mob.BACKOO, true)
-                if nmBackoo:isSpawned() then
-                    nmBackoo:spawn(1)
-                end
+        if hour == 6 then -- backoo time-of-day pop condition open
+            DisallowRespawn(ID.mob.BACKOO, false)
+            if nmBackoo:getRespawnTime() == 0 then
+                nmBackoo:setRespawnTime(1)
+            end
+        elseif hour == 16 then -- backoo despawns
+            DisallowRespawn(ID.mob.BACKOO, true)
+            if nmBackoo:isSpawned() then
+                nmBackoo:spawn(1)
             end
         end
     end

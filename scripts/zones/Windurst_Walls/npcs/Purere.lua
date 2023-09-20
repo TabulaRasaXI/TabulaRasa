@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: Windurst Walls
 --  NPC: Purere
+-- Working 100%
 -----------------------------------
 local entity = {}
 
